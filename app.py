@@ -1279,9 +1279,8 @@ def construction_contact_messages():
 # =====================================================
 # VIEW CONSTRUCTION CONTACT MESSAGE
 # =====================================================
-@app.route(
-    "/construction/admin/contact-message/<int:id>"
-)
+
+@app.route("/construction/admin/contact-message/<int:id>")
 def view_construction_contact_message(id):
 
     if "construction_admin_id" not in session:
@@ -1303,11 +1302,10 @@ def view_construction_contact_message(id):
         """
         UPDATE construction_contact_messages
         SET is_read = 1
-        WHERE id=%s
+        WHERE id = %s
         """,
         (id,)
     )
-
 
     conn.commit()
 
@@ -1320,17 +1318,15 @@ def view_construction_contact_message(id):
         """
         SELECT *
         FROM construction_contact_messages
-        WHERE id=%s
+        WHERE id = %s
         """,
         (id,)
     )
-
 
     message = cursor.fetchone()
 
 
     cursor.close()
-
     conn.close()
 
 
@@ -1346,9 +1342,7 @@ def view_construction_contact_message(id):
         )
 
         return redirect(
-            url_for(
-                "construction_contact_messages"
-            )
+            url_for("construction_contact_messages")
         )
 
 
@@ -1360,7 +1354,6 @@ def view_construction_contact_message(id):
         "construction_admin/view_contact_message.html",
         message=message
     )
-
 
 # =====================================================
 # DELETE CONSTRUCTION CONTACT MESSAGE
