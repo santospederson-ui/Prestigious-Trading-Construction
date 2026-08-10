@@ -781,8 +781,7 @@ Construction | Contact Messages
                     {% for message in messages %}
 
 
-                        <tr
-                            class="{% if message.status != 'read' %}message-row-unread{% endif %}">
+                       <tr class="{% if not message.is_read %}message-row-unread{% endif %}">
 
 
                             <!-- =================================
@@ -793,7 +792,7 @@ Construction | Contact Messages
 
                                 <div class="sender-name">
 
-                                    {{ message.name }}
+                                    {{ message.fullname }}
 
                                 </div>
 
