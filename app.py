@@ -3525,9 +3525,7 @@ def delete_construction_project(project_id):
 
 
 
-# ============================================================
-# CONSTRUCTION CAREER / VACANCY MANAGEMENT
-# ============================================================
+
 
 
 # ============================================================
@@ -4568,17 +4566,6 @@ def apply_construction_vacancy(vacancy_id):
 
 
         # =================================================
-        # UNIQUE CV FILENAME
-        # =================================================
-
-        unique_filename = (
-            str(uuid.uuid4())
-            + "_"
-            + original_filename
-        )
-
-
-        # =================================================
         # UPLOAD CV TO CLOUDINARY
         # =================================================
 
@@ -4604,11 +4591,12 @@ def apply_construction_vacancy(vacancy_id):
                 "Cloudinary did not return a CV URL."
             )
 
+
         # =================================================
-        # SAVE APPLICATION
+        # SAVE APPLICATION TO DATABASE
         # =================================================
 
-        cursor.execute("""
+        insert_query = """
             INSERT INTO construction_job_applications
             (
                 vacancy_id,
@@ -4633,9 +4621,12 @@ def apply_construction_vacancy(vacancy_id):
                 %s,
                 %s,
                 %s,
-                'new'
+                %s
             )
-        """, (
+        """
+
+
+        insert_values = (
             vacancy_id,
             full_name,
             email,
@@ -4644,31 +4635,105 @@ def apply_construction_vacancy(vacancy_id):
             years_of_experience,
             original_filename,
             cv_url,
-            cover_message
-        ))
-
-        conn.commit()
-
-        application_id = cursor.lastrowid
-
-
-        conn.commit()
-
-
-        application_id = cursor.lastrowid
+            cover_message,
+            "new"
+        )
 
 
         print("========================================")
-        print("CONSTRUCTION JOB APPLICATION SAVED")
-        print("Application ID:", application_id)
+        print("INSERTING CONSTRUCTION JOB APPLICATION")
         print("Vacancy ID:", vacancy_id)
-        print("Position:", vacancy["title"])
         print("Applicant:", full_name)
         print("Email:", email)
         print("Phone:", phone)
         print("Country:", country)
-        print("years_of_experience:", years_of_experience)
+        print("Experience:", years_of_experience)
         print("CV:", original_filename)
+        print("========================================")
+
+
+        cursor.execute(
+            insert_query,
+            insert_values
+        )
+
+
+        # =================================================
+        # GET INSERTED ID
+        # =================================================
+
+        application_id = cursor.lastrowid
+
+
+        if not application_id:
+
+            raise Exception(
+                "Database INSERT completed but no application ID was returned."
+            )
+
+
+        # =================================================
+        # COMMIT DATABASE TRANSACTION
+        # =================================================
+
+        conn.commit()
+
+
+        print("========================================")
+        print("DATABASE COMMIT SUCCESSFUL")
+        print("Application ID:", application_id)
+        print("========================================")
+
+
+        # =================================================
+        # VERIFY APPLICATION WAS SAVED
+        # =================================================
+
+        verify_cursor = conn.cursor(dictionary=True)
+
+        try:
+
+            verify_cursor.execute(
+                """
+                SELECT
+                    id,
+                    vacancy_id,
+                    applicant_name,
+                    email,
+                    phone,
+                    country,
+                    years_of_experience,
+                    cv_filename,
+                    cv_url,
+                    cover_letter,
+                    status,
+                    created_at
+                FROM construction_job_applications
+                WHERE id = %s
+                LIMIT 1
+                """,
+                (application_id,)
+            )
+
+            saved_application = verify_cursor.fetchone()
+
+        finally:
+
+            verify_cursor.close()
+
+
+        if not saved_application:
+
+            raise Exception(
+                f"Application {application_id} was inserted but could not be verified after commit."
+            )
+
+
+        print("========================================")
+        print("CONSTRUCTION JOB APPLICATION VERIFIED")
+        print("Application ID:", saved_application["id"])
+        print("Applicant:", saved_application["applicant_name"])
+        print("Email:", saved_application["email"])
         print("========================================")
 
 
@@ -4730,10 +4795,10 @@ def apply_construction_vacancy(vacancy_id):
                 <b>Country:</b>
                 {country or 'N/A'}
             </p>
-            
+
             <p>
                 <b>Years of Experience:</b>
-                {years_of_experience}
+                {years_of_experience or 'N/A'}
             </p>
 
             <hr>
@@ -4877,15 +4942,23 @@ def apply_construction_vacancy(vacancy_id):
         )
 
 
+    # =====================================================
+    # ERROR HANDLING
+    # =====================================================
+
     except Exception as e:
 
         if conn:
 
-            conn.rollback()
+            try:
+                conn.rollback()
+            except Exception:
+                pass
 
 
         print("========================================")
         print("CONSTRUCTION APPLICATION ERROR")
+        print("========================================")
         print("Vacancy ID:", vacancy_id)
         print("Error Type:", type(e).__name__)
         print("Error:", str(e))
@@ -4900,244 +4973,34 @@ def apply_construction_vacancy(vacancy_id):
 
         return render_template(
             "construction_apply.html",
-            vacancy=vacancy if 'vacancy' in locals() else None
+            vacancy=vacancy if "vacancy" in locals() else None
         ), 500
 
+
+    # =====================================================
+    # CLOSE DATABASE
+    # =====================================================
 
     finally:
 
         if cursor:
 
-            cursor.close()
+            try:
+                cursor.close()
+            except Exception:
+                pass
 
         if conn:
 
-            conn.close()
-
-            # ============================================================
-            # CONSTRUCTION JOB APPLICATIONS
-            # ============================================================
-
-            @app.route(
-                "/admin/construction-applications",
-                methods=["GET"]
-            )
-            def construction_applications():
-
-                # =========================================================
-                # CHECK CONSTRUCTION ADMIN
-                # =========================================================
-
-                if "construction_admin_id" not in session:
-                    return redirect(
-                        url_for("admin_login")
-                    )
-
-                conn = None
-                cursor = None
-
-                try:
-
-                    # =====================================================
-                    # DATABASE CONNECTION
-                    # =====================================================
-
-                    conn = get_db_connection()
-
-                    cursor = conn.cursor(
-                        dictionary=True
-                    )
-
-                    # =====================================================
-                    # SEARCH
-                    # =====================================================
-
-                    search = request.args.get(
-                        "search",
-                        ""
-                    ).strip()
-
-                    # =====================================================
-                    # PAGE
-                    # =====================================================
-
-                    try:
-
-                        page = int(
-                            request.args.get(
-                                "page",
-                                1
-                            )
-                        )
-
-                    except ValueError:
-
-                        page = 1
-
-                    if page < 1:
-                        page = 1
-
-                    per_page = 10
-
-                    offset = (
-                                     page - 1
-                             ) * per_page
-
-                    # =====================================================
-                    # BASE QUERY
-                    # =====================================================
-
-                    base_query = """
-                        FROM construction_job_applications a
-
-                        LEFT JOIN construction_job_vacancies v
-                            ON a.vacancy_id = v.id
-                    """
-
-                    # =====================================================
-                    # SEARCH CONDITION
-                    # =====================================================
-
-                    search_condition = ""
-
-                    search_params = []
-
-                    if search:
-                        search_condition = """
-                            WHERE
-                                a.applicant_name LIKE %s
-                                OR a.email LIKE %s
-                                OR a.phone LIKE %s
-                                OR a.country LIKE %s
-                                OR a.years_of_experience LIKE %s
-                                OR v.title LIKE %s
-                        """
-
-                        search_value = f"%{search}%"
-
-                        search_params = [
-                            search_value,
-                            search_value,
-                            search_value,
-                            search_value,
-                            search_value,
-                            search_value
-                        ]
-
-                    # =====================================================
-                    # COUNT APPLICATIONS
-                    # =====================================================
-
-                    cursor.execute(
-                        f"""
-                            SELECT COUNT(*) AS total
-                            {base_query}
-                            {search_condition}
-                        """,
-                        search_params
-                    )
-
-                    count_result = cursor.fetchone()
-
-                    total_applications = (
-                        count_result["total"]
-                        if count_result
-                        else 0
-                    )
-
-                    # =====================================================
-                    # TOTAL PAGES
-                    # =====================================================
-
-                    total_pages = (
-                            (total_applications + per_page - 1)
-                            // per_page
-                    )
-
-                    # =====================================================
-                    # GET APPLICATIONS
-                    # =====================================================
-
-                    cursor.execute(
-                        f"""
-                            SELECT
-                                a.id,
-                                a.vacancy_id,
-                                a.applicant_name,
-                                a.email,
-                                a.phone,
-                                a.country,
-                                a.years_of_experience,
-                                a.cv_filename,
-                                a.cv_url,
-                                a.cover_letter,
-                                a.status,
-                                a.created_at,
-                                a.updated_at,
-
-                                v.title AS vacancy_title,
-                                v.department AS vacancy_department
-
-                            {base_query}
-
-                            {search_condition}
-
-                            ORDER BY
-                                a.created_at DESC
-
-                            LIMIT %s OFFSET %s
-                        """,
-                        search_params + [
-                            per_page,
-                            offset
-                        ]
-                    )
-
-                    applications = cursor.fetchall()
-
-                    # =====================================================
-                    # RENDER
-                    # =====================================================
-
-                    return render_template(
-                        "construction_admin/applications.html",
-                        applications=applications,
-                        search=search,
-                        page=page,
-                        per_page=per_page,
-                        total_applications=total_applications,
-                        total_pages=total_pages
-                    )
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 
-                except Exception as e:
-
-                    if conn:
-                        conn.rollback()
-
-                    print("========================================")
-                    print("CONSTRUCTION APPLICATIONS ERROR")
-                    print(type(e).__name__)
-                    print(str(e))
-                    print("========================================")
-
-                    flash(
-                        "Unable to load job applications.",
-                        "danger"
-                    )
-
-                    return redirect(
-                        url_for("admin_login")
-                    )
 
 
-                finally:
 
-                    if cursor:
-                        cursor.close()
-
-                    if conn:
-                        conn.close()
 
 
 
@@ -5158,15 +5021,12 @@ def construction_applications():
     # =========================================================
 
     if "construction_admin_id" not in session:
-
         return redirect(
             url_for("admin_login")
         )
 
-
     conn = None
     cursor = None
-
 
     try:
 
@@ -5180,7 +5040,6 @@ def construction_applications():
             dictionary=True
         )
 
-
         # =====================================================
         # SEARCH
         # =====================================================
@@ -5189,7 +5048,6 @@ def construction_applications():
             "search",
             ""
         ).strip()
-
 
         # =====================================================
         # PAGE
@@ -5204,22 +5062,18 @@ def construction_applications():
                 )
             )
 
-        except ValueError:
+        except (ValueError, TypeError):
 
             page = 1
-
 
         if page < 1:
-
             page = 1
-
 
         per_page = 10
 
         offset = (
             page - 1
         ) * per_page
-
 
         # =====================================================
         # BASE QUERY
@@ -5232,7 +5086,6 @@ def construction_applications():
                 ON a.vacancy_id = v.id
         """
 
-
         # =====================================================
         # SEARCH CONDITION
         # =====================================================
@@ -5240,7 +5093,6 @@ def construction_applications():
         search_condition = ""
 
         search_params = []
-
 
         if search:
 
@@ -5265,7 +5117,6 @@ def construction_applications():
                 search_value
             ]
 
-
         # =====================================================
         # COUNT APPLICATIONS
         # =====================================================
@@ -5273,7 +5124,9 @@ def construction_applications():
         cursor.execute(
             f"""
                 SELECT COUNT(*) AS total
+
                 {base_query}
+
                 {search_condition}
             """,
             search_params
@@ -5287,7 +5140,6 @@ def construction_applications():
             else 0
         )
 
-
         # =====================================================
         # TOTAL PAGES
         # =====================================================
@@ -5296,7 +5148,6 @@ def construction_applications():
             (total_applications + per_page - 1)
             // per_page
         )
-
 
         # =====================================================
         # GET APPLICATIONS
@@ -5307,15 +5158,20 @@ def construction_applications():
                 SELECT
                     a.id,
                     a.vacancy_id,
+
                     a.applicant_name,
                     a.email,
                     a.phone,
                     a.country,
                     a.years_of_experience,
+
                     a.cv_filename,
                     a.cv_url,
+
                     a.cover_letter,
+
                     a.status,
+
                     a.created_at,
                     a.updated_at,
 
@@ -5339,66 +5195,57 @@ def construction_applications():
 
         applications = cursor.fetchall()
 
-
         # =====================================================
         # RENDER
         # =====================================================
 
         return render_template(
             "construction_admin/applications.html",
+
             applications=applications,
+
             search=search,
+
             page=page,
+
             per_page=per_page,
+
             total_applications=total_applications,
+
             total_pages=total_pages
         )
-
 
     except Exception as e:
 
         if conn:
-
             conn.rollback()
-
 
         print("========================================")
         print("CONSTRUCTION APPLICATIONS ERROR")
-        print(type(e).__name__)
-        print(str(e))
+        print("Error Type:", type(e).__name__)
+        print("Error:", str(e))
         print("========================================")
-
 
         flash(
             "Unable to load job applications.",
             "danger"
         )
 
-
         return redirect(
             url_for("admin_login")
         )
 
-
     finally:
 
         if cursor:
-
             cursor.close()
 
-
         if conn:
-
             conn.close()
 
 
-
-
-
-
-
 # ============================================================
-# CONSTRUCTION APPLICATION DETAILS
+# CONSTRUCTION JOB APPLICATION DETAILS
 # ============================================================
 
 @app.route(
@@ -5412,15 +5259,12 @@ def construction_application_details(id):
     # =========================================================
 
     if "construction_admin_id" not in session:
-
         return redirect(
             url_for("admin_login")
         )
 
-
     conn = None
     cursor = None
-
 
     try:
 
@@ -5434,7 +5278,6 @@ def construction_application_details(id):
             dictionary=True
         )
 
-
         # =====================================================
         # GET APPLICATION
         # =====================================================
@@ -5442,7 +5285,6 @@ def construction_application_details(id):
         cursor.execute(
             """
             SELECT
-
                 a.id,
                 a.vacancy_id,
 
@@ -5466,7 +5308,11 @@ def construction_application_details(id):
                 v.department AS vacancy_department,
                 v.location AS vacancy_location,
                 v.employment_type AS vacancy_employment_type,
-                v.experience AS vacancy_required_experience
+                v.experience AS vacancy_experience,
+                v.description AS vacancy_description,
+                v.responsibilities AS vacancy_responsibilities,
+                v.requirements AS vacancy_requirements,
+                v.deadline AS vacancy_deadline
 
             FROM construction_job_applications a
 
@@ -5480,18 +5326,16 @@ def construction_application_details(id):
             (id,)
         )
 
-
         application = cursor.fetchone()
 
-
         # =====================================================
-        # NOT FOUND
+        # APPLICATION NOT FOUND
         # =====================================================
 
         if not application:
 
             flash(
-                "Job application not found.",
+                "Construction job application not found.",
                 "danger"
             )
 
@@ -5501,9 +5345,8 @@ def construction_application_details(id):
                 )
             )
 
-
         # =====================================================
-        # RENDER
+        # RENDER DETAILS PAGE
         # =====================================================
 
         return render_template(
@@ -5511,26 +5354,25 @@ def construction_application_details(id):
             application=application
         )
 
-
     except Exception as e:
 
         if conn:
 
-            conn.rollback()
-
+            try:
+                conn.rollback()
+            except Exception:
+                pass
 
         print("========================================")
         print("CONSTRUCTION APPLICATION DETAILS ERROR")
-        print(type(e).__name__)
-        print(str(e))
+        print("Error Type:", type(e).__name__)
+        print("Error:", str(e))
         print("========================================")
-
 
         flash(
             "Unable to load application details.",
             "danger"
         )
-
 
         return redirect(
             url_for(
@@ -5538,21 +5380,21 @@ def construction_application_details(id):
             )
         )
 
-
     finally:
 
         if cursor:
 
-            cursor.close()
-
+            try:
+                cursor.close()
+            except Exception:
+                pass
 
         if conn:
 
-            conn.close()
-
-
-
-
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 
 # =====================================================
