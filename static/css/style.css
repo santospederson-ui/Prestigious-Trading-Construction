@@ -74,9 +74,9 @@
 /* LOGO */
 
 .navbar-brand img {
-    width: 52px;
+    width: 58px;
 
-    height: 52px;
+    height: 58px;
 
     object-fit: contain;
 
@@ -160,7 +160,7 @@
 
     text-decoration: none;
 
-    font-size: 13px;
+    font-size: 15px;
 
     font-weight: 600;
 
@@ -217,9 +217,9 @@
 
     justify-content: center;
 
-    height: 42px !important;
+    height: 44px !important;
 
-    padding: 0 20px !important;
+    padding: 0 22px !important;
 
     margin-left: 10px;
 
@@ -231,7 +231,7 @@
 
     text-decoration: none;
 
-    font-size: 12px !important;
+    font-size: 14px !important;
 
     font-weight: 700 !important;
 
@@ -365,7 +365,7 @@
     .nav-links > a {
         padding: 0 9px;
 
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .nav-btn {
@@ -385,9 +385,9 @@
 
 
     .navbar-brand img {
-        width: 47px;
+        width: 60px;
 
-        height: 47px;
+        height: 60px;
     }
 
 
@@ -441,17 +441,31 @@
     }
 
 
-    .nav-links > a {
-        height: 48px;
+   .nav-links > a {
+    position: relative;
 
-        justify-content: flex-start;
+    display: flex;
 
-        padding: 0 5px;
+    align-items: center;
 
-        border-bottom: 1px solid #f0f2f0;
+    height: 82px;
 
-        font-size: 14px;
-    }
+    padding: 0 14px;
+
+    color: #4d5953;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition:
+        color .25s ease,
+        background .25s ease;
+}
 
 
     .nav-links > a:not(.nav-btn)::after {
