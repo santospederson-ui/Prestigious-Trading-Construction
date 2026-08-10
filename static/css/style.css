@@ -1,0 +1,503 @@
+/* =========================================================
+   PRESTIGIOUS TRADING & CONSTRUCTION
+   MAIN NAVIGATION
+========================================================= */
+
+:root {
+    --construction-dark: #17201b;
+    --construction-green: #244b3a;
+    --construction-green-dark: #18352a;
+    --construction-accent: #c49a4a;
+    --construction-light: #f5f6f3;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    position: relative;
+    width: 100%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e3e7e4;
+
+    z-index: 1000;
+
+    box-shadow:
+        0 3px 18px rgba(20, 40, 30, 0.05);
+}
+
+
+/* =========================================================
+   NAV CONTAINER
+========================================================= */
+
+.navbar-container {
+    max-width: 1280px;
+
+    margin: 0 auto;
+
+    min-height: 82px;
+
+    padding: 0 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.navbar-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+
+/* LOGO */
+
+.navbar-brand img {
+    width: 52px;
+
+    height: 52px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* BRAND TEXT */
+
+.logo-text {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    line-height: 1;
+}
+
+
+.logo-text h2 {
+    margin: 0;
+
+    font-family:
+        'Playfair Display',
+        Georgia,
+        serif;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: var(--construction-dark);
+
+    letter-spacing: -.3px;
+}
+
+
+.logo-text span {
+    margin-top: 5px;
+
+    color: var(--construction-green);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.7px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    height: 100%;
+}
+
+
+.nav-links > a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    height: 82px;
+
+    padding: 0 13px;
+
+    color: #4d5953;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition:
+        color .25s ease,
+        background .25s ease;
+}
+
+
+/* GOLD UNDERLINE */
+
+.nav-links > a:not(.nav-btn)::after {
+    content: "";
+
+    position: absolute;
+
+    left: 13px;
+    right: 13px;
+
+    bottom: 0;
+
+    height: 2px;
+
+    background: var(--construction-accent);
+
+    transform: scaleX(0);
+
+    transform-origin: center;
+
+    transition: transform .25s ease;
+}
+
+
+.nav-links > a:not(.nav-btn):hover {
+    color: var(--construction-green);
+}
+
+
+.nav-links > a:not(.nav-btn):hover::after {
+    transform: scaleX(1);
+}
+
+
+/* =========================================================
+   REQUEST A QUOTE BUTTON
+========================================================= */
+
+.nav-btn {
+    display: inline-flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 42px !important;
+
+    padding: 0 20px !important;
+
+    margin-left: 10px;
+
+    background: var(--construction-green);
+
+    color: #ffffff !important;
+
+    border: 1px solid var(--construction-green);
+
+    text-decoration: none;
+
+    font-size: 12px !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: .2px;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        transform .25s ease;
+}
+
+
+.nav-btn:hover {
+    background: var(--construction-accent);
+
+    border-color: var(--construction-accent);
+
+    color: #ffffff !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.menu-toggle {
+    display: none;
+
+    width: 44px;
+
+    height: 44px;
+
+    border: 1px solid #dfe4df;
+
+    background: #ffffff;
+
+    color: var(--construction-green);
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease;
+}
+
+
+.menu-toggle:hover {
+    background: var(--construction-green);
+
+    color: #ffffff;
+
+    border-color: var(--construction-green);
+}
+
+
+/* =========================================================
+   FLASH MESSAGES
+========================================================= */
+
+.alert {
+    max-width: 1280px;
+
+    margin: 18px auto;
+
+    padding: 13px 18px;
+
+    border-radius: 4px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.alert-danger {
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+
+.alert-success {
+    background: #f0fdf4;
+
+    color: #15803d;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+.alert-warning {
+    background: #fffbeb;
+
+    color: #b45309;
+
+    border: 1px solid #fde68a;
+}
+
+
+.alert-info {
+    background: #eff6ff;
+
+    color: #1d4ed8;
+
+    border: 1px solid #bfdbfe;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .nav-links {
+        gap: 0;
+    }
+
+    .nav-links > a {
+        padding: 0 9px;
+
+        font-size: 12px;
+    }
+
+    .nav-btn {
+        padding: 0 14px !important;
+
+        margin-left: 5px;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .navbar-container {
+        min-height: 72px;
+    }
+
+
+    .navbar-brand img {
+        width: 47px;
+
+        height: 47px;
+    }
+
+
+    .logo-text h2 {
+        font-size: 20px;
+    }
+
+
+    .logo-text span {
+        font-size: 8px;
+
+        letter-spacing: 1.4px;
+    }
+
+
+    .menu-toggle {
+        display: flex;
+    }
+
+
+    .nav-links {
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+
+        width: 100%;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        background: #ffffff;
+
+        border-top: 1px solid #e3e7e4;
+
+        border-bottom: 1px solid #dfe4df;
+
+        box-shadow:
+            0 15px 30px rgba(20, 40, 30, .10);
+
+        padding: 10px 20px 20px;
+    }
+
+
+    .nav-links.active {
+        display: flex;
+    }
+
+
+    .nav-links > a {
+        height: 48px;
+
+        justify-content: flex-start;
+
+        padding: 0 5px;
+
+        border-bottom: 1px solid #f0f2f0;
+
+        font-size: 14px;
+    }
+
+
+    .nav-links > a:not(.nav-btn)::after {
+        display: none;
+    }
+
+
+    .nav-btn {
+        height: 45px !important;
+
+        margin: 12px 0 0;
+
+        justify-content: center !important;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .navbar-container {
+        padding: 0 18px;
+    }
+
+
+    .navbar-brand {
+        gap: 9px;
+    }
+
+
+    .navbar-brand img {
+        width: 43px;
+
+        height: 43px;
+    }
+
+
+    .logo-text h2 {
+        font-size: 18px;
+    }
+
+
+    .logo-text span {
+        font-size: 7px;
+
+        letter-spacing: 1.1px;
+    }
+
+}
