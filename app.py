@@ -936,6 +936,7 @@ def contact():
         fullname = request.form.get("name", "").strip()
         phone = request.form.get("phone", "").strip()
         email = request.form.get("email", "").strip()
+        service = request.form.get("service", "").strip()
         subject = request.form.get("subject", "").strip()
         message = request.form.get("message", "").strip()
 
@@ -944,7 +945,14 @@ def contact():
         # BASIC VALIDATION
         # =========================
 
-        if not fullname or not phone or not email or not subject or not message:
+        if (
+            not fullname
+            or not phone
+            or not email
+            or not service
+            or not subject
+            or not message
+        ):
 
             flash(
                 "Please fill in all required fields.",
@@ -980,16 +988,18 @@ def contact():
                     email,
                     phone,
                     subject,
+                    service,
                     message,
                     is_read
                 )
-                VALUES (%s, %s, %s, %s, %s, 0)
+                VALUES (%s, %s, %s, %s, %s, %s, 0)
                 """,
                 (
                     fullname,
                     email,
                     phone,
                     subject,
+                    service,
                     message
                 )
             )
@@ -997,11 +1007,16 @@ def contact():
             conn.commit()
 
 
+            # =========================
+            # CONSOLE CONFIRMATION
+            # =========================
+
             print("========================================")
             print("CONSTRUCTION CONTACT MESSAGE SAVED")
             print("Name:", fullname)
             print("Email:", email)
             print("Phone:", phone)
+            print("Service:", service)
             print("Subject:", subject)
             print("========================================")
 
@@ -1031,6 +1046,10 @@ def contact():
 
                 <p>
                     <b>Phone:</b> {phone}
+                </p>
+
+                <p>
+                    <b>Service Required:</b> {service}
                 </p>
 
                 <p>
@@ -1079,7 +1098,11 @@ def contact():
                 </p>
 
                 <p>
-                    We have received your enquiry.
+                    We have received your enquiry regarding:
+                </p>
+
+                <p>
+                    <b>{service}</b>
                 </p>
 
                 <p>
@@ -1118,11 +1141,13 @@ def contact():
             if conn:
                 conn.rollback()
 
+
             print("========================================")
             print("CONSTRUCTION CONTACT ERROR")
             print(type(e).__name__)
             print(str(e))
             print("========================================")
+
 
             flash(
                 "Unable to send your enquiry. Please try again.",
@@ -1147,7 +1172,6 @@ def contact():
     return render_template(
         "contact.html"
     )
-
 
 # =====================================================
 # CONSTRUCTION CONTACT MESSAGES
