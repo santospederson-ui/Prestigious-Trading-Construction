@@ -1,0 +1,1760 @@
+{% extends "base.html" %}
+
+{% block title %}
+Projects | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   PRESTIGIOUS TRADING & CONSTRUCTION
+   PROJECTS PAGE
+========================================= */
+
+:root {
+  --projects-dark: #17201b;
+  --projects-green: #244b3a;
+  --projects-green-dark: #18352a;
+  --projects-accent: #c49a4a;
+  --projects-light: #f5f6f3;
+  --projects-border: #dfe4df;
+  --projects-text: #68736d;
+}
+
+
+/* =========================================
+   PAGE HERO
+========================================= */
+
+.projects-hero {
+  position: relative;
+  min-height: 480px;
+
+  display: flex;
+  align-items: center;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(10,18,14,.82),
+      rgba(10,18,14,.55),
+      rgba(10,18,14,.20)
+    ),
+    url('{{ url_for("static", filename="images/home/home1.webp") }}');
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.projects-hero-content {
+  width: 100%;
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 70px 24px;
+
+  color: #ffffff;
+}
+
+.projects-hero-inner {
+  max-width: 760px;
+}
+
+.projects-hero-label {
+  color: var(--projects-accent);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  margin-bottom: 18px;
+}
+
+.projects-hero h1 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(42px, 6vw, 68px);
+
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  margin-bottom: 22px;
+
+  text-shadow: 0 4px 18px rgba(0,0,0,.4);
+}
+
+.projects-hero p {
+  max-width: 650px;
+
+  font-size: clamp(16px, 2vw, 19px);
+
+  line-height: 1.7;
+
+  color: rgba(255,255,255,.88);
+
+  margin: 0;
+}
+
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.projects-intro {
+  padding: 90px 0 60px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+.projects-intro-inner {
+  max-width: 760px;
+
+  margin: 0 auto;
+}
+
+.section-label {
+  color: var(--projects-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.projects-intro h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--projects-dark);
+
+  font-size: clamp(32px, 4vw, 42px);
+
+  line-height: 1.2;
+
+  margin-bottom: 18px;
+}
+
+.projects-intro p {
+  color: var(--projects-text);
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   PROJECT STATUS FILTER
+========================================= */
+
+.project-filter-section {
+  background: #ffffff;
+
+  padding: 10px 0 55px;
+}
+
+.project-filters {
+  display: flex;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.project-filter {
+  border: 1px solid var(--projects-border);
+
+  background: #ffffff;
+
+  color: var(--projects-dark);
+
+  padding: 11px 22px;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+
+  cursor: pointer;
+
+  transition: all .3s ease;
+
+  border-radius: 2px;
+}
+
+.project-filter:hover,
+.project-filter.active {
+  background: var(--projects-green);
+
+  border-color: var(--projects-green);
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   PROJECTS GRID
+========================================= */
+
+.projects-list-section {
+  padding: 20px 0 100px;
+
+  background: var(--projects-light);
+}
+
+.projects-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 28px;
+}
+
+
+/* =========================================
+   PROJECT CARD
+========================================= */
+
+.project-item {
+  position: relative;
+
+  height: 470px;
+
+  overflow: hidden;
+
+  background: #dddddd;
+
+  cursor: pointer;
+
+  opacity: 1;
+
+  transform: scale(1);
+
+  transition:
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+.project-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform .7s ease,
+    filter .5s ease;
+}
+
+.project-item:hover img {
+  transform: scale(1.07);
+
+  filter: brightness(.82);
+}
+
+
+/* =========================================
+   PROJECT OVERLAY
+========================================= */
+
+.project-item-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  padding: 35px;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 30%,
+      rgba(10,18,14,.88) 100%
+    );
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   PROJECT CATEGORY
+========================================= */
+
+.project-category {
+  color: var(--projects-accent);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 9px;
+}
+
+
+/* =========================================
+   PROJECT TITLE
+========================================= */
+
+.project-item-overlay h3 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 28px;
+
+  line-height: 1.2;
+
+  margin-bottom: 7px;
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   PROJECT LOCATION
+========================================= */
+
+.project-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: rgba(255,255,255,.78);
+
+  font-size: 13px;
+
+  margin-top: 2px;
+}
+
+.project-location i {
+  color: var(--projects-accent);
+}
+
+
+/* =========================================
+   STATUS BADGE
+========================================= */
+
+.project-status-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  width: fit-content;
+
+  margin-top: 14px;
+
+  padding: 7px 11px;
+
+  border-radius: 3px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  backdrop-filter: blur(6px);
+
+}
+
+
+/* STATUS DOT */
+
+.project-status-dot {
+
+  width: 6px;
+
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+}
+
+
+/* ONGOING */
+
+.status-ongoing {
+
+  background: rgba(196,154,74,.18);
+
+  border: 1px solid rgba(196,154,74,.45);
+
+  color: #e2bd70;
+}
+
+
+/* UPCOMING */
+
+.status-upcoming {
+
+  background: rgba(255,255,255,.12);
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  color: #ffffff;
+}
+
+
+/* COMPLETED */
+
+.status-completed {
+
+  background: rgba(76,150,105,.18);
+
+  border: 1px solid rgba(105,185,130,.35);
+
+  color: #9bd3aa;
+}
+
+
+/* =========================================
+   PROJECT NUMBER
+========================================= */
+
+.project-number {
+  position: absolute;
+
+  top: 25px;
+  right: 25px;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(23,32,27,.78);
+
+  border: 1px solid rgba(255,255,255,.18);
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  backdrop-filter: blur(6px);
+
+  z-index: 5;
+}
+
+
+/* =========================================
+   PROJECT LINK
+========================================= */
+
+.project-view {
+  position: absolute;
+
+  top: 25px;
+  left: 25px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--projects-accent);
+
+  color: #ffffff;
+
+  opacity: 0;
+
+  transform: translateY(0);
+
+  transition: all .35s ease;
+
+  text-decoration: none;
+
+  z-index: 5;
+}
+
+.project-view:hover {
+  background: var(--projects-green);
+
+  color: #ffffff;
+
+  transform: scale(1.08);
+}
+
+.project-item:hover .project-view {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   FEATURED PROJECT
+========================================= */
+
+.featured-project {
+  grid-column: span 2;
+
+  height: 560px;
+}
+
+.featured-project .project-item-overlay {
+  padding: 48px;
+}
+
+.featured-project .project-item-overlay h3 {
+  font-size: 36px;
+}
+
+
+/* =========================================
+   PROJECT INFORMATION
+========================================= */
+
+.project-info-section {
+  padding: 100px 0;
+
+  background: #ffffff;
+}
+
+.project-info-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.project-info-content .section-label {
+  margin-bottom: 12px;
+}
+
+.project-info-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--projects-dark);
+
+  font-size: 38px;
+
+  line-height: 1.2;
+
+  margin-bottom: 20px;
+}
+
+.project-info-content p {
+  color: var(--projects-text);
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin-bottom: 18px;
+}
+
+
+/* =========================================
+   PROJECT STATS
+========================================= */
+
+.project-stats {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-top: 32px;
+}
+
+.project-stat {
+  padding: 20px 15px;
+
+  background: var(--projects-light);
+
+  border: 1px solid var(--projects-border);
+
+  text-align: center;
+}
+
+.project-stat strong {
+  display: block;
+
+  color: var(--projects-green);
+
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 28px;
+
+  margin-bottom: 4px;
+}
+
+.project-stat span {
+  color: var(--projects-text);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: .7px;
+}
+
+
+/* =========================================
+   INFORMATION IMAGE
+========================================= */
+
+.project-info-image {
+  height: 480px;
+
+  overflow: hidden;
+}
+
+.project-info-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .6s ease;
+}
+
+.project-info-image:hover img {
+  transform: scale(1.04);
+}
+
+
+/* =========================================
+   PROJECT PROCESS
+========================================= */
+
+.process-section {
+  padding: 95px 0;
+
+  background: var(--projects-light);
+}
+
+.section-heading {
+  text-align: center;
+
+  max-width: 700px;
+
+  margin: 0 auto 55px;
+}
+
+.section-heading h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--projects-dark);
+
+  font-size: 38px;
+
+  margin-bottom: 14px;
+}
+
+.section-heading p {
+  color: var(--projects-text);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.process-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.process-card {
+  position: relative;
+
+  padding: 35px 25px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--projects-border);
+
+  transition: all .3s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--projects-accent);
+
+  box-shadow: 0 15px 35px rgba(20,40,30,.07);
+}
+
+.process-number {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  color: rgba(36,75,58,.12);
+
+  line-height: 1;
+
+  margin-bottom: 20px;
+}
+
+.process-card h3 {
+  color: var(--projects-dark);
+
+  font-size: 17px;
+
+  margin-bottom: 10px;
+}
+
+.process-card p {
+  color: var(--projects-text);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.projects-cta {
+  padding: 90px 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--projects-green),
+      var(--projects-green-dark)
+    );
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.projects-cta h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 40px;
+
+  margin-bottom: 14px;
+}
+
+.projects-cta p {
+  max-width: 650px;
+
+  margin: 0 auto 28px;
+
+  color: rgba(255,255,255,.82);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.projects-cta-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 15px 32px;
+
+  background: var(--projects-accent);
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: all .3s ease;
+}
+
+.projects-cta-button:hover {
+  background: #ffffff;
+
+  color: var(--projects-green);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   NO RESULTS
+========================================= */
+
+.no-projects-filtered {
+
+  display: none;
+
+  grid-column: 1 / -1;
+
+  text-align: center;
+
+  padding: 90px 20px;
+}
+
+.no-projects-filtered i {
+
+  font-size: 45px;
+
+  color: #cbd5ce;
+
+  margin-bottom: 20px;
+}
+
+.no-projects-filtered h3 {
+
+  font-family: var(--font-serif);
+
+  color: var(--projects-dark);
+
+  font-size: 28px;
+
+  margin-bottom: 10px;
+}
+
+.no-projects-filtered p {
+
+  color: var(--projects-text);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .featured-project {
+    grid-column: span 2;
+  }
+
+  .project-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .projects-hero {
+    min-height: 380px;
+
+    background-attachment: scroll;
+  }
+
+  .projects-hero-content {
+    padding: 60px 20px;
+  }
+
+  .projects-hero h1 {
+    font-size: 42px;
+  }
+
+  .projects-intro {
+    padding: 65px 0 40px;
+  }
+
+  .project-filter-section {
+    padding-bottom: 40px;
+  }
+
+  .project-filters {
+    gap: 7px;
+  }
+
+  .project-filter {
+    padding: 9px 14px;
+
+    font-size: 11px;
+  }
+
+  .projects-list-section {
+    padding: 10px 0 70px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .featured-project {
+    grid-column: span 1;
+
+    height: 380px;
+  }
+
+  .project-item {
+    height: 360px;
+  }
+
+  .featured-project .project-item-overlay {
+    padding: 28px;
+  }
+
+  .featured-project .project-item-overlay h3 {
+    font-size: 27px;
+  }
+
+  .project-item-overlay {
+    padding: 25px;
+  }
+
+  .project-item-overlay h3 {
+    font-size: 23px;
+  }
+
+  .project-info-section,
+  .process-section {
+    padding: 70px 0;
+  }
+
+  .project-info-content h2,
+  .section-heading h2 {
+    font-size: 31px;
+  }
+
+  .project-info-image {
+    height: 340px;
+  }
+
+  .project-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-cta {
+    padding: 70px 0;
+  }
+
+  .projects-cta h2 {
+    font-size: 32px;
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     PROJECT HERO
+========================================= -->
+
+<section class="projects-hero">
+
+  <div class="projects-hero-content">
+
+    <div class="projects-hero-inner">
+
+      <div class="projects-hero-label">
+        Our Work
+      </div>
+
+      <h1>
+        Projects Built With
+        Purpose & Precision
+      </h1>
+
+      <p>
+        Explore selected construction, finishing and development
+        projects delivered by Prestigious Trading & Construction
+        across Qatar.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     INTRODUCTION
+========================================= -->
+
+<section class="projects-intro">
+
+  <div class="container">
+
+    <div class="projects-intro-inner">
+
+      <div class="section-label">
+        Our Portfolio
+      </div>
+
+      <h2>
+        Quality You Can See.
+        Craftsmanship You Can Trust.
+      </h2>
+
+      <p>
+        Our projects reflect our commitment to quality workmanship,
+        responsible execution and attention to detail. From
+        residential developments to commercial spaces and specialist
+        finishing works, we approach every project with the same
+        professional standard.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROJECT STATUS FILTERS
+========================================= -->
+
+<section class="project-filter-section">
+
+  <div class="container">
+
+    <div class="project-filters">
+
+      <button
+        type="button"
+        class="project-filter active"
+        data-filter="all">
+
+        All Projects
+
+      </button>
+
+      <button
+        type="button"
+        class="project-filter"
+        data-filter="ongoing">
+
+        Ongoing
+
+      </button>
+
+      <button
+        type="button"
+        class="project-filter"
+        data-filter="upcoming">
+
+        Upcoming
+
+      </button>
+
+      <button
+        type="button"
+        class="project-filter"
+        data-filter="completed">
+
+        Completed
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROJECTS
+========================================= -->
+
+<section class="projects-list-section">
+
+  <div class="container">
+
+    <div class="projects-grid">
+
+
+      {% if projects %}
+
+
+        {% for project in projects %}
+
+
+          <div
+            class="project-item
+            {% if project.is_featured %}featured-project{% endif %}"
+            data-status="{{ (project.status or 'ongoing')|lower|replace(' ', '-') }}"
+          >
+
+
+            <!-- PROJECT IMAGE -->
+
+            {% if project.image %}
+
+              <img
+                src="{{ project.image }}"
+                alt="{{ project.title }}"
+                loading="lazy">
+
+            {% else %}
+
+              <img
+                src="{{ url_for('static', filename='images/home/home1.webp') }}"
+                alt="{{ project.title }}"
+                loading="lazy">
+
+            {% endif %}
+
+
+            <!-- PROJECT NUMBER -->
+
+            <div class="project-number">
+
+              {{ "%02d"|format(loop.index) }}
+
+            </div>
+
+
+            <!-- VIEW PROJECT -->
+
+            <a
+              href="{{ url_for('project_details', slug=project.slug) }}"
+              class="project-view"
+              aria-label="View {{ project.title }}"
+            >
+
+              <i class="fas fa-arrow-right"></i>
+
+            </a>
+
+
+            <!-- PROJECT INFORMATION -->
+
+            <div class="project-item-overlay">
+
+
+              <!-- CATEGORY -->
+
+              <div class="project-category">
+
+                {{ project.category or "Construction" }}
+
+              </div>
+
+
+              <!-- TITLE -->
+
+              <h3>
+
+                {{ project.title }}
+
+              </h3>
+
+
+              <!-- LOCATION -->
+
+              {% if project.location %}
+
+                <div class="project-location">
+
+                  <i class="fas fa-location-dot"></i>
+
+                  {{ project.location }}
+
+                </div>
+
+              {% endif %}
+
+
+              <!-- STATUS -->
+
+              {% set project_status =
+                  (project.status or "ongoing")
+                  |lower
+                  |replace(" ", "-")
+              %}
+
+
+              <div
+                class="project-status-badge
+                {% if project_status == 'ongoing' %}
+                  status-ongoing
+                {% elif project_status == 'upcoming' %}
+                  status-upcoming
+                {% elif project_status == 'completed' %}
+                  status-completed
+                {% else %}
+                  status-upcoming
+                {% endif %}"
+              >
+
+                <span class="project-status-dot"></span>
+
+                {{ project.status or "Ongoing" }}
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+        {% endfor %}
+
+
+      {% else %}
+
+
+        <!-- EMPTY STATE -->
+
+        <div style="
+          grid-column:1 / -1;
+          text-align:center;
+          padding:90px 20px;
+        ">
+
+          <i
+            class="fas fa-building"
+            style="
+              font-size:45px;
+              color:#cbd5ce;
+              margin-bottom:20px;
+            ">
+          </i>
+
+          <h3 style="
+            font-family:var(--font-serif);
+            color:var(--projects-dark);
+            font-size:28px;
+            margin-bottom:10px;
+          ">
+
+            Projects Coming Soon
+
+          </h3>
+
+          <p style="
+            color:var(--projects-text);
+            font-size:14px;
+          ">
+
+            Our construction projects will be showcased here.
+
+          </p>
+
+        </div>
+
+
+      {% endif %}
+
+
+      <!-- FILTERED EMPTY STATE -->
+
+      <div
+        class="no-projects-filtered"
+        id="noProjectsFiltered"
+      >
+
+        <i class="fas fa-folder-open"></i>
+
+        <h3>
+          No Projects Found
+        </h3>
+
+        <p>
+          There are currently no projects in this category.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROJECT APPROACH
+========================================= -->
+
+<section class="project-info-section">
+
+  <div class="container">
+
+    <div class="project-info-grid">
+
+
+      <div class="project-info-content">
+
+
+        <div class="section-label">
+
+          Our Approach
+
+        </div>
+
+
+        <h2>
+
+          Every Project Begins
+          With A Clear Standard
+
+        </h2>
+
+
+        <p>
+
+          We believe successful projects are built on more than
+          materials and workmanship. They require careful planning,
+          effective coordination, quality control and a commitment
+          to delivering what was promised.
+
+        </p>
+
+
+        <p>
+
+          Our team works closely with clients, contractors,
+          suppliers and project stakeholders to maintain quality
+          throughout every stage of execution.
+
+        </p>
+
+
+        <div class="project-stats">
+
+
+          <div class="project-stat">
+
+            <strong>
+              01
+            </strong>
+
+            <span>
+              Planning
+            </span>
+
+          </div>
+
+
+          <div class="project-stat">
+
+            <strong>
+              02
+            </strong>
+
+            <span>
+              Execution
+            </span>
+
+          </div>
+
+
+          <div class="project-stat">
+
+            <strong>
+              03
+            </strong>
+
+            <span>
+              Delivery
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+      <div class="project-info-image">
+
+        <img
+          src="{{ url_for('static', filename='images/home/home4.png') }}"
+          alt="Prestigious Trading and Construction Project"
+          loading="lazy">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROJECT PROCESS
+========================================= -->
+
+<section class="process-section">
+
+  <div class="container">
+
+
+    <div class="section-heading">
+
+
+      <div class="section-label">
+
+        How We Work
+
+      </div>
+
+
+      <h2>
+
+        From Concept To Completion
+
+      </h2>
+
+
+      <p>
+
+        A structured approach helps us maintain quality,
+        efficiency and accountability throughout every project.
+
+      </p>
+
+
+    </div>
+
+
+    <div class="process-grid">
+
+
+      <div class="process-card">
+
+        <div class="process-number">
+          01
+        </div>
+
+        <h3>
+          Understand
+        </h3>
+
+        <p>
+
+          We begin by understanding the project requirements,
+          objectives, scope and expectations.
+
+        </p>
+
+      </div>
+
+
+      <div class="process-card">
+
+        <div class="process-number">
+          02
+        </div>
+
+        <h3>
+          Plan
+        </h3>
+
+        <p>
+
+          Our team develops a practical execution approach
+          focused on quality, resources and timelines.
+
+        </p>
+
+      </div>
+
+
+      <div class="process-card">
+
+        <div class="process-number">
+          03
+        </div>
+
+        <h3>
+          Execute
+        </h3>
+
+        <p>
+
+          Skilled teams and project coordination ensure
+          work is completed according to the required standards.
+
+        </p>
+
+      </div>
+
+
+      <div class="process-card">
+
+        <div class="process-number">
+          04
+        </div>
+
+        <h3>
+          Deliver
+        </h3>
+
+        <p>
+
+          We complete the project with attention to detail,
+          quality checks and client satisfaction.
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="projects-cta">
+
+  <div class="container">
+
+
+    <h2>
+
+      Have A Project In Mind?
+
+    </h2>
+
+
+    <p>
+
+      Whether you are planning a new development, renovation,
+      finishing project or construction work, our team is ready
+      to discuss your requirements.
+
+    </p>
+
+
+    <a
+      href="{{ url_for('contact') }}"
+      class="projects-cta-button"
+    >
+
+      Discuss Your Project
+
+      <i class="fas fa-arrow-right"></i>
+
+    </a>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROJECT STATUS FILTER SCRIPT
+========================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+  const filterButtons =
+    document.querySelectorAll(".project-filter");
+
+
+  const projects =
+    document.querySelectorAll(".project-item");
+
+
+  const noProjects =
+    document.getElementById("noProjectsFiltered");
+
+
+  filterButtons.forEach(function (button) {
+
+
+    button.addEventListener("click", function () {
+
+
+      const filter =
+        this.getAttribute("data-filter");
+
+
+      /* ================================
+         UPDATE ACTIVE BUTTON
+      ================================= */
+
+      filterButtons.forEach(function (btn) {
+
+        btn.classList.remove("active");
+
+      });
+
+
+      this.classList.add("active");
+
+
+      /* ================================
+         FILTER PROJECTS
+      ================================= */
+
+      let visibleCount = 0;
+
+
+      projects.forEach(function (project) {
+
+
+        const status =
+          (project.getAttribute("data-status") || "")
+          .toLowerCase()
+          .trim();
+
+
+        const shouldShow =
+          filter === "all" ||
+          status === filter;
+
+
+        if (shouldShow) {
+
+
+          project.style.display = "";
+
+
+          requestAnimationFrame(function () {
+
+            project.style.opacity = "1";
+
+            project.style.transform = "scale(1)";
+
+          });
+
+
+          visibleCount++;
+
+
+        } else {
+
+
+          project.style.opacity = "0";
+
+          project.style.transform = "scale(.96)";
+
+
+          setTimeout(function () {
+
+            project.style.display = "none";
+
+          }, 250);
+
+
+        }
+
+      });
+
+
+      /* ================================
+         NO RESULTS MESSAGE
+      ================================= */
+
+      if (noProjects) {
+
+
+        if (visibleCount === 0) {
+
+          noProjects.style.display = "block";
+
+        } else {
+
+          noProjects.style.display = "none";
+
+        }
+
+      }
+
+
+    });
+
+
+  });
+
+
+});
+
+</script>
+
+
+{% endblock %}

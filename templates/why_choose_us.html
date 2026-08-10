@@ -1,0 +1,1310 @@
+{% extends "base.html" %}
+
+{% block title %}
+Why Choose Us | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   WHY CHOOSE US PAGE
+========================================= */
+
+:root {
+  --why-dark: #17201b;
+  --why-green: #244b3a;
+  --why-green-dark: #18352a;
+  --why-accent: #c49a4a;
+  --why-light: #f5f6f3;
+  --why-border: #dfe4df;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.why-hero {
+  position: relative;
+
+  min-height: 500px;
+
+  display: flex;
+  align-items: center;
+
+  background-image:
+    url('{{ url_for("static", filename="images/why/why.webp") }}');
+
+  background-size: cover;
+  background-position: center;
+
+  overflow: hidden;
+}
+
+.why-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10,18,14,.84) 0%,
+      rgba(10,18,14,.62) 48%,
+      rgba(10,18,14,.22) 100%
+    );
+}
+
+.why-hero-content {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 780px;
+
+  color: #ffffff;
+}
+
+.why-label {
+  color: var(--why-accent);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 16px;
+}
+
+.why-hero h1 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(40px, 5vw, 64px);
+
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  margin-bottom: 20px;
+
+  text-shadow: 0 4px 18px rgba(0,0,0,.4);
+}
+
+.why-hero p {
+  max-width: 680px;
+
+  color: rgba(255,255,255,.9);
+
+  font-size: 17px;
+
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.why-intro {
+  padding: 95px 0;
+
+  background: #ffffff;
+}
+
+.why-intro-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1.05fr;
+
+  gap: 65px;
+
+  align-items: center;
+}
+
+.why-intro-image {
+  height: 490px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.why-intro-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .6s ease;
+}
+
+.why-intro-image:hover img {
+  transform: scale(1.04);
+}
+
+.why-image-badge {
+  position: absolute;
+
+  right: 25px;
+  bottom: 25px;
+
+  background: var(--why-green);
+
+  color: #ffffff;
+
+  padding: 20px 25px;
+}
+
+.why-image-badge strong {
+  display: block;
+
+  color: var(--why-accent);
+
+  font-size: 29px;
+
+  margin-bottom: 4px;
+}
+
+.why-image-badge span {
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.why-intro-content .section-label {
+  color: var(--why-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.why-intro-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--why-dark);
+
+  font-size: 40px;
+
+  line-height: 1.2;
+
+  margin-bottom: 20px;
+}
+
+.why-intro-content p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin-bottom: 17px;
+}
+
+
+/* =========================================
+   STRENGTHS
+========================================= */
+
+.strengths-section {
+  padding: 95px 0;
+
+  background: var(--why-light);
+}
+
+.why-section-title {
+  text-align: center;
+
+  max-width: 720px;
+
+  margin: 0 auto 55px;
+}
+
+.why-section-title .section-label {
+  color: var(--why-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+}
+
+.why-section-title h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--why-dark);
+
+  font-size: 38px;
+
+  line-height: 1.2;
+
+  margin-bottom: 14px;
+}
+
+.why-section-title p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.strength-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.strength-card {
+  background: #ffffff;
+
+  border: 1px solid var(--why-border);
+
+  padding: 35px 25px;
+
+  transition: all .35s ease;
+}
+
+.strength-card:hover {
+  transform: translateY(-7px);
+
+  border-color: var(--why-accent);
+
+  box-shadow: 0 16px 35px rgba(20,40,30,.08);
+}
+
+.strength-icon {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--why-green);
+
+  font-size: 22px;
+
+  margin-bottom: 20px;
+}
+
+.strength-card h3 {
+  color: var(--why-dark);
+
+  font-size: 17px;
+
+  margin-bottom: 10px;
+}
+
+.strength-card p {
+  color: #68736d;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   PROFESSIONAL APPROACH
+========================================= */
+
+.professional-section {
+  padding: 95px 0;
+
+  background: #ffffff;
+}
+
+.professional-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 65px;
+
+  align-items: center;
+}
+
+.professional-content .section-label {
+  color: var(--why-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.professional-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--why-dark);
+
+  font-size: 38px;
+
+  line-height: 1.2;
+
+  margin-bottom: 18px;
+}
+
+.professional-content > p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin-bottom: 25px;
+}
+
+.professional-list {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+.professional-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 14px;
+
+  background: var(--why-light);
+
+  border: 1px solid var(--why-border);
+
+  color: var(--why-dark);
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.professional-item i {
+  color: var(--why-accent);
+}
+
+.professional-image {
+  height: 450px;
+
+  overflow: hidden;
+}
+
+.professional-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================
+   TEAM
+========================================= */
+
+.team-section {
+  padding: 95px 0;
+
+  background: var(--why-dark);
+
+  color: #ffffff;
+}
+
+.team-section .why-section-title h2 {
+  color: #ffffff;
+}
+
+.team-section .why-section-title p {
+  color: #aeb8b2;
+}
+
+.team-section .section-label {
+  color: var(--why-accent);
+}
+
+.team-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+.team-card {
+  background: rgba(255,255,255,.035);
+
+  border: 1px solid rgba(255,255,255,.09);
+
+  transition: all .35s ease;
+
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-7px);
+
+  border-color: rgba(196,154,74,.55);
+}
+
+.team-image {
+  height: 300px;
+
+  overflow: hidden;
+}
+
+.team-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .5s ease;
+}
+
+.team-card:hover .team-image img {
+  transform: scale(1.05);
+}
+
+.team-info {
+  padding: 25px;
+}
+
+.team-info h3 {
+  color: #ffffff;
+
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 21px;
+
+  margin-bottom: 6px;
+}
+
+.team-position {
+  color: var(--why-accent);
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.team-info p {
+  color: #aeb8b2;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   COMPANY CULTURE
+========================================= */
+
+.culture-section {
+  padding: 90px 0;
+
+  background: var(--why-light);
+}
+
+.culture-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+.culture-card {
+  text-align: center;
+
+  padding: 38px 28px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--why-border);
+
+  transition: all .3s ease;
+}
+
+.culture-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--why-accent);
+}
+
+.culture-card i {
+  color: var(--why-green);
+
+  font-size: 30px;
+
+  margin-bottom: 18px;
+}
+
+.culture-card h3 {
+  color: var(--why-dark);
+
+  font-size: 18px;
+
+  margin-bottom: 10px;
+}
+
+.culture-card p {
+  color: #68736d;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.why-cta {
+  padding: 90px 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--why-green),
+      var(--why-green-dark)
+    );
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.why-cta h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 40px;
+
+  margin-bottom: 15px;
+}
+
+.why-cta p {
+  max-width: 650px;
+
+  margin: 0 auto 28px;
+
+  color: rgba(255,255,255,.82);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.why-cta-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 15px 32px;
+
+  background: var(--why-accent);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  transition: all .3s ease;
+}
+
+.why-cta-button:hover {
+  background: #ffffff;
+
+  color: var(--why-green);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .why-intro-grid,
+  .professional-grid {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .strength-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .culture-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .why-hero {
+    min-height: 430px;
+  }
+
+  .why-hero h1 {
+    font-size: 40px;
+  }
+
+  .why-intro,
+  .strengths-section,
+  .professional-section,
+  .team-section,
+  .culture-section {
+    padding: 70px 0;
+  }
+
+  .why-intro-image {
+    height: 330px;
+  }
+
+  .why-intro-content h2,
+  .why-section-title h2,
+  .professional-content h2 {
+    font-size: 31px;
+  }
+
+  .strength-grid,
+  .team-grid,
+  .culture-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .professional-list {
+    grid-template-columns: 1fr;
+  }
+
+  .professional-image {
+    height: 330px;
+  }
+
+  .why-cta {
+    padding: 70px 0;
+  }
+
+  .why-cta h2 {
+    font-size: 32px;
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="why-hero">
+
+  <div class="container">
+
+    <div class="why-hero-content">
+
+      <div class="why-label">
+        Why Prestigious
+      </div>
+
+      <h1>
+        Built On Quality.<br>
+        Driven By Trust.
+      </h1>
+
+      <p>
+        We combine professional expertise, quality workmanship,
+        responsible project execution and a commitment to our
+        clients to deliver construction and maintenance solutions
+        they can depend on.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     INTRODUCTION
+========================================= -->
+
+<section class="why-intro">
+
+  <div class="container">
+
+    <div class="why-intro-grid">
+
+
+      <div class="why-intro-image">
+
+        <img
+          src="{{ url_for('static', filename='images/why/why1.webp') }}"
+          alt="Prestigious Trading and Construction Team"
+          loading="lazy">
+
+        <div class="why-image-badge">
+
+          <strong>Professional</strong>
+
+          <span>
+            Construction Solutions
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="why-intro-content">
+
+        <div class="section-label">
+          Why Choose Prestigious
+        </div>
+
+        <h2>
+          A Construction Partner You Can Depend On
+        </h2>
+
+        <p>
+          Prestigious Trading & Construction is committed to
+          delivering dependable construction, finishing,
+          maintenance and building material solutions across Qatar.
+        </p>
+
+        <p>
+          We understand that successful projects require more than
+          completing a scope of work. They require communication,
+          planning, skilled workmanship, responsible execution and
+          attention to detail.
+        </p>
+
+        <p>
+          Our approach is centered on understanding our clients'
+          requirements and delivering practical solutions while
+          maintaining professional standards throughout the project.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     KEY STRENGTHS
+========================================= -->
+
+<section class="strengths-section">
+
+  <div class="container">
+
+    <div class="why-section-title">
+
+      <div class="section-label">
+        Our Strengths
+      </div>
+
+      <h2>
+        What Sets Us Apart
+      </h2>
+
+      <p>
+        The principles and capabilities that shape the way
+        we approach every project.
+      </p>
+
+    </div>
+
+
+    <div class="strength-grid">
+
+
+      <div class="strength-card">
+
+        <div class="strength-icon">
+          <i class="fas fa-medal"></i>
+        </div>
+
+        <h3>
+          Quality Workmanship
+        </h3>
+
+        <p>
+          We maintain strong attention to workmanship,
+          materials and finishing throughout our projects.
+        </p>
+
+      </div>
+
+
+      <div class="strength-card">
+
+        <div class="strength-icon">
+           <i class="fas fa-shield-alt"></i>
+        </div>
+
+        <h3>
+          Safety Conscious
+        </h3>
+
+        <p>
+          Safety remains an important part of our approach
+          to construction, maintenance and site operations.
+        </p>
+
+      </div>
+
+
+      <div class="strength-card">
+
+        <div class="strength-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+
+        <h3>
+          Reliable Execution
+        </h3>
+
+        <p>
+          We focus on organized project execution and
+          dependable delivery of agreed work.
+        </p>
+
+      </div>
+
+
+      <div class="strength-card">
+
+        <div class="strength-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+
+        <h3>
+          Client Focused
+        </h3>
+
+        <p>
+          We work closely with clients to understand their
+          requirements and provide practical solutions.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PROFESSIONAL APPROACH
+========================================= -->
+
+<section class="professional-section">
+
+  <div class="container">
+
+    <div class="professional-grid">
+
+
+      <div class="professional-content">
+
+        <div class="section-label">
+          Our Professional Approach
+        </div>
+
+        <h2>
+          Experience, Coordination & Attention To Detail
+        </h2>
+
+        <p>
+          Every project presents different requirements. Our team
+          brings together practical experience and coordinated
+          project execution to help ensure that work is completed
+          efficiently and professionally.
+        </p>
+
+        <div class="professional-list">
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Project Coordination
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Site Supervision
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Quality Control
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Material Management
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Skilled Workmanship
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Safety Awareness
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Clear Communication
+          </div>
+
+          <div class="professional-item">
+            <i class="fas fa-check"></i>
+            Responsible Delivery
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="professional-image">
+
+        <img
+          src="{{ url_for('static', filename='images/why/why2.webp') }}"
+          alt="Construction Project Supervision"
+          loading="lazy">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     TEAM
+========================================= -->
+
+<section class="team-section">
+
+  <div class="container">
+
+    <div class="why-section-title">
+
+      <div class="section-label">
+        Our People
+      </div>
+
+      <h2>
+        A Team Working Toward One Goal
+      </h2>
+
+      <p>
+        Our people bring together practical experience,
+        technical knowledge and commitment to quality.
+      </p>
+
+    </div>
+
+
+    <div class="team-grid">
+
+
+      <div class="team-card">
+
+        <div class="team-image">
+
+          <img
+            src="{{ url_for('static', filename='images/why/team1.webp') }}"
+            alt="Project Management Team"
+            loading="lazy">
+
+        </div>
+
+        <div class="team-info">
+
+          <h3>
+            Project Management
+          </h3>
+
+          <div class="team-position">
+            Planning & Coordination
+          </div>
+
+          <p>
+            Coordinating project requirements, schedules,
+            resources and communication throughout execution.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="team-card">
+
+        <div class="team-image">
+
+          <img
+            src="{{ url_for('static', filename='images/why/team2.webp') }}"
+            alt="Site Operations Team"
+            loading="lazy">
+
+        </div>
+
+        <div class="team-info">
+
+          <h3>
+            Site Operations
+          </h3>
+
+          <div class="team-position">
+            Supervision & Execution
+          </div>
+
+          <p>
+            Supporting safe, organized and professional
+            execution of construction and finishing works.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="team-card">
+
+        <div class="team-image">
+
+          <img
+            src="{{ url_for('static', filename='images/why/team3.webp') }}"
+            alt="Technical and Support Team"
+            loading="lazy">
+
+        </div>
+
+        <div class="team-info">
+
+          <h3>
+            Technical & Support
+          </h3>
+
+          <div class="team-position">
+            Quality & Project Support
+          </div>
+
+          <p>
+            Providing technical, material and operational support
+            to help projects progress efficiently.
+          </p>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     COMPANY CULTURE
+========================================= -->
+
+<section class="culture-section">
+
+  <div class="container">
+
+    <div class="why-section-title">
+
+      <div class="section-label">
+        Our Culture
+      </div>
+
+      <h2>
+        How We Work
+      </h2>
+
+      <p>
+        Our culture influences the way we work with clients,
+        colleagues, suppliers and project partners.
+      </p>
+
+    </div>
+
+
+    <div class="culture-grid">
+
+
+      <div class="culture-card">
+
+        <i class="fas fa-comments"></i>
+
+        <h3>
+          Communication
+        </h3>
+
+        <p>
+          We believe clear communication helps projects
+          remain organized and expectations understood.
+        </p>
+
+      </div>
+
+
+      <div class="culture-card">
+
+        <i class="fas fa-user-tie"></i>
+
+        <h3>
+          Professionalism
+        </h3>
+
+        <p>
+          We conduct our work responsibly and maintain
+          professional standards throughout every assignment.
+        </p>
+
+      </div>
+
+
+      <div class="culture-card">
+
+        <i class="fas fa-chart-line"></i>
+
+        <h3>
+          Continuous Improvement
+        </h3>
+
+        <p>
+          We continuously look for better ways to improve
+          our processes, workmanship and client experience.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="why-cta">
+
+  <div class="container">
+
+    <h2>
+      Let's Build Something Better
+    </h2>
+
+    <p>
+      Whether you are planning a new construction project,
+      renovation, maintenance assignment or material requirement,
+      our team is ready to discuss your needs.
+    </p>
+
+    <a
+      href="{{ url_for('contact') }}"
+      class="why-cta-button">
+
+      Contact Our Team
+
+      <i
+        class="fas fa-arrow-right"
+        style="margin-left:10px;">
+      </i>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+{% endblock %}

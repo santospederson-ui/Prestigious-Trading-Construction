@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-QA">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Project Maintenance | Prestigious Trading & Construction
+    </title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #F4F8F4;
+            margin: 0;
+            padding: 40px;
+            color: #24352D;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #3F6B57;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #687A70;
+            margin-bottom: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #DCE7DE;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .project-card h2 {
+            margin-top: 0;
+            color: #3F6B57;
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .info-box {
+            background: #F4F8F4;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 11px;
+            color: #687A70;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-view {
+            background: #3F6B57;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #EDF5EE;
+            color: #3F6B57;
+        }
+
+        .btn-gallery {
+            background: #EAF0ED;
+            color: #234236;
+        }
+
+        .btn-delete {
+            background: #FDECEC;
+            color: #9B3B3B;
+            border: none;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+}
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid #DCE7DE;
+        }
+
+        @media(max-width: 700px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .project-info {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Project Maintenance
+    </h1>
+
+    <p class="subtitle">
+        Manage construction projects, galleries and project information.
+    </p>
+
+
+    {% if projects %}
+
+        {% for project in projects %}
+
+            <div class="project-card">
+
+                <h2>
+                    {{ project.title }}
+                </h2>
+
+
+                <div class="project-info">
+
+                    <div class="info-box">
+
+                        <strong>
+                            Category
+                        </strong>
+
+                        <span>
+                            {{ project.category or "Not specified" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Location
+                        </strong>
+
+                        <span>
+                            {{ project.location or "Not specified" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Status
+                        </strong>
+
+                        <span>
+                            {{ project.status or "Not specified" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Images
+                        </strong>
+
+                        <span>
+                            {{ project.image_count or 0 }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+
+                    <!-- VIEW -->
+
+                    <a
+                        href="{{ url_for('project_details', slug=project.slug) }}"
+                        class="btn btn-view"
+                    >
+                        View Project
+                    </a>
+
+
+                    <!-- EDIT -->
+
+                    <a
+                        href="{{ url_for('edit_project', project_id=project.id) }}"
+                        class="btn btn-edit">
+                        Edit Project
+                    </a>
+
+
+                    <!-- GALLERY -->
+
+                   <a
+                        href="{{ url_for('manage_construction_gallery', project_id=project.id) }}"
+                        class="btn btn-gallery">
+                        Manage Gallery
+                   </a>
+
+
+                    <!-- DELETE -->
+
+                    <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_construction_project',
+                                project_id=project.id
+                            ) }}"
+                            style="display:inline;"
+                            onsubmit="
+                                return confirm(
+                                    'WARNING!\n\nAre you sure you want to permanently delete this project?\n\nThe project and ALL its gallery images will be deleted permanently.'
+                                );
+                            ">
+
+                            <button
+                                type="submit"
+                                class="btn btn-delete"
+                            >
+                                Delete Project
+                            </button>
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>
+                No Construction Projects
+            </h2>
+
+            <p>
+                No projects have been added yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

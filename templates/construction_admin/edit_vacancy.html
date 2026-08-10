@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Vacancy | Construction Admin
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.edit-vacancy-page {
+    padding: 40px 0 70px;
+    background: #f5f7f5;
+    min-height: calc(100vh - 80px);
+}
+
+.edit-vacancy-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.edit-vacancy-header {
+    margin-bottom: 28px;
+}
+
+.edit-vacancy-header h1 {
+    margin: 0 0 7px;
+    color: #17201b;
+    font-family:
+        var(--font-serif,
+        'Playfair Display',
+        Georgia,
+        serif);
+    font-size: 32px;
+}
+
+.edit-vacancy-header p {
+    margin: 0;
+    color: #6a746e;
+    font-size: 14px;
+}
+
+.edit-vacancy-card {
+    background: #ffffff;
+    border: 1px solid #dfe5e0;
+    border-radius: 10px;
+    padding: 35px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #344139;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    border: 1px solid #d8dfda;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #27322c;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s ease,
+                box-shadow .2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #244b3a;
+    box-shadow: 0 0 0 3px rgba(36,75,58,.08);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.form-help {
+    margin-top: 6px;
+    color: #8a938e;
+    font-size: 11px;
+}
+
+.form-actions {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e9e6;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.cancel-button,
+.save-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+.cancel-button {
+    background: #eef1ef;
+    color: #56615a;
+}
+
+.cancel-button:hover {
+    background: #dfe5e1;
+    color: #344139;
+}
+
+.save-button {
+    background: #244b3a;
+    color: #ffffff;
+}
+
+.save-button:hover {
+    background: #18352a;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .edit-vacancy-card {
+        padding: 25px 20px;
+    }
+
+    .edit-vacancy-header h1 {
+        font-size: 27px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+    }
+}
+
+</style>
+
+
+<section class="edit-vacancy-page">
+
+    <div class="edit-vacancy-container">
+
+
+        <div class="edit-vacancy-header">
+
+            <h1>
+                Edit Job Vacancy
+            </h1>
+
+            <p>
+                Update the recruitment information for
+                {{ vacancy.title }}.
+            </p>
+
+        </div>
+
+
+        <div class="edit-vacancy-card">
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'edit_construction_vacancy',
+                    id=vacancy.id
+                ) }}"
+            >
+
+                <div class="form-grid">
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group full-width">
+
+                        <label for="title">
+                            Job Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value="{{ vacancy.title or '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            name="department"
+                            value="{{ vacancy.department or '' }}"
+                        >
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            value="{{ vacancy.location or 'Qatar' }}"
+                        >
+
+                    </div>
+
+
+                    <!-- EMPLOYMENT TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="employment_type">
+                            Employment Type
+                        </label>
+
+                        <input
+                            type="text"
+                            id="employment_type"
+                            name="employment_type"
+                            value="{{ vacancy.employment_type or '' }}"
+                            placeholder="Full-time, Part-time, Contract..."
+                        >
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="form-group">
+
+                        <label for="experience">
+                            Experience
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experience"
+                            name="experience"
+                            value="{{ vacancy.experience or '' }}"
+                            placeholder="e.g. 3-5 years"
+                        >
+
+                    </div>
+
+
+                    <!-- DEADLINE -->
+
+                    <div class="form-group">
+
+                        <label for="deadline">
+                            Application Deadline
+                        </label>
+
+                        <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            value="{% if vacancy.deadline %}{{ vacancy.deadline.strftime('%Y-%m-%d') }}{% endif %}"
+                        >
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Status
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                        >
+
+                            <option
+                                value="draft"
+                                {% if vacancy.status == 'draft' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Draft
+                            </option>
+
+                            <option
+                                value="open"
+                                {% if vacancy.status == 'open' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Open
+                            </option>
+
+                            <option
+                                value="closed"
+                                {% if vacancy.status == 'closed' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Closed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full-width">
+
+                        <label for="description">
+                            Job Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                        >{{ vacancy.description or '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- RESPONSIBILITIES -->
+
+                    <div class="form-group full-width">
+
+                        <label for="responsibilities">
+                            Key Responsibilities
+                        </label>
+
+                        <textarea
+                            id="responsibilities"
+                            name="responsibilities"
+                        >{{ vacancy.responsibilities or '' }}</textarea>
+
+                        <span class="form-help">
+                            You can place each responsibility on a separate line.
+                        </span>
+
+                    </div>
+
+
+                    <!-- REQUIREMENTS -->
+
+                    <div class="form-group full-width">
+
+                        <label for="requirements">
+                            Candidate Requirements
+                        </label>
+
+                        <textarea
+                            id="requirements"
+                            name="requirements"
+                        >{{ vacancy.requirements or '' }}</textarea>
+
+                        <span class="form-help">
+                            You can place each requirement on a separate line.
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('construction_vacancies') }}"
+                        class="cancel-button"
+                    >
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
+
+                        <i class="fas fa-save"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en-QA">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#3F6B57">
+
+    <title>
+        Add Construction Project | Prestigious
+    </title>
+
+
+    <!-- GOOGLE FONTS -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <style>
+
+        :root {
+
+            --primary: #3F6B57;
+
+            --dark: #234236;
+
+            --accent: #8BAF8B;
+
+            --background: #F4F8F4;
+
+            --text: #24352D;
+
+            --muted: #687A70;
+
+            --border: #DCE7DE;
+
+            --white: #ffffff;
+
+            --font-serif:
+                'Playfair Display',
+                Georgia,
+                serif;
+
+            --font-sans:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+
+        }
+
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+
+        body {
+
+            font-family: var(--font-sans);
+
+            background: var(--background);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .header {
+
+            height: 78px;
+
+            background: var(--white);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .header-left a {
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 8px;
+
+            background: #EDF5EE;
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-decoration: none;
+
+            transition: .2s;
+
+        }
+
+
+        .header-left a:hover {
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+        }
+
+
+        .header-title h1 {
+
+            font-family: var(--font-serif);
+
+            font-size: 22px;
+
+            color: var(--primary);
+
+        }
+
+
+        .header-title p {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 2px;
+
+        }
+
+
+        /* =====================================
+           CONTENT
+        ===================================== */
+
+        .container {
+
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            padding: 35px 25px 60px;
+
+        }
+
+
+        /* =====================================
+           ALERTS
+        ===================================== */
+
+        .alert {
+
+            padding: 14px 18px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        .alert-danger {
+
+            background: #FDECEC;
+
+            color: #9B3B3B;
+
+            border: 1px solid #F2CCCC;
+
+        }
+
+
+        .alert-success {
+
+            background: #E7F1E8;
+
+            color: #3F6B57;
+
+            border: 1px solid #C9DDCB;
+
+        }
+
+
+        /* =====================================
+           FORM CARD
+        ===================================== */
+
+        .form-card {
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+        }
+
+
+        .form-header {
+
+            padding: 25px 28px;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .form-header h2 {
+
+            font-family: var(--font-serif);
+
+            color: var(--primary);
+
+            font-size: 20px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .form-header p {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+        }
+
+
+        .form-body {
+
+            padding: 30px;
+
+        }
+
+
+        /* =====================================
+           GRID
+        ===================================== */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        label {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: var(--text);
+
+            margin-bottom: 7px;
+
+        }
+
+
+        label span {
+
+            color: #A54A4A;
+
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            border: 1px solid var(--border);
+
+            background: #FBFDFC;
+
+            border-radius: 8px;
+
+            padding: 12px 13px;
+
+            font-family: var(--font-sans);
+
+            font-size: 13px;
+
+            color: var(--text);
+
+            outline: none;
+
+            transition: .2s;
+
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(63,107,87,.10);
+
+            background: #ffffff;
+
+        }
+
+
+        textarea {
+
+            min-height: 150px;
+
+            resize: vertical;
+
+        }
+
+
+        /* =====================================
+           IMAGE UPLOAD
+        ===================================== */
+
+        .upload-box {
+
+            border: 2px dashed #C8D9CB;
+
+            background: #F8FBF8;
+
+            border-radius: 10px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            transition: .2s;
+
+        }
+
+
+        .upload-box:hover {
+
+            border-color: var(--primary);
+
+            background: #F3F8F3;
+
+        }
+
+
+        .upload-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            margin: 0 auto 12px;
+
+            border-radius: 50%;
+
+            background: #E7F1E8;
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 19px;
+
+        }
+
+
+        .upload-box strong {
+
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .upload-box p {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .upload-box input {
+
+            background: transparent;
+
+            border: none;
+
+            padding: 0;
+
+        }
+
+
+        /* =====================================
+           CHECKBOX
+        ===================================== */
+
+        .checkbox-wrapper {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-top: 8px;
+
+        }
+
+
+        .checkbox-wrapper input {
+
+            width: 17px;
+
+            height: 17px;
+
+            accent-color: var(--primary);
+
+        }
+
+
+        .checkbox-wrapper label {
+
+            margin: 0;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================
+           ACTIONS
+        ===================================== */
+
+        .form-actions {
+
+            margin-top: 30px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid var(--border);
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+        }
+
+
+        .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            font-family: var(--font-sans);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .btn-cancel {
+
+            background: #F1F5F2;
+
+            color: var(--muted);
+
+            border: 1px solid var(--border);
+
+        }
+
+
+        .btn-cancel:hover {
+
+            background: #E7EEE9;
+
+            color: var(--text);
+
+        }
+
+
+        .btn-primary {
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            box-shadow:
+                0 4px 12px
+                rgba(63,107,87,.18);
+
+        }
+
+
+        .btn-primary:hover {
+
+            background: var(--dark);
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                padding: 0 18px;
+
+            }
+
+
+            .container {
+
+                padding:
+                    22px 15px 40px;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-group.full {
+
+                grid-column: auto;
+
+            }
+
+
+            .form-body {
+
+                padding: 22px;
+
+            }
+
+
+            .form-actions {
+
+                flex-direction: column-reverse;
+
+            }
+
+
+            .btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+=========================================== -->
+
+<header class="header">
+
+
+    <div class="header-left">
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            <i class="fas fa-arrow-left"></i>
+
+        </a>
+
+
+        <div class="header-title">
+
+            <h1>
+                Add Construction Project
+            </h1>
+
+            <p>
+                Construction Administration
+            </p>
+
+        </div>
+
+    </div>
+
+
+</header>
+
+
+
+<!-- ==========================================
+     CONTENT
+=========================================== -->
+
+<div class="container">
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+
+        <div class="form-header">
+
+            <h2>
+                Project Information
+            </h2>
+
+            <p>
+                Enter the details of the construction project below.
+            </p>
+
+        </div>
+
+
+
+        <div class="form-body">
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+
+                <div class="form-grid">
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Project Title <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="e.g. Al Wakrah Residential Development"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Project Category
+                        </label>
+
+                        <select name="category">
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Building Construction">
+                                Building Construction
+                            </option>
+
+                            <option value="General Contracting">
+                                General Contracting
+                            </option>
+
+                            <option value="Interior & Fit-Out">
+                                Interior & Fit-Out
+                            </option>
+
+                            <option value="Stone & Tile Works">
+                                Stone & Tile Works
+                            </option>
+
+                            <option value="Maintenance">
+                                Maintenance
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- LOCATION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="e.g. Doha, Qatar"
+                        >
+
+                    </div>
+
+
+
+                    <!-- CLIENT -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Client
+                        </label>
+
+                        <input
+                            type="text"
+                            name="client"
+                            placeholder="Client or company name"
+                        >
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Project Status
+                        </label>
+
+                        <select name="status">
+
+                            <option value="Upcoming">
+                                Upcoming
+                            </option>
+
+                            <option value="Ongoing">
+                                Ongoing
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- START DATE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="start_date"
+                        >
+
+                    </div>
+
+
+
+                    <!-- COMPLETION DATE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Completion Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="completion_date"
+                        >
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Project Description
+                        </label>
+
+                        <textarea
+                            name="description"
+                            placeholder="Describe the project, scope of work, services provided, etc."
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- IMAGE -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Project Images
+                        </label>
+
+
+                        <div class="upload-box">
+
+
+                            <div class="upload-icon">
+
+                                <i class="fas fa-cloud-arrow-up"></i>
+
+                            </div>
+
+
+                            <strong>
+                                Upload Project Images
+                            </strong>
+
+
+                            <p>
+                                You can select multiple images.
+                                Maximum 10MB per image.
+                            </p>
+
+
+                            <input
+                                type="file"
+                                name="images"
+                                accept="image/*"
+                                multiple
+                            >
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FEATURED -->
+
+                    <div class="form-group full">
+
+
+                        <div class="checkbox-wrapper">
+
+                            <input
+                                type="checkbox"
+                                id="is_featured"
+                                name="is_featured"
+                                value="1"
+                            >
+
+
+                            <label for="is_featured">
+
+                                Feature this project on the website
+
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+
+                    <a
+                        href="{{ url_for('admin_dashboard') }}"
+                        class="btn btn-cancel"
+                    >
+
+                        <i class="fas fa-xmark"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        <i class="fas fa-plus"></i>
+
+                        Add Project
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

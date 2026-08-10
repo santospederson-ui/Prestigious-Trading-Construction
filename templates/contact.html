@@ -1,0 +1,1057 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   CONTACT PAGE
+   PRESTIGIOUS TRADING & CONSTRUCTION
+========================================= */
+
+.contact-page {
+    background: #ffffff;
+    color: #17201b;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.contact-hero {
+    position: relative;
+    min-height: 500px;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(10,18,14,.84),
+            rgba(10,18,14,.52),
+            rgba(10,18,14,.20)
+        ),
+        url('{{ url_for("static", filename="images/contact/contact.webp") }}');
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+}
+
+.contact-hero-content {
+    max-width: 760px;
+    color: #ffffff;
+}
+
+.contact-kicker {
+    color: #c49a4a;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    margin-bottom: 18px;
+}
+
+.contact-hero h1 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    margin-bottom: 20px;
+}
+
+.contact-hero p {
+    max-width: 650px;
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    color: rgba(255,255,255,.90);
+}
+
+
+/* =========================================
+   CONTACT INTRO
+========================================= */
+
+.contact-section {
+    padding: 95px 0;
+}
+
+.contact-grid {
+    display: grid;
+
+    grid-template-columns: .9fr 1.1fr;
+
+    gap: 65px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   CONTACT INFORMATION
+========================================= */
+
+.contact-info-label {
+    color: #244b3a;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    margin-bottom: 12px;
+}
+
+.contact-info h2 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    font-size: 40px;
+
+    line-height: 1.2;
+
+    color: #17201b;
+
+    margin-bottom: 20px;
+}
+
+.contact-info > p {
+    color: #68736d;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.contact-detail {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #dfe4df;
+}
+
+.contact-detail-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(36,75,58,.08);
+
+    color: #244b3a;
+
+    font-size: 18px;
+}
+
+.contact-detail h3 {
+    color: #17201b;
+
+    font-size: 15px;
+
+    margin-bottom: 5px;
+}
+
+.contact-detail p,
+.contact-detail a {
+    color: #68736d;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    text-decoration: none;
+
+    margin: 0;
+}
+
+.contact-detail a:hover {
+    color: #244b3a;
+}
+
+
+/* =========================================
+   CONTACT FORM
+========================================= */
+
+.contact-form-wrapper {
+    background: #f5f6f3;
+
+    border: 1px solid #dfe4df;
+
+    padding: 42px;
+}
+
+.contact-form-wrapper h3 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    color: #17201b;
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+.contact-form-wrapper > p {
+    color: #68736d;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 28px;
+}
+
+.contact-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+.form-group label {
+    color: #17201b;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #cfd6d1;
+
+    background: #ffffff;
+
+    color: #17201b;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all .25s ease;
+
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #244b3a;
+
+    box-shadow: 0 0 0 3px rgba(36,75,58,.08);
+}
+
+.form-group textarea {
+    min-height: 145px;
+
+    resize: vertical;
+}
+
+.form-submit {
+    grid-column: span 2;
+
+    margin-top: 5px;
+}
+
+.submit-button {
+    width: 100%;
+
+    border: none;
+
+    padding: 15px 28px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: all .3s ease;
+}
+
+.submit-button:hover {
+    background: #c49a4a;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   SERVICES CTA STRIP
+========================================= */
+
+.contact-services {
+    padding: 75px 0;
+
+    background: #17201b;
+
+    color: #ffffff;
+}
+
+.contact-services-inner {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+.contact-services-content .contact-info-label {
+    color: #c49a4a;
+}
+
+.contact-services-content h2 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    font-size: 34px;
+
+    margin-bottom: 10px;
+}
+
+.contact-services-content p {
+    color: #aeb8b2;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    max-width: 650px;
+
+    margin: 0;
+}
+
+.contact-services-button {
+    flex-shrink: 0;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 28px;
+
+    background: #c49a4a;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    transition: all .3s ease;
+}
+
+.contact-services-button:hover {
+    background: #ffffff;
+
+    color: #244b3a;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   MAP / LOCATION
+========================================= */
+
+.location-section {
+    padding: 90px 0;
+
+    background: #ffffff;
+}
+
+.location-heading {
+    text-align: center;
+
+    max-width: 700px;
+
+    margin: 0 auto 45px;
+}
+
+.location-heading .contact-info-label {
+    margin-bottom: 10px;
+}
+
+.location-heading h2 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    font-size: 38px;
+
+    color: #17201b;
+
+    margin-bottom: 12px;
+}
+
+.location-heading p {
+    color: #68736d;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.location-map {
+    width: 100%;
+
+    height: 400px;
+
+    background: #f5f6f3;
+
+    border: 1px solid #dfe4df;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.location-map-inner {
+    max-width: 500px;
+
+    padding: 30px;
+}
+
+.location-map-icon {
+    font-size: 42px;
+
+    color: #244b3a;
+
+    margin-bottom: 15px;
+}
+
+.location-map h3 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+
+    color: #17201b;
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+}
+
+.location-map p {
+    color: #68736d;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 20px;
+}
+
+.map-button {
+    display: inline-flex;
+
+    padding: 12px 22px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    transition: all .3s ease;
+}
+
+.map-button:hover {
+    background: #c49a4a;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+    .contact-services-inner {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .contact-hero {
+        min-height: 420px;
+    }
+
+    .contact-hero h1 {
+        font-size: 42px;
+    }
+
+    .contact-hero p {
+        font-size: 16px;
+    }
+
+    .contact-section,
+    .location-section {
+        padding: 70px 0;
+    }
+
+    .contact-info h2,
+    .location-heading h2 {
+        font-size: 31px;
+    }
+
+    .contact-form-wrapper {
+        padding: 28px 20px;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full,
+    .form-submit {
+        grid-column: span 1;
+    }
+
+    .contact-services {
+        padding: 65px 0;
+    }
+
+    .contact-services-content h2 {
+        font-size: 30px;
+    }
+
+    .contact-services-button {
+        width: 100%;
+    }
+
+    .location-map {
+        height: 350px;
+    }
+
+}
+
+</style>
+
+
+<div class="contact-page">
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="contact-hero">
+
+    <div class="container">
+
+        <div class="contact-hero-content">
+
+            <div class="contact-kicker">
+                Get In Touch
+            </div>
+
+            <h1>
+                Let's Build<br>
+                Something Great.
+            </h1>
+
+            <p>
+                Whether you need construction, maintenance,
+                finishing, renovation or material supply services,
+                our team is ready to discuss your requirements.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CONTACT INFORMATION + FORM
+========================================= -->
+
+<section class="contact-section">
+
+    <div class="container">
+
+        <div class="contact-grid">
+
+
+            <!-- CONTACT INFORMATION -->
+
+            <div class="contact-info">
+
+                <div class="contact-info-label">
+                    Contact Us
+                </div>
+
+                <h2>
+                    We Are Ready To Hear From You
+                </h2>
+
+                <p>
+                    Tell us about your project, maintenance
+                    requirements or construction needs. Our team
+                    will review your enquiry and get back to you.
+                </p>
+
+
+                <div class="contact-details">
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Office Location
+                            </h3>
+
+                            <p>
+                                Doha, State of Qatar
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Phone
+                            </h3>
+
+                            <a href="tel:+97400000000">
+                                +974 0000 0000
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Email
+                            </h3>
+
+                            <a href="mailto:info@prestigiousrealestate.qa">
+                                info@prestigiousrealestate.qa
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Working Hours
+                            </h3>
+
+                            <p>
+                                Sunday – Thursday<br>
+                                8:00 AM – 5:00 PM
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT FORM -->
+
+            <div class="contact-form-wrapper">
+
+                <h3>
+                    Send Us An Enquiry
+                </h3>
+
+                <p>
+                    Complete the form below and our team will
+                    contact you regarding your enquiry.
+                </p>
+
+
+                <form
+                    class="contact-form"
+                    method="POST"
+                    action="{{ url_for('contact') }}">
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Your full name"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="+974"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="service">
+                            Service Required
+                        </label>
+
+                        <select
+                            id="service"
+                            name="service"
+                            required>
+
+                            <option value="">
+                                Select a service
+                            </option>
+
+                            <option value="building-construction">
+                                Building Construction
+                            </option>
+
+                            <option value="general-contracting">
+                                General Contracting
+                            </option>
+
+                            <option value="finishing">
+                                Finishing Works
+                            </option>
+
+                            <option value="stone-marble">
+                                Stone & Marble Works
+                            </option>
+
+                            <option value="maintenance">
+                                Maintenance & Renovation
+                            </option>
+
+                            <option value="materials">
+                                Building Materials Trading
+                            </option>
+
+                            <option value="other">
+                                Other Enquiry
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="subject">
+                            Subject
+                        </label>
+
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            placeholder="What can we help you with?"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Tell us about your project or requirements..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="form-submit">
+
+                        <button
+                            type="submit"
+                            class="submit-button">
+
+                            Send Enquiry
+
+                            <i
+                                class="fas fa-arrow-right"
+                                style="margin-left:10px;">
+                            </i>
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="contact-services">
+
+    <div class="container">
+
+        <div class="contact-services-inner">
+
+            <div class="contact-services-content">
+
+                <div class="contact-info-label">
+                    Construction & Maintenance
+                </div>
+
+                <h2>
+                    Planning A Project In Qatar?
+                </h2>
+
+                <p>
+                    From construction and finishing to maintenance,
+                    renovation and material supply, Prestigious
+                    Trading & Construction provides practical
+                    solutions tailored to your project.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('services') }}"
+                class="contact-services-button">
+
+                Explore Our Services
+
+                <i
+                    class="fas fa-arrow-right"
+                    style="margin-left:10px;">
+                </i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     LOCATION
+========================================= -->
+
+<section class="location-section">
+
+    <div class="container">
+
+        <div class="location-heading">
+
+            <div class="contact-info-label">
+                Find Us
+            </div>
+
+            <h2>
+                Our Location
+            </h2>
+
+            <p>
+                Our operations are based in Qatar, serving
+                residential, commercial and construction projects
+                across Doha and surrounding areas.
+            </p>
+
+        </div>
+
+
+        <div class="location-map">
+
+            <div class="location-map-inner">
+
+                <div class="location-map-icon">
+                    <i class="fas fa-map-location-dot"></i>
+                </div>
+
+                <h3>
+                    Doha, Qatar
+                </h3>
+
+                <p>
+                    Visit our office or contact our team to
+                    arrange a meeting regarding your project.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Doha%2C%20Qatar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="map-button">
+
+                    Open In Google Maps
+
+                    <i
+                        class="fas fa-arrow-up-right-from-square"
+                        style="margin-left:8px;">
+                    </i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+{% endblock %}

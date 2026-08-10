@@ -1,0 +1,761 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Career Vacancy | Construction Admin
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.vacancy-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.vacancy-header {
+    margin-bottom: 28px;
+}
+
+.vacancy-header h1 {
+    margin: 0 0 8px;
+    color: #17201b;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.vacancy-header p {
+    margin: 0;
+    color: #68736d;
+    font-size: 14px;
+}
+
+.vacancy-card {
+    background: #ffffff;
+    border: 1px solid #dfe7e1;
+    border-radius: 14px;
+    padding: 32px;
+    box-shadow: 0 8px 25px rgba(20,40,30,.05);
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #244b3a;
+    font-size: 16px;
+    font-weight: 800;
+
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid #e4e9e5;
+}
+
+.form-section-title i {
+    color: #c49a4a;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #34433b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.required {
+    color: #b33b3b;
+}
+
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5ded8;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #26332d;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all .2s ease;
+}
+
+.form-control:focus {
+    border-color: #3f6b57;
+    box-shadow: 0 0 0 3px rgba(63,107,87,.08);
+}
+
+textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+textarea.large {
+    min-height: 190px;
+}
+
+.form-help {
+    margin-top: 6px;
+
+    color: #89938d;
+    font-size: 11px;
+}
+
+.status-box {
+    background: #f4f8f4;
+    border: 1px solid #dce7de;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.status-box label {
+    color: #244b3a;
+}
+
+.status-description {
+    margin-top: 7px;
+    color: #7a857f;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #e4e9e5;
+}
+
+.back-button,
+.submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 13px 22px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+}
+
+.back-button {
+    background: #f1f4f1;
+    border: 1px solid #dce4de;
+    color: #3f6b57;
+}
+
+.back-button:hover {
+    background: #e6ece7;
+}
+
+.submit-button {
+    border: none;
+
+    background: #244b3a;
+    color: #ffffff;
+}
+
+.submit-button:hover {
+    background: #18352a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(36,75,58,.18);
+}
+
+.publish-note {
+    margin-top: 20px;
+
+    padding: 14px 16px;
+
+    background: #fffaf0;
+    border: 1px solid #eadbb9;
+
+    border-radius: 8px;
+
+    color: #75633c;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.publish-note i {
+    color: #c49a4a;
+    margin-right: 7px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 750px) {
+
+    .vacancy-card {
+        padding: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .back-button,
+    .submit-button {
+        width: 100%;
+    }
+
+}
+
+</style>
+
+
+<div class="vacancy-page">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="vacancy-header">
+
+        <h1>
+            Add Career Vacancy
+        </h1>
+
+        <p>
+            Create a new job opportunity that can be published
+            on the company's public careers page.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         FORM CARD
+    ====================================== -->
+
+    <div class="vacancy-card">
+
+        <form
+            method="POST"
+            action="{{ url_for('add_construction_vacancy') }}"
+        >
+
+
+            <!-- =================================
+                 BASIC INFORMATION
+            ================================== -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <i class="fas fa-briefcase"></i>
+
+                    Job Information
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <!-- JOB TITLE -->
+
+                    <div class="form-group">
+
+                        <label for="title">
+
+                            Job Title
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            placeholder="e.g. Civil Engineer"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="form-group">
+
+                        <label for="department">
+
+                            Department
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            name="department"
+                            class="form-control"
+                            placeholder="e.g. Construction"
+                        >
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="form-group">
+
+                        <label for="location">
+
+                            Location
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            class="form-control"
+                            value="Qatar"
+                            placeholder="e.g. Doha, Qatar"
+                        >
+
+                    </div>
+
+
+                    <!-- EMPLOYMENT TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="employment_type">
+
+                            Employment Type
+
+                        </label>
+
+                        <select
+                            id="employment_type"
+                            name="employment_type"
+                            class="form-control"
+                        >
+
+                            <option value="">
+                                Select employment type
+                            </option>
+
+                            <option value="Full Time">
+                                Full Time
+                            </option>
+
+                            <option value="Part Time">
+                                Part Time
+                            </option>
+
+                            <option value="Contract">
+                                Contract
+                            </option>
+
+                            <option value="Temporary">
+                                Temporary
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+
+
+
+                    <!-- EXPERIENCE -->
+
+                        <div class="form-group">
+
+                            <label for="experience">
+
+                                Required Experience
+
+                            </label>
+
+                            <select
+                                id="experience"
+                                name="experience"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select experience
+                                </option>
+
+                                <option value="No experience required">
+                                    No experience required
+                                </option>
+
+                                <option value="1 year">
+                                    1 year
+                                </option>
+
+                                <option value="2 years">
+                                    2 years
+                                </option>
+
+                                <option value="3 years">
+                                    3 years
+                                </option>
+
+                                <option value="4 years">
+                                    4 years
+                                </option>
+
+                                <option value="5 years">
+                                    5 years
+                                </option>
+
+                                <option value="6 years">
+                                    6 years
+                                </option>
+
+                                <option value="7 years">
+                                    7 years
+                                </option>
+
+                                <option value="8 years">
+                                    8 years
+                                </option>
+
+                                <option value="9 years">
+                                    9 years
+                                </option>
+
+                                <option value="10+ years">
+                                    10+ years
+                                </option>
+
+                            </select>
+
+                            <div class="form-help">
+                                Select the minimum experience required for this position.
+                            </div>
+
+                        </div>
+
+
+
+                    <!-- DEADLINE -->
+
+                    <div class="form-group">
+
+                        <label for="deadline">
+
+                            Application Deadline
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            class="form-control"
+                        >
+
+                        <div class="form-help">
+                            Leave empty if there is no specific deadline.
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+
+                            Vacancy Status
+
+                        </label>
+
+                        <div class="status-box">
+
+                            <select
+                                id="status"
+                                name="status"
+                                class="form-control"
+                            >
+
+                                <option value="draft">
+                                    Draft
+                                </option>
+
+                                <option value="open">
+                                    Open / Published
+                                </option>
+
+                                <option value="closed">
+                                    Closed
+                                </option>
+
+                            </select>
+
+                            <div class="status-description">
+
+                                <strong>Draft:</strong>
+                                Saved but not publicly available.
+
+                                <br>
+
+                                <strong>Open:</strong>
+                                Available for visitors to apply.
+
+                                <br>
+
+                                <strong>Closed:</strong>
+                                No longer accepting applications.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 JOB DESCRIPTION
+            ================================== -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <i class="fas fa-file-lines"></i>
+
+                    Job Description
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="description">
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control large"
+                        placeholder="Describe the position, purpose of the role and what the successful candidate will be responsible for..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 RESPONSIBILITIES
+            ================================== -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <i class="fas fa-list-check"></i>
+
+                    Responsibilities
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="responsibilities">
+
+                        Key Responsibilities
+
+                    </label>
+
+                    <textarea
+                        id="responsibilities"
+                        name="responsibilities"
+                        class="form-control large"
+                        placeholder="Enter the main responsibilities of the position..."
+                    ></textarea>
+
+                    <div class="form-help">
+
+                        You can use separate lines for each responsibility.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 REQUIREMENTS
+            ================================== -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <i class="fas fa-user-check"></i>
+
+                    Candidate Requirements
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="requirements">
+
+                        Requirements
+
+                    </label>
+
+                    <textarea
+                        id="requirements"
+                        name="requirements"
+                        class="form-control large"
+                        placeholder="Enter qualifications, experience, skills and other requirements..."
+                    ></textarea>
+
+                    <div class="form-help">
+
+                        You can use separate lines for qualifications,
+                        experience and required skills.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 PUBLISH NOTE
+            ================================== -->
+
+            <div class="publish-note">
+
+                <i class="fas fa-circle-info"></i>
+
+                <strong>Publishing:</strong>
+
+                If you select
+                <strong>Open / Published</strong>,
+                this vacancy can appear on the public Careers
+                page. Draft vacancies remain hidden from visitors.
+
+            </div>
+
+
+            <!-- =================================
+                 ACTIONS
+            ================================== -->
+
+            <div class="form-actions">
+
+                <a
+                    href="{{ url_for('construction_vacancies') }}"
+                    class="back-button"
+                >
+
+                    <i class="fas fa-arrow-left"></i>
+
+                    Back to Vacancies
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+
+                    <i class="fas fa-plus"></i>
+
+                    Create Vacancy
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

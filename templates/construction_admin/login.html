@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en-QA">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#244B3A">
+
+    <title>Construction Admin Login | Prestigious Trading & Construction</title>
+
+    <!-- GOOGLE FONTS -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <style>
+
+        :root {
+
+            /* =====================================
+               PRESTIGIOUS CONSTRUCTION BRAND COLORS
+            ===================================== */
+
+            --construction-primary: #244B3A;
+            --construction-dark: #17201B;
+            --construction-green-dark: #18352A;
+            --construction-accent: #C49A4A;
+            --construction-light: #F5F6F3;
+
+            --text-primary: #17201B;
+            --text-secondary: #68736D;
+
+            --border-color: #DFE4DF;
+
+            --font-serif:
+                'Playfair Display',
+                Georgia,
+                serif;
+
+            --font-sans:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+
+        }
+
+
+        /* =====================================
+           RESET
+        ===================================== */
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+
+        /* =====================================
+           BODY
+        ===================================== */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: var(--font-sans);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #F5F6F3 0%,
+                    #EDF1ED 100%
+                );
+
+            color: var(--text-primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 24px;
+
+        }
+
+
+        /* =====================================
+           LOGIN CONTAINER
+        ===================================== */
+
+        .login-wrapper {
+
+            width: 100%;
+
+            max-width: 460px;
+
+        }
+
+
+        /* =====================================
+           BRAND
+        ===================================== */
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .brand-logo {
+
+            width: 76px;
+
+            height: 76px;
+
+            object-fit: contain;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .brand h1 {
+
+            font-family: var(--font-serif);
+
+            color: var(--construction-primary);
+
+            font-size: 27px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .brand span {
+
+            color: var(--construction-accent);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2.5px;
+
+        }
+
+
+        /* =====================================
+           LOGIN CARD
+        ===================================== */
+
+        .login-card {
+
+            background: #ffffff;
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 18px;
+
+            padding: 42px;
+
+            box-shadow:
+                0 20px 50px rgba(24, 53, 42, 0.10);
+
+        }
+
+
+        /* =====================================
+           LOGIN HEADER
+        ===================================== */
+
+        .login-header {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .login-header h2 {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: var(--construction-primary);
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .login-header p {
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================
+           FORM
+        ===================================== */
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: var(--construction-primary);
+
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .input-wrapper i {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #89958F;
+
+            font-size: 15px;
+
+        }
+
+
+        .form-control {
+
+            width: 100%;
+
+            height: 50px;
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 9px;
+
+            padding: 0 15px 0 45px;
+
+            font-family: var(--font-sans);
+
+            font-size: 14px;
+
+            color: var(--text-primary);
+
+            background: #ffffff;
+
+            outline: none;
+
+            transition:
+                border-color .25s ease,
+                box-shadow .25s ease;
+
+        }
+
+
+        .form-control::placeholder {
+
+            color: #9AA39E;
+
+        }
+
+
+        .form-control:focus {
+
+            border-color: var(--construction-primary);
+
+            box-shadow:
+                0 0 0 3px rgba(36, 75, 58, .10);
+
+        }
+
+
+        /* =====================================
+           LOGIN BUTTON
+        ===================================== */
+
+        .login-button {
+
+            width: 100%;
+
+            height: 52px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: var(--construction-primary);
+
+            color: #ffffff;
+
+            font-family: var(--font-sans);
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background .3s ease,
+                transform .3s ease,
+                box-shadow .3s ease;
+
+            box-shadow:
+                0 6px 15px rgba(36, 75, 58, .18);
+
+        }
+
+
+        .login-button:hover {
+
+            background: var(--construction-green-dark);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 22px rgba(24, 53, 42, .25);
+
+        }
+
+
+        .login-button:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        .login-button i {
+
+            color: var(--construction-accent);
+
+        }
+
+
+        /* =====================================
+           FLASH MESSAGES
+        ===================================== */
+
+        .alert {
+
+            padding: 13px 15px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        .alert-danger {
+
+            background: #fee2e2;
+
+            color: #b91c1c;
+
+            border: 1px solid #fecaca;
+
+        }
+
+
+        .alert-success {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+            border: 1px solid #bbf7d0;
+
+        }
+
+
+        .alert-warning {
+
+            background: #fef3c7;
+
+            color: #b45309;
+
+            border: 1px solid #fde68a;
+
+        }
+
+
+        .alert-info {
+
+            background: #e0f2fe;
+
+            color: #0369a1;
+
+            border: 1px solid #bae6fd;
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .login-footer {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #89958F;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .login-footer strong {
+
+            color: var(--construction-accent);
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 500px) {
+
+            body {
+
+                padding: 18px;
+
+            }
+
+
+            .login-card {
+
+                padding: 30px 24px;
+
+                border-radius: 15px;
+
+            }
+
+
+            .brand {
+
+                margin-bottom: 24px;
+
+            }
+
+
+            .brand-logo {
+
+                width: 68px;
+
+                height: 68px;
+
+            }
+
+
+            .brand h1 {
+
+                font-size: 23px;
+
+            }
+
+
+            .brand span {
+
+                font-size: 10px;
+
+                letter-spacing: 2px;
+
+            }
+
+
+            .login-header h2 {
+
+                font-size: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-wrapper">
+
+
+    <!-- ==============================
+         BRAND
+    =============================== -->
+
+    <div class="brand">
+
+        <img
+            src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="Prestigious Trading & Construction Logo"
+            class="brand-logo"
+        >
+
+        <h1>
+            Prestigious
+        </h1>
+
+        <span>
+            Trading & Construction
+        </span>
+
+    </div>
+
+
+    <!-- ==============================
+         LOGIN CARD
+    =============================== -->
+
+    <div class="login-card">
+
+
+        <div class="login-header">
+
+            <h2>
+                Construction Administration
+            </h2>
+
+            <p>
+                Sign in to manage construction projects,
+                website enquiries and company content.
+            </p>
+
+        </div>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert alert-{{ category }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- LOGIN FORM -->
+
+        <form method="POST">
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fas fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fas fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+
+                <i class="fas fa-right-to-bracket"></i>
+
+                &nbsp;
+
+                Sign In
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="login-footer">
+
+        © 2026
+        <strong>Prestigious Trading & Construction</strong>
+
+        <br>
+
+        Construction Administration Portal
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

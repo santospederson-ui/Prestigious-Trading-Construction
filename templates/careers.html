@@ -1,0 +1,1839 @@
+{% extends "base.html" %}
+
+{% block title %}
+Careers | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   CAREERS PAGE
+========================================= */
+
+:root {
+  --career-dark: #17201b;
+  --career-green: #244b3a;
+  --career-green-dark: #18352a;
+  --career-gold: #c49a4a;
+  --career-light: #f5f6f3;
+  --career-border: #dfe4df;
+  --career-text: #5f6963;
+}
+
+
+/* =========================================
+   PAGE HERO
+========================================= */
+
+.careers-hero {
+  min-height: 480px;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(10,18,14,.82),
+      rgba(10,18,14,.48),
+      rgba(10,18,14,.22)
+    ),
+    url('{{ url_for("static", filename="images/careers/careers.webp") }}');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+}
+
+.careers-hero-content {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  padding: 80px 24px;
+  color: #ffffff;
+}
+
+.careers-hero-inner {
+  max-width: 700px;
+}
+
+.careers-kicker {
+  color: var(--career-gold);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  margin-bottom: 18px;
+}
+
+.careers-hero h1 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(40px, 5vw, 62px);
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  margin-bottom: 20px;
+
+  text-shadow: 0 3px 15px rgba(0,0,0,.35);
+}
+
+.careers-hero p {
+  max-width: 620px;
+
+  color: rgba(255,255,255,.9);
+
+  font-size: 17px;
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.careers-intro {
+  padding: 95px 0;
+  background: #ffffff;
+}
+
+.careers-intro-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1.05fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.careers-intro-image {
+  height: 470px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.careers-intro-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .6s ease;
+}
+
+.careers-intro-image:hover img {
+  transform: scale(1.04);
+}
+
+.careers-image-label {
+  position: absolute;
+
+  left: 24px;
+  bottom: 24px;
+
+  background: var(--career-green);
+
+  color: #ffffff;
+
+  padding: 18px 24px;
+}
+
+.careers-image-label strong {
+  display: block;
+
+  color: var(--career-gold);
+
+  font-size: 25px;
+
+  margin-bottom: 3px;
+}
+
+.careers-image-label span {
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.5px;
+}
+
+.careers-intro-content .section-label {
+  color: var(--career-green);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.careers-intro-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--career-dark);
+
+  font-size: clamp(32px, 4vw, 42px);
+
+  line-height: 1.2;
+
+  margin-bottom: 22px;
+}
+
+.careers-intro-content p {
+  color: var(--career-text);
+
+  font-size: 15px;
+
+  line-height: 1.85;
+
+  margin-bottom: 17px;
+}
+
+
+/* =========================================
+   WHY WORK WITH US
+========================================= */
+
+.work-with-us {
+  padding: 90px 0;
+
+  background: var(--career-light);
+}
+
+.careers-section-title {
+  text-align: center;
+
+  max-width: 700px;
+
+  margin: 0 auto 55px;
+}
+
+.careers-section-label {
+  color: var(--career-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+}
+
+.careers-section-title h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--career-dark);
+
+  font-size: clamp(31px, 4vw, 40px);
+
+  line-height: 1.2;
+
+  margin-bottom: 14px;
+}
+
+.careers-section-title p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.career-benefits-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 22px;
+}
+
+.career-benefit {
+  background: #ffffff;
+
+  border: 1px solid var(--career-border);
+
+  padding: 34px 25px;
+
+  transition: all .3s ease;
+}
+
+.career-benefit:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--career-gold);
+
+  box-shadow: 0 15px 35px rgba(20,40,30,.08);
+}
+
+.career-benefit-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--career-green);
+
+  font-size: 21px;
+
+  margin-bottom: 20px;
+}
+
+.career-benefit h3 {
+  color: var(--career-dark);
+
+  font-size: 17px;
+
+  margin-bottom: 10px;
+}
+
+.career-benefit p {
+  color: #6b756f;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   CAREER AREAS
+========================================= */
+
+.career-areas {
+  padding: 95px 0;
+
+  background: #ffffff;
+}
+
+.career-areas-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 24px;
+}
+
+.career-area {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding: 30px;
+
+  border: 1px solid var(--career-border);
+
+  background: #ffffff;
+
+  transition: all .3s ease;
+}
+
+.career-area:hover {
+  border-color: var(--career-green);
+
+  box-shadow: 0 12px 30px rgba(20,40,30,.07);
+
+  transform: translateY(-4px);
+}
+
+.career-area-icon {
+  min-width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--career-green);
+
+  color: var(--career-gold);
+
+  font-size: 20px;
+}
+
+.career-area h3 {
+  color: var(--career-dark);
+
+  font-size: 18px;
+
+  margin-bottom: 8px;
+}
+
+.career-area p {
+  color: var(--career-text);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   CURRENT VACANCIES
+========================================= */
+
+.current-vacancies {
+  padding: 95px 0;
+
+  background: var(--career-light);
+}
+
+.vacancies-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 25px;
+}
+
+.vacancy-card {
+  background: #ffffff;
+
+  border: 1px solid var(--career-border);
+
+  padding: 32px;
+
+  transition: all .3s ease;
+
+  position: relative;
+}
+
+.vacancy-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--career-gold);
+
+  box-shadow: 0 18px 40px rgba(20,40,30,.08);
+}
+
+
+/* =========================================
+   VACANCY TOP
+========================================= */
+
+.vacancy-card-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+}
+
+.vacancy-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--career-green);
+
+  font-size: 20px;
+}
+
+.vacancy-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 7px 11px;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--career-green);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   VACANCY TITLE
+========================================= */
+
+.vacancy-card h3 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--career-dark);
+
+  font-size: 25px;
+
+  line-height: 1.25;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   VACANCY META
+========================================= */
+
+.vacancy-meta {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 11px;
+
+  margin-bottom: 20px;
+}
+
+.vacancy-meta div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--career-text);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.vacancy-meta i {
+  color: var(--career-gold);
+
+  width: 15px;
+
+  min-width: 15px;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   EXPERIENCE HIGHLIGHT
+========================================= */
+
+.vacancy-experience {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 11px 13px;
+
+  background: rgba(196,154,74,.08);
+
+  border-left: 3px solid var(--career-gold);
+
+  color: var(--career-dark) !important;
+
+  font-weight: 700;
+}
+
+.vacancy-experience i {
+  color: var(--career-gold);
+
+  width: 17px;
+
+  min-width: 17px;
+}
+
+.vacancy-experience strong {
+  color: var(--career-dark);
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.vacancy-description {
+  color: var(--career-text);
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  margin-bottom: 22px;
+}
+
+
+/* =========================================
+   DEADLINE
+========================================= */
+
+.vacancy-closing {
+  padding: 12px 14px;
+
+  background: var(--career-light);
+
+  border-left: 3px solid var(--career-gold);
+
+  color: var(--career-text);
+
+  font-size: 11px;
+
+  margin-bottom: 22px;
+}
+
+.vacancy-closing i {
+  color: var(--career-gold);
+
+  margin-right: 6px;
+}
+
+.vacancy-closing strong {
+  color: var(--career-dark);
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.vacancy-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  background: var(--career-green);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  transition: all .3s ease;
+}
+
+.vacancy-button:hover {
+  background: var(--career-gold);
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   NO VACANCIES
+========================================= */
+
+.no-vacancies {
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  padding: 55px 35px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid var(--career-border);
+}
+
+.no-vacancies-icon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--career-green);
+
+  font-size: 25px;
+}
+
+.no-vacancies h3 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--career-dark);
+
+  font-size: 28px;
+
+  margin-bottom: 12px;
+}
+
+.no-vacancies p {
+  max-width: 600px;
+
+  margin: 0 auto 25px;
+
+  color: var(--career-text);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+.no-vacancies-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 14px 24px;
+
+  background: var(--career-green);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  transition: all .3s ease;
+}
+
+.no-vacancies-button:hover {
+  background: var(--career-gold);
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   OPEN APPLICATION
+========================================= */
+
+.opportunity-section {
+  padding: 95px 0;
+
+  background: var(--career-dark);
+
+  color: #ffffff;
+}
+
+.opportunity-grid {
+  display: grid;
+
+  grid-template-columns: 1.2fr .8fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.opportunity-content .section-label {
+  color: var(--career-gold);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.opportunity-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(31px, 4vw, 42px);
+
+  line-height: 1.2;
+
+  margin-bottom: 20px;
+}
+
+.opportunity-content p {
+  color: #b6c0ba;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  max-width: 650px;
+
+  margin-bottom: 18px;
+}
+
+.opportunity-points {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+  margin-top: 28px;
+}
+
+.opportunity-point {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 13px;
+
+  border: 1px solid rgba(255,255,255,.09);
+
+  background: rgba(255,255,255,.035);
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.opportunity-point i {
+  color: var(--career-gold);
+}
+
+.opportunity-card {
+  background: var(--career-green);
+
+  padding: 42px 35px;
+
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.opportunity-card h3 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 27px;
+
+  margin-bottom: 14px;
+}
+
+.opportunity-card p {
+  color: rgba(255,255,255,.78);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  margin-bottom: 25px;
+}
+
+.career-email {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #ffffff;
+
+  background: var(--career-gold);
+
+  padding: 14px 22px;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: all .3s ease;
+}
+
+.career-email:hover {
+  background: #ffffff;
+
+  color: var(--career-green);
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.career-cta {
+  padding: 85px 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--career-green),
+      var(--career-green-dark)
+    );
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.career-cta h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(30px, 4vw, 40px);
+
+  margin-bottom: 14px;
+}
+
+.career-cta p {
+  max-width: 650px;
+
+  margin: 0 auto 28px;
+
+  color: rgba(255,255,255,.82);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.career-cta-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 15px 30px;
+
+  background: var(--career-gold);
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: all .3s ease;
+}
+
+.career-cta-button:hover {
+  background: #ffffff;
+
+  color: var(--career-green);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .career-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .careers-intro-grid {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+  }
+
+  .opportunity-grid {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .vacancies-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .careers-hero {
+    min-height: 390px;
+
+    background-position: center;
+  }
+
+  .careers-hero-content {
+    padding: 70px 22px;
+  }
+
+  .careers-hero h1 {
+    font-size: 40px;
+  }
+
+  .careers-hero p {
+    font-size: 15px;
+  }
+
+  .careers-intro,
+  .work-with-us,
+  .career-areas,
+  .current-vacancies,
+  .opportunity-section {
+    padding: 65px 0;
+  }
+
+  .careers-intro-image {
+    height: 330px;
+  }
+
+  .career-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-areas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .opportunity-points {
+    grid-template-columns: 1fr;
+  }
+
+  .career-cta {
+    padding: 65px 20px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .vacancy-card {
+    padding: 25px;
+  }
+
+  .vacancy-card h3 {
+    font-size: 22px;
+  }
+
+  .vacancy-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .vacancy-experience {
+    grid-column: auto;
+  }
+
+  .no-vacancies {
+    padding: 40px 22px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .careers-hero {
+    min-height: 340px;
+  }
+
+  .careers-hero h1 {
+    font-size: 35px;
+  }
+
+  .careers-intro-image {
+    height: 280px;
+  }
+
+  .career-area {
+    padding: 24px;
+  }
+
+  .opportunity-card {
+    padding: 32px 24px;
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="careers-hero">
+
+  <div class="careers-hero-content">
+
+    <div class="careers-hero-inner">
+
+      <div class="careers-kicker">
+        Careers at Prestigious
+      </div>
+
+      <h1>
+        Build Your Future With Us
+      </h1>
+
+      <p>
+        Join a professional team committed to quality,
+        excellence and delivering outstanding construction
+        and maintenance solutions across Qatar.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     INTRODUCTION
+========================================= -->
+
+<section class="careers-intro">
+
+  <div class="container">
+
+    <div class="careers-intro-grid">
+
+      <div class="careers-intro-image">
+
+        <img
+          src="{{ url_for('static', filename='images/careers/careers1.webp') }}"
+          alt="Prestigious Trading and Construction Team"
+          loading="lazy">
+
+        <div class="careers-image-label">
+
+          <strong>Our Team</strong>
+
+          <span>
+            Building Together
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="careers-intro-content">
+
+        <div class="section-label">
+          Work With Us
+        </div>
+
+        <h2>
+          Grow With A Company Built On Excellence
+        </h2>
+
+        <p>
+          At Prestigious Trading & Construction, we believe
+          that our people are one of our greatest strengths.
+          Our projects are delivered by skilled professionals,
+          experienced supervisors, technicians, engineers and
+          support teams working together toward a common goal.
+        </p>
+
+        <p>
+          We are committed to creating a professional working
+          environment where talented people can develop their
+          skills, take on new challenges and contribute to
+          meaningful projects across Qatar.
+        </p>
+
+        <p>
+          Whether you are an experienced construction professional
+          or a motivated individual looking to build your career,
+          we welcome people who share our commitment to quality,
+          responsibility, teamwork and continuous improvement.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     WHY WORK WITH US
+========================================= -->
+
+<section class="work-with-us">
+
+  <div class="container">
+
+    <div class="careers-section-title">
+
+      <div class="careers-section-label">
+        Why Join Prestigious
+      </div>
+
+      <h2>
+        A Workplace Built Around People
+      </h2>
+
+      <p>
+        We believe strong teams create strong projects.
+        Our working culture encourages professionalism,
+        teamwork and continuous development.
+      </p>
+
+    </div>
+
+
+    <div class="career-benefits-grid">
+
+      <div class="career-benefit">
+
+        <div class="career-benefit-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+
+        <h3>
+          Career Growth
+        </h3>
+
+        <p>
+          Opportunities to develop your technical,
+          professional and leadership skills through
+          real project experience.
+        </p>
+
+      </div>
+
+
+      <div class="career-benefit">
+
+        <div class="career-benefit-icon">
+          <i class="fas fa-users"></i>
+        </div>
+
+        <h3>
+          Teamwork
+        </h3>
+
+        <p>
+          Work alongside experienced professionals
+          across construction, maintenance and project
+          operations.
+        </p>
+
+      </div>
+
+
+      <div class="career-benefit">
+
+        <div class="career-benefit-icon">
+          <i class="fas fa-award"></i>
+        </div>
+
+        <h3>
+          Professional Standards
+        </h3>
+
+        <p>
+          Be part of an organization that values quality,
+          responsibility, safety and professional conduct.
+        </p>
+
+      </div>
+
+
+      <div class="career-benefit">
+
+        <div class="career-benefit-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+
+        <h3>
+          Continuous Learning
+        </h3>
+
+        <p>
+          Develop new skills and gain practical experience
+          through diverse construction and maintenance projects.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CAREER AREAS
+========================================= -->
+
+<section class="career-areas">
+
+  <div class="container">
+
+    <div class="careers-section-title">
+
+      <div class="careers-section-label">
+        Career Opportunities
+      </div>
+
+      <h2>
+        Areas Where You Can Make An Impact
+      </h2>
+
+      <p>
+        We welcome qualified and motivated professionals
+        across different areas of our operations.
+      </p>
+
+    </div>
+
+
+    <div class="career-areas-grid">
+
+      <div class="career-area">
+
+        <div class="career-area-icon">
+          <i class="fas fa-hard-hat"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            Construction & Site Operations
+          </h3>
+
+          <p>
+            Opportunities for site supervisors, foremen,
+            engineers, skilled workers and construction
+            professionals.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="career-area">
+
+        <div class="career-area-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            Maintenance & Technical Services
+          </h3>
+
+          <p>
+            Roles supporting building maintenance,
+            repair, refurbishment and technical service
+            operations.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="career-area">
+
+        <div class="career-area-icon">
+          <i class="fas fa-drafting-compass"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            Engineering & Project Management
+          </h3>
+
+          <p>
+            Professionals involved in planning,
+            coordination, supervision and project
+            execution.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="career-area">
+
+        <div class="career-area-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            Administration & Support
+          </h3>
+
+          <p>
+            Administrative, procurement, finance,
+            logistics, HR and other business support
+            functions.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CURRENT JOB OPPORTUNITIES
+========================================= -->
+
+<section class="current-vacancies">
+
+  <div class="container">
+
+    <div class="careers-section-title">
+
+      <div class="careers-section-label">
+        Current Opportunities
+      </div>
+
+      <h2>
+        Join Our Team
+      </h2>
+
+      <p>
+        Explore our current career opportunities and find a role
+        where your skills and experience can make a difference.
+      </p>
+
+    </div>
+
+
+    {% if vacancies %}
+
+      <div class="vacancies-grid">
+
+        {% for vacancy in vacancies %}
+
+          <div class="vacancy-card">
+
+            <!-- VACANCY TOP -->
+
+            <div class="vacancy-card-top">
+
+              <div class="vacancy-icon">
+
+                <i class="fas fa-briefcase"></i>
+
+              </div>
+
+              <span class="vacancy-status">
+                Open Position
+              </span>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h3>
+              {{ vacancy.title }}
+            </h3>
+
+
+            <!-- =====================================
+                 VACANCY INFORMATION
+            ====================================== -->
+
+            <div class="vacancy-meta">
+
+
+              {% if vacancy.department %}
+
+                <div>
+
+                  <i class="fas fa-building"></i>
+
+                  <span>
+                    {{ vacancy.department }}
+                  </span>
+
+                </div>
+
+              {% endif %}
+
+
+              {% if vacancy.location %}
+
+                <div>
+
+                  <i class="fas fa-location-dot"></i>
+
+                  <span>
+                    {{ vacancy.location }}
+                  </span>
+
+                </div>
+
+              {% endif %}
+
+
+              {% if vacancy.employment_type %}
+
+                <div>
+
+                  <i class="fas fa-clock"></i>
+
+                  <span>
+                    {{ vacancy.employment_type }}
+                  </span>
+
+                </div>
+
+              {% endif %}
+
+
+              <!-- =================================
+                   EXPERIENCE
+              ================================== -->
+
+              {% if vacancy.experience %}
+
+                <div class="vacancy-experience">
+
+                  <i class="fas fa-briefcase"></i>
+
+                  <span>
+
+                    Experience:
+
+                    <strong>
+                      {{ vacancy.experience }}
+                    </strong>
+
+                    {% if vacancy.experience|string|trim == '1' %}
+
+                      year
+
+                    {% elif vacancy.experience|string|trim %}
+
+                      years
+
+                    {% endif %}
+
+                  </span>
+
+                </div>
+
+              {% endif %}
+
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            {% if vacancy.description %}
+
+              <p class="vacancy-description">
+
+                {{ vacancy.description[:180] }}
+
+                {% if vacancy.description|length > 180 %}
+                  ...
+                {% endif %}
+
+              </p>
+
+            {% endif %}
+
+
+            <!-- DEADLINE -->
+
+            {% if vacancy.deadline %}
+
+              <div class="vacancy-closing">
+
+                <i class="fas fa-calendar-alt"></i>
+
+                Application deadline:
+
+                <strong>
+                  {{ vacancy.deadline.strftime('%d %b %Y') }}
+                </strong>
+
+              </div>
+
+            {% endif %}
+
+
+            <!-- VIEW POSITION -->
+
+            <a
+              href="{{ url_for('construction_vacancy_details', id=vacancy.id) }}"
+              class="vacancy-button">
+
+              View Position
+
+              <i class="fas fa-arrow-right"></i>
+
+            </a>
+
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+
+    {% else %}
+
+
+      <!-- =========================================
+           NO CURRENT VACANCIES
+      ========================================= -->
+
+      <div class="no-vacancies">
+
+        <div class="no-vacancies-icon">
+
+          <i class="fas fa-briefcase"></i>
+
+        </div>
+
+        <h3>
+          No Current Vacancies
+        </h3>
+
+        <p>
+          We are not currently recruiting for any specific
+          positions. However, we welcome qualified and motivated
+          professionals to submit their CV for future opportunities.
+        </p>
+
+        <a
+          href="#open-application"
+          class="no-vacancies-button">
+
+          Submit Your CV
+
+          <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     OPEN APPLICATION
+========================================= -->
+
+<section class="opportunity-section" id="open-application">
+
+  <div class="container">
+
+    <div class="opportunity-grid">
+
+
+      <div class="opportunity-content">
+
+        <div class="section-label">
+          Join Our Team
+        </div>
+
+        <h2>
+          Don't See The Right Position?
+        </h2>
+
+        <p>
+          We are always interested in meeting talented,
+          reliable and motivated professionals who can
+          contribute to our growing operations.
+        </p>
+
+        <p>
+          If your experience matches our business and
+          you believe you can add value to our team,
+          we encourage you to send us your CV for future
+          opportunities.
+        </p>
+
+
+        <div class="opportunity-points">
+
+          <div class="opportunity-point">
+
+            <i class="fas fa-check"></i>
+
+            Professional Environment
+
+          </div>
+
+
+          <div class="opportunity-point">
+
+            <i class="fas fa-check"></i>
+
+            Team-Based Culture
+
+          </div>
+
+
+          <div class="opportunity-point">
+
+            <i class="fas fa-check"></i>
+
+            Project Experience
+
+          </div>
+
+
+          <div class="opportunity-point">
+
+            <i class="fas fa-check"></i>
+
+            Growth Opportunities
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="opportunity-card">
+
+        <h3>
+          Submit Your CV
+        </h3>
+
+        <p>
+          Send your CV to our recruitment team.
+          Please include the position you are interested
+          in and a brief introduction about your experience.
+        </p>
+
+        <a
+          href="santospederson@gmail.com"
+          class="career-email">
+
+          <i class="fas fa-envelope"></i>
+
+          Send Your CV
+
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CAREER CTA
+========================================= -->
+
+<section class="career-cta">
+
+  <div class="container">
+
+    <h2>
+      Ready To Build Something Great?
+    </h2>
+
+    <p>
+      Explore opportunities with Prestigious Trading &
+      Construction and become part of a team delivering
+      quality projects across Qatar.
+    </p>
+
+    <a
+      href="santospederson@gmail.com"
+      class="career-cta-button">
+
+      Contact Recruitment
+
+      <i class="fas fa-arrow-right"></i>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+{% endblock %}

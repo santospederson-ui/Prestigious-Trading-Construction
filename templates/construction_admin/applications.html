@@ -1,0 +1,970 @@
+{% extends "base.html" %}
+
+{% block title %}
+Job Applications | Construction Admin
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.applications-page {
+    padding: 35px 0 70px;
+    background: #f5f7f5;
+    min-height: calc(100vh - 80px);
+}
+
+.applications-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.applications-header {
+    margin-bottom: 25px;
+}
+
+.applications-header h1 {
+    margin: 0 0 7px;
+
+    color: #17201b;
+
+    font-family:
+        var(--font-serif,
+        'Playfair Display',
+        Georgia,
+        serif);
+
+    font-size: 31px;
+}
+
+.applications-header p {
+    margin: 0;
+
+    color: #6a746e;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.applications-toolbar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.application-count {
+    color: #68736d;
+
+    font-size: 13px;
+}
+
+.application-count strong {
+    color: #244b3a;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.application-search {
+    display: flex;
+
+    gap: 8px;
+
+    width: 370px;
+}
+
+.application-search input {
+    flex: 1;
+
+    height: 42px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d5ded8;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #27322c;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+}
+
+.application-search input:focus {
+    border-color: #3f6b57;
+
+    box-shadow:
+        0 0 0 3px rgba(63,107,87,.08);
+}
+
+.search-button {
+    height: 42px;
+
+    padding: 0 16px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background: #18352a;
+}
+
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.applications-card {
+    background: #ffffff;
+
+    border: 1px solid #dfe5e0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.applications-table-wrapper {
+    overflow-x: auto;
+}
+
+.applications-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 950px;
+}
+
+.applications-table th {
+    padding: 15px 16px;
+
+    background: #f4f7f4;
+
+    border-bottom: 1px solid #dfe5e0;
+
+    color: #526158;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: .04em;
+}
+
+.applications-table td {
+    padding: 15px 16px;
+
+    border-bottom: 1px solid #edf0ed;
+
+    color: #3f4943;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+.applications-table tr:last-child td {
+    border-bottom: none;
+}
+
+.applications-table tbody tr:hover {
+    background: #fafcfb;
+}
+
+
+/* =========================================
+   APPLICANT
+========================================= */
+
+.applicant-name {
+    color: #244b3a;
+
+    font-weight: 800;
+}
+
+.applicant-email {
+    margin-top: 4px;
+
+    color: #89938d;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   POSITION
+========================================= */
+
+.position-title {
+    color: #344139;
+
+    font-weight: 700;
+}
+
+.position-department {
+    margin-top: 4px;
+
+    color: #89938d;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   EXPERIENCE
+========================================= */
+
+.experience-badge {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    background: #eef5f0;
+
+    border: 1px solid #dce9df;
+
+    border-radius: 5px;
+
+    color: #35634c;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.status-new {
+    background: #edf3ff;
+
+    color: #315b9a;
+}
+
+.status-reviewing {
+    background: #fff7e7;
+
+    color: #916c24;
+}
+
+.status-shortlisted {
+    background: #eaf7ee;
+
+    color: #32704a;
+}
+
+.status-rejected {
+    background: #fff0f0;
+
+    color: #a33c3c;
+}
+
+
+/* =========================================
+   CV
+========================================= */
+
+.cv-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #3f6b57;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.cv-link:hover {
+    color: #244b3a;
+}
+
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
+.view-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    background: #244b3a;
+
+    border-radius: 6px;
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+.view-button:hover {
+    background: #18352a;
+
+    color: #ffffff;
+}
+
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+.delete-application-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #f0cccc;
+    border-radius: 6px;
+
+    background: #fff1f1;
+    color: #a33a3a;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    transition: all .2s ease;
+}
+
+.delete-application-button:hover {
+    background: #a33a3a;
+    border-color: #a33a3a;
+    color: #ffffff;
+}
+
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-applications {
+    padding: 70px 20px;
+
+    text-align: center;
+
+    color: #89938d;
+}
+
+.empty-applications i {
+    margin-bottom: 15px;
+
+    color: #c7d0ca;
+
+    font-size: 38px;
+}
+
+.empty-applications h3 {
+    margin: 0 0 7px;
+
+    color: #526158;
+
+    font-size: 16px;
+}
+
+.empty-applications p {
+    margin: 0;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.pagination {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 22px;
+
+    border-top: 1px solid #edf0ed;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 34px;
+
+    height: 34px;
+
+    padding: 0 8px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.pagination a {
+    background: #f1f4f1;
+
+    color: #526158;
+}
+
+.pagination a:hover {
+    background: #e4ebe5;
+
+    color: #244b3a;
+}
+
+.pagination .active {
+    background: #244b3a;
+
+    color: #ffffff;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .applications-page {
+        padding-top: 25px;
+    }
+
+    .applications-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .application-search {
+        width: 100%;
+    }
+
+    .applications-header h1 {
+        font-size: 27px;
+    }
+
+}
+
+</style>
+
+
+<section class="applications-page">
+
+    <div class="applications-container">
+
+
+        <!-- HEADER -->
+
+        <div class="applications-header">
+
+            <h1>
+                Job Applications
+            </h1>
+
+            <p>
+                View applications submitted for
+                construction career opportunities.
+            </p>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="applications-toolbar">
+
+            <div class="application-count">
+
+                <strong>
+                    {{ total_applications }}
+                </strong>
+
+                application{% if total_applications != 1 %}s{% endif %}
+
+            </div>
+
+
+            <form
+                method="GET"
+                action="{{ url_for('construction_applications') }}"
+                class="application-search"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search applicant, email, phone or position..."
+                >
+
+                <button
+                    type="submit"
+                    class="search-button"
+                >
+
+                    <i class="fas fa-search"></i>
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- APPLICATIONS -->
+
+        <div class="applications-card">
+
+
+            {% if applications %}
+
+            <div class="applications-table-wrapper">
+
+                <table class="applications-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Applicant
+                            </th>
+
+                            <th>
+                                Position
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Country
+                            </th>
+
+                            <th>
+                                Experience
+                            </th>
+
+                            <th>
+                                CV
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Applied
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for application in applications %}
+
+                        <tr>
+
+
+                            <!-- APPLICANT -->
+
+                            <td>
+
+                                <div class="applicant-name">
+
+                                    {{ application.applicant_name }}
+
+                                </div>
+
+                                <div class="applicant-email">
+
+                                    {{ application.email }}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- POSITION -->
+
+                            <td>
+
+                                <div class="position-title">
+
+                                    {{ application.vacancy_title or 'N/A' }}
+
+                                </div>
+
+                                {% if application.vacancy_department %}
+
+                                <div class="position-department">
+
+                                    {{ application.vacancy_department }}
+
+                                </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- PHONE -->
+
+                            <td>
+
+                                {{ application.phone or 'N/A' }}
+
+                            </td>
+
+
+                            <!-- COUNTRY -->
+
+                            <td>
+
+                                {{ application.country or 'N/A' }}
+
+                            </td>
+
+
+                            <!-- EXPERIENCE -->
+
+                            <td>
+
+                                {% if application.years_of_experience %}
+
+                                    <span class="experience-badge">
+
+                                        {{ application.years_of_experience }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span style="color:#9aa39e;">
+                                        N/A
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- CV -->
+
+                            <td>
+
+                                {% if application.cv_url %}
+
+                                <a
+                                    href="{{ application.cv_url }}"
+                                    target="_blank"
+                                    class="cv-link"
+                                >
+
+                                    <i class="fas fa-file-pdf"></i>
+
+                                    View CV
+
+                                </a>
+
+                                {% else %}
+
+                                    N/A
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span
+                                    class="status-badge status-{{ application.status }}"
+                                >
+
+                                    {{ application.status }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                {% if application.created_at %}
+
+                                    {{ application.created_at.strftime('%d %b %Y') }}
+
+                                {% else %}
+
+                                    N/A
+
+                                {% endif %}
+
+                            </td>
+
+
+                           <!-- ACTION -->
+
+<td>
+
+    <a
+        href="{{ url_for(
+            'construction_application_details',
+            id=application.id
+        ) }}"
+        class="view-button"
+    >
+
+        <i class="fas fa-eye"></i>
+
+        View
+
+    </a>
+
+
+    <form
+        method="POST"
+        action="{{ url_for(
+            'delete_construction_application',
+            id=application.id
+        ) }}"
+        style="display:inline;"
+        onsubmit="return confirm(
+            'Are you sure you want to permanently delete this application? This action cannot be undone.'
+        );"
+    >
+
+        <button
+            type="submit"
+            class="delete-application-button"
+        >
+
+            <i class="fas fa-trash"></i>
+
+            Delete
+
+        </button>
+
+    </form>
+
+</td>
+
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            {% if total_pages > 1 %}
+
+            <div class="pagination">
+
+
+                {% if page > 1 %}
+
+                <a
+                    href="{{ url_for(
+                        'construction_applications',
+                        page=page-1,
+                        search=search
+                    ) }}"
+                >
+
+                    <i class="fas fa-chevron-left"></i>
+
+                </a>
+
+                {% endif %}
+
+
+                {% for p in range(1, total_pages + 1) %}
+
+                    {% if p == page %}
+
+                        <span class="active">
+                            {{ p }}
+                        </span>
+
+                    {% else %}
+
+                        <a
+                            href="{{ url_for(
+                                'construction_applications',
+                                page=p,
+                                search=search
+                            ) }}"
+                        >
+                            {{ p }}
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if page < total_pages %}
+
+                <a
+                    href="{{ url_for(
+                        'construction_applications',
+                        page=page+1,
+                        search=search
+                    ) }}"
+                >
+
+                    <i class="fas fa-chevron-right"></i>
+
+                </a>
+
+                {% endif %}
+
+
+            </div>
+
+            {% endif %}
+
+
+            {% else %}
+
+            <!-- EMPTY -->
+
+            <div class="empty-applications">
+
+                <i class="fas fa-user-tie"></i>
+
+                <h3>
+                    No applications found
+                </h3>
+
+                <p>
+                    {% if search %}
+                        No applications matched your search.
+                    {% else %}
+                        No job applications have been submitted yet.
+                    {% endif %}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

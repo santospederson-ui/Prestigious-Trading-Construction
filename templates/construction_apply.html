@@ -1,0 +1,553 @@
+{% extends "base.html" %}
+
+{% block title %}
+Apply for {{ vacancy.title }} | Prestigious Trading & Construction
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.application-page {
+    padding: 80px 20px;
+    background: #f5f6f3;
+    min-height: 75vh;
+}
+
+.application-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.application-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #244b3a;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.application-card {
+    background: #ffffff;
+    border: 1px solid #dfe4df;
+    box-shadow: 0 15px 45px rgba(20,40,30,.08);
+}
+
+.application-header {
+    background: #17201b;
+    color: #ffffff;
+    padding: 40px;
+}
+
+.application-label {
+    color: #c49a4a;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.application-header h1 {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+    font-size: 38px;
+    line-height: 1.2;
+    margin: 0 0 15px;
+}
+
+.application-header p {
+    margin: 0;
+    color: rgba(255,255,255,.75);
+    font-size: 14px;
+}
+
+.application-form {
+    padding: 40px;
+}
+
+.form-section-title {
+    font-family: var(--font-serif, 'Playfair Display', serif);
+    color: #17201b;
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    color: #17201b;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.form-group label span {
+    color: #c49a4a;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #dfe4df;
+    background: #ffffff;
+    color: #17201b;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: #244b3a;
+    box-shadow: 0 0 0 3px rgba(36,75,58,.08);
+}
+
+textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.cv-upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 180px;
+    padding: 25px;
+
+    border: 2px dashed #cfd6d0;
+    background: #f8f9f7;
+
+    cursor: pointer;
+    text-align: center;
+
+    transition: .3s ease;
+}
+
+.cv-upload-box:hover {
+    border-color: #244b3a;
+    background: rgba(36,75,58,.03);
+}
+
+.cv-upload-box i {
+    font-size: 35px;
+    color: #244b3a;
+    margin-bottom: 14px;
+}
+
+.cv-upload-box strong {
+    color: #17201b;
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.cv-upload-box span {
+    color: #6b756f;
+    font-size: 12px;
+}
+
+.cv-upload-box input {
+    display: none;
+}
+
+.selected-file {
+    margin-top: 12px;
+    color: #244b3a;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.application-submit {
+    width: 100%;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 16px 25px;
+
+    background: #244b3a;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.application-submit:hover {
+    background: #c49a4a;
+}
+
+.application-note {
+    margin-top: 18px;
+    color: #737d77;
+    font-size: 11px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+
+    .application-page {
+        padding: 50px 15px;
+    }
+
+    .application-header {
+        padding: 30px 25px;
+    }
+
+    .application-header h1 {
+        font-size: 30px;
+    }
+
+    .application-form {
+        padding: 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+}
+
+</style>
+
+
+<section class="application-page">
+
+    <div class="application-container">
+
+        <a
+            href="{{ url_for('construction_vacancy_details', id=vacancy.id) }}"
+            class="application-back">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Position
+
+        </a>
+
+
+        <div class="application-card">
+
+
+            <!-- HEADER -->
+
+            <div class="application-header">
+
+                <div class="application-label">
+                    Career Application
+                </div>
+
+                <h1>
+                    {{ vacancy.title }}
+                </h1>
+
+                <p>
+                    Submit your application and CV for consideration.
+                </p>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form
+                class="application-form"
+                method="POST"
+                action="{{ url_for('apply_construction_vacancy', vacancy_id=vacancy.id) }}"
+                enctype="multipart/form-data">
+
+
+                <h2 class="form-section-title">
+                    Applicant Information
+                </h2>
+
+
+                <div class="form-row">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            class="form-control"
+                            placeholder="Enter your full name"
+                            required>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter your email address"
+                            required>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            class="form-control"
+                            placeholder="Enter your phone number"
+                            required>
+
+                    </div>
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Country
+                        </label>
+
+                        <input
+                            type="text"
+                            name="country"
+                            class="form-control"
+                            placeholder="Country of residence">
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="form-row">
+
+    <!-- COUNTRY -->
+
+    <div class="form-group">
+
+        <label for="country">
+            Country
+        </label>
+
+        <input
+            type="text"
+            id="country"
+            name="country"
+            class="form-control"
+            placeholder="e.g. Nigeria"
+            value="{{ request.form.get('country', '') }}"
+        >
+
+    </div>
+
+
+    <!-- YEARS OF EXPERIENCE -->
+
+    <div class="form-group">
+
+        <label for="years_of_experience">
+
+            Years of Experience
+            <span class="required">*</span>
+
+        </label>
+
+        <select
+    name="years_of_experience"
+    id="years_of_experience"
+    class="form-control"
+    required
+>
+    <option value="">Select experience</option>
+    <option value="Less than 1 year">Less than 1 year</option>
+    <option value="1–2 years">1–2 years</option>
+    <option value="3–5 years">3–5 years</option>
+    <option value="6–10 years">6–10 years</option>
+    <option value="11–15 years">11–15 years</option>
+    <option value="16+ years">16+ years</option>
+</select>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+                <!-- COVER MESSAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Cover Message
+                    </label>
+
+                    <textarea
+                        name="cover_message"
+                        class="form-control"
+                        placeholder="Tell us briefly about yourself, your experience and why you are interested in this position"></textarea>
+
+                </div>
+
+
+                <!-- CV -->
+
+                <div class="form-group">
+
+                    <label>
+                        Upload CV <span>*</span>
+                    </label>
+
+
+                    <label
+                        for="cvFile"
+                        class="cv-upload-box">
+
+                        <i class="fas fa-cloud-arrow-up"></i>
+
+                        <strong>
+                            Click to upload your CV
+                        </strong>
+
+                        <span>
+                            PDF, DOC or DOCX — Maximum 5MB
+                        </span>
+
+
+                        <input
+                            type="file"
+                            id="cvFile"
+                            name="cv"
+                            accept=".pdf,.doc,.docx"
+                            required>
+
+
+                        <div
+                            class="selected-file"
+                            id="selectedFile">
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="application-submit">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                    Submit Application
+
+                </button>
+
+
+                <div class="application-note">
+
+                    By submitting this application, you confirm that
+                    the information provided is accurate and that your
+                    CV may be reviewed for recruitment purposes.
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+document.getElementById("cvFile").addEventListener("change", function () {
+
+    const selectedFile = document.getElementById("selectedFile");
+
+    if (this.files.length > 0) {
+
+        const file = this.files[0];
+
+        const sizeMB = file.size / (1024 * 1024);
+
+        if (sizeMB > 5) {
+
+            alert("The CV file must not exceed 5MB.");
+
+            this.value = "";
+
+            selectedFile.textContent = "";
+
+            return;
+        }
+
+        selectedFile.innerHTML =
+            '<i class="fas fa-file"></i> ' + file.name;
+
+    } else {
+
+        selectedFile.textContent = "";
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

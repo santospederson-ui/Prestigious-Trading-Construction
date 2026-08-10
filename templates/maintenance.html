@@ -1,0 +1,1098 @@
+{% extends "base.html" %}
+
+{% block title %}
+Maintenance & Renovation | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   MAINTENANCE PAGE
+========================================= */
+
+:root {
+  --maintenance-dark: #17201b;
+  --maintenance-green: #244b3a;
+  --maintenance-green-dark: #18352a;
+  --maintenance-accent: #c49a4a;
+  --maintenance-light: #f5f6f3;
+  --maintenance-border: #dfe4df;
+}
+
+
+/* =========================================
+   PAGE HERO
+========================================= */
+
+.maintenance-hero {
+  position: relative;
+
+  min-height: 500px;
+
+  display: flex;
+  align-items: center;
+
+  background-image:
+    url('{{ url_for("static", filename="images/maintenance/maintenance.webp") }}');
+
+  background-size: cover;
+  background-position: center;
+
+  overflow: hidden;
+}
+
+.maintenance-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10,18,14,.82) 0%,
+      rgba(10,18,14,.60) 48%,
+      rgba(10,18,14,.25) 100%
+    );
+}
+
+.maintenance-hero-content {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 760px;
+
+  color: #ffffff;
+}
+
+.maintenance-label {
+  color: var(--maintenance-accent);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 16px;
+}
+
+.maintenance-hero h1 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(40px, 5vw, 64px);
+
+  line-height: 1.08;
+
+  margin-bottom: 20px;
+
+  font-weight: 800;
+
+  text-shadow: 0 4px 18px rgba(0,0,0,.35);
+}
+
+.maintenance-hero p {
+  max-width: 680px;
+
+  color: rgba(255,255,255,.9);
+
+  font-size: 17px;
+
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.maintenance-intro {
+  padding: 95px 0;
+
+  background: #ffffff;
+}
+
+.maintenance-intro-grid {
+  display: grid;
+
+  grid-template-columns: 1.05fr 1fr;
+
+  gap: 65px;
+
+  align-items: center;
+}
+
+.maintenance-image {
+  height: 500px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.maintenance-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .6s ease;
+}
+
+.maintenance-image:hover img {
+  transform: scale(1.04);
+}
+
+.maintenance-image-badge {
+  position: absolute;
+
+  left: 25px;
+  bottom: 25px;
+
+  background: var(--maintenance-green);
+
+  color: #ffffff;
+
+  padding: 20px 24px;
+}
+
+.maintenance-image-badge strong {
+  display: block;
+
+  color: var(--maintenance-accent);
+
+  font-size: 27px;
+
+  margin-bottom: 4px;
+}
+
+.maintenance-image-badge span {
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.5px;
+}
+
+.maintenance-intro-content .section-label {
+  color: var(--maintenance-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.maintenance-intro-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--maintenance-dark);
+
+  font-size: 40px;
+
+  line-height: 1.2;
+
+  margin-bottom: 20px;
+}
+
+.maintenance-intro-content p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin-bottom: 17px;
+}
+
+
+/* =========================================
+   SERVICES
+========================================= */
+
+.maintenance-services {
+  padding: 95px 0;
+
+  background: var(--maintenance-light);
+}
+
+.maintenance-section-title {
+  text-align: center;
+
+  max-width: 720px;
+
+  margin: 0 auto 55px;
+}
+
+.maintenance-section-title .section-label {
+  color: var(--maintenance-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+}
+
+.maintenance-section-title h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--maintenance-dark);
+
+  font-size: 38px;
+
+  line-height: 1.2;
+
+  margin-bottom: 14px;
+}
+
+.maintenance-section-title p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.maintenance-service-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 22px;
+}
+
+.maintenance-service-card {
+  background: #ffffff;
+
+  border: 1px solid var(--maintenance-border);
+
+  padding: 35px 28px;
+
+  transition: all .35s ease;
+}
+
+.maintenance-service-card:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--maintenance-accent);
+
+  box-shadow: 0 15px 35px rgba(20,40,30,.08);
+}
+
+.maintenance-service-icon {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--maintenance-green);
+
+  font-size: 22px;
+
+  margin-bottom: 20px;
+}
+
+.maintenance-service-card h3 {
+  color: var(--maintenance-dark);
+
+  font-size: 18px;
+
+  margin-bottom: 10px;
+}
+
+.maintenance-service-card p {
+  color: #68736d;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   MAINTENANCE APPROACH
+========================================= */
+
+.maintenance-approach {
+  padding: 95px 0;
+
+  background: #ffffff;
+}
+
+.approach-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 60px;
+
+  align-items: center;
+}
+
+.approach-content .section-label {
+  color: var(--maintenance-green);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.approach-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--maintenance-dark);
+
+  font-size: 38px;
+
+  line-height: 1.2;
+
+  margin-bottom: 18px;
+}
+
+.approach-content > p {
+  color: #68736d;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  margin-bottom: 25px;
+}
+
+.approach-list {
+  display: grid;
+
+  gap: 12px;
+}
+
+.approach-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  background: var(--maintenance-light);
+
+  border: 1px solid var(--maintenance-border);
+
+  color: var(--maintenance-dark);
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.approach-item i {
+  color: var(--maintenance-accent);
+}
+
+.approach-image {
+  height: 460px;
+
+  overflow: hidden;
+}
+
+.approach-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================
+   CLIENTS
+========================================= */
+
+.maintenance-client-section {
+  padding: 85px 0;
+
+  background: var(--maintenance-dark);
+
+  color: #ffffff;
+}
+
+.client-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.client-card {
+  padding: 30px 22px;
+
+  border: 1px solid rgba(255,255,255,.09);
+
+  background: rgba(255,255,255,.035);
+
+  text-align: center;
+
+  transition: all .3s ease;
+}
+
+.client-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(196,154,74,.5);
+}
+
+.client-card i {
+  color: var(--maintenance-accent);
+
+  font-size: 27px;
+
+  margin-bottom: 15px;
+}
+
+.client-card h3 {
+  font-size: 16px;
+
+  margin-bottom: 7px;
+}
+
+.client-card p {
+  color: #aeb8b2;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.maintenance-cta {
+  padding: 90px 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--maintenance-green),
+      var(--maintenance-green-dark)
+    );
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.maintenance-cta h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 40px;
+
+  margin-bottom: 15px;
+}
+
+.maintenance-cta p {
+  max-width: 650px;
+
+  margin: 0 auto 28px;
+
+  color: rgba(255,255,255,.82);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.maintenance-cta-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 15px 32px;
+
+  background: var(--maintenance-accent);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  transition: all .3s ease;
+}
+
+.maintenance-cta-button:hover {
+  background: #ffffff;
+
+  color: var(--maintenance-green);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .maintenance-intro-grid,
+  .approach-grid {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .maintenance-service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .client-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .maintenance-hero {
+    min-height: 430px;
+  }
+
+  .maintenance-hero h1 {
+    font-size: 40px;
+  }
+
+  .maintenance-intro,
+  .maintenance-services,
+  .maintenance-approach,
+  .maintenance-client-section {
+    padding: 70px 0;
+  }
+
+  .maintenance-image {
+    height: 330px;
+  }
+
+  .maintenance-intro-content h2,
+  .maintenance-section-title h2,
+  .approach-content h2 {
+    font-size: 31px;
+  }
+
+  .maintenance-service-grid,
+  .client-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .approach-image {
+    height: 330px;
+  }
+
+  .maintenance-cta {
+    padding: 70px 0;
+  }
+
+  .maintenance-cta h2 {
+    font-size: 32px;
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="maintenance-hero">
+
+  <div class="container">
+
+    <div class="maintenance-hero-content">
+
+      <div class="maintenance-label">
+        Maintenance & Renovation
+      </div>
+
+      <h1>
+        Protecting Buildings.<br>
+        Preserving Value.
+      </h1>
+
+      <p>
+        Reliable building maintenance, renovation and repair
+        solutions designed to keep residential, commercial and
+        industrial properties safe, functional and well maintained.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     INTRODUCTION
+========================================= -->
+
+<section class="maintenance-intro">
+
+  <div class="container">
+
+    <div class="maintenance-intro-grid">
+
+      <div class="maintenance-image">
+
+        <img
+          src="{{ url_for('static', filename='images/maintenance/maintenance1.webp') }}"
+          alt="Building Maintenance and Renovation"
+          loading="lazy">
+
+        <div class="maintenance-image-badge">
+
+          <strong>Reliable</strong>
+
+          <span>
+            Maintenance Solutions
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="maintenance-intro-content">
+
+        <div class="section-label">
+          Professional Maintenance
+        </div>
+
+        <h2>
+          Keeping Your Property In Excellent Condition
+        </h2>
+
+        <p>
+          Prestigious Trading & Construction provides professional
+          maintenance and renovation services for residential,
+          commercial and other built environments across Qatar.
+        </p>
+
+        <p>
+          Our team works to identify maintenance requirements,
+          resolve building issues and improve existing spaces through
+          reliable repair, refurbishment and renovation solutions.
+        </p>
+
+        <p>
+          Whether you require planned maintenance, corrective repairs,
+          renovation works or property improvement, we approach every
+          assignment with attention to quality, safety and detail.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     MAINTENANCE SERVICES
+========================================= -->
+
+<section class="maintenance-services">
+
+  <div class="container">
+
+    <div class="maintenance-section-title">
+
+      <div class="section-label">
+        What We Provide
+      </div>
+
+      <h2>
+        Maintenance & Renovation Services
+      </h2>
+
+      <p>
+        Practical maintenance solutions designed to address
+        everyday building requirements and larger renovation projects.
+      </p>
+
+    </div>
+
+
+    <div class="maintenance-service-grid">
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-screwdriver-wrench"></i>
+        </div>
+
+        <h3>
+          General Building Maintenance
+        </h3>
+
+        <p>
+          Routine building repairs, corrective works and general
+          maintenance services to keep properties functional and
+          well maintained.
+        </p>
+
+      </div>
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-paint-roller"></i>
+        </div>
+
+        <h3>
+          Renovation & Refurbishment
+        </h3>
+
+        <p>
+          Renovation and refurbishment works that improve the
+          appearance, functionality and condition of existing spaces.
+        </p>
+
+      </div>
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-border-all"></i>
+        </div>
+
+        <h3>
+          Tile & Flooring Repairs
+        </h3>
+
+        <p>
+          Professional replacement, repair and installation of
+          tiles and flooring surfaces for different environments.
+        </p>
+
+      </div>
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-gem"></i>
+        </div>
+
+        <h3>
+          Stone & Marble Maintenance
+        </h3>
+
+        <p>
+          Repair, replacement and finishing support for marble,
+          natural stone and architectural surfaces.
+        </p>
+
+      </div>
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-building"></i>
+        </div>
+
+        <h3>
+          Commercial Maintenance
+        </h3>
+
+        <p>
+          Maintenance and improvement services for offices,
+          commercial buildings, retail spaces and other facilities.
+        </p>
+
+      </div>
+
+
+      <div class="maintenance-service-card">
+
+        <div class="maintenance-service-icon">
+          <i class="fas fa-house"></i>
+        </div>
+
+        <h3>
+          Residential Maintenance
+        </h3>
+
+        <p>
+          Reliable maintenance and renovation support for villas,
+          apartments and residential properties.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     APPROACH
+========================================= -->
+
+<section class="maintenance-approach">
+
+  <div class="container">
+
+    <div class="approach-grid">
+
+
+      <div class="approach-content">
+
+        <div class="section-label">
+          Our Approach
+        </div>
+
+        <h2>
+          Maintenance Done With Professional Attention
+        </h2>
+
+        <p>
+          Effective maintenance requires more than simply fixing
+          visible problems. Our approach focuses on understanding
+          the condition of the property, identifying the required
+          work and delivering practical solutions.
+        </p>
+
+        <div class="approach-list">
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Professional site assessment
+          </div>
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Clear scope of work
+          </div>
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Quality materials and workmanship
+          </div>
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Safety-conscious execution
+          </div>
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Organized project coordination
+          </div>
+
+          <div class="approach-item">
+            <i class="fas fa-check"></i>
+            Reliable completion and follow-up
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="approach-image">
+
+        <img
+          src="{{ url_for('static', filename='images/maintenance/maintenance2.webp') }}"
+          alt="Professional Maintenance Works"
+          loading="lazy">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CLIENT TYPES
+========================================= -->
+
+<section class="maintenance-client-section">
+
+  <div class="container">
+
+    <div class="maintenance-section-title">
+
+      <div class="section-label">
+        Who We Serve
+      </div>
+
+      <h2 style="color:#ffffff;">
+        Maintenance Solutions For Different Properties
+      </h2>
+
+      <p style="color:#aeb8b2;">
+        Flexible maintenance and renovation support for
+        different property types and project requirements.
+      </p>
+
+    </div>
+
+
+    <div class="client-grid">
+
+
+      <div class="client-card">
+
+        <i class="fas fa-house"></i>
+
+        <h3>
+          Villas & Homes
+        </h3>
+
+        <p>
+          Maintenance, repair and renovation services
+          for residential properties.
+        </p>
+
+      </div>
+
+
+      <div class="client-card">
+
+        <i class="fas fa-building"></i>
+
+        <h3>
+          Commercial Buildings
+        </h3>
+
+        <p>
+          Professional maintenance support for
+          offices and commercial facilities.
+        </p>
+
+      </div>
+
+
+      <div class="client-card">
+
+        <i class="fas fa-store"></i>
+
+        <h3>
+          Retail Spaces
+        </h3>
+
+        <p>
+          Repair and refurbishment services that
+          help maintain attractive business environments.
+        </p>
+
+      </div>
+
+
+      <div class="client-card">
+
+        <i class="fas fa-city"></i>
+
+        <h3>
+          Larger Facilities
+        </h3>
+
+        <p>
+          Coordinated maintenance and improvement
+          works for larger built environments.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="maintenance-cta">
+
+  <div class="container">
+
+    <h2>
+      Need Maintenance or Renovation?
+    </h2>
+
+    <p>
+      Contact Prestigious Trading & Construction to discuss
+      your building maintenance, repair or renovation requirements.
+    </p>
+
+    <a href="{{ url_for('contact') }}" class="maintenance-cta-button">
+
+      Request a Consultation
+
+      <i
+        class="fas fa-arrow-right"
+        style="margin-left:10px;">
+      </i>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+{% endblock %}

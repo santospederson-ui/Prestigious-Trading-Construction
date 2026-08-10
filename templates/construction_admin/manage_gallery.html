@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en-QA">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Manage Gallery | {{ project.title }}
+    </title>
+
+
+    <style>
+
+        :root {
+
+            --primary: #3F6B57;
+            --dark: #234236;
+            --light: #F4F8F4;
+            --text: #24352D;
+            --secondary: #687A70;
+            --border: #DCE7DE;
+            --gold: #D4AF37;
+            --danger: #9B3B3B;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            padding: 40px;
+
+            background: var(--light);
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            color: var(--text);
+
+        }
+
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+        }
+
+
+        /* ==========================
+           HEADER
+        ========================== */
+
+        .header {
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .header h1 {
+
+            margin: 0 0 8px;
+
+            color: var(--primary);
+
+        }
+
+
+        .header p {
+
+            margin: 0;
+
+            color: var(--secondary);
+
+        }
+
+
+        /* ==========================
+           TOP ACTIONS
+        ========================== */
+
+        .top-actions {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .btn-back {
+
+            background: #EDF5EE;
+
+            color: var(--primary);
+
+        }
+
+
+        .btn-back:hover {
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+        }
+
+
+        .btn-edit {
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+        }
+
+
+        .btn-edit:hover {
+
+            background: var(--dark);
+
+        }
+
+
+        /* ==========================
+           GALLERY
+        ========================== */
+
+        .gallery {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+
+        }
+
+
+        .image-card {
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .image-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(35, 66, 54, 0.08);
+
+        }
+
+
+        .image-wrapper {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 240px;
+
+            background: #EAF0ED;
+
+        }
+
+
+        .image-wrapper img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
+
+        /* ==========================
+           COVER BADGE
+        ========================== */
+
+        .cover-badge {
+
+            position: absolute;
+
+            top: 12px;
+
+            left: 12px;
+
+            background: var(--gold);
+
+            color: #ffffff;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0, 0, 0, 0.15);
+
+        }
+
+
+        /* ==========================
+           IMAGE INFO
+        ========================== */
+
+        .image-info {
+
+            padding: 16px;
+
+        }
+
+
+        .image-number {
+
+            color: var(--secondary);
+
+            font-size: 12px;
+
+            margin-bottom: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        .image-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        /* ==========================
+           ACTION BUTTONS
+        ========================== */
+
+        .action-btn {
+
+            border: none;
+
+            border-radius: 7px;
+
+            padding: 9px 12px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        /* SET COVER */
+
+        .cover-btn {
+
+            background: #EDF5EE;
+
+            color: var(--primary);
+
+            border: 1px solid #DCE7DE;
+
+        }
+
+
+        .cover-btn:hover {
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+        }
+
+
+        /* CURRENT COVER */
+
+        .current-cover-btn {
+
+            background: var(--gold);
+
+            color: #ffffff;
+
+            border: 1px solid var(--gold);
+
+            cursor: default;
+
+        }
+
+
+        /* DELETE */
+
+        .delete-btn {
+
+            background: #FDECEC;
+
+            color: var(--danger);
+
+            border: 1px solid #F5D2D2;
+
+        }
+
+
+        .delete-btn:hover {
+
+            background: var(--danger);
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================
+           EMPTY
+        ========================== */
+
+        .empty {
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+        }
+
+
+        .empty h2 {
+
+            color: var(--primary);
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .empty p {
+
+            color: var(--secondary);
+
+        }
+
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+
+        @media(max-width: 850px) {
+
+            body {
+
+                padding: 25px;
+
+            }
+
+
+            .gallery {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            body {
+
+                padding: 18px;
+
+            }
+
+
+            .top-actions {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 12px;
+
+            }
+
+
+            .top-actions .btn {
+
+                text-align: center;
+
+            }
+
+
+            .gallery {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==========================
+         HEADER
+    ========================== -->
+
+    <div class="header">
+
+        <h1>
+            Manage Project Gallery
+        </h1>
+
+        <p>
+            {{ project.title }}
+        </p>
+
+    </div>
+
+
+
+    <!-- ==========================
+         TOP ACTIONS
+    ========================== -->
+
+    <div class="top-actions">
+
+
+        <a
+            href="{{ url_for('manage_construction_projects') }}"
+            class="btn btn-back"
+        >
+            ← Back to Projects
+        </a>
+
+
+        <a
+            href="{{ url_for('edit_project', project_id=project.id) }}"
+            class="btn btn-edit"
+        >
+            Edit Project
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ==========================
+         GALLERY
+    ========================== -->
+
+    {% if images %}
+
+
+        <div class="gallery">
+
+
+            {% for image in images %}
+
+
+                <div class="image-card">
+
+
+                    <!-- ==========================
+                         IMAGE
+                    ========================== -->
+
+                    <div class="image-wrapper">
+
+
+                        <img
+                            src="{{ image.image_url }}"
+                            alt="{{ project.title }}"
+                        >
+
+
+                        {% if project.image == image.image_url %}
+
+                            <div class="cover-badge">
+                                ✓ COVER IMAGE
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <!-- ==========================
+                         IMAGE INFORMATION
+                    ========================== -->
+
+                    <div class="image-info">
+
+
+                        <div class="image-number">
+
+                            Image {{ loop.index }}
+
+                        </div>
+
+
+
+                        <div class="image-actions">
+
+
+                            <!-- ==========================
+                                 SET COVER
+                            ========================== -->
+
+                            {% if project.image != image.image_url %}
+
+
+                                <form
+                                    method="POST"
+                                    action="{{
+                                        url_for(
+                                            'set_project_cover',
+                                            project_id=project.id,
+                                            image_id=image.id
+                                        )
+                                    }}"
+                                    style="display:inline;"
+                                >
+
+
+                                    <button
+                                        type="submit"
+                                        class="action-btn cover-btn"
+                                    >
+                                        Set as Cover
+                                    </button>
+
+
+                                </form>
+
+
+                            {% else %}
+
+
+                                <span
+                                    class="action-btn current-cover-btn"
+                                >
+                                    ✓ Current Cover
+                                </span>
+
+
+                            {% endif %}
+
+
+
+                            <!-- ==========================
+                                 DELETE IMAGE
+                            ========================== -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'delete_project_image',
+                                    project_id=project.id,
+                                    image_id=image.id
+                                ) }}"
+                                style="display:inline;"
+                                onsubmit="
+                                    return confirm(
+                                        'Are you sure you want to permanently delete this image?'
+                                    );
+                                "
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="action-btn delete-btn"
+                                >
+                                    Delete Image
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- ==========================
+             EMPTY GALLERY
+        ========================== -->
+
+        <div class="empty">
+
+            <h2>
+                No Gallery Images
+            </h2>
+
+            <p>
+                This project currently has no gallery images.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

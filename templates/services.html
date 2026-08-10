@@ -1,0 +1,2101 @@
+{% extends "base.html" %}
+
+{% block title %}
+Services | Prestigious Trading & Construction Qatar
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   PRESTIGIOUS TRADING & CONSTRUCTION
+   PREMIUM SERVICES PAGE
+========================================================= */
+
+:root {
+  --construction-dark: #17201b;
+  --construction-green: #244b3a;
+  --construction-green-dark: #18352a;
+  --construction-accent: #c49a4a;
+  --construction-light: #f5f6f3;
+  --construction-border: #dfe4df;
+  --construction-text: #68736d;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.services-hero {
+  position: relative;
+  min-height: 540px;
+
+  background-image:
+    url("{{ url_for('static', filename='images/services/services.webp') }}");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.services-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10,18,14,.88) 0%,
+      rgba(10,18,14,.70) 42%,
+      rgba(10,18,14,.30) 100%
+    );
+}
+
+.services-hero::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: rgba(196,154,74,.45);
+}
+
+.services-hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 90px 24px;
+
+  color: #ffffff;
+}
+
+.services-hero-content-inner {
+  max-width: 760px;
+}
+
+.services-kicker {
+  color: var(--construction-accent);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.services-kicker::before {
+  content: "";
+
+  width: 38px;
+  height: 1px;
+
+  background: var(--construction-accent);
+}
+
+.services-hero h1 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(42px, 5.5vw, 68px);
+
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  margin-bottom: 24px;
+
+  letter-spacing: -1px;
+
+  text-shadow:
+    0 4px 18px rgba(0,0,0,.4);
+}
+
+.services-hero p {
+  max-width: 680px;
+
+  color: rgba(255,255,255,.88);
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   INTRODUCTION
+========================================================= */
+
+.services-intro {
+  padding: 105px 0;
+
+  background: #ffffff;
+}
+
+.services-intro-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1.05fr;
+
+  gap: 75px;
+
+  align-items: center;
+}
+
+.services-intro-image {
+  height: 500px;
+
+  overflow: hidden;
+
+  position: relative;
+
+  background: #eeeeee;
+}
+
+.services-intro-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  pointer-events: none;
+}
+
+.services-intro-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .7s ease;
+}
+
+.services-intro-image:hover img {
+  transform: scale(1.04);
+}
+
+.services-intro-badge {
+  position: absolute;
+
+  left: 25px;
+  bottom: 25px;
+
+  z-index: 2;
+
+  background: var(--construction-green);
+
+  color: #ffffff;
+
+  padding: 21px 27px;
+
+  border-left: 3px solid var(--construction-accent);
+}
+
+.services-intro-badge strong {
+  display: block;
+
+  color: var(--construction-accent);
+
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: 28px;
+
+  line-height: 1;
+
+  margin-bottom: 7px;
+}
+
+.services-intro-badge span {
+  font-size: 10px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.6px;
+}
+
+.section-label {
+  color: var(--construction-green);
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 14px;
+}
+
+.services-intro-content h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--construction-dark);
+
+  font-size: clamp(34px, 4vw, 46px);
+
+  line-height: 1.17;
+
+  margin-bottom: 24px;
+}
+
+.services-intro-content p {
+  color: var(--construction-text);
+
+  font-size: 15px;
+
+  line-height: 1.85;
+
+  margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   CORE SERVICES
+========================================================= */
+
+.core-services {
+  padding: 105px 0;
+
+  background: var(--construction-light);
+}
+
+.section-title {
+  text-align: center;
+
+  max-width: 760px;
+
+  margin: 0 auto 60px;
+}
+
+.section-title .section-label {
+  margin-bottom: 11px;
+}
+
+.section-title h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  color: var(--construction-dark);
+
+  font-size: clamp(34px, 4vw, 44px);
+
+  line-height: 1.2;
+
+  margin-bottom: 15px;
+}
+
+.section-title p {
+  color: var(--construction-text);
+
+  font-size: 15px;
+
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   SERVICE GRID
+========================================================= */
+
+.core-services-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 22px;
+}
+
+.core-service-card {
+  position: relative;
+
+  background: #ffffff;
+
+  border: 1px solid var(--construction-border);
+
+  min-height: 345px;
+
+  padding: 36px 31px;
+
+  overflow: hidden;
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+.core-service-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 0;
+  height: 4px;
+
+  background: var(--construction-accent);
+
+  transition: width .35s ease;
+}
+
+.core-service-card:hover {
+  transform: translateY(-7px);
+
+  border-color: var(--construction-accent);
+
+  box-shadow: 0 20px 45px rgba(20,40,30,.10);
+}
+
+.core-service-card:hover::after {
+  width: 100%;
+}
+
+.core-service-icon {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--construction-green);
+
+  font-size: 23px;
+
+  margin-bottom: 25px;
+
+  transition:
+    background .3s ease,
+    color .3s ease;
+}
+
+.core-service-card:hover .core-service-icon {
+  background: var(--construction-green);
+
+  color: var(--construction-accent);
+}
+
+.core-service-card h3 {
+  color: var(--construction-dark);
+
+  font-size: 20px;
+
+  line-height: 1.3;
+
+  margin-bottom: 14px;
+}
+
+.core-service-card p {
+  color: var(--construction-text);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  margin-bottom: 0;
+}
+
+.service-number {
+  position: absolute;
+
+  top: 25px;
+  right: 25px;
+
+  color: rgba(36,75,58,.07);
+
+  font-size: 50px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* SERVICE LINK */
+
+.core-service-card-link {
+  display: block;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   DETAILED SERVICES
+========================================================= */
+
+.service-details {
+  padding: 110px 0;
+
+  background: #ffffff;
+}
+
+.service-detail {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 75px;
+
+  align-items: center;
+
+  margin-bottom: 115px;
+}
+
+.service-detail:last-child {
+  margin-bottom: 0;
+}
+
+.service-detail.reverse .service-detail-image {
+  order: 2;
+}
+
+.service-detail.reverse .service-detail-content {
+  order: 1;
+}
+
+.service-detail-image {
+  height: 460px;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+
+  position: relative;
+}
+
+.service-detail-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border: 1px solid rgba(23,32,27,.08);
+
+  pointer-events: none;
+}
+
+.service-detail-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .7s ease;
+}
+
+.service-detail-image:hover img {
+  transform: scale(1.045);
+}
+
+.service-detail-content .detail-number {
+  color: var(--construction-accent);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+
+  margin-bottom: 12px;
+}
+
+.service-detail-content h2 {
+  color: var(--construction-dark);
+
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(32px, 4vw, 40px);
+
+  line-height: 1.18;
+
+  margin-bottom: 20px;
+}
+
+.service-detail-content p {
+  color: var(--construction-text);
+
+  font-size: 15px;
+
+  line-height: 1.85;
+
+  margin-bottom: 18px;
+}
+
+.detail-list {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 27px;
+}
+
+.detail-list-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 12px 14px;
+
+  background: var(--construction-light);
+
+  border: 1px solid var(--construction-border);
+
+  color: var(--construction-dark);
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.detail-list-item i {
+  color: var(--construction-accent);
+}
+
+
+/* =========================================================
+   APPROACH
+========================================================= */
+
+.approach-section {
+  padding: 105px 0;
+
+  background: var(--construction-dark);
+
+  color: #ffffff;
+}
+
+.approach-section .section-title h2 {
+  color: #ffffff;
+}
+
+.approach-section .section-title p {
+  color: #aeb8b2;
+}
+
+.approach-section .section-label {
+  color: var(--construction-accent);
+}
+
+.approach-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.approach-card {
+  padding: 38px 27px;
+
+  border: 1px solid rgba(255,255,255,.09);
+
+  background: rgba(255,255,255,.035);
+
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    background .3s ease;
+}
+
+.approach-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(196,154,74,.55);
+
+  background: rgba(255,255,255,.055);
+}
+
+.approach-number {
+  color: var(--construction-accent);
+
+  font-size: 30px;
+
+  font-weight: 800;
+
+  margin-bottom: 18px;
+}
+
+.approach-card h3 {
+  font-size: 18px;
+
+  margin-bottom: 11px;
+}
+
+.approach-card p {
+  color: #aeb8b2;
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   ADVANTAGES
+========================================================= */
+
+.advantages-section {
+  padding: 105px 0;
+
+  background: #ffffff;
+}
+
+.advantages-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+.advantage-card {
+  padding: 38px 30px;
+
+  border: 1px solid var(--construction-border);
+
+  background: #ffffff;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+
+.advantage-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 18px 38px rgba(20,40,30,.08);
+
+  border-color: var(--construction-accent);
+}
+
+.advantage-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36,75,58,.08);
+
+  color: var(--construction-green);
+
+  font-size: 21px;
+
+  margin-bottom: 21px;
+}
+
+.advantage-card h3 {
+  color: var(--construction-dark);
+
+  font-size: 18px;
+
+  margin-bottom: 10px;
+}
+
+.advantage-card p {
+  color: var(--construction-text);
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.services-cta {
+  padding: 100px 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--construction-green),
+      var(--construction-green-dark)
+    );
+
+  color: #ffffff;
+
+  text-align: center;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.services-cta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  border: 1px solid rgba(196,154,74,.12);
+
+  border-radius: 50%;
+
+  top: -230px;
+  left: -100px;
+}
+
+.services-cta::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  border: 1px solid rgba(196,154,74,.10);
+
+  border-radius: 50%;
+
+  right: -100px;
+  bottom: -210px;
+}
+
+.services-cta .container {
+  position: relative;
+
+  z-index: 2;
+}
+
+.services-cta h2 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+
+  font-size: clamp(34px, 4vw, 46px);
+
+  margin-bottom: 17px;
+}
+
+.services-cta p {
+  max-width: 670px;
+
+  margin: 0 auto 30px;
+
+  color: rgba(255,255,255,.82);
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+.services-cta-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px 33px;
+
+  background: var(--construction-accent);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: .2px;
+
+  transition:
+    background .3s ease,
+    color .3s ease,
+    transform .3s ease;
+}
+
+.services-cta-button:hover {
+  background: #ffffff;
+
+  color: var(--construction-green);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .services-intro-grid {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+  }
+
+  .services-intro-image {
+    height: 440px;
+  }
+
+  .core-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-detail {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+
+    margin-bottom: 85px;
+  }
+
+  .service-detail.reverse .service-detail-image {
+    order: 1;
+  }
+
+  .service-detail.reverse .service-detail-content {
+    order: 2;
+  }
+
+  .service-detail-image {
+    height: 430px;
+  }
+
+  .approach-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .services-hero {
+    min-height: 450px;
+  }
+
+  .services-hero-content {
+    padding: 70px 24px;
+  }
+
+  .services-hero h1 {
+    font-size: 42px;
+
+    letter-spacing: -.5px;
+  }
+
+  .services-hero p {
+    font-size: 15px;
+  }
+
+  .services-intro,
+  .core-services,
+  .service-details,
+  .approach-section,
+  .advantages-section {
+    padding: 75px 0;
+  }
+
+  .services-intro-image {
+    height: 330px;
+  }
+
+  .services-intro-badge {
+    left: 18px;
+    bottom: 18px;
+  }
+
+  .core-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .core-service-card {
+    min-height: auto;
+
+    padding: 32px 27px;
+  }
+
+  .service-detail-image {
+    height: 330px;
+  }
+
+  .service-detail-content h2 {
+    font-size: 31px;
+  }
+
+  .detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .approach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-cta {
+    padding: 75px 0;
+  }
+
+  .services-cta-button {
+    width: 100%;
+    max-width: 280px;
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="services-hero">
+
+  <div class="services-hero-content">
+
+    <div class="services-hero-content-inner">
+
+      <div class="services-kicker">
+        What We Do
+      </div>
+
+      <h1>
+        Construction Solutions<br>
+        Built Around Excellence.
+      </h1>
+
+      <p>
+        From construction and general contracting to specialist
+        finishing, renovation, maintenance and building materials
+        trading, Prestigious Trading & Construction delivers
+        dependable solutions across Qatar.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     INTRODUCTION
+========================================================= -->
+
+<section class="services-intro">
+
+  <div class="container">
+
+    <div class="services-intro-grid">
+
+      <div class="services-intro-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services1.webp') }}"
+          alt="Prestigious Trading and Construction Services"
+          loading="lazy">
+
+        <div class="services-intro-badge">
+
+          <strong>Qatar</strong>
+
+          <span>
+            Professional Construction Services
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="services-intro-content">
+
+        <div class="section-label">
+          Our Expertise
+        </div>
+
+        <h2>
+          Practical Solutions For Every Stage Of Your Project
+        </h2>
+
+        <p>
+          Prestigious Trading & Construction provides a broad range
+          of construction and project support services designed to
+          meet the requirements of residential, commercial and
+          development projects across Qatar.
+        </p>
+
+        <p>
+          Our approach combines skilled workmanship, responsible
+          project management, quality materials and careful attention
+          to detail. From initial construction through finishing and
+          maintenance, we work to ensure every stage is delivered
+          professionally and efficiently.
+        </p>
+
+        <p>
+          Whether you require a complete construction solution,
+          specialist finishing works or reliable material supply,
+          our team is prepared to provide dependable service tailored
+          to your project requirements.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CORE SERVICES
+========================================================= -->
+
+<section class="core-services">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-label">
+        Our Services
+      </div>
+
+      <h2>
+        Comprehensive Construction & Trading Services
+      </h2>
+
+      <p>
+        Professional capabilities supporting projects from
+        construction and structural works through finishing,
+        maintenance and material supply.
+      </p>
+
+    </div>
+
+
+    <div class="core-services-grid">
+
+
+      <!-- 01 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">01</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-building"></i>
+        </div>
+
+        <h3>
+          Building Construction
+        </h3>
+
+        <p>
+          Complete building construction services delivered with
+          attention to workmanship, safety, quality control and
+          project coordination.
+        </p>
+
+      </div>
+
+
+      <!-- 02 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">02</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-hard-hat"></i>
+        </div>
+
+        <h3>
+          General Contracting
+        </h3>
+
+        <p>
+          Professional contracting and project coordination services
+          for residential, commercial and development projects.
+        </p>
+
+      </div>
+
+
+      <!-- 03 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">03</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-layer-group"></i>
+        </div>
+
+        <h3>
+          Finishing Works
+        </h3>
+
+        <p>
+          Detailed interior and exterior finishing works including
+          tiles, flooring, architectural surfaces and decorative
+          installations.
+        </p>
+
+      </div>
+
+
+      <!-- 04 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">04</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-gem"></i>
+        </div>
+
+        <h3>
+          Stone & Marble Works
+        </h3>
+
+        <p>
+          Precision stone, marble and architectural surface
+          installation for premium residential and commercial
+          environments.
+        </p>
+
+      </div>
+
+
+      <!-- 05 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">05</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+
+        <h3>
+          Maintenance & Renovation
+        </h3>
+
+        <p>
+          Building maintenance, refurbishment and renovation
+          solutions designed to preserve and improve existing
+          properties.
+        </p>
+
+      </div>
+
+
+      <!-- 06 -->
+
+      <div class="core-service-card">
+
+        <span class="service-number">06</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-boxes-stacked"></i>
+        </div>
+
+        <h3>
+          Building Materials Trading
+        </h3>
+
+        <p>
+          Reliable supply and trading of construction materials
+          supporting contractors, developers and project owners.
+        </p>
+
+      </div>
+
+
+      <!-- 07 -->
+
+      <a
+        href="#interiors-fitout"
+        class="core-service-card core-service-card-link">
+
+        <span class="service-number">07</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-couch"></i>
+        </div>
+
+        <h3>
+          Interiors & Fit Out
+        </h3>
+
+        <p>
+          Professional interior fit-out solutions covering
+          architectural finishes, partitions, ceilings, flooring,
+          joinery and complete interior finishing requirements.
+        </p>
+
+      </a>
+
+
+      <!-- 08 -->
+
+      <a
+        href="#stone-tile"
+        class="core-service-card core-service-card-link">
+
+        <span class="service-number">08</span>
+
+        <div class="core-service-icon">
+          <i class="fas fa-border-all"></i>
+        </div>
+
+        <h3>
+          Stone & Tile Works
+        </h3>
+
+        <p>
+          Specialist stone and tile installation services including
+          wall cladding, floor tiling, marble, natural stone and
+          architectural surface applications.
+        </p>
+
+      </a>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     DETAILED SERVICES
+========================================================= -->
+
+<section class="service-details">
+
+  <div class="container">
+
+
+    <!-- SERVICE 01 -->
+
+    <div class="service-detail">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services2.webp') }}"
+          alt="Building Construction"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 01
+        </div>
+
+        <h2>
+          Building Construction
+        </h2>
+
+        <p>
+          We provide professional construction services for
+          residential and commercial projects, combining organized
+          execution, skilled workmanship and responsible site
+          management.
+        </p>
+
+        <p>
+          Our team focuses on maintaining quality throughout the
+          construction process while coordinating materials,
+          manpower and project requirements efficiently.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Residential Construction
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Commercial Construction
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Site Coordination
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Quality Control
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 02 -->
+
+    <div class="service-detail reverse">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services3.webp') }}"
+          alt="Finishing Works"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 02
+        </div>
+
+        <h2>
+          Finishing Works
+        </h2>
+
+        <p>
+          Quality finishing can transform a building into a refined
+          and functional space. Our finishing services focus on
+          precision, consistency and attention to architectural
+          details.
+        </p>
+
+        <p>
+          From flooring and tiling to decorative surfaces and
+          architectural finishes, we deliver workmanship designed
+          to meet the visual and practical requirements of each
+          project.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Tile Installation
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Flooring Works
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Wall Finishes
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Architectural Finishes
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 03 -->
+
+    <div class="service-detail">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services4.webp') }}"
+          alt="Stone and Marble Works"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 03
+        </div>
+
+        <h2>
+          Stone & Marble Works
+        </h2>
+
+        <p>
+          Our stone and marble capabilities support premium
+          architectural applications where precision, alignment
+          and finishing quality are essential.
+        </p>
+
+        <p>
+          We work with natural stone and marble surfaces for
+          residential, commercial and architectural environments.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Stone Cladding
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Marble Installation
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Wall Cladding
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Surface Finishing
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 04 -->
+
+    <div class="service-detail reverse">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services5.webp') }}"
+          alt="Maintenance and Renovation"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 04
+        </div>
+
+        <h2>
+          Maintenance & Renovation
+        </h2>
+
+        <p>
+          We help property owners maintain, improve and renew
+          existing spaces through practical maintenance and
+          renovation solutions.
+        </p>
+
+        <p>
+          Our services can support individual maintenance
+          requirements as well as broader refurbishment and
+          renovation projects.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Property Maintenance
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Renovation Works
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Refurbishment
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Building Improvements
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 05 -->
+
+    <div class="service-detail">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services6.webp') }}"
+          alt="Building Materials Trading"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 05
+        </div>
+
+        <h2>
+          Building Materials Trading
+        </h2>
+
+        <p>
+          Our trading activities support construction projects by
+          providing access to quality building materials required
+          for different stages of project execution.
+        </p>
+
+        <p>
+          We work with contractors, project teams and property
+          owners to support material requirements with dependable
+          supply and professional service.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Construction Materials
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Tiles & Surfaces
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Stone Materials
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Project Supply
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 06 -->
+
+    <div class="service-detail reverse">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services7.webp') }}"
+          alt="General Contracting"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 06
+        </div>
+
+        <h2>
+          General Contracting
+        </h2>
+
+        <p>
+          Our general contracting services bring together
+          construction activities, project coordination and
+          specialist works to help clients manage their projects
+          efficiently.
+        </p>
+
+        <p>
+          We focus on organized execution, communication and
+          coordination between project requirements, workforce,
+          materials and timelines.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Project Coordination
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Contractor Management
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Site Supervision
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Project Support
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 07 -->
+
+    <div
+      class="service-detail"
+      id="interiors-fitout">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services8.webp') }}"
+          alt="Interiors and Fit Out"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 07
+        </div>
+
+        <h2>
+          Interiors & Fit Out
+        </h2>
+
+        <p>
+          Our interior and fit-out services transform building
+          spaces into functional, refined and professionally
+          finished environments tailored to project requirements.
+        </p>
+
+        <p>
+          We coordinate interior finishing activities with careful
+          attention to workmanship, materials, detailing and the
+          overall architectural character of each space.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Interior Fit Out
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Ceiling & Partition Works
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Flooring & Wall Finishes
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Architectural Finishes
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICE 08 -->
+
+    <div
+      class="service-detail reverse"
+      id="stone-tile">
+
+      <div class="service-detail-image">
+
+        <img
+          src="{{ url_for('static', filename='images/services/services9.webp') }}"
+          alt="Stone and Tile Works"
+          loading="lazy">
+
+      </div>
+
+
+      <div class="service-detail-content">
+
+        <div class="detail-number">
+          SERVICE 08
+        </div>
+
+        <h2>
+          Stone & Tile Works
+        </h2>
+
+        <p>
+          We provide specialist stone and tile installation for
+          residential, commercial and architectural projects,
+          combining precision, alignment and quality finishing.
+        </p>
+
+        <p>
+          Our capabilities include floor and wall tiling, natural
+          stone applications, marble installation and architectural
+          cladding designed to deliver durable and visually refined
+          surfaces.
+        </p>
+
+        <div class="detail-list">
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Floor Tile Installation
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Wall Tile Installation
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Natural Stone Works
+          </div>
+
+          <div class="detail-list-item">
+            <i class="fas fa-check"></i>
+            Stone & Tile Cladding
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     OUR APPROACH
+========================================================= -->
+
+<section class="approach-section">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-label">
+        Our Approach
+      </div>
+
+      <h2>
+        How We Deliver Our Services
+      </h2>
+
+      <p>
+        A structured approach helps us maintain quality,
+        communication and accountability throughout every project.
+      </p>
+
+    </div>
+
+
+    <div class="approach-grid">
+
+
+      <div class="approach-card">
+
+        <div class="approach-number">
+          01
+        </div>
+
+        <h3>
+          Understand
+        </h3>
+
+        <p>
+          We begin by understanding the project scope,
+          requirements, objectives and expectations.
+        </p>
+
+      </div>
+
+
+      <div class="approach-card">
+
+        <div class="approach-number">
+          02
+        </div>
+
+        <h3>
+          Plan
+        </h3>
+
+        <p>
+          We organize resources, materials, workforce and
+          project activities around the agreed requirements.
+        </p>
+
+      </div>
+
+
+      <div class="approach-card">
+
+        <div class="approach-number">
+          03
+        </div>
+
+        <h3>
+          Execute
+        </h3>
+
+        <p>
+          Our team carries out the work with attention to
+          quality, safety, precision and professional standards.
+        </p>
+
+      </div>
+
+
+      <div class="approach-card">
+
+        <div class="approach-number">
+          04
+        </div>
+
+        <h3>
+          Deliver
+        </h3>
+
+        <p>
+          We complete the work responsibly while maintaining
+          communication and focusing on client satisfaction.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     ADVANTAGES
+========================================================= -->
+
+<section class="advantages-section">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-label">
+        Why Choose Us
+      </div>
+
+      <h2>
+        Built Around Professional Service
+      </h2>
+
+      <p>
+        Our services are designed around the qualities that matter
+        most to clients and project partners.
+      </p>
+
+    </div>
+
+
+    <div class="advantages-grid">
+
+
+      <div class="advantage-card">
+
+        <div class="advantage-icon">
+          <i class="fas fa-medal"></i>
+        </div>
+
+        <h3>
+          Quality Focus
+        </h3>
+
+        <p>
+          We maintain attention to workmanship, materials and
+          finishing quality throughout project execution.
+        </p>
+
+      </div>
+
+
+      <div class="advantage-card">
+
+        <div class="advantage-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+
+        <h3>
+          Responsible Execution
+        </h3>
+
+        <p>
+          We approach every project with responsibility,
+          organization and respect for safety requirements.
+        </p>
+
+      </div>
+
+
+      <div class="advantage-card">
+
+        <div class="advantage-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+
+        <h3>
+          Clear Communication
+        </h3>
+
+        <p>
+          We maintain professional communication with clients
+          and project partners throughout the work.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="services-cta">
+
+  <div class="container">
+
+    <h2>
+      Let's Build Something Exceptional
+    </h2>
+
+    <p>
+      Whether you are planning a new construction project,
+      renovation, finishing works or material supply,
+      our team is ready to discuss your requirements.
+    </p>
+
+    <a
+      href="{{ url_for('contact') }}"
+      class="services-cta-button">
+
+      Request a Quote
+
+      <i
+        class="fas fa-arrow-right"
+        style="margin-left:10px;">
+      </i>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+{% endblock %}

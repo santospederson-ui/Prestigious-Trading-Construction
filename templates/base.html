@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-QA">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>
+{% block title %}
+Prestigious Trading & Construction | Qatar
+{% endblock %}
+</title>
+
+<!-- SEO DESCRIPTION -->
+<meta name="description" content="Prestigious Trading & Construction Company W.L.L. provides professional construction, building, contracting, trading and project solutions across Qatar.">
+<meta name="keywords" content="construction Qatar, building contractor Qatar, construction company Doha, contracting Qatar, trading Qatar, building services Doha">
+<meta name="author" content="Prestigious Trading & Construction Company W.L.L.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.base_url }}">
+
+<!-- MOBILE BRAND COLOR -->
+<meta name="theme-color" content="#1F2A44">
+
+<!-- OPEN GRAPH -->
+<meta property="og:site_name" content="Prestigious Trading & Construction">
+<meta property="og:title" content="Prestigious Trading & Construction | Qatar">
+<meta property="og:description" content="Professional construction, contracting, trading and project solutions across Qatar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.url }}">
+<meta property="og:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prestigious Trading & Construction | Qatar">
+<meta name="twitter:description" content="Professional construction, contracting, trading and project solutions across Qatar.">
+<meta name="twitter:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
+
+<!-- GOOGLE FONT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<!-- BASE INLINE STYLES -->
+<style>
+
+:root {
+  --construction-primary: #1F2A44;
+  --construction-dark: #111827;
+  --construction-accent: #C58B2A;
+  --construction-light: #F5F7FA;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --bg-light: #f8fafc;
+  --border-color: #e2e8f0;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-light);
+  color: var(--text-primary);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* NAVBAR DESIGN */
+
+.navbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 85px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text h2 {
+  font-family: var(--font-serif);
+  color: var(--construction-primary);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.logo-text span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--construction-accent);
+  font-weight: 700;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--construction-primary);
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+nav a:not(.nav-btn):hover {
+  color: var(--construction-accent);
+}
+
+nav a:not(.nav-btn)::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--construction-accent);
+  transition: var(--transition-smooth);
+}
+
+nav a:not(.nav-btn):hover::after {
+  width: 100%;
+}
+
+nav .nav-btn {
+  background: var(--construction-primary);
+  color: #ffffff !important;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(31, 42, 68, 0.2);
+  transition: var(--transition-smooth);
+}
+
+nav .nav-btn:hover {
+  background: var(--construction-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(31, 42, 68, 0.3);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--construction-primary);
+  cursor: pointer;
+}
+
+/* MAIN CONTENT */
+
+main {
+  flex: 1;
+}
+
+/* FLASH ALERTS */
+
+.alert-wrapper {
+  position: fixed;
+  top: 95px;
+  right: 24px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.alert {
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-success {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.alert-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.alert-warning {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.alert-info {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+/* FOOTER */
+
+footer {
+  background: var(--construction-dark);
+  color: #ffffff;
+  padding: 70px 0 30px;
+  margin-top: auto;
+  border-top: 4px solid var(--construction-accent);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+footer h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+footer h4 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: var(--construction-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+footer p {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+footer a:hover {
+  color: var(--construction-accent);
+  padding-left: 4px;
+}
+
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 25px;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 992px) {
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 85px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 24px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    gap: 16px;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+}
+
+</style>
+
+<!-- FAVICON -->
+
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon/favicon.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
+
+<!-- STRUCTURED DATA -->
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Prestigious Trading & Construction Company W.L.L.",
+  "url":"{{ request.url_root[:-1] }}",
+  "logo":"{{ url_for('static', filename='images/logo.png', _external=True) }}",
+  "image":"{{ url_for('static', filename='images/logo.png', _external=True) }}",
+  "telephone":"+974 XXXXXXXX",
+  "address":{
+    "@type":"PostalAddress",
+    "addressLocality":"Doha",
+    "addressCountry":"QA"
+  }
+}
+</script>
+
+</head>
+
+<body>
+
+<!-- =========================
+NAVBAR
+========================= -->
+
+<header class="navbar">
+
+<div class="container nav-wrapper">
+
+<div class="logo">
+
+    <a href="{{ url_for('home') }}">
+        <img
+            src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="Prestigious Trading and Construction Qatar Logo">
+    </a>
+
+    <div class="logo-text">
+        <h2>Prestigious</h2>
+        <span>Trading & Construction</span>
+    </div>
+
+</div>
+
+<!-- MOBILE MENU BUTTON -->
+
+<button class="mobile-menu-btn" id="mobileMenuBtn">
+
+    <i class="fas fa-bars"></i>
+
+</button>
+
+<nav id="navMenu">
+
+    <a href="{{ url_for('home') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('about') }}">
+        About
+    </a>
+
+    <a href="{{ url_for('services') }}">
+        Services
+    </a>
+
+    <a href="{{ url_for('projects') }}">
+        Projects
+    </a>
+
+    <a href="{{ url_for('maintenance') }}">
+        Maintenance
+    </a>
+
+    <a href="{{ url_for('why_choose_us') }}">
+        Why Choose Us
+    </a>
+
+    <a href="{{ url_for('careers') }}">
+        Careers
+    </a>
+
+    <a href="{{ url_for('contact') }}">
+        Contact
+    </a>
+
+    <a href="{{ url_for('contact') }}" class="nav-btn">
+        Request a Quote
+    </a>
+
+</nav>
+
+</div>
+
+</header>
+
+<!-- =========================
+MAIN CONTENT
+========================= -->
+
+<main>
+
+<div class="alert-wrapper container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+  {% if messages %}
+
+    {% for category, message in messages %}
+
+      <div class="alert alert-{{ category }}" role="alert">
+
+        {{ message }}
+
+      </div>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endwith %}
+
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+</main>
+
+<!-- =========================
+FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-container">
+
+<div>
+
+<h3>Prestigious Trading & Construction</h3>
+
+<p>
+Professional construction, contracting and trading solutions
+in Qatar built on quality, reliability and excellence.
+</p>
+
+</div>
+
+<div>
+
+    <h4>Quick Links</h4>
+
+    <p>
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('about') }}">
+            About Us
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('services') }}">
+            Services
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('projects') }}">
+            Projects
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('maintenance') }}">
+            Maintenance
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('why_choose_us') }}">
+            Why Choose Us
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('careers') }}">
+            Careers
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('contact') }}">
+            Contact
+        </a>
+    </p>
+
+</div>
+
+
+<!-- =========================
+SERVICES LINKS
+========================= -->
+
+<div>
+
+    <h4>Services</h4>
+
+    <p>
+        <a href="{{ url_for('services') }}#general-contracting">
+            General Contracting
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('services') }}#building-construction">
+            Building Construction
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('services') }}#interior-fitout">
+            Interior & Fit-Out
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('services') }}#stone-tile">
+            Stone & Tile Works
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('maintenance') }}">
+            Maintenance
+        </a>
+    </p>
+
+</div>
+
+
+<div>
+
+<h4>Contact</h4>
+
+<p>📍 Doha, Qatar</p>
+
+<p>📞 +974 XXXXXXXX</p>
+
+<p>✉ info@prestigiousconstruction.com</p>
+
+</div>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Prestigious Trading & Construction Company W.L.L.
+All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const alerts = document.querySelectorAll(
+    ".alert-success, .alert-danger, .alert-warning, .alert-info"
+  );
+
+  alerts.forEach(function(alert){
+
+    setTimeout(function(){
+
+      alert.style.transition="opacity .8s ease";
+
+      alert.style.opacity="0";
+
+      setTimeout(function(){
+
+        alert.remove();
+
+      }, 800);
+
+    }, 8000);
+
+  });
+
+});
+
+</script>
+
+</body>
+
+</html>

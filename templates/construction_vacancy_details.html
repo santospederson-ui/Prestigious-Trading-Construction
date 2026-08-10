@@ -1,0 +1,727 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ vacancy.title }} | Careers | Prestigious Trading & Construction
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   CONSTRUCTION VACANCY DETAILS
+========================================================= */
+
+.vacancy-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    color: #244b3a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.vacancy-back:hover {
+    color: #b08d57;
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.vacancy-detail-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 45px;
+    padding: 65px 55px;
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            135deg,
+            #18382b 0%,
+            #244b3a 55%,
+            #315d49 100%
+        );
+    color: #ffffff;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+}
+
+.vacancy-detail-header::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    right: -120px;
+    top: -150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.vacancy-detail-header::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: 100px;
+    bottom: -150px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vacancy-header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 950px;
+}
+
+.vacancy-kicker {
+    margin-bottom: 14px;
+    color: #d5b477;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.vacancy-detail-header h1 {
+    margin: 0 0 18px;
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.vacancy-header-description {
+    max-width: 800px;
+    margin: 0 0 30px;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.vacancy-header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.vacancy-header-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.vacancy-header-meta-item i {
+    color: #d5b477;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.vacancy-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 35px;
+    align-items: start;
+    margin-bottom: 70px;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.vacancy-main-card {
+    padding: 45px;
+    border: 1px solid #e9e5df;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+}
+
+.vacancy-section {
+    padding-bottom: 38px;
+    margin-bottom: 38px;
+    border-bottom: 1px solid #ece8e2;
+}
+
+.vacancy-section:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.vacancy-section-label {
+    margin-bottom: 10px;
+    color: #b08d57;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.vacancy-section h2 {
+    margin: 0 0 20px;
+    color: #18382b;
+    font-size: 28px;
+    line-height: 1.25;
+}
+
+.vacancy-text-list {
+    color: #5c625e;
+    font-size: 15px;
+    line-height: 1.9;
+    white-space: pre-line;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.vacancy-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    position: sticky;
+    top: 25px;
+}
+
+.vacancy-sidebar-card,
+.vacancy-apply-card {
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+}
+
+.vacancy-sidebar-card {
+    padding: 30px;
+    border: 1px solid #e9e5df;
+}
+
+.vacancy-sidebar-card h3 {
+    margin: 0 0 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #ece8e2;
+    color: #18382b;
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   INFO ITEMS
+========================================================= */
+
+.vacancy-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid #f0ede8;
+}
+
+.vacancy-info-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.vacancy-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f4f0e9;
+    color: #244b3a;
+    font-size: 15px;
+}
+
+.vacancy-info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.vacancy-info-text span {
+    color: #858a86;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.vacancy-info-text strong {
+    color: #303733;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   APPLY CARD
+========================================================= */
+
+.vacancy-apply-card {
+    padding: 32px;
+    background:
+        linear-gradient(
+            145deg,
+            #18382b,
+            #244b3a
+        );
+    color: #ffffff;
+}
+
+.vacancy-apply-card h3 {
+    margin: 0 0 14px;
+    color: #ffffff;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.vacancy-apply-card p {
+    margin: 0 0 25px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.apply-now-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 10px;
+    background: #d5b477;
+    color: #18382b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+}
+
+.apply-now-button:hover {
+    background: #ffffff;
+    color: #18382b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .vacancy-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vacancy-sidebar {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .vacancy-detail-header {
+        padding: 42px 28px;
+        border-radius: 14px;
+    }
+
+    .vacancy-detail-header h1 {
+        font-size: 34px;
+    }
+
+    .vacancy-main-card {
+        padding: 30px 25px;
+        border-radius: 14px;
+    }
+
+    .vacancy-sidebar-card,
+    .vacancy-apply-card {
+        padding: 25px;
+        border-radius: 14px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .vacancy-back {
+        margin-bottom: 20px;
+    }
+
+    .vacancy-detail-header {
+        padding: 35px 22px;
+    }
+
+    .vacancy-detail-header h1 {
+        font-size: 29px;
+    }
+
+    .vacancy-header-description {
+        font-size: 14px;
+    }
+
+    .vacancy-header-meta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .vacancy-header-meta-item {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .vacancy-main-card {
+        padding: 25px 20px;
+    }
+
+    .vacancy-section h2 {
+        font-size: 24px;
+    }
+
+}
+</style>
+
+
+<!-- BACK -->
+
+<a href="{{ url_for('careers') }}" class="vacancy-back">
+    <i class="fas fa-arrow-left"></i>
+    Back to Careers
+</a>
+
+
+<!-- HEADER -->
+
+<div class="vacancy-detail-header">
+
+    <div class="vacancy-header-content">
+
+        <div class="vacancy-kicker">
+            Career Opportunity
+        </div>
+
+        <h1>
+            {{ vacancy.title }}
+        </h1>
+
+        {% if vacancy.description %}
+        <p class="vacancy-header-description">
+            {{ vacancy.description }}
+        </p>
+        {% endif %}
+
+        <div class="vacancy-header-meta">
+
+            {% if vacancy.department %}
+            <div class="vacancy-header-meta-item">
+                <i class="fas fa-building"></i>
+                <span>{{ vacancy.department }}</span>
+            </div>
+            {% endif %}
+
+            {% if vacancy.location %}
+            <div class="vacancy-header-meta-item">
+                <i class="fas fa-location-dot"></i>
+                <span>{{ vacancy.location }}</span>
+            </div>
+            {% endif %}
+
+            {% if vacancy.employment_type %}
+            <div class="vacancy-header-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>{{ vacancy.employment_type }}</span>
+            </div>
+            {% endif %}
+
+            {% if vacancy.experience %}
+            <div class="vacancy-header-meta-item">
+                <i class="fas fa-briefcase"></i>
+                <span>
+                    Experience: {{ vacancy.experience }}
+                </span>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="vacancy-content-grid">
+
+    <main class="vacancy-main-card">
+
+        {% if vacancy.description %}
+
+        <section class="vacancy-section">
+
+            <div class="vacancy-section-label">
+                About The Position
+            </div>
+
+            <h2>
+                Job Overview
+            </h2>
+
+            <div class="vacancy-text-list">
+                {{ vacancy.description }}
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        {% if vacancy.responsibilities %}
+
+        <section class="vacancy-section">
+
+            <div class="vacancy-section-label">
+                Responsibilities
+            </div>
+
+            <h2>
+                What You Will Do
+            </h2>
+
+            <div class="vacancy-text-list">
+                {{ vacancy.responsibilities }}
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        {% if vacancy.requirements %}
+
+        <section class="vacancy-section">
+
+            <div class="vacancy-section-label">
+                Requirements
+            </div>
+
+            <h2>
+                What We Are Looking For
+            </h2>
+
+            <div class="vacancy-text-list">
+                {{ vacancy.requirements }}
+            </div>
+
+        </section>
+
+        {% endif %}
+
+    </main>
+
+
+    <aside class="vacancy-sidebar">
+
+        <div class="vacancy-sidebar-card">
+
+            <h3>
+                Position Details
+            </h3>
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>Position</span>
+
+                    <strong>
+                        {{ vacancy.title }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if vacancy.department %}
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>Department</span>
+
+                    <strong>
+                        {{ vacancy.department }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if vacancy.location %}
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-location-dot"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>Location</span>
+
+                    <strong>
+                        {{ vacancy.location }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if vacancy.employment_type %}
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>Employment Type</span>
+
+                    <strong>
+                        {{ vacancy.employment_type }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if vacancy.experience %}
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>Experience</span>
+
+                    <strong>
+                        {{ vacancy.experience }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if vacancy.deadline %}
+
+            <div class="vacancy-info-item">
+
+                <div class="vacancy-info-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+
+                <div class="vacancy-info-text">
+
+                    <span>
+                        Application Deadline
+                    </span>
+
+                    <strong>
+                        {{ vacancy.deadline.strftime('%d %B %Y') }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- APPLY CARD -->
+
+        <div class="vacancy-apply-card">
+
+            <h3>
+                Interested In This Position?
+            </h3>
+
+            <p>
+                Submit your application and CV to our
+                recruitment team. We will review your
+                application and contact you if your
+                qualifications match the position.
+            </p>
+
+            <a
+                href="{{ url_for('apply_construction_vacancy', vacancy_id=vacancy.id) }}"
+                class="apply-now-button"
+            >
+
+                <i class="fas fa-file-arrow-up"></i>
+
+                Apply Now
+
+            </a>
+
+        </div>
+
+    </aside>
+
+</div>
+
+{% endblock %}

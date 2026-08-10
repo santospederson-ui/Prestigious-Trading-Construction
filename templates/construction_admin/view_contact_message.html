@@ -1,0 +1,749 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Message | Prestigious Trading & Construction
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   CONSTRUCTION CONTACT MESSAGE
+========================================= */
+
+.message-page {
+
+    background: #f5f7f5;
+
+    min-height: calc(100vh - 70px);
+
+    padding: 45px 25px;
+
+}
+
+
+.message-container {
+
+    max-width: 1000px;
+
+    margin: auto;
+
+}
+
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.message-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.message-heading {
+
+    margin: 0;
+
+    color: #17201b;
+
+    font-family:
+        var(--font-serif,
+        'Playfair Display',
+        serif);
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+}
+
+
+.message-subtitle {
+
+    margin-top: 6px;
+
+    color: #68736d;
+
+    font-size: 14px;
+
+}
+
+
+.back-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: .25s;
+
+}
+
+
+.back-button:hover {
+
+    background: #c49a4a;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================
+   MESSAGE CARD
+========================================= */
+
+.message-card {
+
+    background: #ffffff;
+
+    border: 1px solid #dfe4df;
+
+    box-shadow:
+        0 12px 35px rgba(23,32,27,.07);
+
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.message-card-header {
+
+    padding: 25px 30px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+}
+
+
+.message-card-header-inner {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+
+.message-card-header h2 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+.message-id {
+
+    font-size: 12px;
+
+    opacity: .8;
+
+}
+
+
+/* =========================================
+   DETAILS
+========================================= */
+
+.message-details {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    border-bottom: 1px solid #dfe4df;
+
+}
+
+
+.detail-item {
+
+    padding: 22px 30px;
+
+    border-bottom: 1px solid #edf0ed;
+
+}
+
+
+.detail-item:nth-child(odd) {
+
+    border-right: 1px solid #edf0ed;
+
+}
+
+
+.detail-label {
+
+    display: block;
+
+    color: #68736d;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 7px;
+
+}
+
+
+.detail-value {
+
+    color: #17201b;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+
+}
+
+
+.detail-value a {
+
+    color: #244b3a;
+
+    text-decoration: none;
+
+}
+
+
+.detail-value a:hover {
+
+    color: #c49a4a;
+
+}
+
+
+/* =========================================
+   MESSAGE BODY
+========================================= */
+
+.message-content {
+
+    padding: 30px;
+
+}
+
+
+.content-label {
+
+    color: #244b3a;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 10px;
+
+}
+
+
+.subject {
+
+    color: #17201b;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    margin-bottom: 25px;
+
+}
+
+
+.message-text {
+
+    background: #f5f6f3;
+
+    border: 1px solid #dfe4df;
+
+    padding: 25px;
+
+    color: #3f4943;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+
+    min-height: 150px;
+
+}
+
+
+/* =========================================
+   SERVICE BADGE
+========================================= */
+
+.service-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 12px;
+
+    background: rgba(36,75,58,.08);
+
+    color: #244b3a;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.message-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding: 20px 30px;
+
+    border-top: 1px solid #dfe4df;
+
+}
+
+
+.footer-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.reply-button {
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+}
+
+
+.reply-button:hover {
+
+    background: #c49a4a;
+
+    color: #ffffff;
+
+}
+
+
+.close-button {
+
+    background: #eef1ee;
+
+    color: #344139;
+
+}
+
+
+.close-button:hover {
+
+    background: #dfe4df;
+
+    color: #17201b;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .message-page {
+
+        padding: 25px 12px;
+
+    }
+
+
+    .message-top {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .message-heading {
+
+        font-size: 27px;
+
+    }
+
+
+    .back-button {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+
+    .message-details {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .detail-item:nth-child(odd) {
+
+        border-right: none;
+
+    }
+
+
+    .message-card-header-inner {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .message-content {
+
+        padding: 22px;
+
+    }
+
+
+    .message-details .detail-item {
+
+        padding: 18px 22px;
+
+    }
+
+
+    .message-footer {
+
+        padding: 18px 22px;
+
+        flex-direction: column;
+
+    }
+
+
+    .footer-button {
+
+        justify-content: center;
+
+    }
+
+}
+
+</style>
+
+
+<div class="message-page">
+
+    <div class="message-container">
+
+
+        <!-- =====================================
+             PAGE HEADER
+        ====================================== -->
+
+        <div class="message-top">
+
+            <div>
+
+                <h1 class="message-heading">
+                    Contact Message
+                </h1>
+
+                <div class="message-subtitle">
+                    View enquiry details submitted through
+                    the construction website.
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('construction_contact_messages') }}"
+                class="back-button">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Back To Messages
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================
+             MESSAGE CARD
+        ====================================== -->
+
+        <div class="message-card">
+
+
+            <!-- HEADER -->
+
+            <div class="message-card-header">
+
+                <div class="message-card-header-inner">
+
+                    <h2>
+                        {{ message.subject }}
+                    </h2>
+
+                    <span class="message-id">
+
+                        Message #{{ message.id }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DETAILS -->
+
+            <div class="message-details">
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Full Name
+                    </span>
+
+                    <div class="detail-value">
+                        {{ message.name }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <div class="detail-value">
+
+                        <a
+                            href="tel:{{ message.phone }}">
+
+                            {{ message.phone }}
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <div class="detail-value">
+
+                        <a
+                            href="mailto:{{ message.email }}">
+
+                            {{ message.email }}
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Service Required
+                    </span>
+
+                    <div class="detail-value">
+
+                        <span class="service-badge">
+
+                            <i class="fas fa-briefcase"></i>
+
+                            {{ message.service }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Date Submitted
+                    </span>
+
+                    <div class="detail-value">
+
+                        {{ message.created_at }}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <div class="message-content">
+
+
+                <div class="content-label">
+                    Subject
+                </div>
+
+                <div class="subject">
+                    {{ message.subject }}
+                </div>
+
+
+                <div class="content-label">
+                    Message
+                </div>
+
+                <div class="message-text">
+
+                    {{ message.message }}
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="message-footer">
+
+
+                <a
+                    href="mailto:{{ message.email }}?subject=Re: {{ message.subject }}"
+                    class="footer-button reply-button">
+
+                    <i class="fas fa-reply"></i>
+
+                    Reply By Email
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('construction_contact_messages') }}"
+                    class="footer-button close-button">
+
+                    <i class="fas fa-arrow-left"></i>
+
+                    Back
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

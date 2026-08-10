@@ -1,0 +1,917 @@
+{% extends "base.html" %}
+
+{% block title %}
+Construction | Email Settings
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   CONSTRUCTION EMAIL SETTINGS
+   BODY ONLY
+========================================= */
+
+.construction-email-page {
+
+    min-height: calc(100vh - 80px);
+
+    background: #F4F8F4;
+
+    padding: 40px 25px;
+
+}
+
+
+.construction-email-container {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.email-settings-card {
+
+    background: #ffffff;
+
+    border: 1px solid #DCE7DE;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(35,66,54,.08);
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.email-settings-header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #3F6B57,
+            #234236
+        );
+
+    color: #ffffff;
+
+    padding: 30px 35px;
+
+}
+
+
+.email-settings-header-content {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+}
+
+
+.email-settings-header-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.12);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+}
+
+
+.email-settings-header h2 {
+
+    margin: 0;
+
+    font-family:
+        'Playfair Display',
+        Georgia,
+        serif;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+}
+
+
+.email-settings-header p {
+
+    margin: 6px 0 0;
+
+    color: #D9E7DE;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+.email-settings-body {
+
+    padding: 35px;
+
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.email-field {
+
+    margin-bottom: 22px;
+
+}
+
+
+.email-field label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #24352D;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.email-field label i {
+
+    color: #3F6B57;
+
+    width: 18px;
+
+    margin-right: 5px;
+
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.email-input {
+
+    width: 100%;
+
+    height: 49px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #CBD9D0;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #24352D;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition: all .25s ease;
+
+}
+
+
+.email-input:hover {
+
+    border-color: #AFC4B5;
+
+}
+
+
+.email-input:focus {
+
+    outline: none;
+
+    border-color: #3F6B57;
+
+    box-shadow:
+        0 0 0 3px rgba(63,107,87,.12);
+
+}
+
+
+/* =========================================
+   PASSWORD NOTE
+========================================= */
+
+.password-note {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #687A70;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   TLS
+========================================= */
+
+.email-security-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 15px 16px;
+
+    margin-top: 5px;
+
+    margin-bottom: 25px;
+
+    background: #F4F8F4;
+
+    border: 1px solid #DCE7DE;
+
+    border-radius: 9px;
+
+}
+
+
+.email-security-option input {
+
+    width: 18px;
+
+    height: 18px;
+
+    margin: 0;
+
+    accent-color: #3F6B57;
+
+}
+
+
+.email-security-option label {
+
+    margin: 0;
+
+    color: #24352D;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.email-security-option i {
+
+    color: #3F6B57;
+
+    margin-left: auto;
+
+}
+
+
+/* =========================================
+   SAVE BUTTON
+========================================= */
+
+.email-save-btn {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #3F6B57;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+
+}
+
+
+.email-save-btn:hover {
+
+    background: #234236;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(35,66,54,.15);
+
+}
+
+
+.email-save-btn i {
+
+    margin-right: 7px;
+
+}
+
+
+/* =========================================
+   INFORMATION BOX
+========================================= */
+
+.email-info-box {
+
+    margin-top: 30px;
+
+    padding: 20px;
+
+    background: #EDF5EE;
+
+    border: 1px solid #DCE7DE;
+
+    border-left: 4px solid #3F6B57;
+
+    border-radius: 9px;
+
+}
+
+
+.email-info-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+
+    color: #234236;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+}
+
+
+.email-info-title i {
+
+    color: #3F6B57;
+
+}
+
+
+.email-info-box ul {
+
+    margin: 0;
+
+    padding-left: 20px;
+
+}
+
+
+.email-info-box li {
+
+    margin-bottom: 7px;
+
+    color: #687A70;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+.email-info-box li:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.email-info-box strong {
+
+    color: #3F6B57;
+
+}
+
+
+/* =========================================
+   SECURITY MESSAGE
+========================================= */
+
+.email-security-note {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 14px 16px;
+
+    background: #F8FAF8;
+
+    border: 1px solid #DCE7DE;
+
+    border-radius: 8px;
+
+    color: #687A70;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+.email-security-note i {
+
+    color: #3F6B57;
+
+    margin-top: 2px;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .construction-email-page {
+
+        padding: 25px 12px;
+
+    }
+
+
+    .email-settings-header {
+
+        padding: 25px 22px;
+
+    }
+
+
+    .email-settings-header-content {
+
+        align-items: flex-start;
+
+    }
+
+
+    .email-settings-header h2 {
+
+        font-size: 22px;
+
+    }
+
+
+    .email-settings-header p {
+
+        font-size: 12px;
+
+    }
+
+
+    .email-settings-body {
+
+        padding: 22px 18px;
+
+    }
+
+}
+
+
+</style>
+
+
+<div class="construction-email-page">
+
+
+    <div class="construction-email-container">
+
+
+        <div class="email-settings-card">
+
+
+            <!-- =================================
+                 HEADER
+            ================================== -->
+
+            <div class="email-settings-header">
+
+                <div class="email-settings-header-content">
+
+
+                    <div class="email-settings-header-icon">
+
+                       <i class="fas fa-envelope"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Email Notification Settings
+                        </h2>
+
+                        <p>
+                            Configure Brevo SMTP for
+                            Prestigious Trading & Construction
+                            enquiry notifications.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 BODY
+            ================================== -->
+
+            <div class="email-settings-body">
+
+
+                <form method="POST">
+
+
+                    <!-- SMTP SERVER -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-server"></i>
+
+                            SMTP Server
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="smtp_server"
+                            class="email-input"
+                            value="{{ settings.smtp_server if settings else 'smtp-relay.brevo.com' }}"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SMTP PORT -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-network-wired"></i>
+
+                            SMTP Port
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            name="smtp_port"
+                            class="email-input"
+                            value="{{ settings.smtp_port if settings else '587' }}"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SMTP USERNAME -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-user"></i>
+
+                            Brevo SMTP Username
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="smtp_username"
+                            class="email-input"
+                            value="{{ settings.smtp_username if settings else '' }}"
+                            placeholder="example@smtp-brevo.com"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SMTP PASSWORD -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-key"></i>
+
+                            Brevo SMTP Key
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            name="smtp_password"
+                            class="email-input"
+                            placeholder="Enter Brevo SMTP Key"
+                            {% if not settings %}required{% endif %}
+                        >
+
+
+                        {% if settings %}
+
+                        <span class="password-note">
+
+                            Leave blank to keep the existing
+                            SMTP key.
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- SENDER EMAIL -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-at"></i>
+
+                            Sender Email
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            name="from_email"
+                            class="email-input"
+                            value="{{ settings.from_email if settings else '' }}"
+                            placeholder="noreply@yourdomain.com"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SENDER NAME -->
+
+                    <div class="email-field">
+
+                        <label>
+
+                            <i class="fas fa-signature"></i>
+
+                            Sender Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="sender_name"
+                            class="email-input"
+                            value="{{ settings.sender_name if settings else 'Prestigious Trading & Construction' }}"
+                        >
+
+                    </div>
+
+
+
+                    <!-- TLS -->
+
+                    <div class="email-security-option">
+
+                        <input
+                            type="checkbox"
+                            name="use_tls"
+                            id="use_tls"
+                            {% if not settings or settings.use_tls %}checked{% endif %}
+                        >
+
+
+                        <label for="use_tls">
+
+                            Enable TLS Security
+
+                        </label>
+
+
+                        <i class="fas fa-shield-halved"></i>
+
+                    </div>
+
+
+
+                    <!-- SAVE -->
+
+                    <button
+                        type="submit"
+                        class="email-save-btn"
+                    >
+
+                        <i class="fas fa-save"></i>
+
+                        Save Email Settings
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =================================
+                     BREVO GUIDE
+                ================================== -->
+
+                <div class="email-info-box">
+
+
+                    <div class="email-info-title">
+
+                        <i class="fas fa-circle-info"></i>
+
+                        Brevo Configuration Guide
+
+                    </div>
+
+
+                    <ul>
+
+                        <li>
+
+                            SMTP Server:
+
+                            <strong>
+                                smtp-relay.brevo.com
+                            </strong>
+
+                        </li>
+
+
+                        <li>
+
+                            SMTP Port:
+
+                            <strong>
+                                587
+                            </strong>
+
+                        </li>
+
+
+                        <li>
+
+                            Security:
+
+                            <strong>
+                                TLS
+                            </strong>
+
+                        </li>
+
+
+                        <li>
+
+                            Use your
+                            <strong>
+                                Brevo SMTP Key
+                            </strong>
+                            rather than your Brevo account password.
+
+                        </li>
+
+
+                        <li>
+
+                            The sender email must be verified
+                            in Brevo.
+
+                        </li>
+
+                    </ul>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     SECURITY NOTE
+                ================================== -->
+
+                <div class="email-security-note">
+
+                    <i class="fas fa-shield-halved"></i>
+
+
+                    <div>
+
+                        <strong style="color:#3F6B57;">
+                            Security:
+                        </strong>
+
+                        Your SMTP credentials are used only
+                        for sending construction website
+                        notifications.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

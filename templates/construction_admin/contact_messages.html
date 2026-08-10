@@ -1,0 +1,1112 @@
+{% extends "base.html" %}
+
+{% block title %}
+Construction | Contact Messages
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   CONSTRUCTION CONTACT MESSAGES
+   ========================================================= */
+
+.messages-page {
+    background: #f5f8f5;
+    min-height: calc(100vh - 70px);
+    padding: 40px 25px;
+}
+
+.messages-container {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.messages-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.messages-title h1 {
+    margin: 0;
+    color: #17201b;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.messages-title p {
+    margin: 8px 0 0;
+    color: #68736d;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 16px;
+
+    background: #244b3a;
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    border-radius: 4px;
+
+    transition: .25s;
+}
+
+.dashboard-btn:hover {
+    background: #c49a4a;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.message-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.message-stat {
+    background: #ffffff;
+    border: 1px solid #dfe8e1;
+    padding: 22px 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    box-shadow: 0 8px 25px rgba(36, 75, 58, .06);
+}
+
+.message-stat-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(36, 75, 58, .09);
+    color: #244b3a;
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+}
+
+.message-stat strong {
+    display: block;
+    color: #17201b;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.message-stat span {
+    color: #68736d;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MESSAGE CARD
+   ========================================================= */
+
+.messages-card {
+    background: #ffffff;
+    border: 1px solid #dfe4df;
+
+    box-shadow:
+        0 12px 35px rgba(23, 32, 27, .06);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.messages-card-header {
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #dfe4df;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.messages-card-header h2 {
+    margin: 0;
+
+    color: #17201b;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.messages-card-header p {
+    margin: 5px 0 0;
+
+    color: #68736d;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.messages-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.messages-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+}
+
+.messages-table thead {
+    background: #f5f7f5;
+}
+
+.messages-table th {
+    padding: 15px 18px;
+
+    text-align: left;
+
+    color: #68736d;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid #dfe4df;
+}
+
+.messages-table td {
+    padding: 18px;
+
+    color: #46524b;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #edf0ed;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   ROW HOVER
+   ========================================================= */
+
+.messages-table tbody tr {
+    transition: .2s;
+}
+
+.messages-table tbody tr:hover {
+    background: #f8fbf8;
+}
+
+
+/* =========================================================
+   UNREAD ROW
+   ========================================================= */
+
+.message-row-unread {
+    background: #f4faf5;
+}
+
+.message-row-unread td {
+    color: #17201b;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NAME
+   ========================================================= */
+
+.sender-name {
+    color: #17201b;
+    font-weight: 800;
+}
+
+.sender-email {
+    color: #7a847e;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+.sender-phone {
+    color: #7a847e;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   SERVICE BADGE
+   ========================================================= */
+
+.service-badge {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    background: rgba(36, 75, 58, .08);
+
+    color: #244b3a;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    border-radius: 4px;
+}
+
+.status-new {
+    background: #e8f5eb;
+    color: #1f6b38;
+}
+
+.status-read {
+    background: #f0f2f0;
+    color: #68736d;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* =========================================================
+   SUBJECT
+   ========================================================= */
+
+.subject-text {
+    max-width: 230px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    color: #17201b;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.message-date {
+    color: #68736d;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.message-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.view-message-btn,
+.delete-message-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 9px 13px;
+
+    border: none;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+    border-radius: 4px;
+}
+
+
+/* VIEW */
+
+.view-message-btn {
+    background: #244b3a;
+    color: #ffffff;
+}
+
+.view-message-btn:hover {
+    background: #c49a4a;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* DELETE */
+
+.delete-message-btn {
+    background: #f8eaea;
+    color: #8a3030;
+}
+
+.delete-message-btn:hover {
+    background: #8a3030;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-messages {
+    padding: 75px 25px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(36, 75, 58, .08);
+
+    color: #244b3a;
+
+    font-size: 28px;
+
+    border-radius: 50%;
+}
+
+.empty-messages h3 {
+    color: #17201b;
+
+    font-size: 22px;
+
+    margin-bottom: 8px;
+}
+
+.empty-messages p {
+    color: #68736d;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.pagination-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px 25px;
+
+    border-top: 1px solid #dfe4df;
+
+    gap: 20px;
+}
+
+.pagination-info {
+    color: #68736d;
+
+    font-size: 13px;
+}
+
+.pagination {
+    display: flex;
+
+    gap: 6px;
+
+    margin: 0;
+}
+
+.pagination a {
+    min-width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid #dfe4df;
+
+    color: #244b3a;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: .2s;
+
+    border-radius: 4px;
+}
+
+.pagination a:hover,
+.pagination a.active {
+    background: #244b3a;
+
+    color: #ffffff;
+
+    border-color: #244b3a;
+}
+
+
+/* =========================================================
+   DELETE FORM
+   ========================================================= */
+
+.delete-form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .messages-page {
+        padding: 25px 12px;
+    }
+
+    .messages-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .messages-title h1 {
+        font-size: 31px;
+    }
+
+    .message-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .messages-card-header {
+        padding: 18px;
+    }
+
+    .pagination-wrapper {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
+
+</style>
+
+
+<div class="messages-page">
+
+    <div class="messages-container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================= -->
+
+        <div class="messages-header">
+
+            <div class="messages-title">
+
+                <h1>
+                    Contact Messages
+                </h1>
+
+                <p>
+                    Manage enquiries received from the construction website.
+                </p>
+
+            </div>
+
+
+            <!-- BACK TO DASHBOARD -->
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="dashboard-btn">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================= -->
+
+        <div class="message-stats">
+
+
+            <!-- TOTAL -->
+
+            <div class="message-stat">
+
+                <div class="message-stat-icon">
+
+                    <i class="fas fa-envelope"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ total_messages|default(0) }}
+                    </strong>
+
+                    <span>
+                        Total Messages
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- UNREAD -->
+
+            <div class="message-stat">
+
+                <div class="message-stat-icon">
+
+                    <i class="fas fa-envelope-open"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ unread_count|default(0) }}
+                    </strong>
+
+                    <span>
+                        Unread Messages
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             MESSAGES CARD
+        ================================================= -->
+
+        <div class="messages-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="messages-card-header">
+
+                <div>
+
+                    <h2>
+                        Construction Enquiries
+                    </h2>
+
+                    <p>
+                        Recent enquiries submitted through the contact form.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MESSAGES
+            ================================================= -->
+
+            {% if messages %}
+
+
+            <div class="messages-table-wrapper">
+
+                <table class="messages-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Sender
+                            </th>
+
+                            <th>
+                                Service
+                            </th>
+
+                            <th>
+                                Subject
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for message in messages %}
+
+
+                        <tr
+                            class="{% if message.status != 'read' %}message-row-unread{% endif %}">
+
+
+                            <!-- =================================
+                                 SENDER
+                            ================================== -->
+
+                            <td>
+
+                                <div class="sender-name">
+
+                                    {{ message.name }}
+
+                                </div>
+
+
+                                <div class="sender-email">
+
+                                    {{ message.email }}
+
+                                </div>
+
+
+                                {% if message.phone %}
+
+                                <div class="sender-phone">
+
+                                    <i class="fas fa-phone"></i>
+
+                                    {{ message.phone }}
+
+                                </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================
+                                 SERVICE
+                            ================================== -->
+
+                            <td>
+
+                                {% if message.service %}
+
+                                    <span class="service-badge">
+
+                                        {{ message.service }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        style="color:#89938d;font-size:12px;">
+
+                                        General Enquiry
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================
+                                 SUBJECT
+                            ================================== -->
+
+                            <td>
+
+                                <div class="subject-text">
+
+                                    {{ message.subject or "Website Enquiry" }}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 STATUS
+                            ================================== -->
+
+                            <td>
+
+
+                                {% if message.status == 'read' %}
+
+
+                                    <span
+                                        class="status-badge status-read">
+
+                                        <span class="status-dot"></span>
+
+                                        Read
+
+                                    </span>
+
+
+                                {% else %}
+
+
+                                    <span
+                                        class="status-badge status-new">
+
+                                        <span class="status-dot"></span>
+
+                                        New
+
+                                    </span>
+
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <!-- =================================
+                                 DATE
+                            ================================== -->
+
+                            <td>
+
+                                <div class="message-date">
+
+                                    {{ message.created_at }}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 ACTION
+                            ================================== -->
+
+                            <td>
+
+                                <div class="message-actions">
+
+
+                                    <!-- VIEW -->
+
+                                    <a
+    href="{{ url_for(
+        'view_construction_contact_message',
+        id=message.id
+    ) }}"
+    class="view-message-btn">
+
+    <i class="fas fa-eye"></i>
+
+    View
+
+</a>
+
+
+                                    <!-- DELETE -->
+
+                                    <form
+    method="POST"
+    action="{{ url_for(
+        'delete_construction_contact_message',
+        id=message.id
+    ) }}"
+    class="delete-form"
+    onsubmit="return confirm(
+        'Are you sure you want to delete this contact message?'
+    );">
+
+    <button
+        type="submit"
+        class="delete-message-btn">
+
+        <i class="fas fa-trash"></i>
+
+        Delete
+
+    </button>
+
+</form>
+
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =================================================
+                 PAGINATION
+            ================================================= -->
+
+            {% if total_pages > 1 %}
+
+
+            <div class="pagination-wrapper">
+
+
+                <div class="pagination-info">
+
+                    Showing page
+                    <strong>{{ page }}</strong>
+                    of
+                    <strong>{{ total_pages }}</strong>
+
+                </div>
+
+
+                <div class="pagination">
+
+
+                    <!-- PREVIOUS -->
+
+                    {% if page > 1 %}
+
+                    <a
+                        href="{{ url_for(
+                            'construction_contact_messages',
+                            page=page-1
+                        ) }}"
+                        title="Previous page">
+
+                        <i class="fas fa-chevron-left"></i>
+
+                    </a>
+
+                    {% endif %}
+
+
+                    <!-- PAGE NUMBERS -->
+
+                    {% for p in range(1, total_pages + 1) %}
+
+
+                        <a
+                            href="{{ url_for(
+                                'construction_contact_messages',
+                                page=p
+                            ) }}"
+                            class="{% if p == page %}active{% endif %}">
+
+                            {{ p }}
+
+                        </a>
+
+
+                    {% endfor %}
+
+
+                    <!-- NEXT -->
+
+                    {% if page < total_pages %}
+
+                    <a
+                        href="{{ url_for(
+                            'construction_contact_messages',
+                            page=page+1
+                        ) }}"
+                        title="Next page">
+
+                        <i class="fas fa-chevron-right"></i>
+
+                    </a>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+            {% endif %}
+
+
+            {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================= -->
+
+            <div class="empty-messages">
+
+                <div class="empty-icon">
+
+                    <i class="fas fa-envelope-open"></i>
+
+                </div>
+
+                <h3>
+                    No Contact Messages
+                </h3>
+
+                <p>
+                    There are currently no construction enquiries.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
