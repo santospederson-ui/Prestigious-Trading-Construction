@@ -678,6 +678,958 @@ def get_construction_email_settings():
 
 
 
+# =========================================================
+# QID EXPIRY MONITORING ENGINE
+# =========================================================
+
+def run_qid_expiry_monitoring():
+
+    print("")
+    print("=========================================================")
+    print("STARTING CONSTRUCTION QID EXPIRY MONITORING")
+    print("=========================================================")
+
+    conn = None
+    cursor = None
+
+    results = {
+        "checked": 0,
+        "notifications_sent": 0,
+        "already_sent": 0,
+        "no_manager_email": 0,
+        "no_staff_email": 0,
+        "no_admin_email": 0,
+        "errors": 0
+    }
+
+    try:
+
+        # =================================================
+        # DATABASE CONNECTION
+        # =================================================
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(dictionary=True)
+
+
+        # =================================================
+        # GET ALL QID RECORDS
+        # =================================================
+
+        cursor.execute("""
+            SELECT
+
+                id,
+
+                staff_name,
+
+                qid_number,
+
+                qid_issue_date,
+
+                qid_expiry_date,
+
+                staff_email,
+
+                manager_name,
+
+                manager_email,
+
+                department,
+
+                position,
+
+                status
+
+            FROM construction_staff_qids
+
+            WHERE qid_expiry_date IS NOT NULL
+
+            ORDER BY qid_expiry_date ASC
+
+        """)
+
+        qids = cursor.fetchall()
+
+
+        today = datetime.utcnow().date()
+
+
+        # =================================================
+        # GET ADMIN EMAIL FROM EXISTING EMAIL SETTINGS
+        # =================================================
+
+        email_settings = get_construction_email_settings()
+
+
+        admin_email = ""
+
+
+        if email_settings:
+
+            admin_email = (
+                email_settings.get("from_email") or ""
+            ).strip()
+
+
+        if admin_email:
+
+            print(
+                "QID ADMIN EMAIL:",
+                admin_email
+            )
+
+        else:
+
+            print(
+                "WARNING: No admin email found in "
+                "construction_email_settings."
+            )
+
+
+        # =================================================
+        # PROCESS EACH QID
+        # =================================================
+
+        for qid in qids:
+
+            results["checked"] += 1
+
+
+            # =================================================
+            # BASIC DATA
+            # =================================================
+
+            qid_id = qid["id"]
+
+            staff_name = (
+                qid.get("staff_name")
+                or "Staff Member"
+            )
+
+            expiry_date = qid["qid_expiry_date"]
+
+
+            staff_email = (
+                qid.get("staff_email")
+                or ""
+            ).strip()
+
+
+            manager_email = (
+                qid.get("manager_email")
+                or ""
+            ).strip()
+
+
+            print("")
+            print("-----------------------------------------")
+            print("QID:", qid.get("qid_number"))
+            print("Staff:", staff_name)
+            print("Expiry:", expiry_date)
+
+
+            # =================================================
+            # CALCULATE DAYS REMAINING
+            # =================================================
+
+            days_remaining = (
+                expiry_date - today
+            ).days
+
+
+            print(
+                "Days Remaining:",
+                days_remaining
+            )
+
+
+            # =================================================
+            # DETERMINE NOTIFICATION TYPE
+            # =================================================
+
+            notification_type = None
+
+
+            # -------------------------------------------------
+            # EXPIRED
+            # -------------------------------------------------
+
+            if days_remaining < 0:
+
+                notification_type = "expired"
+
+
+            # -------------------------------------------------
+            # 7 DAYS OR LESS
+            # -------------------------------------------------
+
+            elif days_remaining <= 7:
+
+                notification_type = "7_days"
+
+
+            # -------------------------------------------------
+            # 30 DAYS OR LESS
+            # -------------------------------------------------
+
+            elif days_remaining <= 30:
+
+                notification_type = "30_days"
+
+
+            # -------------------------------------------------
+            # 90 DAYS OR LESS
+            # -------------------------------------------------
+
+            elif days_remaining <= 90:
+
+                notification_type = "90_days"
+
+
+            # -------------------------------------------------
+            # MORE THAN 90 DAYS
+            # -------------------------------------------------
+
+            else:
+
+                print(
+                    "Status: More than 90 days - no notification."
+                )
+
+                continue
+
+
+            print(
+                "Notification Type:",
+                notification_type
+            )
+
+
+            # =================================================
+            # BUILD NOTIFICATION CONTENT
+            # =================================================
+
+            if notification_type == "90_days":
+
+                subject = (
+                    f"QID Expiry Early Warning - "
+                    f"{staff_name}"
+                )
+
+                heading = (
+                    "QID Expiry Early Warning"
+                )
+
+                message = f"""
+                <p>
+                    This is an early warning that the
+                    Qatar ID (QID) of the following staff
+                    member will expire in approximately
+                    <strong>90 days or less</strong>.
+                </p>
+
+                <p>
+                    There are approximately
+                    <strong>
+                        {days_remaining}
+                        days
+                    </strong>
+                    remaining.
+                </p>
+                """
+
+                alert_color = "#3F6B57"
+
+
+            elif notification_type == "30_days":
+
+                subject = (
+                    f"QID Expiry Warning - "
+                    f"{staff_name}"
+                )
+
+                heading = (
+                    "QID Expiry Warning"
+                )
+
+                message = f"""
+                <p>
+                    The Qatar ID (QID) of the following
+                    staff member is approaching expiry.
+                </p>
+
+                <p>
+                    There are approximately
+                    <strong>
+                        {days_remaining}
+                        days
+                    </strong>
+                    remaining.
+                </p>
+                """
+
+                alert_color = "#8A6A20"
+
+
+            elif notification_type == "7_days":
+
+                subject = (
+                    f"URGENT: QID Expires Soon - "
+                    f"{staff_name}"
+                )
+
+                heading = (
+                    "Urgent QID Expiry Notification"
+                )
+
+                message = f"""
+                <p>
+                    <strong>
+                        Immediate attention is required.
+                    </strong>
+                </p>
+
+                <p>
+                    The Qatar ID (QID) of the following
+                    staff member will expire in
+                    <strong>
+                        {days_remaining}
+                        day
+                        {"s" if days_remaining != 1 else ""}
+                    </strong>.
+                </p>
+                """
+
+                alert_color = "#A85B22"
+
+
+            else:
+
+                subject = (
+                    f"EXPIRED: Staff QID - "
+                    f"{staff_name}"
+                )
+
+                heading = (
+                    "QID Expired"
+                )
+
+                message = """
+                <p>
+                    <strong>
+                        Immediate action is required.
+                    </strong>
+                </p>
+
+                <p>
+                    The Qatar ID (QID) of the following
+                    staff member has already expired.
+                </p>
+                """
+
+                alert_color = "#A63838"
+
+
+            # =================================================
+            # DATE FORMATTING
+            # =================================================
+
+            issue_date_text = (
+
+                qid["qid_issue_date"].strftime(
+                    "%d %B %Y"
+                )
+
+                if qid.get("qid_issue_date")
+
+                else "N/A"
+
+            )
+
+
+            expiry_date_text = (
+
+                expiry_date.strftime(
+                    "%d %B %Y"
+                )
+
+                if expiry_date
+
+                else "N/A"
+
+            )
+
+
+            days_remaining_text = (
+
+                str(days_remaining)
+
+                if days_remaining >= 0
+
+                else "Expired"
+
+            )
+
+
+            # =================================================
+            # COMPLETE EMAIL
+            # =================================================
+
+            html_message = f"""
+
+            <div style="
+                font-family:Arial,Helvetica,sans-serif;
+                max-width:700px;
+                margin:auto;
+                color:#263238;
+            ">
+
+                <div style="
+                    background:#234236;
+                    padding:22px 25px;
+                    color:#ffffff;
+                ">
+
+                    <h2 style="
+                        margin:0;
+                        font-size:20px;
+                    ">
+
+                        Prestigious Trading & Construction
+
+                    </h2>
+
+                    <p style="
+                        margin:5px 0 0;
+                        color:#D9E7DE;
+                        font-size:12px;
+                    ">
+
+                        Construction Administration
+
+                    </p>
+
+                </div>
+
+
+                <div style="
+                    padding:28px 25px;
+                    border:1px solid #DCE7DE;
+                    border-top:none;
+                ">
+
+                    <div style="
+                        background:{alert_color};
+                        color:#ffffff;
+                        padding:12px 15px;
+                        border-radius:6px;
+                        font-weight:bold;
+                        margin-bottom:22px;
+                    ">
+
+                        {heading}
+
+                    </div>
+
+
+                    {message}
+
+
+                    <hr style="
+                        border:none;
+                        border-top:1px solid #E5E5E5;
+                        margin:25px 0;
+                    ">
+
+
+                    <h3 style="
+                        color:#3F6B57;
+                        margin-bottom:15px;
+                    ">
+
+                        Staff Information
+
+                    </h3>
+
+
+                    <p>
+                        <strong>Staff Name:</strong>
+                        {staff_name}
+                    </p>
+
+
+                    <p>
+                        <strong>QID Number:</strong>
+                        {qid.get("qid_number") or "N/A"}
+                    </p>
+
+
+                    <p>
+                        <strong>Department:</strong>
+                        {qid.get("department") or "N/A"}
+                    </p>
+
+
+                    <p>
+                        <strong>Position:</strong>
+                        {qid.get("position") or "N/A"}
+                    </p>
+
+
+                    <p>
+                        <strong>Manager:</strong>
+                        {qid.get("manager_name") or "N/A"}
+                    </p>
+
+
+                    <p>
+                        <strong>QID Issue Date:</strong>
+                        {issue_date_text}
+                    </p>
+
+
+                    <p>
+                        <strong>QID Expiry Date:</strong>
+                        {expiry_date_text}
+                    </p>
+
+
+                    <p>
+                        <strong>Days Remaining:</strong>
+                        {days_remaining_text}
+                    </p>
+
+
+                    <hr style="
+                        border:none;
+                        border-top:1px solid #E5E5E5;
+                        margin:25px 0;
+                    ">
+
+
+                    <p style="
+                        color:#687A70;
+                        font-size:12px;
+                    ">
+
+                        This notification was automatically
+                        generated by the Prestigious Trading &
+                        Construction QID Expiry Monitoring System.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+            """
+
+
+            # =================================================
+            # BUILD RECIPIENT LIST
+            # =================================================
+
+            recipients = []
+
+
+            # =================================================
+            # MANAGER
+            # =================================================
+
+            if manager_email:
+
+                recipients.append({
+
+                    "type": "manager",
+
+                    "email": manager_email
+
+                })
+
+            else:
+
+                print(
+                    "WARNING: No manager email configured."
+                )
+
+                results["no_manager_email"] += 1
+
+
+            # =================================================
+            # STAFF
+            # =================================================
+
+            if staff_email:
+
+                recipients.append({
+
+                    "type": "staff",
+
+                    "email": staff_email
+
+                })
+
+            else:
+
+                print(
+                    "WARNING: No staff email configured."
+                )
+
+                results["no_staff_email"] += 1
+
+
+            # =================================================
+            # ADMIN
+            # =================================================
+
+            if admin_email:
+
+                recipients.append({
+
+                    "type": "admin",
+
+                    "email": admin_email
+
+                })
+
+            else:
+
+                results["no_admin_email"] += 1
+
+
+            # =================================================
+            # PROCESS EACH RECIPIENT INDEPENDENTLY
+            # =================================================
+
+            for recipient in recipients:
+
+                recipient_type = (
+                    recipient["type"]
+                )
+
+                recipient_email = (
+                    recipient["email"]
+                )
+
+
+                print("")
+                print(
+                    "Checking notification:",
+                    recipient_type
+                )
+
+                print(
+                    "Recipient:",
+                    recipient_email
+                )
+
+
+                # =================================================
+                # CHECK IF THIS RECIPIENT ALREADY RECEIVED THIS
+                # NOTIFICATION
+                # =================================================
+
+                cursor.execute("""
+                    SELECT
+                        id
+
+                    FROM construction_qid_notifications
+
+                    WHERE qid_id = %s
+
+                      AND notification_type = %s
+
+                      AND expiry_date = %s
+
+                      AND recipient_type = %s
+
+                    LIMIT 1
+
+                """, (
+
+                    qid_id,
+
+                    notification_type,
+
+                    expiry_date,
+
+                    recipient_type
+
+                ))
+
+
+                existing_notification = (
+                    cursor.fetchone()
+                )
+
+
+                if existing_notification:
+
+                    print(
+                        "Notification already sent to",
+                        recipient_type
+                    )
+
+                    results["already_sent"] += 1
+
+                    continue
+
+
+                # =================================================
+                # SEND EMAIL
+                # =================================================
+
+                print(
+                    "Sending notification to:",
+                    recipient_email
+                )
+
+
+                email_sent = send_email(
+
+                    recipient_email,
+
+                    subject,
+
+                    html_message
+
+                )
+
+
+                # =================================================
+                # RECORD SUCCESSFUL EMAIL
+                # =================================================
+
+                if email_sent:
+
+                    cursor.execute("""
+                        INSERT INTO construction_qid_notifications
+                        (
+                            qid_id,
+                            notification_type,
+                            recipient_type,
+                            expiry_date,
+                            sent_to,
+                            sent_at
+                        )
+
+                        VALUES
+                        (
+                            %s,
+                            %s,
+                            %s,
+                            %s,
+                            %s,
+                            %s
+                        )
+
+                    """, (
+
+                        qid_id,
+
+                        notification_type,
+
+                        recipient_type,
+
+                        expiry_date,
+
+                        recipient_email,
+
+                        datetime.utcnow()
+
+                    ))
+
+
+                    conn.commit()
+
+
+                    results["notifications_sent"] += 1
+
+
+                    print(
+                        "EMAIL SENT AND NOTIFICATION RECORDED."
+                    )
+
+
+                else:
+
+                    print(
+                        "EMAIL FAILED - "
+                        "NOTIFICATION NOT RECORDED."
+                    )
+
+                    results["errors"] += 1
+
+
+        # =================================================
+        # FINAL RESULT
+        # =================================================
+
+        print("")
+        print("=========================================================")
+        print("QID EXPIRY MONITORING COMPLETED")
+        print("=========================================================")
+
+        print(
+            "QIDs Checked:",
+            results["checked"]
+        )
+
+        print(
+            "Notifications Sent:",
+            results["notifications_sent"]
+        )
+
+        print(
+            "Already Sent:",
+            results["already_sent"]
+        )
+
+        print(
+            "Missing Manager Email:",
+            results["no_manager_email"]
+        )
+
+        print(
+            "Missing Staff Email:",
+            results["no_staff_email"]
+        )
+
+        print(
+            "Missing Admin Email:",
+            results["no_admin_email"]
+        )
+
+        print(
+            "Errors:",
+            results["errors"]
+        )
+
+        print("=========================================================")
+
+
+        return results
+
+
+    # =====================================================
+    # ERROR HANDLING
+    # =====================================================
+
+    except Exception as e:
+
+        if conn:
+
+            try:
+                conn.rollback()
+
+            except Exception:
+                pass
+
+
+        print("")
+        print("=========================================================")
+        print("QID EXPIRY MONITORING ERROR")
+        print("=========================================================")
+
+        print(
+            "Error Type:",
+            type(e).__name__
+        )
+
+        print(
+            "Error:",
+            str(e)
+        )
+
+        print("=========================================================")
+
+
+        results["errors"] += 1
+
+
+        return results
+
+
+    finally:
+
+        if cursor:
+
+            try:
+                cursor.close()
+
+            except Exception:
+                pass
+
+
+        if conn:
+
+            try:
+                conn.close()
+
+            except Exception:
+                pass
+
+
+
+
+
+
+
+
+# =========================================================
+# TEST QID EXPIRY MONITORING
+# =========================================================
+
+@app.route("/test-qid-monitoring")
+def test_qid_monitoring():
+
+    # =====================================================
+    # CONSTRUCTION ADMIN ONLY
+    # =====================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    # =====================================================
+    # RUN MONITORING
+    # =====================================================
+
+    results = run_qid_expiry_monitoring()
+
+
+    # =====================================================
+    # SHOW RESULT
+    # =====================================================
+
+    return jsonify({
+
+        "success": True,
+
+        "message": (
+            "QID expiry monitoring completed."
+        ),
+
+        "results": results
+
+    })
+
+
+
+
+
+
+
+
+
+
+
 
 # =====================================================
 # FILE UPLOAD ROUTE
@@ -1538,9 +2490,6 @@ def admin_logout():
 
 
 
-# =====================================================
-# CONSTRUCTION ADMIN DASHBOARD
-# =====================================================
 
 
 # ============================================================
@@ -5489,6 +6438,1652 @@ def delete_construction_application(id):
 
         if conn:
             conn.close()
+
+
+
+
+
+
+
+
+
+# ============================================================
+# CONSTRUCTION STAFF QID MANAGEMENT
+# ============================================================
+
+
+# ============================================================
+# VIEW ALL STAFF QIDS
+# ============================================================
+
+# =========================================================
+# CONSTRUCTION QID MANAGEMENT
+# =========================================================
+
+@app.route(
+    "/admin/construction-qids",
+    methods=["GET"]
+)
+def construction_qids():
+
+    # =========================================================
+    # CHECK CONSTRUCTION ADMIN
+    # =========================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    conn = None
+    cursor = None
+
+
+    try:
+
+        # =====================================================
+        # DATABASE CONNECTION
+        # =====================================================
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(
+            dictionary=True
+        )
+
+
+        # =====================================================
+        # GET ALL STAFF QIDS
+        # =====================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                id,
+
+                staff_name,
+
+                qid_number,
+
+                qid_issue_date,
+
+                qid_expiry_date,
+
+                staff_email,
+
+                manager_name,
+
+                manager_email,
+
+                department,
+
+                position,
+
+                qid_document,
+
+                notes,
+
+                status,
+
+                created_at,
+
+                updated_at
+
+            FROM construction_staff_qids
+
+            ORDER BY
+                qid_expiry_date ASC,
+
+                staff_name ASC
+            """
+        )
+
+
+        qids = cursor.fetchall()
+
+
+        # =====================================================
+        # CURRENT DATE
+        # =====================================================
+
+        today = datetime.now().date()
+
+
+        # =====================================================
+        # SUMMARY COUNTERS
+        # =====================================================
+
+        total_qids = len(qids)
+
+        valid_qids = 0
+
+        warning_qids = 0
+
+        critical_qids = 0
+
+        expired_qids = 0
+
+
+        # =====================================================
+        # CALCULATE EXPIRY STATUS
+        # =====================================================
+
+        for qid in qids:
+
+            expiry_date = qid.get(
+                "qid_expiry_date"
+            )
+
+
+            # -------------------------------------------------
+            # NO EXPIRY DATE
+            # -------------------------------------------------
+
+            if not expiry_date:
+
+                qid["days_remaining"] = None
+
+                qid["expiry_status"] = "unknown"
+
+                continue
+
+
+            # -------------------------------------------------
+            # CALCULATE DAYS REMAINING
+            # -------------------------------------------------
+
+            days_remaining = (
+                expiry_date - today
+            ).days
+
+
+            qid["days_remaining"] = days_remaining
+
+
+            # -------------------------------------------------
+            # EXPIRED
+            # -------------------------------------------------
+
+            if days_remaining < 0:
+
+                qid["expiry_status"] = "expired"
+
+                expired_qids += 1
+
+
+            # -------------------------------------------------
+            # CRITICAL
+            # 0 - 30 DAYS
+            # -------------------------------------------------
+
+            elif days_remaining <= 30:
+
+                qid["expiry_status"] = "critical"
+
+                critical_qids += 1
+
+
+            # -------------------------------------------------
+            # WARNING
+            # 31 - 60 DAYS
+            # -------------------------------------------------
+
+            elif days_remaining <= 60:
+
+                qid["expiry_status"] = "warning"
+
+                warning_qids += 1
+
+
+            # -------------------------------------------------
+            # VALID
+            # MORE THAN 60 DAYS
+            # -------------------------------------------------
+
+            else:
+
+                qid["expiry_status"] = "valid"
+
+                valid_qids += 1
+
+
+        # =====================================================
+        # RENDER PAGE
+        # =====================================================
+
+        return render_template(
+
+            "construction_admin/construction_qids.html",
+
+            qids=qids,
+
+            total_qids=total_qids,
+
+            valid_qids=valid_qids,
+
+            warning_qids=warning_qids,
+
+            critical_qids=critical_qids,
+
+            expired_qids=expired_qids
+
+        )
+
+
+    except Exception as e:
+
+        # =====================================================
+        # ERROR LOG
+        # =====================================================
+
+        print("========================================")
+
+        print(
+            "CONSTRUCTION QIDS ERROR"
+        )
+
+        print(
+            "Error Type:",
+            type(e).__name__
+        )
+
+        print(
+            "Error:",
+            str(e)
+        )
+
+        print("========================================")
+
+
+        flash(
+            "Unable to load staff QID records.",
+            "danger"
+        )
+
+
+        return redirect(
+            url_for("admin_dashboard")
+        )
+
+
+    finally:
+
+        # =====================================================
+        # CLOSE CURSOR
+        # =====================================================
+
+        if cursor:
+
+            cursor.close()
+
+
+        # =====================================================
+        # CLOSE CONNECTION
+        # =====================================================
+
+        if conn:
+
+            conn.close()
+
+
+# ============================================================
+# ADD STAFF QID
+# ============================================================
+
+@app.route(
+    "/admin/construction-qids/add",
+    methods=["GET", "POST"]
+)
+def add_construction_qid():
+
+    # =========================================================
+    # CHECK CONSTRUCTION ADMIN
+    # =========================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    if request.method == "POST":
+
+        # =====================================================
+        # GET FORM DATA
+        # =====================================================
+
+        staff_name = request.form.get(
+            "staff_name",
+            ""
+        ).strip()
+
+
+        qid_number = request.form.get(
+            "qid_number",
+            ""
+        ).strip()
+
+
+        qid_issue_date = request.form.get(
+            "qid_issue_date",
+            ""
+        ).strip()
+
+
+        qid_expiry_date = request.form.get(
+            "qid_expiry_date",
+            ""
+        ).strip()
+
+
+        staff_email = request.form.get(
+            "staff_email",
+            ""
+        ).strip()
+
+
+        manager_name = request.form.get(
+            "manager_name",
+            ""
+        ).strip()
+
+
+        manager_email = request.form.get(
+            "manager_email",
+            ""
+        ).strip()
+
+
+        department = request.form.get(
+            "department",
+            ""
+        ).strip()
+
+
+        position = request.form.get(
+            "position",
+            ""
+        ).strip()
+
+
+        notes = request.form.get(
+            "notes",
+            ""
+        ).strip()
+
+
+        # =====================================================
+        # GET QID DOCUMENT
+        # =====================================================
+
+        qid_document_file = request.files.get(
+            "qid_document"
+        )
+
+
+        # =====================================================
+        # VALIDATION
+        # =====================================================
+
+        if not staff_name:
+
+            flash(
+                "Staff name is required.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        if not qid_number:
+
+            flash(
+                "QID number is required.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        if not qid_expiry_date:
+
+            flash(
+                "QID expiry date is required.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        if not staff_email:
+
+            flash(
+                "Staff email is required.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        # =====================================================
+        # QID DOCUMENT VALIDATION
+        # =====================================================
+
+        if not qid_document_file:
+
+            flash(
+                "Please upload the staff member's QID document.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        if not qid_document_file.filename:
+
+            flash(
+                "Please select a QID document.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        # =====================================================
+        # ALLOWED FILE TYPES
+        # =====================================================
+
+        allowed_extensions = {
+            "pdf",
+            "jpg",
+            "jpeg",
+            "png"
+        }
+
+
+        original_filename = secure_filename(
+            qid_document_file.filename
+        )
+
+
+        if "." not in original_filename:
+
+            flash(
+                "Invalid QID document file.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        file_extension = (
+            original_filename
+           .rsplit(".", 1)[1]
+            .lower()
+        )
+
+
+        if file_extension not in allowed_extensions:
+
+            flash(
+                "Invalid QID document format. "
+                "Only PDF, JPG, JPEG and PNG files are allowed.",
+                "danger"
+            )
+
+            return render_template(
+                "construction_admin/construction_add_qid.html"
+            )
+
+
+        # =====================================================
+        # DATABASE
+        # =====================================================
+
+        conn = None
+        cursor = None
+
+
+        try:
+
+            # =================================================
+            # UPLOAD DOCUMENT TO CLOUDINARY
+            # =================================================
+
+            upload_result = cloudinary.uploader.upload(
+                qid_document_file,
+
+                folder="prestigious_construction/qids",
+
+                public_id=(
+                    "qid_"
+                    + str(uuid.uuid4())
+                ),
+
+                resource_type="auto"
+            )
+
+
+            # =================================================
+            # GET CLOUDINARY URL
+            # =================================================
+
+            qid_document_url = upload_result.get(
+                "secure_url"
+            )
+
+
+            if not qid_document_url:
+
+                raise Exception(
+                    "Cloudinary did not return a secure URL."
+                )
+
+
+            # =================================================
+            # DATABASE CONNECTION
+            # =================================================
+
+            conn = get_db_connection()
+
+            cursor = conn.cursor()
+
+
+            # =================================================
+            # INSERT QID
+            # =================================================
+
+            cursor.execute(
+                """
+                INSERT INTO construction_staff_qids
+                (
+                    staff_name,
+                    qid_number,
+                    qid_issue_date,
+                    qid_expiry_date,
+                    staff_email,
+                    manager_name,
+                    manager_email,
+                    department,
+                    position,
+                    qid_document,
+                    notes,
+                    status
+                )
+
+                VALUES
+                (
+                    %s,
+                    %s,
+                    NULLIF(%s, ''),
+                    %s,
+                    %s,
+                    NULLIF(%s, ''),
+                    NULLIF(%s, ''),
+                    NULLIF(%s, ''),
+                    NULLIF(%s, ''),
+                    %s,
+                    NULLIF(%s, ''),
+                    'active'
+                )
+                """,
+
+                (
+                    staff_name,
+                    qid_number,
+                    qid_issue_date,
+                    qid_expiry_date,
+                    staff_email,
+                    manager_name,
+                    manager_email,
+                    department,
+                    position,
+                    qid_document_url,
+                    notes
+                )
+            )
+
+
+            # =================================================
+            # COMMIT
+            # =================================================
+
+            conn.commit()
+
+
+            # =================================================
+            # SUCCESS
+            # =================================================
+
+            flash(
+                "Staff QID and document added successfully.",
+                "success"
+            )
+
+
+            return redirect(
+                url_for(
+                    "construction_qids"
+                )
+            )
+
+
+        except Exception as e:
+
+            # =================================================
+            # ROLLBACK DATABASE
+            # =================================================
+
+            if conn:
+
+                conn.rollback()
+
+
+            print("========================================")
+            print("ADD CONSTRUCTION QID ERROR")
+            print("Error Type:", type(e).__name__)
+            print("Error:", str(e))
+            print("========================================")
+
+
+            # =================================================
+            # DUPLICATE QID
+            # =================================================
+
+            if "Duplicate entry" in str(e):
+
+                flash(
+                    "This QID number already exists.",
+                    "danger"
+                )
+
+            else:
+
+                flash(
+                    "Unable to add staff QID or upload document.",
+                    "danger"
+                )
+
+
+        finally:
+
+            if cursor:
+
+                cursor.close()
+
+
+            if conn:
+
+                conn.close()
+
+
+    # =========================================================
+    # DISPLAY ADD PAGE
+    # =========================================================
+
+    return render_template(
+        "construction_admin/construction_add_qid.html"
+    )
+
+
+
+# ============================================================
+# VIEW STAFF QID DETAILS
+# ============================================================
+
+# =========================================================
+# CONSTRUCTION QID DETAILS
+# =========================================================
+
+@app.route(
+    "/admin/construction-qids/details/<int:id>",
+    methods=["GET"]
+)
+def construction_qid_details(id):
+
+    # =========================================================
+    # CHECK CONSTRUCTION ADMIN
+    # =========================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    conn = None
+    cursor = None
+
+
+    try:
+
+        # =====================================================
+        # DATABASE CONNECTION
+        # =====================================================
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(
+            dictionary=True
+        )
+
+
+        # =====================================================
+        # GET QID RECORD
+        # =====================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                id,
+
+                staff_name,
+
+                qid_number,
+
+                qid_issue_date,
+
+                qid_expiry_date,
+
+                staff_email,
+
+                manager_name,
+
+                manager_email,
+
+                department,
+
+                position,
+
+                qid_document,
+
+                notes,
+
+                status,
+
+                created_at,
+
+                updated_at
+
+            FROM construction_staff_qids
+
+            WHERE id = %s
+
+            LIMIT 1
+            """,
+
+            (id,)
+        )
+
+
+        qid = cursor.fetchone()
+
+
+        # =====================================================
+        # NOT FOUND
+        # =====================================================
+
+        if not qid:
+
+            flash(
+                "Staff QID record not found.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_qids"
+                )
+            )
+
+
+        # =====================================================
+        # CALCULATE EXPIRY INFORMATION
+        # =====================================================
+
+        today = datetime.utcnow().date()
+
+        expiry_date = qid.get(
+            "qid_expiry_date"
+        )
+
+
+        if expiry_date:
+
+            days_remaining = (
+                expiry_date - today
+            ).days
+
+
+            # ================================================
+            # EXPIRED
+            # ================================================
+
+            if days_remaining < 0:
+
+                expiry_status = "expired"
+
+
+            # ================================================
+            # CRITICAL
+            # 0 - 30 DAYS
+            # ================================================
+
+            elif days_remaining <= 30:
+
+                expiry_status = "critical"
+
+
+            # ================================================
+            # WARNING
+            # 31 - 90 DAYS
+            # ================================================
+
+            elif days_remaining <= 90:
+
+                expiry_status = "warning"
+
+
+            # ================================================
+            # VALID
+            # ================================================
+
+            else:
+
+                expiry_status = "valid"
+
+
+        else:
+
+            days_remaining = None
+
+            expiry_status = "unknown"
+
+
+        # =====================================================
+        # ADD CALCULATED VALUES TO QID
+        # =====================================================
+
+        qid["days_remaining"] = days_remaining
+
+        qid["expiry_status"] = expiry_status
+
+
+        # =====================================================
+        # RENDER DETAILS PAGE
+        # =====================================================
+
+        return render_template(
+            "construction_admin/construction_qid_details.html",
+
+            qid=qid
+        )
+
+
+    except Exception as e:
+
+        # =====================================================
+        # ERROR
+        # =====================================================
+
+        print("========================================")
+        print("CONSTRUCTION QID DETAILS ERROR")
+        print("Error Type:", type(e).__name__)
+        print("Error:", str(e))
+        print("========================================")
+
+
+        flash(
+            "Unable to load staff QID details.",
+            "danger"
+        )
+
+
+        return redirect(
+            url_for(
+                "construction_qids"
+            )
+        )
+
+
+    finally:
+
+        if cursor:
+
+            cursor.close()
+
+
+        if conn:
+
+            conn.close()
+
+
+# ============================================================
+# EDIT STAFF QID
+# ============================================================
+
+# =========================================================
+# EDIT CONSTRUCTION STAFF QID
+# =========================================================
+
+@app.route(
+    "/admin/construction-qids/edit/<int:id>",
+    methods=["GET", "POST"]
+)
+def edit_construction_qid(id):
+
+    # =========================================================
+    # CHECK CONSTRUCTION ADMIN
+    # =========================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    conn = None
+    cursor = None
+
+
+    try:
+
+        # =====================================================
+        # DATABASE CONNECTION
+        # =====================================================
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(
+            dictionary=True
+        )
+
+
+        # =====================================================
+        # GET EXISTING QID
+        # =====================================================
+
+        cursor.execute(
+            """
+            SELECT *
+
+            FROM construction_staff_qids
+
+            WHERE id = %s
+
+            LIMIT 1
+            """,
+
+            (id,)
+        )
+
+
+        qid = cursor.fetchone()
+
+
+        # =====================================================
+        # RECORD NOT FOUND
+        # =====================================================
+
+        if not qid:
+
+            flash(
+                "Staff QID record not found.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_qids"
+                )
+            )
+
+
+        # =====================================================
+        # POST / UPDATE
+        # =====================================================
+
+        if request.method == "POST":
+
+
+            # =================================================
+            # GET FORM DATA
+            # =================================================
+
+            staff_name = request.form.get(
+                "staff_name",
+                ""
+            ).strip()
+
+
+            qid_number = request.form.get(
+                "qid_number",
+                ""
+            ).strip()
+
+
+            qid_issue_date = request.form.get(
+                "qid_issue_date",
+                ""
+            ).strip()
+
+
+            qid_expiry_date = request.form.get(
+                "qid_expiry_date",
+                ""
+            ).strip()
+
+
+            staff_email = request.form.get(
+                "staff_email",
+                ""
+            ).strip()
+
+
+            manager_name = request.form.get(
+                "manager_name",
+                ""
+            ).strip()
+
+
+            manager_email = request.form.get(
+                "manager_email",
+                ""
+            ).strip()
+
+
+            department = request.form.get(
+                "department",
+                ""
+            ).strip()
+
+
+            position = request.form.get(
+                "position",
+                ""
+            ).strip()
+
+
+            status = request.form.get(
+                "status",
+                "active"
+            ).strip().lower()
+
+
+            notes = request.form.get(
+                "notes",
+                ""
+            ).strip()
+
+
+            # =================================================
+            # GET NEW QID DOCUMENT
+            # =================================================
+
+            qid_document_file = request.files.get(
+                "qid_document"
+            )
+
+
+            # =================================================
+            # VALIDATION
+            # =================================================
+
+            if not staff_name:
+
+                flash(
+                    "Staff name is required.",
+                    "danger"
+                )
+
+                return render_template(
+                    "construction_admin/construction_edit_qid.html",
+                    qid=qid
+                )
+
+
+            if not qid_number:
+
+                flash(
+                    "QID number is required.",
+                    "danger"
+                )
+
+                return render_template(
+                    "construction_admin/construction_edit_qid.html",
+                    qid=qid
+                )
+
+
+            if not qid_expiry_date:
+
+                flash(
+                    "QID expiry date is required.",
+                    "danger"
+                )
+
+                return render_template(
+                    "construction_admin/construction_edit_qid.html",
+                    qid=qid
+                )
+
+
+            if not staff_email:
+
+                flash(
+                    "Staff email is required.",
+                    "danger"
+                )
+
+                return render_template(
+                    "construction_admin/construction_edit_qid.html",
+                    qid=qid
+                )
+
+
+            # =================================================
+            # STATUS VALIDATION
+            # =================================================
+
+            if status not in [
+                "active",
+                "expired",
+                "inactive"
+            ]:
+
+                status = "active"
+
+
+            # =================================================
+            # DOCUMENT VARIABLES
+            # =================================================
+
+            qid_document_url = qid.get(
+                "qid_document"
+            )
+
+
+            old_qid_document_url = qid_document_url
+
+
+            # =================================================
+            # CHECK IF NEW DOCUMENT WAS PROVIDED
+            # =================================================
+
+            new_document_uploaded = False
+
+
+            if qid_document_file:
+
+                if qid_document_file.filename:
+
+                    new_document_uploaded = True
+
+
+            # =================================================
+            # HANDLE NEW DOCUMENT
+            # =================================================
+
+            if new_document_uploaded:
+
+
+                # =============================================
+                # SECURE ORIGINAL FILENAME
+                # =============================================
+
+                original_filename = secure_filename(
+                    qid_document_file.filename
+                )
+
+
+                # =============================================
+                # CHECK EXTENSION
+                # =============================================
+
+                if "." not in original_filename:
+
+                    flash(
+                        "Invalid QID document file.",
+                        "danger"
+                    )
+
+                    return render_template(
+                        "construction_admin/construction_edit_qid.html",
+                        qid=qid
+                    )
+
+
+                file_extension = (
+                    original_filename
+                    .rsplit(".", 1)[1]
+                    .lower()
+                )
+
+
+                # =============================================
+                # ALLOWED FILE TYPES
+                # =============================================
+
+                allowed_extensions = {
+                    "pdf",
+                    "jpg",
+                    "jpeg",
+                    "png"
+                }
+
+
+                if file_extension not in allowed_extensions:
+
+                    flash(
+                        "Invalid QID document format. "
+                        "Only PDF, JPG, JPEG and PNG files are allowed.",
+                        "danger"
+                    )
+
+                    return render_template(
+                        "construction_admin/construction_edit_qid.html",
+                        qid=qid
+                    )
+
+
+                # =============================================
+                # UPLOAD NEW DOCUMENT TO CLOUDINARY
+                # =============================================
+
+                upload_result = cloudinary.uploader.upload(
+
+                    qid_document_file,
+
+                    folder="prestigious_construction/qids",
+
+                    public_id=(
+                        "qid_"
+                        + str(uuid.uuid4())
+                    ),
+
+                    resource_type="auto"
+                )
+
+
+                # =============================================
+                # GET NEW CLOUDINARY URL
+                # =============================================
+
+                qid_document_url = upload_result.get(
+                    "secure_url"
+                )
+
+
+                if not qid_document_url:
+
+                    raise Exception(
+                        "Cloudinary did not return a secure URL."
+                    )
+
+
+            # =================================================
+            # UPDATE DATABASE
+            # =================================================
+
+            cursor.execute(
+                """
+                UPDATE construction_staff_qids
+
+                SET
+
+                    staff_name = %s,
+
+                    qid_number = %s,
+
+                    qid_issue_date =
+                        NULLIF(%s, ''),
+
+                    qid_expiry_date = %s,
+
+                    staff_email = %s,
+
+                    manager_name =
+                        NULLIF(%s, ''),
+
+                    manager_email =
+                        NULLIF(%s, ''),
+
+                    department =
+                        NULLIF(%s, ''),
+
+                    position =
+                        NULLIF(%s, ''),
+
+                    qid_document = %s,
+
+                    notes =
+                        NULLIF(%s, ''),
+
+                    status = %s,
+
+                    updated_at = CURRENT_TIMESTAMP
+
+                WHERE id = %s
+                """,
+
+                (
+                    staff_name,
+                    qid_number,
+                    qid_issue_date,
+                    qid_expiry_date,
+                    staff_email,
+                    manager_name,
+                    manager_email,
+                    department,
+                    position,
+                    qid_document_url,
+                    notes,
+                    status,
+                    id
+                )
+            )
+
+
+            # =================================================
+            # COMMIT
+            # =================================================
+
+            conn.commit()
+
+
+            # =================================================
+            # SUCCESS MESSAGE
+            # =================================================
+
+            if new_document_uploaded:
+
+                flash(
+                    "Staff QID and document updated successfully.",
+                    "success"
+                )
+
+            else:
+
+                flash(
+                    "Staff QID updated successfully.",
+                    "success"
+                )
+
+
+            # =================================================
+            # RETURN TO QID MANAGEMENT
+            # =================================================
+
+            return redirect(
+                url_for(
+                    "construction_qids"
+                )
+            )
+
+
+        # =====================================================
+        # DISPLAY EDIT PAGE
+        # =====================================================
+
+        return render_template(
+
+            "construction_admin/construction_edit_qid.html",
+
+            qid=qid
+        )
+
+
+    except Exception as e:
+
+        # =====================================================
+        # ROLLBACK
+        # =====================================================
+
+        if conn:
+
+            conn.rollback()
+
+
+        # =====================================================
+        # ERROR LOG
+        # =====================================================
+
+        print("========================================")
+
+        print(
+            "EDIT CONSTRUCTION QID ERROR"
+        )
+
+        print(
+            "Error Type:",
+            type(e).__name__
+        )
+
+        print(
+            "Error:",
+            str(e)
+        )
+
+        print("========================================")
+
+
+        # =====================================================
+        # DUPLICATE QID
+        # =====================================================
+
+        if "Duplicate entry" in str(e):
+
+            flash(
+                "This QID number already exists.",
+                "danger"
+            )
+
+        else:
+
+            flash(
+                "Unable to update staff QID.",
+                "danger"
+            )
+
+
+        return redirect(
+            url_for(
+                "construction_qids"
+            )
+        )
+
+
+    finally:
+
+        # =====================================================
+        # CLOSE CURSOR
+        # =====================================================
+
+        if cursor:
+
+            cursor.close()
+
+
+        # =====================================================
+        # CLOSE CONNECTION
+        # =====================================================
+
+        if conn:
+
+            conn.close()
+
+
+# ============================================================
+# DELETE STAFF QID
+# ============================================================
+
+@app.route(
+    "/admin/construction-qids/delete/<int:id>",
+    methods=["POST"]
+)
+def delete_construction_qid(id):
+
+    # =========================================================
+    # CHECK CONSTRUCTION ADMIN
+    # =========================================================
+
+    if "construction_admin_id" not in session:
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+
+    conn = None
+    cursor = None
+
+
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(
+            dictionary=True
+        )
+
+
+        # =====================================================
+        # GET RECORD
+        # =====================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                id,
+
+                staff_name
+
+            FROM construction_staff_qids
+
+            WHERE id = %s
+
+            LIMIT 1
+            """,
+
+            (id,)
+        )
+
+
+        qid = cursor.fetchone()
+
+
+        if not qid:
+
+            flash(
+                "Staff QID record not found.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_qids"
+                )
+            )
+
+
+        # =====================================================
+        # DELETE
+        # =====================================================
+
+        cursor.execute(
+            """
+            DELETE FROM construction_staff_qids
+
+            WHERE id = %s
+            """,
+
+            (id,)
+        )
+
+
+        conn.commit()
+
+
+        # =====================================================
+        # SUCCESS
+        # =====================================================
+
+        flash(
+            f'QID record for "{qid["staff_name"]}" '
+            'was deleted successfully.',
+            "success"
+        )
+
+
+        return redirect(
+            url_for(
+                "construction_qids"
+            )
+        )
+
+
+    except Exception as e:
+
+        if conn:
+
+            conn.rollback()
+
+
+        print("========================================")
+        print("DELETE CONSTRUCTION QID ERROR")
+        print("Error Type:", type(e).__name__)
+        print("Error:", str(e))
+        print("========================================")
+
+
+        flash(
+            "Unable to delete staff QID.",
+            "danger"
+        )
+
+
+        return redirect(
+            url_for(
+                "construction_qids"
+            )
+        )
+
+
+    finally:
+
+        if cursor:
+
+            cursor.close()
+
+
+        if conn:
+
+            conn.close()
+
+
+
 
 
 
