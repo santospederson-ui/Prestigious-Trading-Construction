@@ -36,6 +36,7 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 
 
 
+
 # ==========================================
 # CONSTRUCTION ADMIN SESSION TIMEOUT
 # ==========================================
@@ -1622,7 +1623,152 @@ def test_qid_monitoring():
 
 
 
+# =========================================================
+# AUTOMATIC QID MONITORING
+# =========================================================
 
+@app.route("/run-qid-monitoring", methods=["GET"])
+def run_qid_monitoring():
+
+    # =====================================================
+    # GET SCHEDULER SECRET
+    # =====================================================
+
+    scheduler_key = os.getenv(
+        "QID_MONITORING_SECRET",
+        ""
+    ).strip()
+
+
+    # =====================================================
+    # GET KEY FROM REQUEST
+    # =====================================================
+
+    request_key = request.args.get(
+        "key",
+        ""
+    ).strip()
+
+
+    # =====================================================
+    # CHECK SECRET
+    # =====================================================
+
+    if not scheduler_key:
+
+        print(
+            "QID MONITORING ERROR: "
+            "QID_MONITORING_SECRET is not configured."
+        )
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "QID monitoring scheduler is not configured."
+
+        }), 500
+
+
+    if not request_key:
+
+        print(
+            "QID MONITORING BLOCKED: "
+            "No scheduler key supplied."
+        )
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "Unauthorized."
+
+        }), 401
+
+
+    if request_key != scheduler_key:
+
+        print(
+            "QID MONITORING BLOCKED: "
+            "Invalid scheduler key."
+        )
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "Unauthorized."
+
+        }), 401
+
+
+    # =====================================================
+    # RUN MONITORING
+    # =====================================================
+
+    print("")
+    print("=========================================================")
+    print("AUTOMATIC QID MONITORING TRIGGERED")
+    print("=========================================================")
+
+
+    try:
+
+        results = run_qid_expiry_monitoring()
+
+
+        print("")
+        print("=========================================================")
+        print("AUTOMATIC QID MONITORING FINISHED")
+        print("=========================================================")
+
+
+        return jsonify({
+
+            "success": True,
+
+            "message":
+                "Automatic QID expiry monitoring completed.",
+
+            "results": results
+
+        })
+
+
+    except Exception as e:
+
+        print("")
+        print("=========================================================")
+        print("AUTOMATIC QID MONITORING ERROR")
+        print("=========================================================")
+
+        print(
+            "Error Type:",
+            type(e).__name__
+        )
+
+        print(
+            "Error:",
+            str(e)
+        )
+
+        print("=========================================================")
+
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "QID expiry monitoring failed.",
+
+            "error":
+                str(e)
+
+        }), 500
 
 
 
