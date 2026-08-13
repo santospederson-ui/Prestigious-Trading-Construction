@@ -1,0 +1,1370 @@
+{% extends "base.html" %}
+
+{% block title %}
+Staff QID Management | Construction Admin
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.qids-page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.qids-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+.qids-header h1 {
+    margin: 0 0 7px;
+
+    color: #17201b;
+
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.qids-header p {
+    margin: 0;
+
+    color: #68736d;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ADD BUTTON
+========================================================= */
+
+.add-qid-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    background: #244b3a;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    transition: all .25s ease;
+
+    white-space: nowrap;
+}
+
+.add-qid-button:hover {
+    background: #18352a;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(36,75,58,.18);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 25px;
+}
+
+
+.summary-card {
+    background: #ffffff;
+
+    border: 1px solid #dfe7e1;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-shadow:
+        0 5px 18px
+        rgba(20,40,30,.035);
+}
+
+
+.summary-info span {
+    display: block;
+
+    color: #68736d;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+
+.summary-info strong {
+    display: block;
+
+    color: #244b3a;
+
+    font-size: 25px;
+
+    font-weight: 800;
+}
+
+
+.summary-icon {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f6f2;
+
+    color: #3f6b57;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.table-card {
+    background: #ffffff;
+
+    border: 1px solid #dfe7e1;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px
+        rgba(20,40,30,.045);
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.table-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 20px 22px;
+
+    border-bottom:
+        1px solid #e4e9e5;
+}
+
+
+.table-header h2 {
+    margin: 0;
+
+    color: #244b3a;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+
+.table-header span {
+    color: #89938d;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.qid-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 1250px;
+}
+
+
+.qid-table thead {
+    background: #f5f8f5;
+}
+
+
+.qid-table th {
+    padding: 13px 15px;
+
+    text-align: left;
+
+    color: #68736d;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    white-space: nowrap;
+
+    border-bottom:
+        1px solid #dfe7e1;
+}
+
+
+.qid-table td {
+    padding: 16px 15px;
+
+    color: #35433c;
+
+    font-size: 12px;
+
+    vertical-align: middle;
+
+    border-bottom:
+        1px solid #edf1ee;
+}
+
+
+.qid-table tbody tr {
+    transition: background .2s ease;
+}
+
+
+.qid-table tbody tr:hover {
+    background: #fafcfb;
+}
+
+
+.qid-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   STAFF
+========================================================= */
+
+.staff-name {
+    color: #244b3a;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+.staff-email {
+    margin-top: 4px;
+
+    color: #89938d;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   QID NUMBER
+========================================================= */
+
+.qid-number {
+    font-family: monospace;
+
+    color: #34433b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .3px;
+}
+
+
+/* =========================================================
+   DEPARTMENT / POSITION
+========================================================= */
+
+.department {
+    color: #34433b;
+
+    font-weight: 700;
+}
+
+.position {
+    margin-top: 3px;
+
+    color: #89938d;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   EXPIRY
+========================================================= */
+
+.expiry-date {
+    color: #34433b;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.expiry-days {
+    display: inline-flex;
+
+    margin-top: 6px;
+
+    padding: 4px 7px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   VALID
+========================================================= */
+
+.expiry-valid {
+    background: #e8f3ea;
+
+    color: #347044;
+}
+
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.expiry-warning {
+    background: #fff5d9;
+
+    color: #8a6a20;
+}
+
+
+/* =========================================================
+   CRITICAL
+========================================================= */
+
+.expiry-critical {
+    background: #fff0df;
+
+    color: #a85b22;
+}
+
+
+/* =========================================================
+   EXPIRED
+========================================================= */
+
+.expiry-expired {
+    background: #fde8e8;
+
+    color: #a63838;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #e8f3ea;
+
+    color: #347044;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+.status-badge i {
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   DOCUMENT BUTTON
+========================================================= */
+
+.document-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 8px 11px;
+
+    border-radius: 7px;
+
+    background: #f1f6f2;
+
+    border: 1px solid #dce7de;
+
+    color: #3f6b57;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition: all .2s ease;
+}
+
+
+.document-button:hover {
+    background: #e5eee7;
+
+    color: #244b3a;
+}
+
+
+.document-missing {
+    color: #9aa49e;
+
+    font-size: 10px;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE ACTION BUTTON
+========================================================= */
+
+.table-action {
+    width: 32px;
+    height: 32px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: #f1f6f2;
+
+    border: 1px solid #dce7de;
+
+    color: #3f6b57;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+.table-action:hover {
+    background: #e5eee7;
+
+    color: #244b3a;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE ACTION
+========================================================= */
+
+.delete-action {
+    background: #fff3f3;
+
+    border-color: #f0dada;
+
+    color: #a63838;
+}
+
+
+.delete-action:hover {
+    background: #fde8e8;
+
+    border-color: #eccaca;
+
+    color: #8f2e2e;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE FORM
+========================================================= */
+
+.delete-form {
+    display: inline-flex;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    padding: 70px 25px;
+
+    text-align: center;
+}
+
+
+.empty-state-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 16px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f6f2;
+
+    color: #8ba38f;
+
+    font-size: 25px;
+}
+
+
+.empty-state h3 {
+    margin: 0 0 7px;
+
+    color: #34433b;
+
+    font-size: 16px;
+}
+
+
+.empty-state p {
+    margin: 0;
+
+    color: #89938d;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .qids-header {
+        flex-direction: column;
+    }
+
+    .add-qid-button {
+        width: 100%;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+
+<div class="qids-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="qids-header">
+
+        <div>
+
+            <h1>
+                Staff QID Management
+            </h1>
+
+            <p>
+                Manage Qatar ID records, documents and expiry
+                information for construction staff.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('add_construction_qid') }}"
+            class="add-qid-button"
+        >
+
+            <i class="fas fa-plus"></i>
+
+            Add Staff QID
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SUMMARY
+    ====================================================== -->
+
+    <div class="summary-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <span>
+                    TOTAL QIDS
+                </span>
+
+                <strong>
+                    {{ total_qids|default(0) }}
+                </strong>
+
+            </div>
+
+            <div class="summary-icon">
+
+                <i class="fas fa-id-card"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- VALID -->
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <span>
+                    VALID
+                </span>
+
+                <strong>
+                    {{ valid_qids|default(0) }}
+                </strong>
+
+            </div>
+
+            <div class="summary-icon">
+
+                <i class="fas fa-circle-check"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EXPIRING -->
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <span>
+                    EXPIRING SOON
+                </span>
+
+                <strong>
+                    {{ (warning_qids|default(0)) + (critical_qids|default(0)) }}
+                </strong>
+
+            </div>
+
+            <div class="summary-icon">
+
+                <i class="fas fa-clock"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EXPIRED -->
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <span>
+                    EXPIRED
+                </span>
+
+                <strong>
+                    {{ expired_qids|default(0) }}
+                </strong>
+
+            </div>
+
+            <div class="summary-icon">
+
+                <i class="fas fa-triangle-exclamation"></i>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TABLE CARD
+    ====================================================== -->
+
+    <div class="table-card">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="table-header">
+
+            <h2>
+                Staff Qatar ID Records
+            </h2>
+
+            <span>
+                {{ total_qids|default(0) }}
+                record{% if total_qids != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+
+
+        {% if qids %}
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="table-wrapper">
+
+                <table class="qid-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Staff
+                            </th>
+
+                            <th>
+                                QID Number
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Issue Date
+                            </th>
+
+                            <th>
+                                Expiry Date
+                            </th>
+
+                            <th>
+                                Manager
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Document
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for qid in qids %}
+
+
+                            <tr>
+
+
+                                <!-- =================================
+                                     STAFF
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="staff-name">
+
+                                        {{ qid.staff_name }}
+
+                                    </div>
+
+
+                                    {% if qid.staff_email %}
+
+                                        <div class="staff-email">
+
+                                            {{ qid.staff_email }}
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     QID NUMBER
+                                ================================== -->
+
+                                <td>
+
+                                    <span class="qid-number">
+
+                                        {{ qid.qid_number }}
+
+                                    </span>
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     DEPARTMENT
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="department">
+
+                                        {{ qid.department or "—" }}
+
+                                    </div>
+
+
+                                    {% if qid.position %}
+
+                                        <div class="position">
+
+                                            {{ qid.position }}
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     ISSUE DATE
+                                ================================== -->
+
+                                <td>
+
+                                    {% if qid.qid_issue_date %}
+
+                                        {{ qid.qid_issue_date.strftime('%d %b %Y') }}
+
+                                    {% else %}
+
+                                        —
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     EXPIRY DATE
+                                ================================== -->
+
+                                <td>
+
+                                    {% if qid.qid_expiry_date %}
+
+
+                                        <div class="expiry-date">
+
+                                            {{ qid.qid_expiry_date.strftime('%d %b %Y') }}
+
+                                        </div>
+
+
+                                        {% if qid.expiry_status == "expired" %}
+
+                                            <span class="expiry-days expiry-expired">
+
+                                                <i class="fas fa-circle-xmark"></i>
+
+                                                Expired
+
+                                            </span>
+
+
+                                        {% elif qid.expiry_status == "critical" %}
+
+                                            <span class="expiry-days expiry-critical">
+
+                                                <i class="fas fa-triangle-exclamation"></i>
+
+                                                {{ qid.days_remaining }}
+                                                day{% if qid.days_remaining != 1 %}s{% endif %}
+                                                left
+
+                                            </span>
+
+
+                                        {% elif qid.expiry_status == "warning" %}
+
+                                            <span class="expiry-days expiry-warning">
+
+                                                <i class="fas fa-clock"></i>
+
+                                                {{ qid.days_remaining }}
+                                                days left
+
+                                            </span>
+
+
+                                        {% else %}
+
+                                            <span class="expiry-days expiry-valid">
+
+                                                <i class="fas fa-circle-check"></i>
+
+                                                {{ qid.days_remaining }}
+                                                days left
+
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    {% else %}
+
+                                        —
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     MANAGER
+                                ================================== -->
+
+                                <td>
+
+                                    {% if qid.manager_name %}
+
+                                        <div class="department">
+
+                                            {{ qid.manager_name }}
+
+                                        </div>
+
+
+                                        {% if qid.manager_email %}
+
+                                            <div class="staff-email">
+
+                                                {{ qid.manager_email }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        —
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     STATUS
+                                ================================== -->
+
+                                <td>
+
+                                    {% if qid.status == "active" %}
+
+                                        <span class="status-badge">
+
+                                            <i class="fas fa-circle"></i>
+
+                                            Active
+
+                                        </span>
+
+                                    {% elif qid.status == "inactive" %}
+
+                                        <span
+                                            class="status-badge"
+                                            style="
+                                                background:#f0f1f1;
+                                                color:#68736d;
+                                            "
+                                        >
+
+                                            <i class="fas fa-circle"></i>
+
+                                            Inactive
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span
+                                            class="status-badge"
+                                            style="
+                                                background:#fff5d9;
+                                                color:#8a6a20;
+                                            "
+                                        >
+
+                                            <i class="fas fa-circle"></i>
+
+                                            {{ qid.status or "Unknown" }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     DOCUMENT
+                                ================================== -->
+
+                                <td>
+
+                                    {% if qid.qid_document %}
+
+                                        <a
+                                            href="{{ qid.qid_document }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="document-button"
+                                        >
+
+                                            <i class="fas fa-file-arrow-up"></i>
+
+                                            View Document
+
+                                        </a>
+
+                                    {% else %}
+
+                                        <span class="document-missing">
+
+                                            No document
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- =================================
+                                     ACTIONS
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+
+
+
+                                        <!-- =================================
+                                             VIEW
+                                        ================================= -->
+
+                                        <a
+                                            href="{{ url_for('construction_qid_details', id=qid['id']) }}"
+                                            class="table-action"
+                                            title="View QID"
+                                        >
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+
+
+                                        <!-- EDIT -->
+
+                                        <a
+                                            href="{{ url_for('edit_construction_qid', id=qid.id) }}"
+                                            class="table-action"
+                                            title="Edit QID"
+                                        >
+
+                                            <i class="fas fa-pen"></i>
+
+                                        </a>
+
+
+
+                                        <!-- DELETE -->
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for('delete_construction_qid', id=qid.id) }}"
+                                            class="delete-form"
+                                            onsubmit="return confirm('Are you sure you want to delete the QID record for {{ qid.staff_name|e }}?');"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="table-action delete-action"
+                                                title="Delete QID"
+                                            >
+
+                                                <i class="fas fa-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="empty-state">
+
+
+                <div class="empty-state-icon">
+
+                    <i class="fas fa-id-card"></i>
+
+                </div>
+
+
+                <h3>
+                    No Staff QID Records
+                </h3>
+
+
+                <p>
+                    No construction staff QID records have been
+                    added yet.
+                </p>
+
+
+                <br>
+
+
+                <a
+                    href="{{ url_for('add_construction_qid') }}"
+                    class="add-qid-button"
+                >
+
+                    <i class="fas fa-plus"></i>
+
+                    Add First Staff QID
+
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}
