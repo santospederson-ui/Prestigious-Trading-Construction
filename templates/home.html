@@ -893,13 +893,13 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <div class="hero-buttons">
 
-          <a href="#" class="primary-btn">
-            Our Services
-          </a>
+            <a href="{{ url_for('services') }}" class="primary-btn">
+    Our Services
+            </a>
 
-          <a href="#" class="outline-btn">
-            View Projects
-          </a>
+            <a href="{{ url_for('projects') }}" class="outline-btn">
+              View Projects
+            </a>
 
         </div>
 
@@ -1261,10 +1261,10 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
     <div style="text-align:center;margin-top:45px;">
 
-      <a
-        href="#"
-        class="text-link"
-        style="justify-content:center;">
+          <a
+      href="{{ url_for('projects') }}"
+      class="text-link"
+      style="justify-content:center;">
 
         View All Projects
         <i class="fas fa-arrow-right"></i>
@@ -1496,10 +1496,10 @@ Prestigious Trading & Construction | Building Excellence in Qatar
       renovation or material supply requirements.
     </p>
 
-    <a href="#" class="cta-button">
-      Request a Consultation
-      <i class="fas fa-arrow-right" style="margin-left:10px;"></i>
-    </a>
+      <a href="{{ url_for('contact') }}" class="cta-button">
+    Request a Consultation
+    <i class="fas fa-arrow-right" style="margin-left:10px;"></i>
+  </a>
 
   </div>
 
