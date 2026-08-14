@@ -1651,7 +1651,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # CHECK SECRET
+    # CHECK SECRET CONFIGURATION
     # =====================================================
 
     if not scheduler_key:
@@ -1671,6 +1671,10 @@ def run_qid_monitoring():
         }), 500
 
 
+    # =====================================================
+    # CHECK REQUEST KEY
+    # =====================================================
+
     if not request_key:
 
         print(
@@ -1687,6 +1691,10 @@ def run_qid_monitoring():
 
         }), 401
 
+
+    # =====================================================
+    # VALIDATE SECRET
+    # =====================================================
 
     if request_key != scheduler_key:
 
@@ -1709,10 +1717,9 @@ def run_qid_monitoring():
     # RUN MONITORING
     # =====================================================
 
-    print("")
-    print("=========================================================")
-    print("AUTOMATIC QID MONITORING TRIGGERED")
-    print("=========================================================")
+    print(
+        "AUTOMATIC QID MONITORING TRIGGERED"
+    )
 
 
     try:
@@ -1720,42 +1727,39 @@ def run_qid_monitoring():
         results = run_qid_expiry_monitoring()
 
 
-        print("")
-        print("=========================================================")
-        print("AUTOMATIC QID MONITORING FINISHED")
-        print("=========================================================")
-
+        # =================================================
+        # RETURN ONLY SMALL SUMMARY
+        # =================================================
 
         return jsonify({
 
             "success": True,
 
             "message":
-                "Automatic QID expiry monitoring completed.",
+                "QID monitoring completed.",
 
-            "results": results
+            "checked":
+                results.get("checked", 0),
+
+            "notifications_sent":
+                results.get("notifications_sent", 0),
+
+            "already_sent":
+                results.get("already_sent", 0),
+
+            "errors":
+                results.get("errors", 0)
 
         })
 
 
     except Exception as e:
 
-        print("")
-        print("=========================================================")
-        print("AUTOMATIC QID MONITORING ERROR")
-        print("=========================================================")
-
         print(
-            "Error Type:",
-            type(e).__name__
-        )
-
-        print(
-            "Error:",
+            "AUTOMATIC QID MONITORING ERROR:",
+            type(e).__name__,
             str(e)
         )
-
-        print("=========================================================")
 
 
         return jsonify({
@@ -1763,13 +1767,12 @@ def run_qid_monitoring():
             "success": False,
 
             "message":
-                "QID expiry monitoring failed.",
+                "QID monitoring failed.",
 
             "error":
                 str(e)
 
         }), 500
-
 
 
 
