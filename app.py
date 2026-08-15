@@ -1662,12 +1662,7 @@ def run_qid_monitoring():
         )
 
         return jsonify({
-
-            "success": False,
-
-            "message":
-                "QID monitoring scheduler is not configured."
-
+            "success": False
         }), 500
 
 
@@ -1683,17 +1678,12 @@ def run_qid_monitoring():
         )
 
         return jsonify({
-
-            "success": False,
-
-            "message":
-                "Unauthorized."
-
+            "success": False
         }), 401
 
 
     # =====================================================
-    # VALIDATE SECRET
+    # VALIDATE REQUEST KEY
     # =====================================================
 
     if request_key != scheduler_key:
@@ -1704,12 +1694,7 @@ def run_qid_monitoring():
         )
 
         return jsonify({
-
-            "success": False,
-
-            "message":
-                "Unauthorized."
-
+            "success": False
         }), 401
 
 
@@ -1717,9 +1702,10 @@ def run_qid_monitoring():
     # RUN MONITORING
     # =====================================================
 
-    print(
-        "AUTOMATIC QID MONITORING TRIGGERED"
-    )
+    print("")
+    print("=========================================================")
+    print("AUTOMATIC QID MONITORING TRIGGERED")
+    print("=========================================================")
 
 
     try:
@@ -1728,50 +1714,57 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # RETURN ONLY SMALL SUMMARY
+        # PRINT FULL RESULTS TO RENDER LOG
+        # =================================================
+
+        print("")
+        print("=========================================================")
+        print("AUTOMATIC QID MONITORING FINISHED")
+        print("=========================================================")
+
+        print(
+            "Results:",
+            results
+        )
+
+        print("=========================================================")
+
+
+        # =================================================
+        # SMALL RESPONSE FOR CRON-JOB.ORG
         # =================================================
 
         return jsonify({
-
-            "success": True,
-
-            "message":
-                "QID monitoring completed.",
-
-            "checked":
-                results.get("checked", 0),
-
-            "notifications_sent":
-                results.get("notifications_sent", 0),
-
-            "already_sent":
-                results.get("already_sent", 0),
-
-            "errors":
-                results.get("errors", 0)
-
+            "success": True
         })
 
 
     except Exception as e:
 
+        print("")
+        print("=========================================================")
+        print("AUTOMATIC QID MONITORING ERROR")
+        print("=========================================================")
+
         print(
-            "AUTOMATIC QID MONITORING ERROR:",
-            type(e).__name__,
+            "Error Type:",
+            type(e).__name__
+        )
+
+        print(
+            "Error:",
             str(e)
         )
 
+        print("=========================================================")
+
+
+        # =================================================
+        # SMALL ERROR RESPONSE
+        # =================================================
 
         return jsonify({
-
-            "success": False,
-
-            "message":
-                "QID monitoring failed.",
-
-            "error":
-                str(e)
-
+            "success": False
         }), 500
 
 
