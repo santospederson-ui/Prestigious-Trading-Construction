@@ -1627,6 +1627,10 @@ def test_qid_monitoring():
 # AUTOMATIC QID MONITORING
 # =========================================================
 
+# =========================================================
+# AUTOMATIC QID MONITORING
+# =========================================================
+
 @app.route("/run-qid-monitoring", methods=["GET"])
 def run_qid_monitoring():
 
@@ -1661,9 +1665,7 @@ def run_qid_monitoring():
             "QID_MONITORING_SECRET is not configured."
         )
 
-        return jsonify({
-            "success": False
-        }), 500
+        return "", 500
 
 
     # =====================================================
@@ -1677,9 +1679,7 @@ def run_qid_monitoring():
             "No scheduler key supplied."
         )
 
-        return jsonify({
-            "success": False
-        }), 401
+        return "", 401
 
 
     # =====================================================
@@ -1693,9 +1693,7 @@ def run_qid_monitoring():
             "Invalid scheduler key."
         )
 
-        return jsonify({
-            "success": False
-        }), 401
+        return "", 401
 
 
     # =====================================================
@@ -1714,7 +1712,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # PRINT FULL RESULTS TO RENDER LOG
+        # PRINT RESULTS TO RENDER LOG
         # =================================================
 
         print("")
@@ -1731,7 +1729,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # SMALL RESPONSE FOR CRON-JOB.ORG
+        # NO RESPONSE BODY
         # =================================================
 
         return "", 204
@@ -1761,9 +1759,7 @@ def run_qid_monitoring():
         # SMALL ERROR RESPONSE
         # =================================================
 
-        return jsonify({
-            "success": False
-        }), 500
+        return "", 500
 
 
 
