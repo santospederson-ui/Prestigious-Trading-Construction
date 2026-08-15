@@ -1734,9 +1734,7 @@ def run_qid_monitoring():
         # SMALL RESPONSE FOR CRON-JOB.ORG
         # =================================================
 
-        return jsonify({
-            "success": True
-        })
+        return "", 204
 
 
     except Exception as e:
