@@ -1623,9 +1623,6 @@ def test_qid_monitoring():
 
 
 
-# =========================================================
-# AUTOMATIC QID MONITORING
-# =========================================================
 
 # =========================================================
 # AUTOMATIC QID MONITORING
@@ -1645,7 +1642,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # GET KEY FROM REQUEST
+    # GET REQUEST KEY
     # =====================================================
 
     request_key = request.args.get(
@@ -1655,7 +1652,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # CHECK SECRET CONFIGURATION
+    # CHECK SECRET
     # =====================================================
 
     if not scheduler_key:
@@ -1665,25 +1662,15 @@ def run_qid_monitoring():
             "QID_MONITORING_SECRET is not configured."
         )
 
-        return "", 500
-
-
-    # =====================================================
-    # CHECK REQUEST KEY
-    # =====================================================
-
-    if not request_key:
-
-        print(
-            "QID MONITORING BLOCKED: "
-            "No scheduler key supplied."
+        return Response(
+            status=500,
+            content_type="text/plain",
+            content_length=0
         )
 
-        return "", 401
-
 
     # =====================================================
-    # VALIDATE REQUEST KEY
+    # VALIDATE KEY
     # =====================================================
 
     if request_key != scheduler_key:
@@ -1693,7 +1680,11 @@ def run_qid_monitoring():
             "Invalid scheduler key."
         )
 
-        return "", 401
+        return Response(
+            status=401,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
     # =====================================================
@@ -1712,7 +1703,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # PRINT RESULTS TO RENDER LOG
+        # RENDER LOG ONLY
         # =================================================
 
         print("")
@@ -1729,10 +1720,14 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # NO RESPONSE BODY
+        # EMPTY HTTP RESPONSE
         # =================================================
 
-        return "", 204
+        return Response(
+            status=204,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
     except Exception as e:
@@ -1755,11 +1750,11 @@ def run_qid_monitoring():
         print("=========================================================")
 
 
-        # =================================================
-        # SMALL ERROR RESPONSE
-        # =================================================
-
-        return "", 500
+        return Response(
+            status=500,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
 
