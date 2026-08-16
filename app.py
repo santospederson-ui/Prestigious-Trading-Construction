@@ -1652,7 +1652,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # CHECK SECRET
+    # CHECK SECRET CONFIGURATION
     # =====================================================
 
     if not scheduler_key:
@@ -1662,15 +1662,25 @@ def run_qid_monitoring():
             "QID_MONITORING_SECRET is not configured."
         )
 
-        return Response(
-            status=500,
-            content_type="text/plain",
-            content_length=0
-        )
+        return "", 500
 
 
     # =====================================================
-    # VALIDATE KEY
+    # CHECK REQUEST KEY
+    # =====================================================
+
+    if not request_key:
+
+        print(
+            "QID MONITORING BLOCKED: "
+            "No scheduler key supplied."
+        )
+
+        return "", 401
+
+
+    # =====================================================
+    # VALIDATE REQUEST KEY
     # =====================================================
 
     if request_key != scheduler_key:
@@ -1680,11 +1690,7 @@ def run_qid_monitoring():
             "Invalid scheduler key."
         )
 
-        return Response(
-            status=401,
-            content_type="text/plain",
-            content_length=0
-        )
+        return "", 401
 
 
     # =====================================================
@@ -1703,7 +1709,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # RENDER LOG ONLY
+        # PRINT RESULTS TO RENDER LOG
         # =================================================
 
         print("")
@@ -1720,14 +1726,10 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # EMPTY HTTP RESPONSE
+        # EMPTY SUCCESS RESPONSE
         # =================================================
 
-        return Response(
-            status=204,
-            content_type="text/plain",
-            content_length=0
-        )
+        return "", 204
 
 
     except Exception as e:
@@ -1750,11 +1752,11 @@ def run_qid_monitoring():
         print("=========================================================")
 
 
-        return Response(
-            status=500,
-            content_type="text/plain",
-            content_length=0
-        )
+        # =================================================
+        # EMPTY ERROR RESPONSE
+        # =================================================
+
+        return "", 500
 
 
 
