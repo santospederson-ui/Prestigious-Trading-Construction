@@ -1623,7 +1623,6 @@ def test_qid_monitoring():
 
 
 
-
 # =========================================================
 # AUTOMATIC QID MONITORING
 # =========================================================
@@ -1642,7 +1641,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # GET REQUEST KEY
+    # GET KEY FROM REQUEST
     # =====================================================
 
     request_key = request.args.get(
@@ -1662,7 +1661,9 @@ def run_qid_monitoring():
             "QID_MONITORING_SECRET is not configured."
         )
 
-        return "", 500
+        return jsonify({
+            "success": False
+        }), 500
 
 
     # =====================================================
@@ -1676,7 +1677,9 @@ def run_qid_monitoring():
             "No scheduler key supplied."
         )
 
-        return "", 401
+        return jsonify({
+            "success": False
+        }), 401
 
 
     # =====================================================
@@ -1690,7 +1693,9 @@ def run_qid_monitoring():
             "Invalid scheduler key."
         )
 
-        return "", 401
+        return jsonify({
+            "success": False
+        }), 401
 
 
     # =====================================================
@@ -1709,7 +1714,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # PRINT RESULTS TO RENDER LOG
+        # PRINT FULL RESULTS TO RENDER LOG
         # =================================================
 
         print("")
@@ -1726,10 +1731,12 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # EMPTY SUCCESS RESPONSE
+        # SMALL RESPONSE FOR CRON-JOB.ORG
         # =================================================
 
-        return "", 204
+        return jsonify({
+            "success": True
+        })
 
 
     except Exception as e:
@@ -1753,10 +1760,12 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # EMPTY ERROR RESPONSE
+        # SMALL ERROR RESPONSE
         # =================================================
 
-        return "", 500
+        return jsonify({
+            "success": False
+        }), 500
 
 
 
