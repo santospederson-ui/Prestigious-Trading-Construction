@@ -1623,6 +1623,7 @@ def test_qid_monitoring():
 
 
 
+
 # =========================================================
 # AUTOMATIC QID MONITORING
 # =========================================================
@@ -1641,7 +1642,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # GET KEY FROM REQUEST
+    # GET REQUEST KEY
     # =====================================================
 
     request_key = request.args.get(
@@ -1651,7 +1652,7 @@ def run_qid_monitoring():
 
 
     # =====================================================
-    # CHECK SECRET CONFIGURATION
+    # CHECK SECRET
     # =====================================================
 
     if not scheduler_key:
@@ -1661,29 +1662,15 @@ def run_qid_monitoring():
             "QID_MONITORING_SECRET is not configured."
         )
 
-        return jsonify({
-            "success": False
-        }), 500
-
-
-    # =====================================================
-    # CHECK REQUEST KEY
-    # =====================================================
-
-    if not request_key:
-
-        print(
-            "QID MONITORING BLOCKED: "
-            "No scheduler key supplied."
+        return Response(
+            status=500,
+            content_type="text/plain",
+            content_length=0
         )
 
-        return jsonify({
-            "success": False
-        }), 401
-
 
     # =====================================================
-    # VALIDATE REQUEST KEY
+    # VALIDATE KEY
     # =====================================================
 
     if request_key != scheduler_key:
@@ -1693,9 +1680,11 @@ def run_qid_monitoring():
             "Invalid scheduler key."
         )
 
-        return jsonify({
-            "success": False
-        }), 401
+        return Response(
+            status=401,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
     # =====================================================
@@ -1714,7 +1703,7 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # PRINT FULL RESULTS TO RENDER LOG
+        # RENDER LOG ONLY
         # =================================================
 
         print("")
@@ -1731,12 +1720,14 @@ def run_qid_monitoring():
 
 
         # =================================================
-        # SMALL RESPONSE FOR CRON-JOB.ORG
+        # EMPTY HTTP RESPONSE
         # =================================================
 
-        return jsonify({
-            "success": True
-        })
+        return Response(
+            status=204,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
     except Exception as e:
@@ -1759,13 +1750,11 @@ def run_qid_monitoring():
         print("=========================================================")
 
 
-        # =================================================
-        # SMALL ERROR RESPONSE
-        # =================================================
-
-        return jsonify({
-            "success": False
-        }), 500
+        return Response(
+            status=500,
+            content_type="text/plain",
+            content_length=0
+        )
 
 
 
