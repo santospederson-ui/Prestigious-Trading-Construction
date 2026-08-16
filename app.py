@@ -1627,58 +1627,57 @@ def test_qid_monitoring():
 # AUTOMATIC QID MONITORING
 # =========================================================
 
-import threading
 import os
-from flask import jsonify, request
+import threading
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
 
 @app.route("/run-qid-monitoring", methods=["GET"])
 def run_qid_monitoring():
-
-    # =====================================================
-    # 1. GET & VALIDATE SECRETS
-    # =====================================================
+    # 1. Validate Secret Keys
     scheduler_key = os.getenv("QID_MONITORING_SECRET", "").strip()
     request_key = request.args.get("key", "").strip()
 
     if not scheduler_key:
         print("QID MONITORING ERROR: QID_MONITORING_SECRET is not configured.")
-        return jsonify({"success": False, "error": "Secret not configured"}), 500
+        return jsonify({"success": False, "error": "Secret missing"}), 500
 
     if not request_key or request_key != scheduler_key:
-        print("QID MONITORING BLOCKED: Invalid or missing scheduler key.")
+        print("QID MONITORING BLOCKED: Unauthorized request key.")
         return jsonify({"success": False, "error": "Unauthorized"}), 401
 
-
-    # =====================================================
-    # 2. RUN MONITORING IN BACKGROUND THREAD
-    # (Prevents Render 50-Second Timeout & Large Response Errors)
-    # =====================================================
-    def execute_monitoring():
+    # 2. Worker Function to Execute in Background
+    def async_monitoring_worker():
         print("\n=========================================================")
-        print("AUTOMATIC QID MONITORING STARTED")
+        print("AUTOMATIC QID MONITORING STARTED (BACKGROUND THREAD)")
         print("=========================================================")
         try:
             results = run_qid_expiry_monitoring()
-            print("AUTOMATIC QID MONITORING FINISHED")
-            print("Results:", results)
+
+            # SAFE LOGGING: Log counts or status only (prevents "output too large")
+            if isinstance(results, (list, dict)):
+                print(f"Monitoring Finished. Processed records count: {len(results)}")
+            else:
+                print("Monitoring Finished successfully.")
+
         except Exception as e:
-            print("AUTOMATIC QID MONITORING ERROR")
+            print("AUTOMATIC QID MONITORING FAILED")
             print("Error Type:", type(e).__name__)
-            print("Error:", str(e))
+            print("Error Message:", str(e))
+
         print("=========================================================\n")
 
-    # Start task asynchronously
-    thread = threading.Thread(target=execute_monitoring)
+    # 3. Spawn Thread and Detach
+    thread = threading.Thread(target=async_monitoring_worker)
     thread.daemon = True
     thread.start()
 
-
-    # =====================================================
-    # 3. IMMEDIATE MINIMAL RESPONSE FOR CRON SERVICE
-    # =====================================================
+    # 4. Immediate Return to cron-job.org (Sub-100ms response)
     return jsonify({
         "success": True,
-        "message": "Monitoring task dispatched successfully"
+        "message": "QID monitoring task dispatched in background."
     }), 200
 
 
