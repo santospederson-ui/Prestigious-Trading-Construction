@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Projects | Prestigious Trading & Construction Qatar
+Projects | Prestigious Trading & Constructions Qatar
 {% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@ Projects | Prestigious Trading & Construction Qatar
 <style>
 
 /* =========================================
-   PRESTIGIOUS TRADING & CONSTRUCTION
+   PRESTIGIOUS TRADING & CONSTRUCTIONS
    PROJECTS PAGE
 ========================================= */
 
@@ -22,7 +22,6 @@ Projects | Prestigious Trading & Construction Qatar
   --projects-border: #dfe4df;
   --projects-text: #68736d;
 }
-
 
 /* =========================================
    PAGE HERO
@@ -102,7 +101,6 @@ Projects | Prestigious Trading & Construction Qatar
   margin: 0;
 }
 
-
 /* =========================================
    INTRODUCTION
 ========================================= */
@@ -157,7 +155,6 @@ Projects | Prestigious Trading & Construction Qatar
   margin: 0;
 }
 
-
 /* =========================================
    PROJECT STATUS FILTER
 ========================================= */
@@ -209,7 +206,6 @@ Projects | Prestigious Trading & Construction Qatar
   color: #ffffff;
 }
 
-
 /* =========================================
    PROJECTS GRID
 ========================================= */
@@ -228,7 +224,6 @@ Projects | Prestigious Trading & Construction Qatar
   gap: 28px;
 }
 
-
 /* =========================================
    PROJECT CARD
 ========================================= */
@@ -243,6 +238,10 @@ Projects | Prestigious Trading & Construction Qatar
   background: #dddddd;
 
   cursor: pointer;
+
+  display: block;
+
+  text-decoration: none !important;
 
   opacity: 1;
 
@@ -269,7 +268,6 @@ Projects | Prestigious Trading & Construction Qatar
 
   filter: brightness(.82);
 }
-
 
 /* =========================================
    PROJECT OVERLAY
@@ -298,7 +296,6 @@ Projects | Prestigious Trading & Construction Qatar
   color: #ffffff;
 }
 
-
 /* =========================================
    PROJECT CATEGORY
 ========================================= */
@@ -317,7 +314,6 @@ Projects | Prestigious Trading & Construction Qatar
   margin-bottom: 9px;
 }
 
-
 /* =========================================
    PROJECT TITLE
 ========================================= */
@@ -333,7 +329,6 @@ Projects | Prestigious Trading & Construction Qatar
 
   color: #ffffff;
 }
-
 
 /* =========================================
    PROJECT LOCATION
@@ -356,7 +351,6 @@ Projects | Prestigious Trading & Construction Qatar
 .project-location i {
   color: var(--projects-accent);
 }
-
 
 /* =========================================
    STATUS BADGE
@@ -390,7 +384,6 @@ Projects | Prestigious Trading & Construction Qatar
 
 }
 
-
 /* STATUS DOT */
 
 .project-status-dot {
@@ -405,7 +398,6 @@ Projects | Prestigious Trading & Construction Qatar
 
 }
 
-
 /* ONGOING */
 
 .status-ongoing {
@@ -416,7 +408,6 @@ Projects | Prestigious Trading & Construction Qatar
 
   color: #e2bd70;
 }
-
 
 /* UPCOMING */
 
@@ -429,7 +420,6 @@ Projects | Prestigious Trading & Construction Qatar
   color: #ffffff;
 }
 
-
 /* COMPLETED */
 
 .status-completed {
@@ -440,7 +430,6 @@ Projects | Prestigious Trading & Construction Qatar
 
   color: #9bd3aa;
 }
-
 
 /* =========================================
    PROJECT NUMBER
@@ -475,55 +464,6 @@ Projects | Prestigious Trading & Construction Qatar
   z-index: 5;
 }
 
-
-/* =========================================
-   PROJECT LINK
-========================================= */
-
-.project-view {
-  position: absolute;
-
-  top: 25px;
-  left: 25px;
-
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  background: var(--projects-accent);
-
-  color: #ffffff;
-
-  opacity: 0;
-
-  transform: translateY(0);
-
-  transition: all .35s ease;
-
-  text-decoration: none;
-
-  z-index: 5;
-}
-
-.project-view:hover {
-  background: var(--projects-green);
-
-  color: #ffffff;
-
-  transform: scale(1.08);
-}
-
-.project-item:hover .project-view {
-  opacity: 1;
-
-  transform: translateY(0);
-}
-
-
 /* =========================================
    FEATURED PROJECT
 ========================================= */
@@ -541,7 +481,6 @@ Projects | Prestigious Trading & Construction Qatar
 .featured-project .project-item-overlay h3 {
   font-size: 36px;
 }
-
 
 /* =========================================
    PROJECT INFORMATION
@@ -588,7 +527,6 @@ Projects | Prestigious Trading & Construction Qatar
 
   margin-bottom: 18px;
 }
-
 
 /* =========================================
    PROJECT STATS
@@ -638,7 +576,6 @@ Projects | Prestigious Trading & Construction Qatar
   letter-spacing: .7px;
 }
 
-
 /* =========================================
    INFORMATION IMAGE
 ========================================= */
@@ -661,7 +598,6 @@ Projects | Prestigious Trading & Construction Qatar
 .project-info-image:hover img {
   transform: scale(1.04);
 }
-
 
 /* =========================================
    PROJECT PROCESS
@@ -759,7 +695,6 @@ Projects | Prestigious Trading & Construction Qatar
   margin: 0;
 }
 
-
 /* =========================================
    CTA
 ========================================= */
@@ -831,7 +766,6 @@ Projects | Prestigious Trading & Construction Qatar
   transform: translateY(-3px);
 }
 
-
 /* =========================================
    NO RESULTS
 ========================================= */
@@ -874,7 +808,6 @@ Projects | Prestigious Trading & Construction Qatar
   font-size: 14px;
 }
 
-
 /* =========================================
    RESPONSIVE
 ========================================= */
@@ -900,7 +833,6 @@ Projects | Prestigious Trading & Construction Qatar
   }
 
 }
-
 
 @media (max-width: 650px) {
 
@@ -1006,7 +938,6 @@ Projects | Prestigious Trading & Construction Qatar
 
 </style>
 
-
 <!-- =========================================
      PROJECT HERO
 ========================================= -->
@@ -1037,7 +968,6 @@ Projects | Prestigious Trading & Construction Qatar
   </div>
 
 </section>
-
 
 <!-- =========================================
      INTRODUCTION
@@ -1071,7 +1001,6 @@ Projects | Prestigious Trading & Construction Qatar
   </div>
 
 </section>
-
 
 <!-- =========================================
      PROJECT STATUS FILTERS
@@ -1125,9 +1054,8 @@ Projects | Prestigious Trading & Construction Qatar
 
 </section>
 
-
 <!-- =========================================
-     PROJECTS
+     PROJECTS (CLICKABLE CARDS)
 ========================================= -->
 
 <section class="projects-list-section">
@@ -1136,19 +1064,15 @@ Projects | Prestigious Trading & Construction Qatar
 
     <div class="projects-grid">
 
-
       {% if projects %}
-
 
         {% for project in projects %}
 
-
-          <div
-            class="project-item
-            {% if project.is_featured %}featured-project{% endif %}"
+          <a
+            href="{{ url_for('project_details', slug=project.slug) }}"
+            class="project-item {% if project.is_featured %}featured-project{% endif %}"
             data-status="{{ (project.status or 'ongoing')|lower|replace(' ', '-') }}"
           >
-
 
             <!-- PROJECT IMAGE -->
 
@@ -1168,7 +1092,6 @@ Projects | Prestigious Trading & Construction Qatar
 
             {% endif %}
 
-
             <!-- PROJECT NUMBER -->
 
             <div class="project-number">
@@ -1177,24 +1100,9 @@ Projects | Prestigious Trading & Construction Qatar
 
             </div>
 
-
-            <!-- VIEW PROJECT -->
-
-            <a
-              href="{{ url_for('project_details', slug=project.slug) }}"
-              class="project-view"
-              aria-label="View {{ project.title }}"
-            >
-
-              <i class="fas fa-arrow-right"></i>
-
-            </a>
-
-
             <!-- PROJECT INFORMATION -->
 
             <div class="project-item-overlay">
-
 
               <!-- CATEGORY -->
 
@@ -1204,7 +1112,6 @@ Projects | Prestigious Trading & Construction Qatar
 
               </div>
 
-
               <!-- TITLE -->
 
               <h3>
@@ -1212,7 +1119,6 @@ Projects | Prestigious Trading & Construction Qatar
                 {{ project.title }}
 
               </h3>
-
 
               <!-- LOCATION -->
 
@@ -1228,7 +1134,6 @@ Projects | Prestigious Trading & Construction Qatar
 
               {% endif %}
 
-
               <!-- STATUS -->
 
               {% set project_status =
@@ -1236,7 +1141,6 @@ Projects | Prestigious Trading & Construction Qatar
                   |lower
                   |replace(" ", "-")
               %}
-
 
               <div
                 class="project-status-badge
@@ -1257,18 +1161,13 @@ Projects | Prestigious Trading & Construction Qatar
 
               </div>
 
-
             </div>
 
-
-          </div>
-
+          </a>
 
         {% endfor %}
 
-
       {% else %}
-
 
         <!-- EMPTY STATE -->
 
@@ -1309,9 +1208,7 @@ Projects | Prestigious Trading & Construction Qatar
 
         </div>
 
-
       {% endif %}
-
 
       <!-- FILTERED EMPTY STATE -->
 
@@ -1332,13 +1229,11 @@ Projects | Prestigious Trading & Construction Qatar
 
       </div>
 
-
     </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      PROJECT APPROACH
@@ -1350,9 +1245,7 @@ Projects | Prestigious Trading & Construction Qatar
 
     <div class="project-info-grid">
 
-
       <div class="project-info-content">
-
 
         <div class="section-label">
 
@@ -1360,14 +1253,12 @@ Projects | Prestigious Trading & Construction Qatar
 
         </div>
 
-
         <h2>
 
           Every Project Begins
           With A Clear Standard
 
         </h2>
-
 
         <p>
 
@@ -1378,7 +1269,6 @@ Projects | Prestigious Trading & Construction Qatar
 
         </p>
 
-
         <p>
 
           Our team works closely with clients, contractors,
@@ -1387,9 +1277,7 @@ Projects | Prestigious Trading & Construction Qatar
 
         </p>
 
-
         <div class="project-stats">
-
 
           <div class="project-stat">
 
@@ -1403,7 +1291,6 @@ Projects | Prestigious Trading & Construction Qatar
 
           </div>
 
-
           <div class="project-stat">
 
             <strong>
@@ -1415,7 +1302,6 @@ Projects | Prestigious Trading & Construction Qatar
             </span>
 
           </div>
-
 
           <div class="project-stat">
 
@@ -1429,29 +1315,24 @@ Projects | Prestigious Trading & Construction Qatar
 
           </div>
 
-
         </div>
 
-
       </div>
-
 
       <div class="project-info-image">
 
         <img
           src="{{ url_for('static', filename='images/home/home4.png') }}"
-          alt="Prestigious Trading and Construction Projects"
+          alt="Prestigious Trading and Constructions Projects"
           loading="lazy">
 
       </div>
-
 
     </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      PROJECT PROCESS
@@ -1461,9 +1342,7 @@ Projects | Prestigious Trading & Construction Qatar
 
   <div class="container">
 
-
     <div class="section-heading">
-
 
       <div class="section-label">
 
@@ -1471,13 +1350,11 @@ Projects | Prestigious Trading & Construction Qatar
 
       </div>
 
-
       <h2>
 
         From Concept To Completion
 
       </h2>
-
 
       <p>
 
@@ -1486,12 +1363,9 @@ Projects | Prestigious Trading & Construction Qatar
 
       </p>
 
-
     </div>
 
-
     <div class="process-grid">
-
 
       <div class="process-card">
 
@@ -1512,7 +1386,6 @@ Projects | Prestigious Trading & Construction Qatar
 
       </div>
 
-
       <div class="process-card">
 
         <div class="process-number">
@@ -1531,7 +1404,6 @@ Projects | Prestigious Trading & Construction Qatar
         </p>
 
       </div>
-
 
       <div class="process-card">
 
@@ -1552,7 +1424,6 @@ Projects | Prestigious Trading & Construction Qatar
 
       </div>
 
-
       <div class="process-card">
 
         <div class="process-number">
@@ -1572,13 +1443,11 @@ Projects | Prestigious Trading & Construction Qatar
 
       </div>
 
-
     </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      CTA
@@ -1588,13 +1457,11 @@ Projects | Prestigious Trading & Construction Qatar
 
   <div class="container">
 
-
     <h2>
 
       Have A Project In Mind?
 
     </h2>
-
 
     <p>
 
@@ -1603,7 +1470,6 @@ Projects | Prestigious Trading & Construction Qatar
       to discuss your requirements.
 
     </p>
-
 
     <a
       href="{{ url_for('contact') }}"
@@ -1616,11 +1482,9 @@ Projects | Prestigious Trading & Construction Qatar
 
     </a>
 
-
   </div>
 
 </section>
-
 
 <!-- =========================================
      PROJECT STATUS FILTER SCRIPT
@@ -1630,28 +1494,21 @@ Projects | Prestigious Trading & Construction Qatar
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
   const filterButtons =
     document.querySelectorAll(".project-filter");
-
 
   const projects =
     document.querySelectorAll(".project-item");
 
-
   const noProjects =
     document.getElementById("noProjectsFiltered");
 
-
   filterButtons.forEach(function (button) {
-
 
     button.addEventListener("click", function () {
 
-
       const filter =
         this.getAttribute("data-filter");
-
 
       /* ================================
          UPDATE ACTIVE BUTTON
@@ -1663,9 +1520,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       });
 
-
       this.classList.add("active");
-
 
       /* ================================
          FILTER PROJECTS
@@ -1673,26 +1528,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let visibleCount = 0;
 
-
       projects.forEach(function (project) {
-
 
         const status =
           (project.getAttribute("data-status") || "")
           .toLowerCase()
           .trim();
 
-
         const shouldShow =
           filter === "all" ||
           status === filter;
 
-
         if (shouldShow) {
 
-
           project.style.display = "";
-
 
           requestAnimationFrame(function () {
 
@@ -1702,17 +1551,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
           });
 
-
           visibleCount++;
 
-
         } else {
-
 
           project.style.opacity = "0";
 
           project.style.transform = "scale(.96)";
-
 
           setTimeout(function () {
 
@@ -1720,18 +1565,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
           }, 250);
 
-
         }
 
       });
-
 
       /* ================================
          NO RESULTS MESSAGE
       ================================= */
 
       if (noProjects) {
-
 
         if (visibleCount === 0) {
 
@@ -1745,16 +1587,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       }
 
-
     });
 
-
   });
-
 
 });
 
 </script>
-
 
 {% endblock %}
