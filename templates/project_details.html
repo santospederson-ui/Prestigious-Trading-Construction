@@ -24,49 +24,37 @@
     --pd-white: #ffffff;
 }
 
-
 /* =========================================================
    HERO
 ========================================================= */
 
 .project-detail-hero {
-
     position: relative;
-
     min-height: 560px;
-
     display: flex;
-
     align-items: flex-end;
-
     overflow: hidden;
-
     background: var(--pd-dark);
 }
 
-
 .project-detail-hero-image {
-
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     transform: scale(1.01);
-
+    cursor: pointer;
+    transition: transform .6s ease;
 }
 
+.project-detail-hero-image:hover {
+    transform: scale(1.03);
+}
 
 .project-detail-hero-overlay {
-
     position: absolute;
-
     inset: 0;
-
     background:
         linear-gradient(
             180deg,
@@ -74,1111 +62,641 @@
             rgba(10,18,14,.35) 40%,
             rgba(10,18,14,.94) 100%
         );
-
+    pointer-events: none;
 }
-
 
 .project-detail-hero-content {
-
     position: relative;
-
     z-index: 2;
-
     width: 100%;
-
     max-width: 1280px;
-
     margin: 0 auto;
-
     padding: 90px 24px 65px;
-
     color: var(--pd-white);
-
+    pointer-events: auto;
 }
-
 
 .project-detail-category {
-
     color: var(--pd-accent);
-
     font-size: 12px;
-
     font-weight: 800;
-
     letter-spacing: 2.5px;
-
     text-transform: uppercase;
-
     margin-bottom: 14px;
-
 }
 
-
 .project-detail-hero h1 {
-
     max-width: 900px;
-
     margin: 0 0 18px;
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: clamp(42px, 6vw, 72px);
-
     line-height: 1.06;
-
     font-weight: 800;
-
     text-shadow:
         0 5px 25px rgba(0,0,0,.35);
-
 }
-
 
 .project-detail-location {
-
     display: flex;
-
     align-items: center;
-
     gap: 9px;
-
     color: rgba(255,255,255,.82);
-
     font-size: 14px;
-
 }
-
 
 .project-detail-location i {
-
     color: var(--pd-accent);
-
 }
-
 
 /* =========================================================
    BACK BUTTON
 ========================================================= */
 
 .project-detail-back {
-
     position: absolute;
-
     top: 30px;
-
     left: 24px;
-
     z-index: 5;
-
 }
-
 
 .project-detail-back a {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 9px;
-
     padding: 11px 17px;
-
     background: rgba(23,32,27,.72);
-
     border: 1px solid rgba(255,255,255,.2);
-
     color: #ffffff;
-
     text-decoration: none;
-
     font-size: 12px;
-
     font-weight: 700;
-
     backdrop-filter: blur(8px);
-
     transition: all .3s ease;
-
 }
-
 
 .project-detail-back a:hover {
-
     background: var(--pd-accent);
-
     border-color: var(--pd-accent);
-
     color: #ffffff;
-
 }
-
 
 /* =========================================================
    MAIN CONTENT
 ========================================================= */
 
 .project-detail-main {
-
     padding: 90px 0 100px;
-
     background: #ffffff;
-
 }
-
 
 .project-detail-grid {
-
     display: grid;
-
     grid-template-columns: minmax(0, 1.7fr) minmax(300px, .8fr);
-
     gap: 70px;
-
     align-items: start;
-
 }
-
 
 /* =========================================================
    SECTION LABEL
 ========================================================= */
 
 .project-detail-label {
-
     color: var(--pd-green);
-
     font-size: 12px;
-
     font-weight: 800;
-
     letter-spacing: 2px;
-
     text-transform: uppercase;
-
     margin-bottom: 12px;
-
 }
-
 
 /* =========================================================
    PROJECT INTRO
 ========================================================= */
 
 .project-detail-content h2 {
-
     margin: 0 0 22px;
-
     color: var(--pd-dark);
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: clamp(32px, 4vw, 44px);
-
     line-height: 1.18;
-
 }
-
 
 .project-detail-description {
-
     color: var(--pd-text);
-
     font-size: 15px;
-
     line-height: 1.9;
-
 }
-
 
 .project-detail-description p {
-
     margin-bottom: 18px;
-
 }
-
 
 .project-detail-description p:last-child {
-
     margin-bottom: 0;
-
 }
-
 
 /* =========================================================
    PROJECT INFORMATION CARD
 ========================================================= */
 
 .project-meta-card {
-
     background: var(--pd-light);
-
     border: 1px solid var(--pd-border);
-
     padding: 30px;
-
 }
 
-
 .project-meta-card-title {
-
     color: var(--pd-dark);
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: 23px;
-
     font-weight: 700;
-
     padding-bottom: 20px;
-
     margin-bottom: 5px;
-
     border-bottom: 1px solid var(--pd-border);
-
 }
-
 
 .project-meta-item {
-
     padding: 18px 0;
-
     border-bottom: 1px solid var(--pd-border);
-
 }
-
 
 .project-meta-item:last-child {
-
     border-bottom: none;
-
     padding-bottom: 0;
-
 }
-
 
 .project-meta-label {
-
     display: block;
-
     color: var(--pd-text);
-
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 1.3px;
-
     text-transform: uppercase;
-
     margin-bottom: 6px;
-
 }
-
 
 .project-meta-value {
-
     display: block;
-
     color: var(--pd-dark);
-
     font-size: 14px;
-
     font-weight: 700;
-
 }
-
 
 .project-meta-value.status {
-
     display: inline-flex;
-
     align-items: center;
-
     padding: 6px 11px;
-
     background: rgba(36,75,58,.1);
-
     color: var(--pd-green);
-
     font-size: 11px;
-
     text-transform: uppercase;
-
     letter-spacing: .7px;
-
 }
-
 
 /* =========================================================
    PROJECT IMAGE
 ========================================================= */
 
 .project-detail-image-section {
-
     padding: 0 0 100px;
-
     background: #ffffff;
-
 }
-
 
 .project-detail-image {
-
     position: relative;
-
     height: 620px;
-
     overflow: hidden;
-
     background: var(--pd-light);
-
+    cursor: pointer;
 }
-
 
 .project-detail-image img {
-
     width: 100%;
-
     height: 100%;
-
     object-fit: cover;
-
     transition: transform .7s ease;
-
 }
-
 
 .project-detail-image:hover img {
-
     transform: scale(1.025);
-
 }
-
 
 .project-image-caption {
-
     position: absolute;
-
     left: 25px;
-
     bottom: 25px;
-
     padding: 10px 15px;
-
     background: rgba(23,32,27,.82);
-
     color: rgba(255,255,255,.9);
-
     font-size: 11px;
-
     font-weight: 700;
-
     letter-spacing: .5px;
-
     backdrop-filter: blur(6px);
-
 }
-
-
-
 
 /* =========================================================
    PROJECT GALLERY
 ========================================================= */
 
 .project-gallery-section {
-
     padding: 95px 0;
-
     background: #ffffff;
 }
 
-
 .project-gallery-heading {
-
     max-width: 700px;
-
     margin: 0 auto 50px;
-
     text-align: center;
 }
 
-
 .project-gallery-heading h2 {
-
     margin: 0 0 14px;
-
     color: var(--pd-dark);
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: 38px;
-
     line-height: 1.2;
 }
 
-
 .project-gallery-heading p {
-
     margin: 0;
-
     color: var(--pd-text);
-
     font-size: 14px;
-
     line-height: 1.7;
 }
 
-
-/* ==============================
-   GALLERY GRID
-============================== */
-
+/* GALLERY GRID */
 .project-gallery-grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
 }
 
-
-/* ==============================
-   GALLERY ITEM
-============================== */
-
+/* GALLERY ITEM */
 .project-gallery-item {
-
     position: relative;
-
     height: 300px;
-
     overflow: hidden;
-
     background: var(--pd-light);
-
     cursor: pointer;
 }
-
 
 .project-gallery-item img {
-
     width: 100%;
-
     height: 100%;
-
     object-fit: cover;
-
-    transition:
-        transform .6s ease,
-        filter .4s ease;
+    transition: transform .6s ease;
 }
-
 
 .project-gallery-item:hover img {
-
-    transform: scale(1.06);
-
-    filter: brightness(.72);
+    transform: scale(1.04);
 }
 
-
-/* ==============================
-   IMAGE OVERLAY & BUTTON
-============================== */
-
-.project-gallery-overlay {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    opacity: 0;
-
-    transition: opacity .35s ease;
-
-    background:
-        rgba(23,32,27,.35);
-
-    border: none;
-
-    width: 100%;
-
-    height: 100%;
-
-    cursor: pointer;
-}
-
-
-.project-gallery-item:hover
-.project-gallery-overlay {
-
-    opacity: 1;
-}
-
-
-.project-gallery-overlay span {
-
-    width: 52px;
-
-    height: 52px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: var(--pd-accent);
-
-    color: #ffffff;
-
-    font-size: 16px;
-
-    transition: transform .3s ease, background .3s ease;
-}
-
-.project-gallery-overlay:hover span {
-
-    transform: scale(1.1);
-
-    background: var(--pd-green);
-}
-
-
-/* ==============================
-   LIGHTBOX MODAL
-============================== */
+/* =========================================================
+   ADVANCED LIGHTBOX MODAL WITH KEYBOARD SLIDER
+========================================================= */
 
 .gallery-lightbox-modal {
-
     position: fixed;
-
     inset: 0;
-
     z-index: 99999;
-
-    background: rgba(10,18,14,.92);
-
-    backdrop-filter: blur(10px);
-
+    background: rgba(10,18,14,.95);
+    backdrop-filter: blur(12px);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     opacity: 0;
-
     pointer-events: none;
-
     transition: opacity .3s ease;
-
-
-
-
-
     padding: 20px;
+    user-select: none;
 }
 
 .gallery-lightbox-modal.active {
-
     opacity: 1;
-
     pointer-events: auto;
 }
 
 .gallery-lightbox-content {
-
     position: relative;
-
     max-width: 90vw;
-
     max-height: 85vh;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 }
 
 .gallery-lightbox-content img {
-
     max-width: 100%;
-
     max-height: 85vh;
-
     object-fit: contain;
-
-    box-shadow: 0 10px 40px rgba(0,0,0,.5);
-
-    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 15px 50px rgba(0,0,0,.6);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 4px;
+    transition: transform .2s ease;
 }
 
+/* CLOSE BUTTON */
 .gallery-lightbox-close {
-
     position: absolute;
-
-    top: -45px;
-
+    top: -50px;
     right: 0;
-
     background: transparent;
-
     border: none;
-
     color: #ffffff;
-
-    font-size: 28px;
-
+    font-size: 30px;
     cursor: pointer;
-
-    transition: color .3s ease;
+    transition: all .25s ease;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gallery-lightbox-close:hover {
-
     color: var(--pd-accent);
+    transform: rotate(90deg);
 }
 
-
-/* ==============================
-   MOBILE
-============================== */
-
-@media (max-width: 900px) {
-
-    .project-gallery-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
+/* SLIDER ARROW BUTTONS */
+.lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    background: rgba(23, 32, 27, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .25s ease;
+    border-radius: 50%;
+    z-index: 10;
 }
 
-
-@media (max-width: 600px) {
-
-    .project-gallery-section {
-
-        padding: 70px 0;
-
-    }
-
-
-    .project-gallery-heading h2 {
-
-        font-size: 31px;
-
-    }
-
-
-    .project-gallery-grid {
-
-        grid-template-columns: 1fr;
-
-        gap: 15px;
-
-    }
-
-
-    .project-gallery-item {
-
-        height: 280px;
-
-    }
-
+.lightbox-nav-btn:hover {
+    background: var(--pd-accent);
+    border-color: var(--pd-accent);
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.1);
 }
 
+.lightbox-prev-btn {
+    left: -70px;
+}
 
+.lightbox-next-btn {
+    right: -70px;
+}
 
-
+/* SLIDER COUNTER BADGE */
+.lightbox-counter {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    background: rgba(23, 32, 27, 0.7);
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
 
 /* =========================================================
    PROJECT TIMELINE
 ========================================================= */
 
 .project-timeline-section {
-
     padding: 90px 0;
-
     background: var(--pd-light);
-
 }
-
 
 .project-timeline-heading {
-
     max-width: 700px;
-
     margin: 0 auto 50px;
-
     text-align: center;
-
 }
-
 
 .project-timeline-heading h2 {
-
     margin: 0 0 15px;
-
     color: var(--pd-dark);
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: 38px;
-
 }
-
 
 .project-timeline-heading p {
-
     margin: 0;
-
     color: var(--pd-text);
-
     font-size: 14px;
-
     line-height: 1.7;
-
 }
-
 
 .project-timeline {
-
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 20px;
-
 }
-
 
 .timeline-card {
-
     position: relative;
-
     padding: 35px 28px;
-
     background: #ffffff;
-
     border: 1px solid var(--pd-border);
-
 }
-
 
 .timeline-number {
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     width: 48px;
-
     height: 48px;
-
     margin-bottom: 22px;
-
     background: var(--pd-green);
-
     color: #ffffff;
-
     font-size: 12px;
-
     font-weight: 800;
-
 }
 
-
 .timeline-card h3 {
-
     margin: 0 0 8px;
-
     color: var(--pd-dark);
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: 22px;
-
 }
-
 
 .timeline-card p {
-
     margin: 0;
-
     color: var(--pd-text);
-
     font-size: 13px;
-
     line-height: 1.7;
-
 }
-
 
 /* =========================================================
    CTA
 ========================================================= */
 
 .project-detail-cta {
-
     padding: 90px 0;
-
     background:
         linear-gradient(
             110deg,
             var(--pd-green),
             var(--pd-green-dark)
         );
-
     text-align: center;
-
     color: #ffffff;
-
 }
 
-
 .project-detail-cta h2 {
-
     margin: 0 0 14px;
-
     font-family:
         var(--font-serif,
         'Playfair Display',
         serif);
-
     font-size: 40px;
-
 }
-
 
 .project-detail-cta p {
-
     max-width: 650px;
-
     margin: 0 auto 28px;
-
     color: rgba(255,255,255,.82);
-
     font-size: 15px;
-
     line-height: 1.7;
-
 }
-
 
 .project-detail-cta-button {
-
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 10px;
-
     padding: 15px 32px;
-
     background: var(--pd-accent);
-
     color: #ffffff;
-
     text-decoration: none;
-
     font-size: 13px;
-
     font-weight: 800;
-
     transition: all .3s ease;
-
 }
-
 
 .project-detail-cta-button:hover {
-
     background: #ffffff;
-
     color: var(--pd-green);
-
     transform: translateY(-3px);
-
 }
-
 
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
 @media (max-width: 950px) {
-
     .project-detail-grid {
-
         grid-template-columns: 1fr;
-
         gap: 45px;
-
     }
-
-
     .project-detail-image {
-
         height: 500px;
-
     }
-
-
     .project-timeline {
-
         grid-template-columns: 1fr 1fr;
-
     }
-
+    .project-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .lightbox-prev-btn { left: -15px; }
+    .lightbox-next-btn { right: -15px; }
 }
 
-
 @media (max-width: 650px) {
-
     .project-detail-hero {
-
         min-height: 470px;
-
     }
-
-
     .project-detail-back {
-
         top: 20px;
-
         left: 20px;
-
     }
-
-
-    .project-detail-back a {
-
-        padding: 99px 13px;
-
-    }
-
-
     .project-detail-hero-content {
-
         padding: 70px 20px 45px;
-
     }
-
-
     .project-detail-hero h1 {
-
         font-size: 40px;
-
     }
-
-
     .project-detail-main {
-
         padding: 65px 0 70px;
-
     }
-
-
     .project-detail-grid {
-
         gap: 35px;
-
     }
-
-
     .project-meta-card {
-
         padding: 24px;
-
     }
-
-
     .project-detail-image-section {
-
         padding-bottom: 70px;
-
     }
-
-
     .project-detail-image {
-
         height: 350px;
-
     }
-
-
-    .project-timeline-section {
-
+    .project-gallery-section {
         padding: 70px 0;
-
     }
-
-
-    .project-timeline-heading h2 {
-
+    .project-gallery-heading h2 {
         font-size: 31px;
-
     }
-
-
-    .project-timeline {
-
+    .project-gallery-grid {
         grid-template-columns: 1fr;
-
+        gap: 15px;
     }
-
-
+    .project-gallery-item {
+        height: 280px;
+    }
+    .project-timeline-section {
+        padding: 70px 0;
+    }
+    .project-timeline-heading h2 {
+        font-size: 31px;
+    }
+    .project-timeline {
+        grid-template-columns: 1fr;
+    }
     .project-detail-cta {
-
         padding: 70px 20px;
-
     }
-
-
     .project-detail-cta h2 {
-
         font-size: 32px;
-
     }
-
+    .lightbox-nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
+    }
+    .lightbox-prev-btn { left: 5px; }
+    .lightbox-next-btn { right: 5px; }
 }
 
 </style>
-
 
 <!-- =========================================================
      PROJECT HERO
@@ -1187,116 +705,75 @@
 <section class="project-detail-hero">
 
     {% if project.image %}
-
         <img
-            class="project-detail-hero-image"
+            class="project-detail-hero-image expandable-project-img"
             src="{{ project.image }}"
             alt="{{ project.title }}"
+            data-full-src="{{ project.image }}"
         >
-
     {% else %}
-
         <img
-            class="project-detail-hero-image"
+            class="project-detail-hero-image expandable-project-img"
             src="{{ url_for('static', filename='images/home/home1.webp') }}"
             alt="{{ project.title }}"
+            data-full-src="{{ url_for('static', filename='images/home/home1.webp') }}"
         >
-
     {% endif %}
-
 
     <div class="project-detail-hero-overlay"></div>
 
-
     <!-- BACK TO PROJECTS -->
-
     <div class="project-detail-back">
-
         <a href="{{ url_for('projects') }}">
-
             <i class="fas fa-arrow-left"></i>
-
             Back to Projects
-
         </a>
-
     </div>
 
-
     <!-- HERO CONTENT -->
-
     <div class="project-detail-hero-content">
-
         <div class="project-detail-category">
-
             {{ project.category or "Construction" }}
-
         </div>
 
-
         <h1>
-
             {{ project.title }}
-
         </h1>
 
-
         {% if project.location %}
-
             <div class="project-detail-location">
-
                 <i class="fas fa-location-dot"></i>
-
                 <span>
                     {{ project.location }}
                 </span>
-
             </div>
-
         {% endif %}
-
     </div>
 
 </section>
-
 
 <!-- =========================================================
      PROJECT INFORMATION
 ========================================================= -->
 
 <section class="project-detail-main">
-
     <div class="container">
-
         <div class="project-detail-grid">
 
-
             <!-- PROJECT DESCRIPTION -->
-
             <div class="project-detail-content">
-
                 <div class="project-detail-label">
-
                     Project Overview
-
                 </div>
 
-
                 <h2>
-
                     {{ project.title }}
-
                 </h2>
 
-
                 <div class="project-detail-description">
-
                     {% if project.description %}
-
                         {{ project.description | replace('\n', '<br>') | safe }}
-
                     {% else %}
-
                         <p>
                             This project was delivered by
                             Prestigious Trading & Construction
@@ -1304,202 +781,120 @@
                             professional execution and attention
                             to detail.
                         </p>
-
                     {% endif %}
-
                 </div>
-
             </div>
 
-
             <!-- PROJECT DETAILS -->
-
             <aside class="project-meta-card">
-
                 <div class="project-meta-card-title">
-
                     Project Details
-
                 </div>
 
-
                 <!-- CATEGORY -->
-
                 <div class="project-meta-item">
-
                     <span class="project-meta-label">
                         Project Type
                     </span>
-
                     <span class="project-meta-value">
-
                         {{ project.category or "Construction" }}
-
                     </span>
-
                 </div>
 
-
                 <!-- LOCATION -->
-
                 {% if project.location %}
-
                     <div class="project-meta-item">
-
                         <span class="project-meta-label">
                             Location
                         </span>
-
                         <span class="project-meta-value">
-
                             {{ project.location }}
-
                         </span>
-
                     </div>
-
                 {% endif %}
 
-
                 <!-- CLIENT -->
-
                 {% if project.client %}
-
                     <div class="project-meta-item">
-
                         <span class="project-meta-label">
                             Client
                         </span>
-
                         <span class="project-meta-value">
-
                             {{ project.client }}
-
                         </span>
-
                     </div>
-
                 {% endif %}
 
-
                 <!-- STATUS -->
-
                 {% if project.status %}
-
                     <div class="project-meta-item">
-
                         <span class="project-meta-label">
                             Project Status
                         </span>
-
                         <span class="project-meta-value status">
-
                             {{ project.status }}
-
                         </span>
-
                     </div>
-
                 {% endif %}
 
-
                 <!-- START DATE -->
-
                 {% if project.start_date %}
-
                     <div class="project-meta-item">
-
                         <span class="project-meta-label">
                             Start Date
                         </span>
-
                         <span class="project-meta-value">
-
                             {{ project.start_date }}
-
                         </span>
-
                     </div>
-
                 {% endif %}
 
-
                 <!-- COMPLETION DATE -->
-
                 {% if project.completion_date %}
-
                     <div class="project-meta-item">
-
                         <span class="project-meta-label">
                             Completion Date
                         </span>
-
                         <span class="project-meta-value">
-
                             {{ project.completion_date }}
-
                         </span>
-
                     </div>
-
                 {% endif %}
-
             </aside>
 
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================================================
      PROJECT IMAGE
 ========================================================= -->
 
 <section class="project-detail-image-section">
-
     <div class="container">
-
-        <div class="project-detail-image">
+        <div class="project-detail-image expandable-project-img" data-full-src="{% if project.image %}{{ project.image }}{% else %}{{ url_for('static', filename='images/home/home1.webp') }}{% endif %}">
 
             {% if project.image %}
-
                 <img
                     src="{{ project.image }}"
                     alt="{{ project.title }}"
                     loading="lazy"
                 >
-
             {% else %}
-
                 <img
                     src="{{ url_for('static', filename='images/home/home1.webp') }}"
                     alt="{{ project.title }}"
                     loading="lazy"
                 >
-
             {% endif %}
 
-
             <div class="project-image-caption">
-
                 {{ project.title }}
-
             </div>
 
         </div>
-
     </div>
-
 </section>
-
-
-
-
-
-
-
 
 <!-- =========================================================
      PROJECT GALLERY
@@ -1508,11 +903,9 @@
 {% if project_images %}
 
 <section class="project-gallery-section">
-
     <div class="container">
 
         <div class="project-gallery-heading">
-
             <div class="project-detail-label">
                 Project Gallery
             </div>
@@ -1522,244 +915,141 @@
             </h2>
 
             <p>
-                Explore selected images from
-                {{ project.title }}.
+                Explore selected images from {{ project.title }}. Click any photo to open the interactive viewer.
             </p>
-
         </div>
 
-
         <div class="project-gallery-grid">
-
             {% for image in project_images %}
-
-                <div class="project-gallery-item">
-
+                <div class="project-gallery-item expandable-project-img" data-full-src="{{ image.image_url }}">
                     <img
                         src="{{ image.image_url }}"
                         alt="{{ project.title }} project image {{ loop.index }}"
                         loading="lazy"
                     >
-
-                    <button
-                        class="project-gallery-overlay"
-                        data-large-src="{{ image.image_url }}"
-                        aria-label="View larger image"
-                    >
-
-                        <span>
-                            <i class="fas fa-expand"></i>
-                        </span>
-
-                    </button>
-
                 </div>
-
             {% endfor %}
-
         </div>
 
     </div>
-
 </section>
 
-<!-- LIGHTBOX MODAL -->
+{% endif %}
 
-<div class="gallery-lightbox-modal" id="galleryLightbox">
+<!-- =========================================================
+     LIGHTBOX SLIDER MODAL
+========================================================= -->
 
+<div class="gallery-lightbox-modal" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Image gallery viewer">
     <div class="gallery-lightbox-content">
-
+        <!-- CLOSE BUTTON -->
         <button class="gallery-lightbox-close" id="lightboxClose" aria-label="Close image popup">
             <i class="fas fa-times"></i>
         </button>
 
+        <!-- PREVIOUS BUTTON -->
+        <button class="lightbox-nav-btn lightbox-prev-btn" id="lightboxPrev" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- ACTIVE IMAGE -->
         <img src="" id="lightboxImage" alt="Enlarged project view">
 
+        <!-- NEXT BUTTON -->
+        <button class="lightbox-nav-btn lightbox-next-btn" id="lightboxNext" aria-label="Next image">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- COUNTER -->
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
     </div>
-
 </div>
-
-{% endif %}
-
-
-
-
-
-
-
-
 
 <!-- =========================================================
      PROJECT TIMELINE
 ========================================================= -->
 
 <section class="project-timeline-section">
-
     <div class="container">
 
         <div class="project-timeline-heading">
-
             <div class="project-detail-label">
-
                 Our Approach
-
             </div>
 
-
             <h2>
-
                 From Planning To Completion
-
             </h2>
 
-
             <p>
-
                 Every project is approached with careful planning,
                 professional execution and attention to quality.
-
             </p>
-
         </div>
 
-
         <div class="project-timeline">
-
-
             <!-- STEP 01 -->
-
             <div class="timeline-card">
-
-                <div class="timeline-number">
-
-                    01
-
-                </div>
-
-
-                <h3>
-
-                    Planning
-
-                </h3>
-
-
+                <div class="timeline-number">01</div>
+                <h3>Planning</h3>
                 <p>
-
                     Understanding project requirements,
                     scope, objectives and expectations
                     before execution begins.
-
                 </p>
-
             </div>
 
-
             <!-- STEP 02 -->
-
             <div class="timeline-card">
-
-                <div class="timeline-number">
-
-                    02
-
-                </div>
-
-
-                <h3>
-
-                    Execution
-
-                </h3>
-
-
+                <div class="timeline-number">02</div>
+                <h3>Execution</h3>
                 <p>
-
                     Coordinating resources, materials and
                     skilled teams to deliver the required
                     work to professional standards.
-
                 </p>
-
             </div>
 
-
             <!-- STEP 03 -->
-
             <div class="timeline-card">
-
-                <div class="timeline-number">
-
-                    03
-
-                </div>
-
-
-                <h3>
-
-                    Delivery
-
-                </h3>
-
-
+                <div class="timeline-number">03</div>
+                <h3>Delivery</h3>
                 <p>
-
                     Completing quality checks and ensuring
                     the finished project meets the required
                     standards and expectations.
-
                 </p>
-
             </div>
-
         </div>
 
     </div>
-
 </section>
-
 
 <!-- =========================================================
      CTA
 ========================================================= -->
 
 <section class="project-detail-cta">
-
     <div class="container">
-
         <h2>
-
             Have A Similar Project In Mind?
-
         </h2>
 
-
         <p>
-
             Talk to Prestigious Trading & Construction
             about your construction, finishing, renovation
             or development requirements.
-
         </p>
 
-
-        <a
-            href="{{ url_for('contact') }}"
-            class="project-detail-cta-button"
-        >
-
+        <a href="{{ url_for('contact') }}" class="project-detail-cta-button">
             Discuss Your Project
-
             <i class="fas fa-arrow-right"></i>
-
         </a>
-
     </div>
-
 </section>
 
 <!-- =========================================================
-     LIGHTBOX SCRIPT
+     LIGHTBOX & KEYBOARD SLIDER SCRIPT
 ========================================================= -->
 
 <script>
@@ -1767,18 +1057,49 @@ document.addEventListener("DOMContentLoaded", function () {
     const lightboxModal = document.getElementById("galleryLightbox");
     const lightboxImg = document.getElementById("lightboxImage");
     const closeBtn = document.getElementById("lightboxClose");
-    const galleryTriggers = document.querySelectorAll(".project-gallery-overlay");
+    const prevBtn = document.getElementById("lightboxPrev");
+    const nextBtn = document.getElementById("lightboxNext");
+    const counterDisplay = document.getElementById("lightboxCounter");
 
     if (!lightboxModal) return;
 
-    galleryTriggers.forEach(function (trigger) {
-        trigger.addEventListener("click", function () {
-            const imgSrc = this.getAttribute("data-large-src");
-            lightboxImg.src = imgSrc;
-            lightboxModal.classList.add("active");
-            document.body.style.overflow = "hidden";
-        });
+    // Collect all expandable project image elements
+    const expandableElements = Array.from(document.querySelectorAll(".expandable-project-img"));
+
+    // Extract unique image source URLs
+    const imageSources = [];
+    expandableElements.forEach(el => {
+        const src = el.getAttribute("data-full-src") || el.getAttribute("src") || (el.querySelector("img") ? el.querySelector("img").src : null);
+        if (src && !imageSources.includes(src)) {
+            imageSources.push(src);
+        }
     });
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+        if (imageSources.length === 0) return;
+        if (index < 0) {
+            currentIndex = imageSources.length - 1;
+        } else if (index >= imageSources.length) {
+            currentIndex = 0;
+        } else {
+            currentIndex = index;
+        }
+
+        lightboxImg.src = imageSources[currentIndex];
+        if (counterDisplay) {
+            counterDisplay.textContent = `${currentIndex + 1} / ${imageSources.length}`;
+        }
+    }
+
+    function openLightbox(src) {
+        const foundIndex = imageSources.indexOf(src);
+        currentIndex = foundIndex !== -1 ? foundIndex : 0;
+        showImage(currentIndex);
+        lightboxModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
 
     function closeLightbox() {
         lightboxModal.classList.remove("active");
@@ -1786,18 +1107,63 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = "";
     }
 
+    function showNext() {
+        showImage(currentIndex + 1);
+    }
+
+    function showPrev() {
+        showImage(currentIndex - 1);
+    }
+
+    // Attach click events to all image containers
+    expandableElements.forEach(el => {
+        el.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const src = this.getAttribute("data-full-src") || this.getAttribute("src") || (this.querySelector("img") ? this.querySelector("img").src : null);
+            if (src) {
+                openLightbox(src);
+            }
+        });
+    });
+
+    // Prev / Next button listeners
+    if (prevBtn) {
+        prevBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            showPrev();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            showNext();
+        });
+    }
+
     if (closeBtn) {
         closeBtn.addEventListener("click", closeLightbox);
     }
 
+    // Click outside image closes modal
     lightboxModal.addEventListener("click", function (e) {
-        if (e.target === lightboxModal) {
+        if (e.target === lightboxModal || e.target.classList.contains("gallery-lightbox-content")) {
             closeLightbox();
         }
     });
 
+    // Keyboard controls: ArrowLeft (Prev), ArrowRight (Next), Escape (Close)
     document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && lightboxModal.classList.contains("active")) {
+        if (!lightboxModal.classList.contains("active")) return;
+
+        if (e.key === "ArrowRight") {
+            e.preventDefault();
+            showNext();
+        } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            showPrev();
+        } else if (e.key === "Escape") {
+            e.preventDefault();
             closeLightbox();
         }
     });
