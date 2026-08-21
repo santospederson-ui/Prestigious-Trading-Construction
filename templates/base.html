@@ -10,14 +10,14 @@
 
 <title>
 {% block title %}
-Prestigious Trading & Construction | Qatar
+Prestigious Trading & Constructions | Qatar
 {% endblock %}
 </title>
 
 <!-- SEO DESCRIPTION -->
-<meta name="description" content="Prestigious Trading & Construction Company W.L.L. provides professional construction, building, contracting, trading and project solutions across Qatar.">
+<meta name="description" content="Prestigious Trading & Constructions W.L.L. provides professional construction, building, contracting, trading and project solutions across Qatar.">
 <meta name="keywords" content="construction Qatar, building contractor Qatar, construction company Doha, contracting Qatar, trading Qatar, building services Doha">
-<meta name="author" content="Prestigious Trading & Construction Company W.L.L.">
+<meta name="author" content="Prestigious Trading & Constructions W.L.L.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{{ request.base_url }}">
 
@@ -25,8 +25,8 @@ Prestigious Trading & Construction | Qatar
 <meta name="theme-color" content="#1F2A44">
 
 <!-- OPEN GRAPH -->
-<meta property="og:site_name" content="Prestigious Trading & Construction">
-<meta property="og:title" content="Prestigious Trading & Construction | Qatar">
+<meta property="og:site_name" content="Prestigious Trading & Constructions">
+<meta property="og:title" content="Prestigious Trading & Constructions | Qatar">
 <meta property="og:description" content="Professional construction, contracting, trading and project solutions across Qatar.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.url }}">
@@ -34,7 +34,7 @@ Prestigious Trading & Construction | Qatar
 
 <!-- TWITTER CARD -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Prestigious Trading & Construction | Qatar">
+<meta name="twitter:title" content="Prestigious Trading & Constructions | Qatar">
 <meta name="twitter:description" content="Professional construction, contracting, trading and project solutions across Qatar.">
 <meta name="twitter:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
 
@@ -66,6 +66,7 @@ Prestigious Trading & Construction | Qatar
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -88,6 +89,7 @@ body {
   margin: 0 auto;
   padding: 0 24px;
 }
+
 
 /* NAVBAR DESIGN */
 
@@ -195,11 +197,13 @@ nav .nav-btn:hover {
   cursor: pointer;
 }
 
+
 /* MAIN CONTENT */
 
 main {
   flex: 1;
 }
+
 
 /* FLASH ALERTS */
 
@@ -247,6 +251,7 @@ main {
   color: #0369a1;
   border-color: #bae6fd;
 }
+
 
 /* FOOTER */
 
@@ -306,6 +311,7 @@ footer a:hover {
   font-size: 13px;
 }
 
+
 /* RESPONSIVE DESIGN */
 
 @media (max-width: 992px) {
@@ -349,10 +355,12 @@ footer a:hover {
 
 </style>
 
+
 <!-- FAVICON -->
 
 <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon/favicon.png') }}">
 <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
+
 
 <!-- STRUCTURED DATA -->
 
@@ -360,11 +368,11 @@ footer a:hover {
 {
   "@context":"https://schema.org",
   "@type":"Organization",
-  "name":"Prestigious Trading & Construction Company W.L.L.",
+  "name":"Prestigious Trading & Constructions W.L.L.",
   "url":"{{ request.url_root[:-1] }}",
   "logo":"{{ url_for('static', filename='images/logo.png', _external=True) }}",
   "image":"{{ url_for('static', filename='images/logo.png', _external=True) }}",
-  "telephone":"+974 XXXXXXXX",
+  "telephone":"+974 4427 3538",
   "address":{
     "@type":"PostalAddress",
     "addressLocality":"Doha",
@@ -375,7 +383,9 @@ footer a:hover {
 
 </head>
 
+
 <body>
+
 
 <!-- =========================
 NAVBAR
@@ -390,15 +400,16 @@ NAVBAR
     <a href="{{ url_for('home') }}">
         <img
             src="{{ url_for('static', filename='images/logo.png') }}"
-            alt="Prestigious Trading and Construction Qatar Logo">
+            alt="Prestigious Trading and Constructions Qatar Logo">
     </a>
 
     <div class="logo-text">
         <h2>Prestigious</h2>
-        <span>Trading & Construction</span>
+        <span>Trading & Constructions</span>
     </div>
 
 </div>
+
 
 <!-- MOBILE MENU BUTTON -->
 
@@ -407,6 +418,7 @@ NAVBAR
     <i class="fas fa-bars"></i>
 
 </button>
+
 
 <nav id="navMenu">
 
@@ -452,6 +464,7 @@ NAVBAR
 
 </header>
 
+
 <!-- =========================
 MAIN CONTENT
 ========================= -->
@@ -480,11 +493,13 @@ MAIN CONTENT
 
 </div>
 
+
 {% block content %}
 
 {% endblock %}
 
 </main>
+
 
 <!-- =========================
 FOOTER
@@ -496,9 +511,10 @@ FOOTER
 
 <div class="footer-container">
 
+
 <div>
 
-<h3>Prestigious Trading & Construction</h3>
+<h3>Prestigious Trading & Constructions</h3>
 
 <p>
 Professional construction, contracting and trading solutions
@@ -506,6 +522,7 @@ in Qatar built on quality, reliability and excellence.
 </p>
 
 </div>
+
 
 <div>
 
@@ -571,32 +588,20 @@ SERVICES LINKS
     <h4>Services</h4>
 
     <p>
-        <a href="{{ url_for('services') }}#general-contracting">
-            General Contracting
-        </a>
-    </p>
-
-    <p>
         <a href="{{ url_for('services') }}#building-construction">
             Building Construction
         </a>
     </p>
 
     <p>
-        <a href="{{ url_for('services') }}#interior-fitout">
-            Interior & Fit-Out
+        <a href="{{ url_for('services') }}#general-contracting">
+            General Contracting
         </a>
     </p>
 
     <p>
-        <a href="{{ url_for('services') }}#stone-tile">
-            Stone & Tile Works
-        </a>
-    </p>
-
-    <p>
-        <a href="{{ url_for('maintenance') }}">
-            Maintenance
+        <a href="{{ url_for('services') }}#maintenance-renovation">
+            Maintenance & Renovation
         </a>
     </p>
 
@@ -607,19 +612,46 @@ SERVICES LINKS
 
 <h4>Contact</h4>
 
-<p>📍 Doha, Qatar</p>
+<p>
+    <a
+        href="https://maps.app.goo.gl/jDn7MVjvkeV7oRuv7"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:block;">
 
-<p>📞 +974 XXXXXXXX</p>
+        📍 P.O. Box 2592<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;New Salata, Doha<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Qatar
 
-<p>✉ info@prestigiousconstruction.com</p>
+    </a>
+</p>
+
+<p>
+    📞
+    <a href="tel:+97444273538">
+        +974 4427 3538
+    </a>
+</p>
+
+<p>
+    ✉
+    <a
+        href="https://mail.google.com/mail/u/0/#inbox?compose=new=info@theprestigious.net"
+        target="_blank"
+        rel="noopener noreferrer">
+        info@theprestigious.net
+    </a>
+</p>
 
 </div>
 
+
 </div>
+
 
 <div class="copyright">
 
-© 2026 Prestigious Trading & Construction Company W.L.L.
+© 2026 Prestigious Trading & Constructions W.L.L.
 All Rights Reserved.
 
 </div>
@@ -628,7 +660,9 @@ All Rights Reserved.
 
 </footer>
 
+
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 
 <script>
 
@@ -659,6 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
+
 
 </body>
 
