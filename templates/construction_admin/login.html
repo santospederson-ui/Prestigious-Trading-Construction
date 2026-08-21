@@ -2,55 +2,41 @@
 <html lang="en-QA">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color"
-          content="#1e4b38">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e4b38">
 
     <title>Staff Login | Prestigious Trading & Constructions</title>
 
     <!-- GOOGLE FONTS -->
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;850&family=Playfair+Display:wght@600;700;800&display=swap"
-          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
     <!-- FONT AWESOME -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --pch-bg: #f8fafc;
-            --pch-surface: #ffffff;
-            --pch-border: #e2e8f0;
-            --pch-border-hover: #cbd5e1;
-            --pch-text-dark: #0f172a;
-            --pch-text-body: #334155;
-            --pch-text-muted: #64748b;
+            --primary: #1e4b38;
+            --primary-dark: #143829;
+            --primary-soft: #ecfdf5;
 
-            --pch-forest: #1e4b38;
-            --pch-forest-dark: #143829;
-            --pch-forest-soft: #ecfdf5;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
 
-            --pch-gold: #c49a4a;
-            --pch-gold-soft: #fefce8;
+            --text-main: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
 
-            --pch-radius: 18px;
-            --pch-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-            --pch-shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.09);
+            --accent-gold: #c49a4a;
+
+            --radius: 16px;
+            --shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
         }
 
-        /* =====================================
-           RESET & CANVAS
-        ===================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -59,53 +45,51 @@
 
         body {
             min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #edf4f0 100%);
-            color: var(--pch-text-dark);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(145deg, #f8fafc 0%, #edf3f0 100%);
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 32px 20px;
+            padding: 30px 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
         }
 
         /* =====================================
-           LOGIN WRAPPER & CARD
+           CARD CONTAINER
         ===================================== */
-        .login-wrapper {
-            width: 100%;
-            max-width: 470px;
-        }
-
         .login-card {
-            background: var(--pch-surface);
-            border: 1px solid var(--pch-border);
-            border-radius: var(--pch-radius);
-            padding: 40px 42px 42px;
-            box-shadow: var(--pch-shadow-lg);
-            transition: all 0.25s ease;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 42px 38px 38px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s ease;
         }
 
         .login-card:hover {
-            border-color: var(--pch-border-hover);
+            border-color: var(--border-hover);
         }
 
         /* =====================================
-           BRAND HEADER (34px TITLE)
+           BRAND HEADER
         ===================================== */
-        .brand {
+        .brand-header {
             text-align: center;
-            margin-bottom: 26px;
-            padding-bottom: 24px;
-            border-bottom: 1.5px solid #edf2f7;
+            margin-bottom: 30px;
         }
 
-        .brand-logo-container {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
+        .brand-logo-wrap {
+            width: 76px;
+            height: 76px;
+            border-radius: 16px;
             background: #ffffff;
-            border: 1px solid var(--pch-border);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -120,89 +104,58 @@
             display: block;
         }
 
-        .brand-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--pch-forest);
+        .brand-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .brand-header .company-sub {
+            color: var(--accent-gold);
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: var(--pch-forest-soft);
-            padding: 3px 10px;
-            border-radius: 20px;
-            border: 1px solid #a7f3d0;
-            margin-bottom: 10px;
-        }
-
-        .brand h1 {
-            font-size: 34px;
-            font-weight: 850;
-            color: var(--pch-text-dark);
-            letter-spacing: -0.8px;
-            line-height: 1.15;
-            margin: 0;
-        }
-
-        .brand span.sub-brand {
+            letter-spacing: 2px;
             display: block;
-            color: var(--pch-gold);
-            font-size: 11.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2.2px;
-            margin-top: 5px;
+            margin-bottom: 12px;
         }
 
-        /* =====================================
-           PORTAL INSTRUCTION
-        ===================================== */
-        .login-instruction {
-            margin-bottom: 22px;
-            text-align: center;
-        }
-
-        .login-instruction h2 {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--pch-text-dark);
-            margin-bottom: 4px;
-        }
-
-        .login-instruction p {
-            color: var(--pch-text-muted);
+        .brand-header p {
+            color: var(--text-muted);
             font-size: 13.5px;
-            line-height: 1.5;
+            font-weight: 500;
             margin: 0;
         }
 
         /* =====================================
-           FORM CONTROLS
+           FORM ELEMENTS
         ===================================== */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 7px;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 750;
+            color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--pch-text-dark);
         }
 
-        .input-wrapper {
+        .input-box {
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .input-wrapper > i.field-icon {
+        .input-box i.input-icon {
             position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
+            left: 15px;
             color: #94a3b8;
             font-size: 14px;
             pointer-events: none;
@@ -212,13 +165,13 @@
         .form-control {
             width: 100%;
             height: 48px;
-            border: 1.5px solid var(--pch-border);
+            border: 1.5px solid var(--border);
             border-radius: 10px;
-            padding: 0 16px 0 44px;
+            padding: 0 16px 0 42px;
             font-family: inherit;
             font-size: 13.5px;
             font-weight: 500;
-            color: var(--pch-text-dark);
+            color: var(--text-main);
             background: #f8fafc;
             outline: none;
             transition: all 0.2s ease;
@@ -230,31 +183,33 @@
 
         .form-control:focus {
             background: #ffffff;
-            border-color: var(--pch-forest);
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
         }
 
-        .input-wrapper:focus-within > i.field-icon {
-            color: var(--pch-forest);
+        .input-box:focus-within i.input-icon {
+            color: var(--primary);
         }
 
-        /* =====================================
-           ROLE SELECTOR
-        ===================================== */
-        .role-select {
+        /* SELECT ARROW */
+        .select-box {
+            position: relative;
+        }
+
+        .select-box select {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
             cursor: pointer;
-            padding-right: 42px;
+            padding-right: 40px;
         }
 
-        .select-wrapper::after {
+        .select-box::after {
             content: "\f078";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
-            right: 16px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: #94a3b8;
@@ -262,20 +217,18 @@
             pointer-events: none;
         }
 
-        /* =====================================
-           PASSWORD VISIBILITY
-        ===================================== */
-        .password-wrapper .form-control {
-            padding-right: 46px;
+        /* PASSWORD TOGGLE */
+        .password-box .form-control {
+            padding-right: 44px;
         }
 
-        .password-toggle {
+        .btn-toggle-pwd {
             position: absolute;
             right: 8px;
             top: 50%;
             transform: translateY(-50%);
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border: none;
             background: transparent;
             color: #94a3b8;
@@ -283,64 +236,58 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
             border-radius: 6px;
             transition: all 0.2s ease;
         }
 
-        .password-toggle:hover {
-            color: var(--pch-forest);
+        .btn-toggle-pwd:hover {
+            color: var(--primary);
             background: #f1f5f9;
         }
 
-        .password-toggle:focus {
+        .btn-toggle-pwd:focus {
             outline: none;
-            color: var(--pch-forest);
-        }
-
-        .password-toggle i {
-            font-size: 14px;
-            pointer-events: none;
+            color: var(--primary);
         }
 
         /* =====================================
-           LOGIN SUBMIT BUTTON
+           SUBMIT BUTTON
         ===================================== */
-        .login-button {
+        .btn-submit {
             width: 100%;
-            height: 50px;
-            margin-top: 10px;
+            height: 48px;
+            margin-top: 8px;
             border: none;
             border-radius: 10px;
-            background: var(--pch-forest);
+            background: var(--primary);
             color: #ffffff;
             font-family: inherit;
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 750;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(30, 75, 56, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 4px 14px rgba(30, 75, 56, 0.22);
             transition: all 0.2s ease;
         }
 
-        .login-button:hover {
-            background: var(--pch-forest-dark);
+        .btn-submit:hover {
+            background: var(--primary-dark);
             transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(30, 75, 56, 0.32);
+            box-shadow: 0 6px 18px rgba(30, 75, 56, 0.28);
         }
 
-        .login-button:active {
+        .btn-submit:active {
             transform: translateY(0);
         }
 
         /* =====================================
-           FLASH ALERTS
+           ALERTS
         ===================================== */
         .alert {
-            padding: 12px 16px;
+            padding: 12px 15px;
             border-radius: 10px;
             margin-bottom: 20px;
             font-size: 13px;
@@ -375,110 +322,56 @@
         }
 
         /* =====================================
-           SECURITY NOTE & FOOTER
+           FOOTER
         ===================================== */
-        .security-note {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            margin-top: 20px;
-            color: var(--pch-text-muted);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .security-note i {
-            color: var(--pch-forest);
-            font-size: 12px;
-        }
-
         .login-footer {
             text-align: center;
             margin-top: 24px;
-            color: var(--pch-text-muted);
+            color: var(--text-muted);
             font-size: 12.5px;
             line-height: 1.6;
             font-weight: 500;
         }
 
         .login-footer strong {
-            color: var(--pch-text-dark);
-            font-weight: 750;
+            color: var(--text-main);
+            font-weight: 700;
         }
 
-        /* =====================================
-           RESPONSIVE
-        ===================================== */
-        @media (max-width: 520px) {
-            body {
-                padding: 20px 16px;
-            }
-
+        @media (max-width: 480px) {
             .login-card {
-                padding: 30px 22px 32px;
-                border-radius: 16px;
+                padding: 32px 24px 30px;
             }
 
-            .brand h1 {
-                font-size: 28px;
-            }
-
-            .brand-logo-container {
-                width: 70px;
-                height: 70px;
+            .brand-header h1 {
+                font-size: 23px;
             }
         }
     </style>
-
 </head>
 
 <body>
 
-<div class="login-wrapper">
+<div class="login-container">
 
-    <!-- =================================
-         LOGIN CARD
-    ================================== -->
     <div class="login-card">
 
-        <!-- =================================
-             COMPANY BRAND (34px TITLE)
-        ================================== -->
-        <div class="brand">
-
-            <div class="brand-logo-container">
+        <!-- BRAND HEADER -->
+        <div class="brand-header">
+            <div class="brand-logo-wrap">
                 <img
                     src="{{ url_for('static', filename='images/logo.png') }}"
-                    alt="Prestigious Trading & Constructions Logo"
+                    alt="Logo"
                     class="brand-logo"
                 >
             </div>
 
-            <div class="brand-eyebrow">
-                <i class="fas fa-shield-halved"></i>
-                <span>Enterprise Portal</span>
-            </div>
-
             <h1>Prestigious</h1>
-
-            <span class="sub-brand">
-                Trading & Constructions
-            </span>
-
+            <span class="company-sub">Trading & Constructions</span>
+            <p>Sign in to access your dashboard</p>
         </div>
 
-        <!-- =================================
-             LOGIN INSTRUCTION
-        ================================== -->
-        <div class="login-instruction">
-            <h2>Staff Portal</h2>
-            <p>Sign in to access your authorized procurement, accounting, or management workspace.</p>
-        </div>
-
-        <!-- =================================
-             FLASH MESSAGES
-        ================================== -->
+        <!-- FLASH MESSAGES -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -490,56 +383,40 @@
             {% endif %}
         {% endwith %}
 
-        <!-- =================================
-             LOGIN FORM
-        ================================== -->
+        <!-- FORM -->
         <form method="POST">
 
             <!-- ROLE -->
             <div class="form-group">
-                <label for="role">
-                    Department / Role
-                </label>
-                <div class="input-wrapper select-wrapper">
-                    <i class="fas fa-briefcase field-icon"></i>
+                <label for="role">Department / Role</label>
+                <div class="input-box select-box">
+                    <i class="fas fa-briefcase input-icon"></i>
                     <select
                         id="role"
                         name="role"
-                        class="form-control role-select"
+                        class="form-control"
                         required
                     >
-                        <option value="" disabled selected>
-                            Select your role
-                        </option>
-                        <option value="admin">
-                            Admin
-                        </option>
-                        <option value="manager">
-                            Manager
-                        </option>
-                        <option value="purchase">
-                            Purchase
-                        </option>
-                        <option value="account">
-                            Account
-                        </option>
+                        <option value="" disabled selected>Select role</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="purchase">Purchase</option>
+                        <option value="account">Account</option>
                     </select>
                 </div>
             </div>
 
             <!-- USERNAME -->
             <div class="form-group">
-                <label for="username">
-                    Username
-                </label>
-                <div class="input-wrapper">
-                    <i class="fas fa-user field-icon"></i>
+                <label for="username">Username</label>
+                <div class="input-box">
+                    <i class="fas fa-user input-icon"></i>
                     <input
                         type="text"
                         id="username"
                         name="username"
                         class="form-control"
-                        placeholder="Enter your username"
+                        placeholder="Enter username"
                         autocomplete="username"
                         required
                     >
@@ -548,64 +425,48 @@
 
             <!-- PASSWORD -->
             <div class="form-group">
-                <label for="password">
-                    Password
-                </label>
-                <div class="input-wrapper password-wrapper">
-                    <i class="fas fa-lock field-icon"></i>
+                <label for="password">Password</label>
+                <div class="input-box password-box">
+                    <i class="fas fa-lock input-icon"></i>
                     <input
                         type="password"
                         id="password"
                         name="password"
                         class="form-control"
-                        placeholder="Enter your password"
+                        placeholder="Enter password"
                         autocomplete="current-password"
                         required
                     >
                     <button
                         type="button"
-                        class="password-toggle"
+                        class="btn-toggle-pwd"
                         id="passwordToggle"
-                        aria-label="Show password"
-                        title="Show password"
+                        aria-label="Toggle password"
                     >
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- LOGIN BUTTON -->
-            <button
-                type="submit"
-                class="login-button"
-            >
-                <i class="fas fa-right-to-bracket"></i>
-                <span>Sign In to Portal</span>
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="btn-submit">
+                <span>Sign In</span>
+                <i class="fas fa-arrow-right"></i>
             </button>
 
         </form>
 
-        <!-- SECURITY NOTE -->
-        <div class="security-note">
-            <i class="fas fa-shield-halved"></i>
-            <span>Authorized Personnel & Secure SSL Encryption</span>
-        </div>
-
     </div>
 
-    <!-- =================================
-         FOOTER
-    ================================== -->
+    <!-- FOOTER -->
     <div class="login-footer">
         © 2026 <strong>Prestigious Trading & Constructions</strong><br>
-        Construction Management & Procurement Portal
+        All rights reserved.
     </div>
 
 </div>
 
-<!-- =====================================
-     PASSWORD VISIBILITY SCRIPT
-====================================== -->
+<!-- PASSWORD VISIBILITY SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const passwordInput = document.getElementById("password");
@@ -620,13 +481,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isPassword) {
                 icon.classList.remove("fa-eye");
                 icon.classList.add("fa-eye-slash");
-                this.setAttribute("aria-label", "Hide password");
-                this.setAttribute("title", "Hide password");
             } else {
                 icon.classList.remove("fa-eye-slash");
                 icon.classList.add("fa-eye");
-                this.setAttribute("aria-label", "Show password");
-                this.setAttribute("title", "Show password");
             }
         });
     }
