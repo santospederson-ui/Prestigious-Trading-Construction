@@ -22,7 +22,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   --construction-border: #dfe4df;
 }
 
-
 /* =========================================
    HERO
 ========================================= */
@@ -60,7 +59,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 .hero-slide.active {
   opacity: 1;
 }
-
 
 /* HERO OVERLAY */
 
@@ -178,7 +176,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   transform: translateY(-3px);
 }
 
-
 /* =========================================
    INTRODUCTION
 ========================================= */
@@ -292,7 +289,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 .text-link:hover {
   color: var(--construction-accent);
 }
-
 
 /* =========================================
    SERVICES
@@ -415,7 +411,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   color: var(--construction-accent);
 }
 
-
 /* =========================================
    PROJECTS
 ========================================= */
@@ -442,6 +437,12 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   overflow: hidden;
 
   background: #eeeeee;
+
+  display: block;
+
+  text-decoration: none !important;
+
+  cursor: pointer;
 }
 
 .project-card img {
@@ -494,14 +495,17 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   font-size: 23px;
 
   margin-bottom: 5px;
+
+  color: #ffffff;
 }
 
 .project-overlay p {
   color: rgba(255,255,255,.82);
 
   font-size: 13px;
-}
 
+  margin: 0;
+}
 
 /* =========================================
    WHY CHOOSE US
@@ -572,7 +576,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
   line-height: 1.7;
 }
-
 
 /* =========================================
    CAPABILITIES
@@ -661,7 +664,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   object-fit: cover;
 }
 
-
 /* =========================================
    CTA
 ========================================= */
@@ -724,7 +726,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   transform: translateY(-3px);
 }
 
-
 /* =========================================
    RESPONSIVE
 ========================================= */
@@ -758,7 +759,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   }
 
 }
-
 
 @media (max-width: 650px) {
 
@@ -838,7 +838,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
 </style>
 
-
 <!-- =========================================
      HERO SECTION
 ========================================= -->
@@ -868,7 +867,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
     </div>
 
   </div>
-
 
   <div class="hero-overlay">
 
@@ -911,7 +909,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
 </section>
 
-
 <!-- =========================================
      INTRODUCTION
 ========================================= -->
@@ -940,7 +937,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
         </div>
 
       </div>
-
 
       <div class="intro-content">
 
@@ -979,7 +975,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
 </section>
 
-
 <!-- =========================================
      SERVICES
 ========================================= -->
@@ -1006,9 +1001,7 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
     </div>
 
-
     <div class="services-grid">
-
 
       <!-- BUILDING CONSTRUCTION -->
 
@@ -1034,7 +1027,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
       <!-- GENERAL CONTRACTING -->
 
       <div class="service-card">
@@ -1058,7 +1050,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
         </a>
 
       </div>
-
 
       <!-- MAINTENANCE & RENOVATION -->
 
@@ -1084,16 +1075,14 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
     </div>
 
   </div>
 
 </section>
 
-
 <!-- =========================================
-     PROJECTS
+     PROJECTS (CLICKABLE CARDS)
 ========================================= -->
 
 <section class="projects-section">
@@ -1117,11 +1106,10 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
     </div>
 
-
     <div class="project-grid">
 
-
-      <div class="project-card">
+      <!-- RESIDENTIAL DEVELOPMENT -->
+      <a href="{{ url_for('projects') }}" class="project-card">
 
         <img
           src="{{ url_for('static', filename='images/home/home1.webp') }}"
@@ -1144,10 +1132,10 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
         </div>
 
-      </div>
+      </a>
 
-
-      <div class="project-card">
+      <!-- COMMERCIAL PROJECT -->
+      <a href="{{ url_for('projects') }}" class="project-card">
 
         <img
           src="{{ url_for('static', filename='images/home/home3.png') }}"
@@ -1170,10 +1158,10 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
         </div>
 
-      </div>
+      </a>
 
-
-      <div class="project-card">
+      <!-- RENOVATION WORKS -->
+      <a href="{{ url_for('projects') }}" class="project-card">
 
         <img
           src="{{ url_for('static', filename='images/home/home4.png') }}"
@@ -1196,11 +1184,9 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
         </div>
 
-      </div>
-
+      </a>
 
     </div>
-
 
     <div style="text-align:center;margin-top:45px;">
 
@@ -1219,7 +1205,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   </div>
 
 </section>
-
 
 <!-- =========================================
      WHY CHOOSE US
@@ -1246,9 +1231,7 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
     </div>
 
-
     <div class="why-grid">
-
 
       <div class="why-card">
 
@@ -1267,7 +1250,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
       <div class="why-card">
 
         <div class="why-icon">
@@ -1284,7 +1266,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
         </p>
 
       </div>
-
 
       <div class="why-card">
 
@@ -1303,7 +1284,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
       <div class="why-card">
 
         <div class="why-icon">
@@ -1321,13 +1301,11 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
     </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      CAPABILITIES
@@ -1338,7 +1316,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   <div class="container">
 
     <div class="capabilities-grid">
-
 
       <div class="capabilities-content">
 
@@ -1355,7 +1332,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
           allowing us to provide practical and dependable
           solutions throughout the project lifecycle.
         </p>
-
 
         <div class="capability-list">
 
@@ -1378,7 +1354,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
       <div class="capabilities-image">
 
         <img
@@ -1388,13 +1363,11 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
 
       </div>
 
-
     </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      CALL TO ACTION
@@ -1422,7 +1395,6 @@ Prestigious Trading & Constructions | Building Excellence in Qatar
   </div>
 
 </section>
-
 
 <!-- =========================================
      HERO SLIDER SCRIPT
@@ -1456,6 +1428,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
-
 
 {% endblock %}
