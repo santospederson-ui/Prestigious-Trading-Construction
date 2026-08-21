@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Contact Us | Prestigious Trading & Construction Qatar
+Contact Us | Prestigious Trading & Constructions Qatar
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@ Contact Us | Prestigious Trading & Construction Qatar
 
 /* =========================================
    CONTACT PAGE
-   PRESTIGIOUS TRADING & CONSTRUCTION
+   PRESTIGIOUS TRADING & CONSTRUCTIONS
 ========================================= */
 
 .contact-page {
@@ -155,6 +155,21 @@ Contact Us | Prestigious Trading & Construction Qatar
     padding: 18px 0;
 
     border-bottom: 1px solid #dfe4df;
+
+    transition: all .3s ease;
+}
+
+.contact-detail:hover {
+    transform: translateY(-4px);
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    background: #f8faf8;
+
+    border-bottom-color: #c49a4a;
+
+    box-shadow: 0 8px 20px rgba(20,40,30,.06);
 }
 
 .contact-detail-icon {
@@ -173,6 +188,16 @@ Contact Us | Prestigious Trading & Construction Qatar
     color: #244b3a;
 
     font-size: 18px;
+
+    transition: all .3s ease;
+}
+
+.contact-detail:hover .contact-detail-icon {
+    background: #244b3a;
+
+    color: #ffffff;
+
+    transform: scale(1.05);
 }
 
 .contact-detail h3 {
@@ -457,68 +482,18 @@ Contact Us | Prestigious Trading & Construction Qatar
 
     border: 1px solid #dfe4df;
 
-    display: flex;
+    overflow: hidden;
 
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
+    position: relative;
 }
 
-.location-map-inner {
-    max-width: 500px;
+.location-map iframe {
+    width: 100%;
+    height: 100%;
 
-    padding: 30px;
-}
+    border: 0;
 
-.location-map-icon {
-    font-size: 42px;
-
-    color: #244b3a;
-
-    margin-bottom: 15px;
-}
-
-.location-map h3 {
-    font-family: var(--font-serif, 'Playfair Display', serif);
-
-    color: #17201b;
-
-    font-size: 25px;
-
-    margin-bottom: 10px;
-}
-
-.location-map p {
-    color: #68736d;
-
-    font-size: 14px;
-
-    line-height: 1.7;
-
-    margin-bottom: 20px;
-}
-
-.map-button {
-    display: inline-flex;
-
-    padding: 12px 22px;
-
-    background: #244b3a;
-
-    color: #ffffff;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    transition: all .3s ease;
-}
-
-.map-button:hover {
-    background: #c49a4a;
+    display: block;
 }
 
 
@@ -676,18 +651,26 @@ Contact Us | Prestigious Trading & Construction Qatar
                         </div>
 
                         <div>
+                            <a
+                                    href="https://maps.app.goo.gl/jDn7MVjvkeV7oRuv7"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="display:block;">
+                                                        <h3>
+                                                            Office Location
+                                                        </h3>
 
-                            <h3>
-                                Office Location
-                            </h3>
-
-                            <p>
-                                Doha, State of Qatar
-                            </p>
-
+                                                        <p>
+                                                            New Salata, Doha, Qatar
+                                                        </p>
+                             </a>
                         </div>
 
                     </div>
+
+
+
+
 
 
                     <div class="contact-detail">
@@ -702,8 +685,8 @@ Contact Us | Prestigious Trading & Construction Qatar
                                 Phone
                             </h3>
 
-                            <a href="tel:+97400000000">
-                                +974 0000 0000
+                            <a href="tel:+97444273538">
+                                +974 4427 3538
                             </a>
 
                         </div>
@@ -723,8 +706,11 @@ Contact Us | Prestigious Trading & Construction Qatar
                                 Email
                             </h3>
 
-                            <a href="mailto:info@prestigiousrealestate.qa">
-                                info@prestigiousrealestate.qa
+                            <a
+                                href="https://mail.google.com/mail/u/0/#inbox?compose=new=info@theprestigious.net"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                info@theprestigious.net
                             </a>
 
                         </div>
@@ -850,20 +836,8 @@ Contact Us | Prestigious Trading & Construction Qatar
                                 General Contracting
                             </option>
 
-                            <option value="finishing">
-                                Finishing Works
-                            </option>
-
-                            <option value="stone-marble">
-                                Stone & Marble Works
-                            </option>
-
                             <option value="maintenance">
                                 Maintenance & Renovation
-                            </option>
-
-                            <option value="materials">
-                                Building Materials Trading
                             </option>
 
                             <option value="other">
@@ -958,7 +932,7 @@ Contact Us | Prestigious Trading & Construction Qatar
                 <p>
                     From construction and finishing to maintenance,
                     renovation and material supply, Prestigious
-                    Trading & Construction provides practical
+                    Trading & Constructions provides practical
                     solutions tailored to your project.
                 </p>
 
@@ -1013,37 +987,15 @@ Contact Us | Prestigious Trading & Construction Qatar
 
         <div class="location-map">
 
-            <div class="location-map-inner">
-
-                <div class="location-map-icon">
-                    <i class="fas fa-map-location-dot"></i>
-                </div>
-
-                <h3>
-                    Doha, Qatar
-                </h3>
-
-                <p>
-                    Visit our office or contact our team to
-                    arrange a meeting regarding your project.
-                </p>
-
-                <a
-                    href="https://www.google.com/maps/search/?api=1&query=Doha%2C%20Qatar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="map-button">
-
-                    Open In Google Maps
-
-                    <i
-                        class="fas fa-arrow-up-right-from-square"
-                        style="margin-left:8px;">
-                    </i>
-
-                </a>
-
-            </div>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d225.52648035489676!2d51.505028!3d25.2563291!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45db0055e9fe11%3A0x41112a893a0eaf7f!2z2LDYpyDYqNix2LPYqtmK2KzYsyDZhNmE2KrYrNin2LHYqSDZiNin2YTYpdmG2LTYp9ih2KfYqg!5e0!3m2!1sen!2sqa!4v1787298468389!5m2!1sen!2sqa"
+                width="600"
+                height="450"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
 
         </div>
 
