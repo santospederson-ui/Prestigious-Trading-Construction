@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Prestigious Trading & Construction | Building Excellence in Qatar
+Prestigious Trading & Constructions | Building Excellence in Qatar
 {% endblock %}
 
 {% block content %}
@@ -619,7 +619,7 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 .capability-list {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
   gap: 12px;
 }
@@ -886,20 +886,20 @@ Prestigious Trading & Construction | Building Excellence in Qatar
         </h1>
 
         <p>
-          Delivering professional construction, finishing,
-          trading and project solutions across Qatar with
-          quality, precision and integrity.
+          Delivering professional construction,
+          contracting and maintenance solutions across
+          Qatar with quality, precision and integrity.
         </p>
 
         <div class="hero-buttons">
 
-            <a href="{{ url_for('services') }}" class="primary-btn">
-    Our Services
-            </a>
+          <a href="{{ url_for('services') }}" class="primary-btn">
+            Our Services
+          </a>
 
-            <a href="{{ url_for('projects') }}" class="outline-btn">
-              View Projects
-            </a>
+          <a href="{{ url_for('projects') }}" class="outline-btn">
+            View Projects
+          </a>
 
         </div>
 
@@ -954,19 +954,19 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <p>
           Prestigious Trading & Construction is a professional
-          construction and trading company committed to delivering
-          quality workmanship, reliable project execution and
-          professional solutions across Qatar.
+          construction company committed to delivering quality
+          workmanship, reliable project execution and professional
+          solutions across Qatar.
         </p>
 
         <p>
-          From construction and finishing works to building materials
-          and project support, we combine technical expertise,
+          From building construction and general contracting to
+          maintenance and renovation, we combine technical expertise,
           experienced professionals and attention to detail to deliver
           results our clients can depend on.
         </p>
 
-        <a href="#" class="text-link">
+        <a href="{{ url_for('about') }}" class="text-link">
           Discover Our Company
           <i class="fas fa-arrow-right"></i>
         </a>
@@ -999,9 +999,9 @@ Prestigious Trading & Construction | Building Excellence in Qatar
       </h2>
 
       <p>
-        Comprehensive construction and building solutions
-        designed to meet residential, commercial and
-        industrial project requirements.
+        Focused construction and building solutions covering
+        building construction, general contracting and
+        maintenance & renovation across Qatar.
       </p>
 
     </div>
@@ -1009,6 +1009,8 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
     <div class="services-grid">
 
+
+      <!-- BUILDING CONSTRUCTION -->
 
       <div class="service-card">
 
@@ -1021,16 +1023,19 @@ Prestigious Trading & Construction | Building Excellence in Qatar
         </h3>
 
         <p>
-          Professional construction services delivered with
-          strong attention to quality, safety and project timelines.
+          Professional building construction services delivered
+          with strong attention to quality, safety, workmanship
+          and project timelines.
         </p>
 
-        <a href="#">
+        <a href="{{ url_for('services') }}#building-construction">
           Learn More →
         </a>
 
       </div>
 
+
+      <!-- GENERAL CONTRACTING -->
 
       <div class="service-card">
 
@@ -1044,59 +1049,18 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <p>
           Complete project coordination and contracting solutions
-          for residential and commercial developments.
+          for residential, commercial and other construction
+          requirements.
         </p>
 
-        <a href="#">
+        <a href="{{ url_for('services') }}#general-contracting">
           Learn More →
         </a>
 
       </div>
 
 
-      <div class="service-card">
-
-        <div class="service-icon">
-          <i class="fas fa-layer-group"></i>
-        </div>
-
-        <h3>
-          Finishing Works
-        </h3>
-
-        <p>
-          High-quality flooring, tiling, stone cladding and
-          architectural finishing solutions.
-        </p>
-
-        <a href="#">
-          Learn More →
-        </a>
-
-      </div>
-
-
-      <div class="service-card">
-
-        <div class="service-icon">
-          <i class="fas fa-gem"></i>
-        </div>
-
-        <h3>
-          Stone & Marble Works
-        </h3>
-
-        <p>
-          Precision installation and finishing of marble,
-          natural stone and premium architectural surfaces.
-        </p>
-
-        <a href="#">
-          Learn More →
-        </a>
-
-      </div>
-
+      <!-- MAINTENANCE & RENOVATION -->
 
       <div class="service-card">
 
@@ -1110,32 +1074,11 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <p>
           Reliable maintenance, refurbishment and renovation
-          services for buildings and commercial spaces.
+          services designed to preserve, improve and extend the
+          life of buildings and commercial spaces.
         </p>
 
-        <a href="#">
-          Learn More →
-        </a>
-
-      </div>
-
-
-      <div class="service-card">
-
-        <div class="service-icon">
-          <i class="fas fa-boxes-stacked"></i>
-        </div>
-
-        <h3>
-          Building Materials Trading
-        </h3>
-
-        <p>
-          Supply and trading of quality construction materials
-          for contractors, developers and project owners.
-        </p>
-
-        <a href="#">
+        <a href="{{ url_for('services') }}#maintenance-renovation">
           Learn More →
         </a>
 
@@ -1169,7 +1112,7 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
       <p>
         A glimpse into the quality, precision and craftsmanship
-        behind our construction and finishing work.
+        behind our construction and maintenance work.
       </p>
 
     </div>
@@ -1234,17 +1177,17 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <img
           src="{{ url_for('static', filename='images/home/home4.png') }}"
-          alt="Interior Finishing Project"
+          alt="Building Maintenance and Renovation Project"
           loading="lazy">
 
         <div class="project-overlay">
 
           <span>
-            Finishing
+            Maintenance
           </span>
 
           <h3>
-            Interior Finishing Works
+            Renovation Works
           </h3>
 
           <p>
@@ -1261,10 +1204,10 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
     <div style="text-align:center;margin-top:45px;">
 
-          <a
-      href="{{ url_for('projects') }}"
-      class="text-link"
-      style="justify-content:center;">
+      <a
+        href="{{ url_for('projects') }}"
+        class="text-link"
+        style="justify-content:center;">
 
         View All Projects
         <i class="fas fa-arrow-right"></i>
@@ -1319,7 +1262,7 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
         <p>
           We maintain high standards throughout construction,
-          finishing and project delivery.
+          contracting, maintenance and renovation projects.
         </p>
 
       </div>
@@ -1408,10 +1351,9 @@ Prestigious Trading & Construction | Building Excellence in Qatar
         </h2>
 
         <p>
-          Our capabilities cover multiple areas of construction,
-          finishing, building materials and project support,
-          allowing us to provide practical solutions throughout
-          the project lifecycle.
+          Our capabilities are focused on three core areas,
+          allowing us to provide practical and dependable
+          solutions throughout the project lifecycle.
         </p>
 
 
@@ -1429,32 +1371,7 @@ Prestigious Trading & Construction | Building Excellence in Qatar
 
           <div class="capability-item">
             <i class="fas fa-check"></i>
-            Tile Installation
-          </div>
-
-          <div class="capability-item">
-            <i class="fas fa-check"></i>
-            Stone Cladding
-          </div>
-
-          <div class="capability-item">
-            <i class="fas fa-check"></i>
-            Marble Works
-          </div>
-
-          <div class="capability-item">
-            <i class="fas fa-check"></i>
-            Renovation
-          </div>
-
-          <div class="capability-item">
-            <i class="fas fa-check"></i>
-            Maintenance
-          </div>
-
-          <div class="capability-item">
-            <i class="fas fa-check"></i>
-            Material Trading
+            Maintenance & Renovation
           </div>
 
         </div>
@@ -1492,14 +1409,15 @@ Prestigious Trading & Construction | Building Excellence in Qatar
     </h2>
 
     <p>
-      Talk to our team about your construction, finishing,
-      renovation or material supply requirements.
+      Talk to our team about your building construction,
+      general contracting, maintenance or renovation
+      requirements.
     </p>
 
-      <a href="{{ url_for('contact') }}" class="cta-button">
-    Request a Consultation
-    <i class="fas fa-arrow-right" style="margin-left:10px;"></i>
-  </a>
+    <a href="{{ url_for('contact') }}" class="cta-button">
+      Request a Consultation
+      <i class="fas fa-arrow-right" style="margin-left:10px;"></i>
+    </a>
 
   </div>
 
