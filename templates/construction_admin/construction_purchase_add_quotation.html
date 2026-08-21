@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Supplier Quotation | Prestigious Trading & Construction
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   CLEAN MODERN SUPPLIER QUOTATION THEME
+========================================================= */
+:root {
+  --pch-bg: #f8fafc;
+  --pch-surface: #ffffff;
+  --pch-border: #e2e8f0;
+  --pch-border-hover: #cbd5e1;
+  --pch-border-focus: #1e4b38;
+  --pch-text-dark: #0f172a;
+  --pch-text-body: #334155;
+  --pch-text-muted: #64748b;
+
+  --pch-forest: #1e4b38;
+  --pch-forest-dark: #143829;
+  --pch-forest-soft: #ecfdf5;
+
+  --pch-info-bg: #f0f9ff;
+  --pch-info-border: #bae6fd;
+  --pch-info-text: #0369a1;
+
+  --pch-radius: 16px;
+  --pch-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --pch-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+   PAGE CONTAINER
+========================================================= */
+.quotation-page {
+  background: var(--pch-bg);
+  min-height: calc(100vh - 70px);
+  padding: 32px 36px 60px;
+  color: var(--pch-text-dark);
+}
+
+.quotation-container {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   EXECUTIVE HEADER (34px TITLE)
+========================================================= */
+.quotation-header {
+  margin-bottom: 28px;
+}
+
+.quotation-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pch-forest);
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  background: var(--pch-forest-soft);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #a7f3d0;
+  margin-bottom: 12px;
+}
+
+.quotation-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.quotation-header p {
+  margin: 6px 0 0;
+  color: var(--pch-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CARD CONTAINER
+========================================================= */
+.quotation-card {
+  background: var(--pch-surface);
+  border: 1px solid var(--pch-border);
+  border-radius: var(--pch-radius);
+  overflow: hidden;
+  box-shadow: var(--pch-shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.quotation-card:hover {
+  box-shadow: var(--pch-shadow-md);
+  border-color: var(--pch-border-hover);
+}
+
+.quotation-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  background: #ffffff;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.card-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.quotation-card-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.3px;
+}
+
+.quotation-card-header p {
+  margin: 2px 0 0;
+  color: var(--pch-text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   NOTICE BOX
+========================================================= */
+.quotation-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--pch-info-bg);
+  border: 1px solid var(--pch-info-border);
+  color: var(--pch-info-text);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 24px 28px 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.quotation-notice i {
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   FORM & GRID
+========================================================= */
+.quotation-form {
+  padding: 24px 28px 32px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 2px;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  color: var(--pch-text-dark);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.form-group label span.required-star {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--pch-border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  background: #f8fafc;
+  color: var(--pch-text-dark);
+  font-size: 13.5px;
+  font-weight: 500;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background: #ffffff;
+  border-color: var(--pch-forest);
+  box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
+}
+
+/* =========================================================
+   FILE UPLOAD DROPZONE
+========================================================= */
+.file-upload-dropzone {
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 26px 20px;
+  text-align: center;
+  position: relative;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.file-upload-dropzone:hover,
+.file-upload-dropzone.dragover {
+  border-color: var(--pch-forest);
+  background: #f1f8f4;
+}
+
+.file-upload-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--pch-border);
+  color: var(--pch-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.file-upload-dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.file-upload-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--pch-text-dark);
+  margin-bottom: 4px;
+}
+
+.file-upload-subtitle {
+  font-size: 12px;
+  color: var(--pch-text-muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.file-chosen-name {
+  display: none;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--pch-forest);
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #a7f3d0;
+  margin-top: 10px;
+  word-break: break-all;
+}
+
+.file-badges {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.file-type-pill {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+.quotation-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #edf2f7;
+  flex-wrap: wrap;
+}
+
+.btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 12px 22px;
+  text-decoration: none !important;
+  font-size: 13px;
+  font-weight: 750;
+  background: #ffffff;
+  color: var(--pch-text-body);
+  border: 1px solid var(--pch-border);
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: var(--pch-text-dark);
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 12px 26px;
+  font-size: 13.5px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  background: var(--pch-forest);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(30, 75, 56, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+  background: var(--pch-forest-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(30, 75, 56, 0.32);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+  .quotation-page {
+    padding: 22px 18px 45px;
+  }
+  .quotation-header h1 {
+    font-size: 28px;
+  }
+  .quotation-form {
+    padding: 20px 18px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .form-group.full {
+    grid-column: auto;
+  }
+  .quotation-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .btn-cancel,
+  .btn-submit {
+    width: 100%;
+  }
+}
+</style>
+
+<div class="quotation-page">
+    <div class="quotation-container">
+
+        <!-- ==================================================
+             HEADER
+             ================================================== -->
+        <div class="quotation-header">
+            <div class="quotation-eyebrow">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Procurement Control</span>
+            </div>
+
+            <h1>Upload Supplier Quotation</h1>
+            <p>Upload a supplier quotation and submit it for technical evaluation and management review.</p>
+        </div>
+
+        <!-- ==================================================
+             CARD FORM
+             ================================================== -->
+        <div class="quotation-card">
+            <div class="quotation-card-header">
+                <div class="card-header-icon">
+                    <i class="fas fa-hand-holding-dollar"></i>
+                </div>
+                <div>
+                    <h2>Quotation Information</h2>
+                    <p>Enter the vendor quotation pricing, reference details, and attach the original document.</p>
+                </div>
+            </div>
+
+            <!-- NOTICE -->
+            <div class="quotation-notice">
+                <i class="fas fa-circle-info"></i>
+                <span>Enter the supplier quotation details and upload the original document. After submission, the quotation will be logged for review and purchase order generation.</span>
+            </div>
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="quotation-form"
+            >
+                <div class="form-grid">
+
+                    <!-- SUPPLIER NAME -->
+                    <div class="form-group">
+                        <label>
+                            Supplier Name <span class="required-star">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="supplier_name"
+                            class="form-control"
+                            placeholder="e.g. Al Huda Building Materials W.L.L."
+                            required
+                        >
+                    </div>
+
+                    <!-- QUOTATION NUMBER -->
+                    <div class="form-group">
+                        <label>
+                            Quotation Number <span class="required-star">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="quotation_number"
+                            class="form-control"
+                            placeholder="e.g. QT-2026-8849"
+                            required
+                        >
+                    </div>
+
+                    <!-- QUOTATION DATE -->
+                    <div class="form-group">
+                        <label>
+                            Quotation Date <span class="required-star">*</span>
+                        </label>
+                        <input
+                            type="date"
+                            name="quotation_date"
+                            id="quotation_date"
+                            class="form-control"
+                            required
+                        >
+                    </div>
+
+                    <!-- QUOTATION AMOUNT -->
+                    <div class="form-group">
+                        <label>
+                            Quotation Amount
+                        </label>
+                        <input
+                            type="number"
+                            name="quotation_amount"
+                            step="0.01"
+                            min="0"
+                            class="form-control"
+                            placeholder="0.00"
+                        >
+                    </div>
+
+                    <!-- CURRENCY -->
+                    <div class="form-group full">
+                        <label>
+                            Currency
+                        </label>
+                        <select name="currency" class="form-select">
+                            <option value="QAR" selected>QAR - Qatari Riyal</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                        </select>
+                    </div>
+
+                    <!-- FILE UPLOAD DROPZONE -->
+                    <div class="form-group full">
+                        <label>
+                            Supplier Quotation File <span class="required-star">*</span>
+                        </label>
+                        <div class="file-upload-dropzone" id="quoteDropzone">
+                            <input
+                                type="file"
+                                name="quotation_file"
+                                id="quoteFileInput"
+                                accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx"
+                                required
+                            >
+                            <div class="file-upload-icon">
+                                <i class="fas fa-file-arrow-up"></i>
+                            </div>
+                            <div class="file-upload-title">Click or drag & drop quotation to upload</div>
+                            <div class="file-upload-subtitle">Attach the scanned or electronic supplier proposal</div>
+
+                            <div class="file-chosen-name" id="quoteChosenName">
+                                <i class="fas fa-file-invoice me-1"></i> <span id="quoteFileNameText"></span>
+                            </div>
+
+                            <div class="file-badges">
+                                <span class="file-type-pill">PDF</span>
+                                <span class="file-type-pill">Word</span>
+                                <span class="file-type-pill">Excel</span>
+                                <span class="file-type-pill">PNG / JPG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FORM ACTIONS -->
+                <div class="quotation-actions">
+                    <a
+                        href="{{ url_for('construction_purchase_dashboard') }}"
+                        class="btn-cancel"
+                    >
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Cancel & Back</span>
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn-submit"
+                    >
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <span>Submit Quotation</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     DATE PRE-FILL & DRAG-AND-DROP CONTROLLER
+========================================================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Auto-populate today's date if empty
+    const quotationDate = document.getElementById("quotation_date");
+    if (quotationDate && !quotationDate.value) {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        quotationDate.value = `${year}-${month}-${day}`;
+    }
+
+    // 2. Interactive file dropzone preview & drag feedback
+    const fileInput = document.getElementById("quoteFileInput");
+    const dropzone = document.getElementById("quoteDropzone");
+    const chosenBox = document.getElementById("quoteChosenName");
+    const fileNameText = document.getElementById("quoteFileNameText");
+
+    if (fileInput && dropzone) {
+        fileInput.addEventListener("change", function () {
+            if (this.files && this.files.length > 0) {
+                const file = this.files[0];
+                fileNameText.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                chosenBox.style.display = "inline-block";
+            } else {
+                chosenBox.style.display = "none";
+            }
+        });
+
+        ["dragenter", "dragover"].forEach(eventName => {
+            dropzone.addEventListener(eventName, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add("dragover");
+            }, false);
+        });
+
+        ["dragleave", "drop"].forEach(eventName => {
+            dropzone.addEventListener(eventName, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove("dragover");
+            }, false);
+        });
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,2039 @@
+{% extends "base.html" %}
+
+{% block title %}
+Quotation Review | Manager | Purchase Control
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   CONSTRUCTION MANAGER QUOTATION REVIEW
+   ========================================================= */
+
+:root {
+
+    --review-bg: #f5f7fb;
+    --review-card: #ffffff;
+    --review-border: #e2e8f0;
+
+    --review-text: #172033;
+    --review-muted: #64748b;
+
+    --review-primary: #7f1d1d;
+    --review-primary-dark: #5f1515;
+
+    --review-blue: #1d4ed8;
+    --review-green: #15803d;
+    --review-red: #b91c1c;
+
+    --review-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.07);
+
+    --review-radius: 16px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.quotation-review-page {
+
+    background: var(--review-bg);
+
+    min-height: calc(100vh - 70px);
+
+    padding: 28px;
+
+    color: var(--review-text);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.review-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+
+.review-header-left h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+
+.review-header-left p {
+
+    margin: 7px 0 0;
+
+    color: var(--review-muted);
+
+    font-size: 14px;
+}
+
+
+.review-header-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.review-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    border: none;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.review-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.review-btn-back {
+
+    background: #ffffff;
+
+    color: #334155;
+
+    border: 1px solid var(--review-border);
+}
+
+
+.review-btn-back:hover {
+
+    background: #f8fafc;
+
+    color: #172033;
+}
+
+
+.review-btn-document {
+
+    background: #eff6ff;
+
+    color: var(--review-blue);
+}
+
+
+.review-btn-document:hover {
+
+    background: #dbeafe;
+
+    color: var(--review-blue);
+}
+
+
+.review-btn-approve {
+
+    background: var(--review-green);
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px rgba(21, 128, 61, 0.18);
+}
+
+
+.review-btn-approve:hover {
+
+    background: #166534;
+
+    color: white;
+}
+
+
+.review-btn-decline {
+
+    background: var(--review-red);
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px rgba(185, 28, 28, 0.18);
+}
+
+
+.review-btn-decline:hover {
+
+    background: #991b1b;
+
+    color: white;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.review-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: #eff6ff;
+
+    color: var(--review-blue);
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.review-status-approved {
+
+    background: #f0fdf4;
+
+    color: var(--review-green);
+}
+
+
+.review-status-declined {
+
+    background: #fef2f2;
+
+    color: var(--review-red);
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.review-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(340px, 0.8fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.review-card {
+
+    background: var(--review-card);
+
+    border: 1px solid var(--review-border);
+
+    border-radius: var(--review-radius);
+
+    box-shadow: var(--review-shadow);
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+}
+
+
+.review-card:last-child {
+
+    margin-bottom: 0;
+}
+
+
+.review-card-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid var(--review-border);
+}
+
+
+.review-card-header h2 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+
+.review-card-header p {
+
+    margin: 4px 0 0;
+
+    color: var(--review-muted);
+
+    font-size: 12px;
+}
+
+
+.review-card-body {
+
+    padding: 20px;
+}
+
+
+/* =========================================================
+   QUOTATION SUMMARY
+   ========================================================= */
+
+.quotation-number {
+
+    font-size: 22px;
+
+    font-weight: 850;
+
+    color: var(--review-primary);
+
+    margin-bottom: 5px;
+}
+
+
+.quotation-supplier {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: #334155;
+}
+
+
+.detail-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 22px;
+}
+
+
+.detail-item {
+
+    background: #f8fafc;
+
+    border: 1px solid #edf1f5;
+
+    border-radius: 12px;
+
+    padding: 14px;
+}
+
+
+.detail-label {
+
+    color: var(--review-muted);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    margin-bottom: 6px;
+}
+
+
+.detail-value {
+
+    color: #172033;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    word-break: break-word;
+}
+
+
+.detail-value.amount {
+
+    font-size: 18px;
+
+    color: var(--review-primary);
+}
+
+
+/* =========================================================
+   UPLOADED DOCUMENT
+   ========================================================= */
+
+.document-card {
+
+    background: #f8fafc;
+
+    border: 1px solid var(--review-border);
+
+    border-radius: 13px;
+
+    padding: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.document-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.document-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    border-radius: 11px;
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+
+.document-name {
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    color: #334155;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.document-subtitle {
+
+    margin-top: 3px;
+
+    color: var(--review-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   DOCUMENT PREVIEW
+   ========================================================= */
+
+.document-preview {
+
+    margin-top: 18px;
+
+    border: 1px solid var(--review-border);
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    background: #f1f5f9;
+}
+
+
+.document-preview iframe {
+
+    display: block;
+
+    width: 100%;
+
+    height: 650px;
+
+    border: none;
+}
+
+
+.image-preview {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 700px;
+
+    object-fit: contain;
+
+    background: #e2e8f0;
+}
+
+
+/* =========================================================
+   REVIEW PANEL
+   ========================================================= */
+
+.review-decision-card {
+
+    position: sticky;
+
+    top: 20px;
+}
+
+
+.decision-warning {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    background: #fff7ed;
+
+    border: 1px solid #fed7aa;
+
+    color: #9a3412;
+
+    border-radius: 12px;
+
+    padding: 13px;
+
+    margin-bottom: 18px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+.decision-warning i {
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-group {
+
+    margin-bottom: 18px;
+}
+
+
+.form-label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    color: #334155;
+}
+
+
+.form-label span {
+
+    color: var(--review-red);
+}
+
+
+.form-control {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    padding: 11px 12px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.form-control:focus {
+
+    border-color: var(--review-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 29, 29, 0.08);
+}
+
+
+textarea.form-control {
+
+    min-height: 125px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+.form-help {
+
+    margin-top: 6px;
+
+    color: var(--review-muted);
+
+    font-size: 11px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   DECISION BUTTONS
+   ========================================================= */
+
+.decision-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.decision-button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 10px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease;
+}
+
+
+.decision-button:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.decision-approve {
+
+    background: var(--review-green);
+
+    color: white;
+}
+
+
+.decision-approve:hover {
+
+    background: #166534;
+}
+
+
+.decision-decline {
+
+    background: var(--review-red);
+
+    color: white;
+}
+
+
+.decision-decline:hover {
+
+    background: #991b1b;
+}
+
+
+/* =========================================================
+   EXISTING DECISION
+   ========================================================= */
+
+.existing-decision {
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--review-border);
+}
+
+
+.existing-decision-label {
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    color: var(--review-muted);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    margin-bottom: 8px;
+}
+
+
+.existing-comment {
+
+    margin-top: 13px;
+
+    padding-top: 13px;
+
+    border-top: 1px solid var(--review-border);
+
+    color: #475569;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   AUDIT INFORMATION
+   ========================================================= */
+
+.audit-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+
+.audit-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    font-size: 12px;
+}
+
+
+.audit-label {
+
+    color: var(--review-muted);
+
+    font-weight: 600;
+}
+
+
+.audit-value {
+
+    color: #334155;
+
+    font-weight: 750;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .review-layout {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .review-decision-card {
+
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .quotation-review-page {
+
+        padding: 16px;
+    }
+
+
+    .review-header {
+
+        flex-direction: column;
+    }
+
+
+    .review-header-actions {
+
+        width: 100%;
+    }
+
+
+    .review-header-actions .review-btn {
+
+        flex: 1;
+    }
+
+
+    .detail-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .review-card-body {
+
+        padding: 15px;
+    }
+
+
+    .document-card {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .document-card .review-btn {
+
+        width: 100%;
+    }
+
+
+    .document-preview iframe {
+
+        height: 500px;
+    }
+
+
+    .decision-buttons {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+<div class="quotation-review-page">
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="review-header">
+
+        <div class="review-header-left">
+
+            <h1>
+                Supplier Quotation Review
+            </h1>
+
+            <p>
+                Carefully review the supplier quotation before
+                making a procurement approval decision.
+            </p>
+
+        </div>
+
+
+        <div class="review-header-actions">
+
+            <a
+                href="{{ url_for(
+                    'construction_manager_dashboard'
+                ) }}"
+                class="review-btn review-btn-back"
+            >
+
+                <i class="fas fa-arrow-left"></i>
+
+                Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN LAYOUT
+         ===================================================== -->
+
+    <div class="review-layout">
+
+
+        <!-- =================================================
+             LEFT COLUMN
+             ================================================= -->
+
+        <div>
+
+
+            <!-- =============================================
+                 QUOTATION INFORMATION
+                 ============================================= -->
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Quotation Information
+                        </h2>
+
+                        <p>
+                            Supplier quotation details submitted
+                            for management review.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        {% if quotation.status == "Under Review" %}
+
+                            <span class="review-status">
+
+                                <i class="fas fa-clock"></i>
+
+                                Under Review
+
+                            </span>
+
+                        {% elif quotation.status == "Approved" %}
+
+                            <span class="review-status review-status-approved">
+
+                                <i class="fas fa-check-circle"></i>
+
+                                Approved
+
+                            </span>
+
+                        {% elif quotation.status == "Declined" %}
+
+                            <span class="review-status review-status-declined">
+
+                                <i class="fas fa-times-circle"></i>
+
+                                Declined
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="review-status">
+
+                                {{ quotation.status }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+
+                    <div class="quotation-number">
+
+                        {{ quotation.quotation_number }}
+
+                    </div>
+
+
+                    <div class="quotation-supplier">
+
+                        {{ quotation.supplier_name }}
+
+                    </div>
+
+
+                    <div class="detail-grid">
+
+
+                        <!-- DATE -->
+
+                        <div class="detail-item">
+
+                            <div class="detail-label">
+                                Quotation Date
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ quotation.quotation_date }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- AMOUNT -->
+
+                        <div class="detail-item">
+
+                            <div class="detail-label">
+                                Quotation Amount
+                            </div>
+
+                            <div class="detail-value amount">
+
+                                {% if quotation.quotation_amount is not none %}
+
+                                    {{ quotation.currency or "QAR" }}
+
+                                    {{ "{:,.2f}".format(
+                                        quotation.quotation_amount
+                                    ) }}
+
+                                {% else %}
+
+                                    Not specified
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SUPPLIER -->
+
+                        <div class="detail-item">
+
+                            <div class="detail-label">
+                                Supplier
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ quotation.supplier_name }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- UPLOADED BY -->
+
+                        <div class="detail-item">
+
+                            <div class="detail-label">
+                                Uploaded By
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ quotation.uploaded_by_name
+                                   or "Unknown" }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 SUPPLIER DOCUMENT
+                 ============================================= -->
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Supplier Quotation Document
+                        </h2>
+
+                        <p>
+                            Original document submitted by the
+                            Purchase Department.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+
+                    {% if quotation.file_url %}
+
+                        <div class="document-card">
+
+                            <div class="document-info">
+
+                                <div class="document-icon">
+
+                                    <i class="fas fa-file-alt"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div class="document-name">
+
+                                        {{ quotation.file_name
+                                           or "Supplier Quotation" }}
+
+                                    </div>
+
+                                    <div class="document-subtitle">
+
+                                        Supplier quotation document
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="{{ quotation.file_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="review-btn review-btn-document"
+                            >
+
+                                <i class="fas fa-external-link-alt"></i>
+
+                                Open Document
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- =================================
+                             PREVIEW
+                             ================================= -->
+
+                        {% set file_name_lower =
+                            (quotation.file_name or "") | lower
+                        %}
+
+
+                        {% if file_name_lower.endswith(".pdf") %}
+
+                            <div class="document-preview">
+
+                                <iframe
+                                    src="{{ quotation.file_url }}"
+                                    title="Supplier Quotation Document"
+                                ></iframe>
+
+                            </div>
+
+                        {% elif
+                            file_name_lower.endswith(".jpg")
+                            or file_name_lower.endswith(".jpeg")
+                            or file_name_lower.endswith(".png")
+                            or file_name_lower.endswith(".webp")
+                        %}
+
+                            <div class="document-preview">
+
+                                <img
+                                    src="{{ quotation.file_url }}"
+                                    alt="Supplier Quotation"
+                                    class="image-preview"
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div
+                                style="
+                                    margin-top:18px;
+                                    padding:25px;
+                                    text-align:center;
+                                    border:1px dashed #cbd5e1;
+                                    border-radius:12px;
+                                    background:#f8fafc;
+                                    color:#64748b;
+                                "
+                            >
+
+                                <i
+                                    class="fas fa-file-download"
+                                    style="
+                                        font-size:28px;
+                                        margin-bottom:10px;
+                                        display:block;
+                                    "
+                                ></i>
+
+                                <strong
+                                    style="
+                                        display:block;
+                                        color:#334155;
+                                        margin-bottom:5px;
+                                    "
+                                >
+                                    Preview not available
+                                </strong>
+
+                                <span style="font-size:12px;">
+                                    Please use the
+                                    <b>Open Document</b>
+                                    button above to inspect the
+                                    supplier quotation.
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <div
+                            style="
+                                padding:35px 20px;
+                                text-align:center;
+                                color:#64748b;
+                            "
+                        >
+
+                            <i
+                                class="fas fa-file-slash"
+                                style="
+                                    font-size:30px;
+                                    margin-bottom:10px;
+                                "
+                            ></i>
+
+                            <div>
+                                No quotation document is available.
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 AUDIT INFORMATION
+                 ============================================= -->
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Audit Information
+                        </h2>
+
+                        <p>
+                            Procurement record information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+                    <div class="audit-list">
+
+
+                        <div class="audit-row">
+
+                            <span class="audit-label">
+                                Quotation ID
+                            </span>
+
+                            <span class="audit-value">
+
+                                #{{ quotation.id }}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="audit-row">
+
+                            <span class="audit-label">
+                                Uploaded By
+                            </span>
+
+                            <span class="audit-value">
+
+                                {{ quotation.uploaded_by_name
+                                   or "Unknown" }}
+
+                            </span>
+
+                        </div>
+
+
+                        {% if quotation.uploaded_by_username %}
+
+                            <div class="audit-row">
+
+                                <span class="audit-label">
+                                    Purchase Username
+                                </span>
+
+                                <span class="audit-value">
+
+                                    {{ quotation.uploaded_by_username }}
+
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="audit-row">
+
+                            <span class="audit-label">
+                                Created
+                            </span>
+
+                            <span class="audit-value">
+
+                                {% if quotation.created_at %}
+
+                                    {{ quotation.created_at.strftime(
+                                        "%d %b %Y %H:%M"
+                                    ) }}
+
+                                {% else %}
+
+                                    Not available
+
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+
+                        {% if quotation.updated_at %}
+
+                            <div class="audit-row">
+
+                                <span class="audit-label">
+                                    Last Updated
+                                </span>
+
+                                <span class="audit-value">
+
+                                    {{ quotation.updated_at.strftime(
+                                        "%d %b %Y %H:%M"
+                                    ) }}
+
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT COLUMN
+             ================================================= -->
+
+        <div>
+
+
+            <!-- =============================================
+                 DECISION PANEL
+                 ============================================= -->
+
+            <div class="review-card review-decision-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Management Decision
+                        </h2>
+
+                        <p>
+                            Record the official procurement decision.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+
+                    {% if quotation.status == "Under Review" %}
+
+
+                        <div class="decision-warning">
+
+                            <i class="fas fa-shield-alt"></i>
+
+                            <div>
+
+                                <strong>
+                                    Approval Control
+                                </strong>
+
+                                <br>
+
+                                Review the original supplier
+                                quotation carefully before
+                                approving it. This decision will
+                                be recorded in the procurement
+                                audit trail.
+
+                            </div>
+
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            id="quotationDecisionForm"
+                        >
+
+
+                            <!-- =================================
+                                 COMMENT
+                                 ================================= -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="manager_comment"
+                                    class="form-label"
+                                >
+
+                                    Manager Comment
+
+                                    <span
+                                        id="commentRequiredMarker"
+                                        style="display:none;"
+                                    >
+                                        *
+                                    </span>
+
+                                </label>
+
+
+                                <textarea
+                                    name="manager_comment"
+                                    id="manager_comment"
+                                    class="form-control"
+                                    placeholder="Enter your review comments, observations, price concerns, supplier concerns, or approval justification..."
+                                ></textarea>
+
+
+                                <div class="form-help">
+
+                                    A comment is required when
+                                    declining a quotation.
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 DECISION BUTTONS
+                                 ================================= -->
+
+                            <div class="decision-buttons">
+
+
+                                <button
+                                    type="submit"
+                                    name="decision"
+                                    value="approve"
+                                    class="decision-button decision-approve"
+                                    onclick="return confirmApproval();"
+                                >
+
+                                    <i class="fas fa-check-circle"></i>
+
+                                    Approve Quotation
+
+                                </button>
+
+
+                                <button
+                                    type="submit"
+                                    name="decision"
+                                    value="decline"
+                                    class="decision-button decision-decline"
+                                    onclick="return confirmDecline();"
+                                >
+
+                                    <i class="fas fa-times-circle"></i>
+
+                                    Decline Quotation
+
+                                </button>
+
+
+                            </div>
+
+
+                        </form>
+
+
+                    {% elif quotation.status == "Approved" %}
+
+
+                        <div class="existing-decision">
+
+                            <div class="existing-decision-label">
+
+                                Decision
+
+                            </div>
+
+
+                            <span
+                                class="review-status review-status-approved"
+                            >
+
+                                <i class="fas fa-check-circle"></i>
+
+                                Approved
+
+                            </span>
+
+
+                            {% if quotation.decision_date %}
+
+                                <div
+                                    style="
+                                        margin-top:10px;
+                                        color:#64748b;
+                                        font-size:12px;
+                                    "
+                                >
+
+                                    Decision Date:
+
+                                    <strong
+                                        style="color:#334155;"
+                                    >
+
+                                        {{ quotation.decision_date.strftime(
+                                            "%d %b %Y %H:%M"
+                                        ) }}
+
+                                    </strong>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if quotation.manager_comment %}
+
+                                <div class="existing-comment">
+
+                                    <strong
+                                        style="
+                                            display:block;
+                                            color:#334155;
+                                            margin-bottom:5px;
+                                        "
+                                    >
+                                        Manager Comment
+                                    </strong>
+
+                                    {{ quotation.manager_comment }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    {% elif quotation.status == "Declined" %}
+
+
+                        <div class="existing-decision">
+
+                            <div class="existing-decision-label">
+
+                                Decision
+
+                            </div>
+
+
+                            <span
+                                class="review-status review-status-declined"
+                            >
+
+                                <i class="fas fa-times-circle"></i>
+
+                                Declined
+
+                            </span>
+
+
+                            {% if quotation.decision_date %}
+
+                                <div
+                                    style="
+                                        margin-top:10px;
+                                        color:#64748b;
+                                        font-size:12px;
+                                    "
+                                >
+
+                                    Decision Date:
+
+                                    <strong
+                                        style="color:#334155;"
+                                    >
+
+                                        {{ quotation.decision_date.strftime(
+                                            "%d %b %Y %H:%M"
+                                        ) }}
+
+                                    </strong>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if quotation.manager_comment %}
+
+                                <div class="existing-comment">
+
+                                    <strong
+                                        style="
+                                            display:block;
+                                            color:#334155;
+                                            margin-bottom:5px;
+                                        "
+                                    >
+                                        Manager Comment
+                                    </strong>
+
+                                    {{ quotation.manager_comment }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <div class="existing-decision">
+
+                            <div class="existing-decision-label">
+                                Current Status
+                            </div>
+
+                            <span class="review-status">
+
+                                {{ quotation.status }}
+
+                            </span>
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PROCUREMENT CONTROL NOTE
+                 ============================================= -->
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Procurement Control
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:10px;
+                            align-items:flex-start;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.6;
+                        "
+                    >
+
+                        <i
+                            class="fas fa-info-circle"
+                            style="
+                                color:#1d4ed8;
+                                margin-top:3px;
+                            "
+                        ></i>
+
+                        <div>
+
+                            <strong
+                                style="color:#334155;"
+                            >
+                                Management Review
+                            </strong>
+
+                            <br>
+
+                            The manager's decision is permanently
+                            recorded against this quotation.
+
+                            <br><br>
+
+                            Before approval, verify the supplier,
+                            quotation amount, quotation date and
+                            original document.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <div
+        style="
+            text-align:center;
+            color:#94a3b8;
+            font-size:12px;
+            padding:18px 0 8px;
+        "
+    >
+
+        Prestigious Trading & Construction
+        · Procurement Management System
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   APPROVAL CONFIRMATION
+   ========================================================= */
+
+function confirmApproval() {
+
+    const comment =
+        document.getElementById(
+            "manager_comment"
+        ).value.trim();
+
+    let message =
+        "Are you sure you want to APPROVE this supplier quotation?";
+
+    if (comment) {
+
+        message +=
+            "\n\nYour comment will be recorded with the approval.";
+
+    }
+
+    return confirm(message);
+}
+
+
+/* =========================================================
+   DECLINE CONFIRMATION
+   ========================================================= */
+
+function confirmDecline() {
+
+    const comment =
+        document.getElementById(
+            "manager_comment"
+        ).value.trim();
+
+    if (!comment) {
+
+        alert(
+            "Please enter a reason or comment before declining the quotation."
+        );
+
+        document.getElementById(
+            "manager_comment"
+        ).focus();
+
+        return false;
+    }
+
+    return confirm(
+        "Are you sure you want to DECLINE this supplier quotation?\n\n" +
+        "The decision and your comment will be recorded."
+    );
+}
+
+
+/* =========================================================
+   DECLINE COMMENT INDICATOR
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const commentField =
+            document.getElementById(
+                "manager_comment"
+            );
+
+        const requiredMarker =
+            document.getElementById(
+                "commentRequiredMarker"
+            );
+
+        if (!commentField || !requiredMarker) {
+            return;
+        }
+
+        /*
+         * We cannot know which button is currently selected
+         * until the user clicks it, so the marker is kept
+         * informational here.
+         */
+
+        commentField.addEventListener(
+            "input",
+            function () {
+
+                if (this.value.trim()) {
+
+                    requiredMarker.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

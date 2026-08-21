@@ -1,0 +1,1463 @@
+{% extends "base.html" %}
+
+{% block title %}
+Purchase Dashboard | Prestigious Trading & Constructions
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   CLEAN MODERN PURCHASE DASHBOARD THEME
+========================================================= */
+:root {
+  --pch-bg: #f8fafc;
+  --pch-surface: #ffffff;
+  --pch-border: #e2e8f0;
+  --pch-border-hover: #cbd5e1;
+  --pch-text-dark: #0f172a;
+  --pch-text-body: #334155;
+  --pch-text-muted: #64748b;
+
+  --pch-forest: #1e4b38;
+  --pch-forest-dark: #143829;
+
+  --pch-emerald: #059669;
+  --pch-emerald-soft: #ecfdf5;
+  --pch-emerald-border: #a7f3d0;
+
+  --pch-amber: #d97706;
+  --pch-amber-soft: #fffbeb;
+  --pch-amber-border: #fde68a;
+
+  --pch-blue: #2563eb;
+  --pch-blue-soft: #eff6ff;
+  --pch-blue-border: #bfdbfe;
+
+  --pch-rose: #dc2626;
+  --pch-rose-soft: #fef2f2;
+  --pch-rose-border: #fecaca;
+
+  --pch-radius: 16px;
+  --pch-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --pch-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+   PAGE CONTAINER
+========================================================= */
+.purchase-page {
+  background: var(--pch-bg);
+  min-height: calc(100vh - 70px);
+  padding: 32px 36px 60px;
+  color: var(--pch-text-dark);
+}
+
+/* =========================================================
+   EXECUTIVE HEADER
+========================================================= */
+.purchase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.purchase-header-left h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.purchase-header-left p {
+  margin: 6px 0 0;
+  color: var(--pch-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.purchase-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.purchase-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-request {
+  background: var(--pch-forest);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(30, 75, 56, 0.2);
+}
+
+.btn-request:hover {
+  background: var(--pch-forest-dark);
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.btn-quotation {
+  background: #0f172a;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.btn-quotation:hover {
+  background: #1e293b;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.btn-logout {
+  background: var(--pch-rose-soft);
+  color: var(--pch-rose) !important;
+  border: 1px solid var(--pch-rose-border);
+}
+
+.btn-logout:hover {
+  background: #fee2e2;
+  color: #991b1b !important;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   SUMMARY / KPI METRIC CARDS
+========================================================= */
+.purchase-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 34px;
+}
+
+.summary-card {
+  background: var(--pch-surface);
+  border: 1px solid var(--pch-border);
+  border-radius: var(--pch-radius);
+  padding: 22px 24px;
+  box-shadow: var(--pch-shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--pch-border-hover);
+  box-shadow: var(--pch-shadow-md);
+}
+
+.summary-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.summary-label {
+  color: var(--pch-text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1.35;
+}
+
+.summary-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.summary-primary .summary-icon-box { background: var(--pch-emerald-soft); color: var(--pch-emerald); border: 1px solid var(--pch-emerald-border); }
+.summary-warning .summary-icon-box { background: var(--pch-amber-soft); color: var(--pch-amber); border: 1px solid var(--pch-amber-border); }
+.summary-blue .summary-icon-box { background: var(--pch-blue-soft); color: var(--pch-blue); border: 1px solid var(--pch-blue-border); }
+
+.summary-number {
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  margin-top: 14px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+}
+
+/* =========================================================
+   SECTION PANELS & DEMARCATION HEADINGS
+========================================================= */
+.purchase-section {
+  background: var(--pch-surface);
+  border: 1px solid var(--pch-border);
+  border-radius: var(--pch-radius);
+  box-shadow: var(--pch-shadow-sm);
+  margin-bottom: 34px;
+  overflow: hidden;
+  scroll-margin-top: 90px;
+}
+
+.purchase-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px 28px;
+  background: #ffffff;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.purchase-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.purchase-section-title h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.4px;
+}
+
+.purchase-section-title span {
+  display: block;
+  color: var(--pch-text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.section-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   INSTANT SEARCH INPUT
+========================================================= */
+.table-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 30px;
+  padding: 6px 14px;
+  transition: all 0.2s ease;
+  width: 320px;
+  max-width: 100%;
+}
+
+.table-search-box:focus-within {
+  border-color: var(--pch-forest);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
+}
+
+.table-search-box i.search-icon {
+  color: var(--pch-text-muted);
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.table-search-box input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13px;
+  color: var(--pch-text-dark);
+  outline: none;
+}
+
+.table-search-box input::placeholder {
+  color: #94a3b8;
+}
+
+.table-search-clear {
+  display: none;
+  background: #e2e8f0;
+  border: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #475569;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+.table-search-clear:hover {
+  background: #cbd5e1;
+  color: #0f172a;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 30px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 800;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TABLE ARCHITECTURE (COLOR & ROW DEMARCATION)
+========================================================= */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.purchase-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1200px;
+  font-size: 13.5px;
+}
+
+/* DEMARCATED DARK NAVY THEAD */
+.purchase-table thead th {
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 15px 18px;
+  text-align: left;
+  border-top: none;
+  border-bottom: 2px solid #334155;
+  white-space: nowrap;
+}
+
+/* CRISP HORIZONTAL LINE SEPARATORS BETWEEN ROWS */
+.purchase-table tbody td {
+  padding: 16px 18px;
+  border-top: 1px solid #e2e8f0 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  color: var(--pch-text-body);
+  vertical-align: middle;
+  background-color: #ffffff;
+  transition: background-color 0.15s ease;
+}
+
+.purchase-table tbody tr:hover td {
+  background-color: #f8fafc;
+}
+
+.purchase-table tbody tr.search-hidden,
+.purchase-table tbody tr.page-hidden {
+  display: none !important;
+}
+
+.row-sn-cell {
+  font-weight: 800;
+  color: var(--pch-text-muted);
+  font-size: 12.5px;
+  width: 50px;
+  text-align: center;
+}
+
+.primary-text {
+  font-weight: 800;
+  color: var(--pch-text-dark);
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+
+.secondary-text {
+  color: var(--pch-text-muted);
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.amount {
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+/* =========================================================
+   PAGINATION CONTROLS
+========================================================= */
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--pch-text-muted);
+  font-weight: 600;
+}
+
+.pagination-info strong {
+  color: var(--pch-text-dark);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--pch-border);
+  background: #ffffff;
+  color: var(--pch-text-dark);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.pagination-btn.active {
+  background: var(--pch-forest);
+  color: #ffffff;
+  border-color: var(--pch-forest);
+  box-shadow: 0 2px 8px rgba(30, 75, 56, 0.25);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.page-size-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--pch-text-muted);
+  font-weight: 600;
+}
+
+.page-size-select {
+  border: 1px solid var(--pch-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  color: var(--pch-text-dark);
+  background-color: #ffffff;
+  outline: none;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.status-pending { background: var(--pch-amber-soft); color: var(--pch-amber); border: 1px solid var(--pch-amber-border); }
+.status-uploaded { background: var(--pch-blue-soft); color: var(--pch-blue); border: 1px solid var(--pch-blue-border); }
+.status-review { background: var(--pch-amber-soft); color: var(--pch-amber); border: 1px solid var(--pch-amber-border); }
+.status-approved { background: var(--pch-emerald-soft); color: var(--pch-emerald); border: 1px solid var(--pch-emerald-border); }
+.status-declined { background: var(--pch-rose-soft); color: var(--pch-rose); border: 1px solid var(--pch-rose-border); }
+
+.cash-released { background: var(--pch-emerald-soft); color: var(--pch-emerald); border: 1px solid var(--pch-emerald-border); }
+.cash-not-released { background: var(--pch-amber-soft); color: var(--pch-amber); border: 1px solid var(--pch-amber-border); }
+
+.cash-details {
+  margin-top: 5px;
+  color: var(--pch-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   DOCUMENT STACK AREA
+========================================================= */
+.document-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 210px;
+}
+
+.document-label {
+  display: block;
+  color: var(--pch-text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.original-document {
+  padding-top: 8px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.finalized-document {
+  padding: 10px 12px;
+  border: 1px solid var(--pch-border);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.finalized-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.finalized-badge-approved { color: var(--pch-emerald); }
+.finalized-badge-declined { color: var(--pch-rose); }
+.finalized-badge-review { color: var(--pch-amber); }
+
+.finalized-date {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.view-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.finalized-approved {
+  background: var(--pch-emerald);
+  color: #ffffff !important;
+}
+
+.finalized-approved:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+.finalized-declined {
+  background: var(--pch-rose);
+  color: #ffffff !important;
+}
+
+.finalized-declined:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.quotation-view {
+  background: #0f172a;
+  color: #ffffff !important;
+}
+
+.quotation-view:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.manager-comment {
+  max-width: 240px;
+  color: var(--pch-text-body);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.manager-comment strong {
+  color: var(--pch-text-dark);
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+.empty-state {
+  padding: 56px 20px;
+  text-align: center;
+  color: var(--pch-text-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.empty-state i {
+  display: block;
+  margin: 0 auto 14px;
+  color: #94a3b8;
+  font-size: 32px;
+}
+
+.no-match-row td {
+  text-align: center;
+  padding: 40px 20px !important;
+  color: var(--pch-text-muted);
+  font-size: 14px;
+  background-color: #fafbfc !important;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+.purchase-footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 0 20px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 992px) {
+  .purchase-page { padding: 22px 18px; }
+  .purchase-header-left h1 { font-size: 28px; }
+  .purchase-summary { grid-template-columns: 1fr; gap: 14px; }
+  .table-search-box { width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .purchase-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .purchase-actions { width: 100%; flex-direction: column; }
+  .purchase-btn { width: 100%; justify-content: center; }
+  .pagination-footer { flex-direction: column; align-items: stretch; }
+}
+</style>
+
+<div class="purchase-page">
+    <div class="purchase-container">
+
+        <!-- ==================================================
+             HEADER
+             ================================================== -->
+        <div class="purchase-header">
+            <div class="purchase-header-left">
+                <h1>Purchase Dashboard</h1>
+                <p>Upload material requests and supplier quotations for procurement management.</p>
+            </div>
+
+            <div class="purchase-actions">
+                <a href="{{ url_for('construction_purchase_material_request') }}" class="purchase-btn btn-request">
+                    <i class="fas fa-file-circle-plus"></i>
+                    <span>Upload Material Request</span>
+                </a>
+
+                <a href="{{ url_for('construction_purchase_add_quotation') }}" class="purchase-btn btn-quotation">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Upload Supplier Quotation</span>
+                </a>
+
+                <a href="{{ url_for('admin_logout') }}" class="purchase-btn btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ==================================================
+             SUMMARY
+             ================================================== -->
+        <div class="purchase-summary">
+            <!-- TOTAL MATERIAL REQUESTS -->
+            <div class="summary-card summary-primary">
+                <div class="summary-top">
+                    <div class="summary-label">Material Requests</div>
+                    <div class="summary-icon-box">
+                        <i class="fas fa-file-lines"></i>
+                    </div>
+                </div>
+                <div class="summary-number">{{ total_material_requests|default(0) }}</div>
+            </div>
+
+            <!-- PENDING QUOTATION -->
+            <div class="summary-card summary-warning">
+                <div class="summary-top">
+                    <div class="summary-label">Pending Quotation</div>
+                    <div class="summary-icon-box">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                </div>
+                <div class="summary-number">{{ pending_quotation|default(0) }}</div>
+            </div>
+
+            <!-- SUPPLIER QUOTATIONS -->
+            <div class="summary-card summary-blue">
+                <div class="summary-top">
+                    <div class="summary-label">Supplier Quotations</div>
+                    <div class="summary-icon-box">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                </div>
+                <div class="summary-number">{{ total_quotations|default(0) }}</div>
+            </div>
+        </div>
+
+        <!-- ==================================================
+             MATERIAL REQUESTS SECTION
+             ================================================== -->
+        <div class="purchase-section" id="purchaseRequestsSection">
+            <div class="purchase-section-header">
+                <div class="purchase-section-title">
+                    <div class="section-icon-pill">
+                        <i class="fas fa-boxes-stacked"></i>
+                    </div>
+                    <div>
+                        <h2>Recent Material Requests</h2>
+                        <span>Original material requests together with manager stamped documents</span>
+                    </div>
+                </div>
+
+                <!-- INSTANT SEARCH BAR -->
+                <div class="section-header-right">
+                    <div class="table-search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input
+                            type="text"
+                            id="purchaseRequestsSearchInput"
+                            placeholder="Search request, project, requester, status..."
+                            autocomplete="off"
+                        >
+                        <button type="button" class="table-search-clear" id="clearPurchaseReqSearch" title="Clear search">✕</button>
+                    </div>
+
+                    <div class="section-badge" id="purchaseRequestsBadge">
+                        {{ recent_requests|length if recent_requests else 0 }} requests
+                    </div>
+                </div>
+            </div>
+
+            {% if recent_requests %}
+                <div class="table-wrapper">
+                    <table class="purchase-table" id="purchaseRequestsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">#</th>
+                                <th>Request Number</th>
+                                <th>Project</th>
+                                <th>Requested By</th>
+                                <th>Request Date</th>
+                                <th>Status</th>
+                                <th>Documents</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchaseRequestsTableBody">
+                        {% for item in recent_requests %}
+                            <tr class="searchable-purchase-req-row">
+                                <!-- S/N -->
+                                <td class="row-sn-cell purchase-req-sn-cell">
+                                    {{ loop.index }}
+                                </td>
+
+                                <!-- REQUEST NUMBER -->
+                                <td>
+                                    <span class="primary-text">
+                                        {{ item.request_number }}
+                                    </span>
+                                </td>
+
+                                <!-- PROJECT -->
+                                <td>
+                                    {{ item.project_name or "—" }}
+                                </td>
+
+                                <!-- REQUESTED BY -->
+                                <td>
+                                    {{ item.requested_by or "—" }}
+                                </td>
+
+                                <!-- DATE -->
+                                <td>
+                                    {{ item.request_date or "—" }}
+                                </td>
+
+                                <!-- STATUS -->
+                                <td>
+                                    {% if item.status == "Approved" %}
+                                        <span class="status status-approved">
+                                            <i class="fas fa-circle-check"></i> Approved
+                                        </span>
+                                    {% elif item.status in ["Declined", "Rejected"] %}
+                                        <span class="status status-declined">
+                                            <i class="fas fa-circle-xmark"></i> {{ item.status }}
+                                        </span>
+                                    {% elif item.status == "Pending Quotation" %}
+                                        <span class="status status-pending">
+                                            <i class="fas fa-hourglass-half"></i> Pending Quotation
+                                        </span>
+                                    {% else %}
+                                        <span class="status status-review">
+                                            {{ item.status or "Under Review" }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- DOCUMENTS -->
+                                <td>
+                                    <div class="document-stack">
+                                        {% if item.finalized_file_url %}
+                                            <div class="finalized-document">
+                                                {% if item.status == "Approved" %}
+                                                    <div class="finalized-badge finalized-badge-approved">
+                                                        <i class="fas fa-stamp"></i> Manager Approved — Stamped
+                                                    </div>
+                                                    <a href="{{ item.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button finalized-approved">
+                                                        <i class="fas fa-circle-check"></i> View Approved Document
+                                                    </a>
+                                                {% elif item.status in ["Declined", "Rejected"] %}
+                                                    <div class="finalized-badge finalized-badge-declined">
+                                                        <i class="fas fa-stamp"></i> Manager Declined — Stamped
+                                                    </div>
+                                                    <a href="{{ item.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button finalized-declined">
+                                                        <i class="fas fa-circle-xmark"></i> View Declined Document
+                                                    </a>
+                                                {% else %}
+                                                    <div class="finalized-badge finalized-badge-review">
+                                                        <i class="fas fa-file-signature"></i> Finalized Document
+                                                    </div>
+                                                    <a href="{{ item.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button quotation-view">
+                                                        <i class="fas fa-file-pdf"></i> View Finalized Document
+                                                    </a>
+                                                {% endif %}
+
+                                                {% if item.finalized_at %}
+                                                    <div class="finalized-date">
+                                                        Finalized: {{ item.finalized_at.strftime('%d %b %Y %H:%M') }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if item.file_url %}
+                                            <div class="original-document">
+                                                <span class="document-label">Original Material Request</span>
+                                                <a href="{{ item.file_url }}" target="_blank" rel="noopener noreferrer" class="view-button quotation-view">
+                                                    <i class="fas fa-file-lines"></i> View Original
+                                                </a>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if not item.file_url and not item.finalized_file_url %}
+                                            <span class="secondary-text">No documents available.</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MATERIAL REQUESTS PAGINATION FOOTER -->
+                <div class="pagination-footer" id="purchaseReqPaginationFooter">
+                    <div class="pagination-info" id="purchaseReqPaginationInfo">
+                        Showing <strong>1</strong> to <strong>10</strong> of <strong>{{ recent_requests|length }}</strong> entries
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="page-size-select-wrapper">
+                            <span>Rows per page:</span>
+                            <select class="page-size-select" id="purchaseReqPageSizeSelect">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+
+                        <div class="pagination-controls" id="purchaseReqPaginationControls"></div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-folder-open"></i>
+                    No material requests have been uploaded yet.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ==================================================
+             SUPPLIER QUOTATIONS SECTION
+             ================================================== -->
+        <div class="purchase-section" id="purchaseQuotationsSection">
+            <div class="purchase-section-header">
+                <div class="purchase-section-title">
+                    <div class="section-icon-pill">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <h2>Recent Supplier Quotations</h2>
+                        <span>Original supplier quotations together with manager stamped decisions</span>
+                    </div>
+                </div>
+
+                <!-- INSTANT SEARCH BAR -->
+                <div class="section-header-right">
+                    <div class="table-search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input
+                            type="text"
+                            id="purchaseQuotationsSearchInput"
+                            placeholder="Search quotation, supplier, amount, status..."
+                            autocomplete="off"
+                        >
+                        <button type="button" class="table-search-clear" id="clearPurchaseQuotSearch" title="Clear search">✕</button>
+                    </div>
+
+                    <div class="section-badge" id="purchaseQuotationsBadge">
+                        {{ recent_quotations|length if recent_quotations else 0 }} quotations
+                    </div>
+                </div>
+            </div>
+
+            {% if recent_quotations %}
+                <div class="table-wrapper">
+                    <table class="purchase-table" id="purchaseQuotationsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">#</th>
+                                <th>Quotation Number</th>
+                                <th>Supplier</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Cash Released</th>
+                                <th>Manager Comment</th>
+                                <th>Documents</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchaseQuotationsTableBody">
+                        {% for quotation in recent_quotations %}
+                            <tr class="searchable-purchase-quot-row">
+                                <!-- S/N -->
+                                <td class="row-sn-cell purchase-quot-sn-cell">
+                                    {{ loop.index }}
+                                </td>
+
+                                <!-- QUOTATION NUMBER -->
+                                <td>
+                                    <span class="primary-text">
+                                        {{ quotation.quotation_number }}
+                                    </span>
+                                </td>
+
+                                <!-- SUPPLIER -->
+                                <td>
+                                    <span class="primary-text">
+                                        {{ quotation.supplier_name or "—" }}
+                                    </span>
+                                </td>
+
+                                <!-- DATE -->
+                                <td>
+                                    {{ quotation.quotation_date or "—" }}
+                                </td>
+
+                                <!-- AMOUNT -->
+                                <td>
+                                    <span class="amount">
+                                        {% if quotation.quotation_amount is not none %}
+                                            {{ quotation.currency or "QAR" }} {{ "%.2f"|format(quotation.quotation_amount) }}
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </span>
+                                </td>
+
+                                <!-- STATUS -->
+                                <td>
+                                    {% if quotation.status == "Approved" %}
+                                        <span class="status status-approved">
+                                            <i class="fas fa-circle-check"></i> Approved
+                                        </span>
+                                        {% if quotation.decision_date %}
+                                            <div class="secondary-text">
+                                                {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+                                            </div>
+                                        {% endif %}
+                                    {% elif quotation.status in ["Declined", "Rejected"] %}
+                                        <span class="status status-declined">
+                                            <i class="fas fa-circle-xmark"></i> {{ quotation.status }}
+                                        </span>
+                                        {% if quotation.decision_date %}
+                                            <div class="secondary-text">
+                                                {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+                                            </div>
+                                        {% endif %}
+                                    {% elif quotation.status == "Quotation Uploaded" %}
+                                        <span class="status status-uploaded">
+                                            <i class="fas fa-file-arrow-up"></i> Quotation Uploaded
+                                        </span>
+                                    {% else %}
+                                        <span class="status status-review">
+                                            <i class="fas fa-clock"></i> {{ quotation.status or "Under Review" }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- CASH RELEASE STATUS -->
+                                <td>
+                                    {% if quotation.status == "Approved" %}
+                                        {% if quotation.cash_released %}
+                                            <span class="status cash-released">
+                                                <i class="fas fa-money-bill-transfer"></i> Cash Released
+                                            </span>
+                                            {% if quotation.cash_released_at %}
+                                                <div class="cash-details">
+                                                    {{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
+                                                </div>
+                                            {% endif %}
+                                            {% if quotation.cash_released_by_name %}
+                                                <div class="cash-details">
+                                                    By: {{ quotation.cash_released_by_name }}
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="status cash-not-released">
+                                                <i class="fas fa-clock"></i> Cash Not Released
+                                            </span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="secondary-text">—</span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- MANAGER COMMENT -->
+                                <td>
+                                    {% if quotation.manager_comment %}
+                                        <div class="manager-comment">
+                                            <strong>Manager:</strong> {{ quotation.manager_comment }}
+                                        </div>
+                                    {% elif quotation.status in ["Approved", "Declined", "Rejected"] %}
+                                        <div class="secondary-text">No comment provided.</div>
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+
+                                <!-- DOCUMENTS -->
+                                <td>
+                                    <div class="document-stack">
+                                        {% if quotation.finalized_file_url %}
+                                            <div class="finalized-document">
+                                                {% if quotation.status == "Approved" %}
+                                                    <div class="finalized-badge finalized-badge-approved">
+                                                        <i class="fas fa-stamp"></i> Manager Approved — Stamped
+                                                    </div>
+                                                    <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button finalized-approved">
+                                                        <i class="fas fa-file-circle-check"></i> View Approved Document
+                                                    </a>
+                                                {% elif quotation.status in ["Declined", "Rejected"] %}
+                                                    <div class="finalized-badge finalized-badge-declined">
+                                                        <i class="fas fa-stamp"></i> Manager Declined — Stamped
+                                                    </div>
+                                                    <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button finalized-declined">
+                                                        <i class="fas fa-file-circle-xmark"></i> View Declined Document
+                                                    </a>
+                                                {% else %}
+                                                    <div class="finalized-badge finalized-badge-review">
+                                                        <i class="fas fa-file-signature"></i> Finalized Document
+                                                    </div>
+                                                    <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="view-button quotation-view">
+                                                        <i class="fas fa-file-pdf"></i> View Finalized Document
+                                                    </a>
+                                                {% endif %}
+
+                                                {% if quotation.finalized_at %}
+                                                    <div class="finalized-date">
+                                                        Finalized: {{ quotation.finalized_at.strftime('%d %b %Y %H:%M') }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if quotation.file_url %}
+                                            <div class="original-document">
+                                                <span class="document-label">Original Supplier Quotation</span>
+                                                <a href="{{ quotation.file_url }}" target="_blank" rel="noopener noreferrer" class="view-button quotation-view">
+                                                    <i class="fas fa-file-invoice-dollar"></i> View Original
+                                                </a>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if not quotation.file_url and not quotation.finalized_file_url %}
+                                            <span class="secondary-text">No documents available.</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SUPPLIER QUOTATIONS PAGINATION FOOTER -->
+                <div class="pagination-footer" id="purchaseQuotPaginationFooter">
+                    <div class="pagination-info" id="purchaseQuotPaginationInfo">
+                        Showing <strong>1</strong> to <strong>10</strong> of <strong>{{ recent_quotations|length }}</strong> entries
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="page-size-select-wrapper">
+                            <span>Rows per page:</span>
+                            <select class="page-size-select" id="purchaseQuotPageSizeSelect">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+
+                        <div class="pagination-controls" id="purchaseQuotPaginationControls"></div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-file-invoice"></i>
+                    No supplier quotations have been uploaded yet.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ==================================================
+             FOOTER
+             ================================================== -->
+        <div class="purchase-footer">
+            © 2026 <strong>Prestigious Trading & Constructions</strong> — Purchase Department
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     INSTANT SEARCH & DYNAMIC PAGINATION ENGINE
+========================================================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* High-Performance Table Manager with Search + Pagination + Auto-Scroll */
+    function initializeTableManager(config) {
+        const input = document.getElementById(config.inputId);
+        const clearBtn = document.getElementById(config.clearBtnId);
+        const tbody = document.getElementById(config.tbodyId);
+        const badge = document.getElementById(config.badgeId);
+        const paginationInfo = document.getElementById(config.paginationInfoId);
+        const paginationControls = document.getElementById(config.paginationControlsId);
+        const pageSizeSelect = document.getElementById(config.pageSizeSelectId);
+        const sectionElement = document.getElementById(config.sectionId);
+
+        if (!tbody) return;
+
+        const allRows = Array.from(tbody.querySelectorAll("." + config.rowClass));
+        let filteredRows = [...allRows];
+        let currentPage = 1;
+        let pageSize = parseInt(pageSizeSelect ? pageSizeSelect.value : 10) || 10;
+
+        function updateDisplay(shouldScroll = false) {
+            // Remove existing no-match placeholder
+            const existingNoMatch = tbody.querySelector(".no-match-row");
+            if (existingNoMatch) existingNoMatch.remove();
+
+            const totalFiltered = filteredRows.length;
+            const isAll = (pageSizeSelect && pageSizeSelect.value === "all");
+            const effectivePageSize = isAll ? (totalFiltered || 1) : pageSize;
+            const totalPages = Math.ceil(totalFiltered / effectivePageSize) || 1;
+
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * effectivePageSize;
+            const endIndex = isAll ? totalFiltered : Math.min(startIndex + effectivePageSize, totalFiltered);
+
+            // Hide all rows first
+            allRows.forEach(row => {
+                row.classList.add("page-hidden");
+            });
+
+            // Show current page subset of filtered rows and update S/N index
+            filteredRows.slice(startIndex, endIndex).forEach((row, idx) => {
+                row.classList.remove("page-hidden");
+                const snCell = row.querySelector("." + config.snCellClass);
+                if (snCell) {
+                    const realIndex = startIndex + idx + 1;
+                    snCell.textContent = realIndex < 10 ? "0" + realIndex : realIndex;
+                }
+            });
+
+            // Update Badge Count
+            if (badge) {
+                const query = input ? input.value.trim() : "";
+                if (query === "") {
+                    badge.textContent = `${allRows.length} ${allRows.length === 1 ? config.labelSingular : config.labelPlural}`;
+                } else {
+                    badge.textContent = `${totalFiltered} of ${allRows.length} found`;
+                }
+            }
+
+            // Update Pagination Info
+            if (paginationInfo) {
+                if (totalFiltered === 0) {
+                    paginationInfo.innerHTML = `Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> entries`;
+                } else {
+                    paginationInfo.innerHTML = `Showing <strong>${startIndex + 1}</strong> to <strong>${endIndex}</strong> of <strong>${totalFiltered}</strong> entries`;
+                }
+            }
+
+            // Render Pagination Buttons
+            renderPaginationControls(totalPages);
+
+            // Smoothly scroll back to section header when changing pages
+            if (shouldScroll && sectionElement) {
+                sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Show clean no-match row if zero results
+            if (totalFiltered === 0 && input && input.value.trim() !== "") {
+                const noMatchRow = document.createElement("tr");
+                noMatchRow.className = "no-match-row";
+                const colCount = allRows[0] ? allRows[0].cells.length : 8;
+                noMatchRow.innerHTML = `
+                    <td colspan="${colCount}">
+                        <div class="py-4 text-center">
+                            <i class="fas fa-search text-muted mb-2 fs-5"></i>
+                            <div>No matching records found for "<strong>${escapeHtml(input.value)}</strong>"</div>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(noMatchRow);
+            }
+        }
+
+        function renderPaginationControls(totalPages) {
+            if (!paginationControls) return;
+            paginationControls.innerHTML = "";
+
+            if (totalPages <= 1 && (pageSizeSelect && pageSizeSelect.value === "all")) {
+                return;
+            }
+
+            // Previous Button
+            const prevBtn = document.createElement("button");
+            prevBtn.type = "button";
+            prevBtn.className = "pagination-btn";
+            prevBtn.innerHTML = `<i class="fas fa-chevron-left me-1"></i> Prev`;
+            prevBtn.disabled = (currentPage === 1);
+            prevBtn.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateDisplay(true);
+                }
+            });
+            paginationControls.appendChild(prevBtn);
+
+            // Numbered Page Buttons
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement("button");
+                pageBtn.type = "button";
+                pageBtn.className = `pagination-btn ${i === currentPage ? "active" : ""}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener("click", () => {
+                    if (currentPage !== i) {
+                        currentPage = i;
+                        updateDisplay(true);
+                    }
+                });
+                paginationControls.appendChild(pageBtn);
+            }
+
+            // Next Button
+            const nextBtn = document.createElement("button");
+            nextBtn.type = "button";
+            nextBtn.className = "pagination-btn";
+            nextBtn.innerHTML = `Next <i class="fas fa-chevron-right ms-1"></i>`;
+            nextBtn.disabled = (currentPage === totalPages);
+            nextBtn.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateDisplay(true);
+                }
+            });
+            paginationControls.appendChild(nextBtn);
+        }
+
+        function filterRows() {
+            const query = input ? input.value.trim().toLowerCase() : "";
+
+            if (clearBtn) {
+                clearBtn.style.display = query.length > 0 ? "inline-flex" : "none";
+            }
+
+            filteredRows = allRows.filter(row => {
+                const text = row.innerText.toLowerCase();
+                const matches = (query === "" || text.includes(query));
+                if (matches) {
+                    row.classList.remove("search-hidden");
+                } else {
+                    row.classList.add("search-hidden");
+                }
+                return matches;
+            });
+
+            currentPage = 1;
+            updateDisplay(false);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        // Event Listeners
+        if (input) {
+            input.addEventListener("input", filterRows);
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    input.value = "";
+                    filterRows();
+                    input.blur();
+                }
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener("click", function () {
+                input.value = "";
+                filterRows();
+                input.focus();
+            });
+        }
+
+        if (pageSizeSelect) {
+            pageSizeSelect.addEventListener("change", function () {
+                pageSize = this.value === "all" ? allRows.length : parseInt(this.value);
+                currentPage = 1;
+                updateDisplay(true);
+            });
+        }
+
+        // Initial Render
+        updateDisplay(false);
+    }
+
+    // 1. Initialize Purchase Material Requests (Search + Pagination + Auto-Scroll)
+    initializeTableManager({
+        inputId: "purchaseRequestsSearchInput",
+        clearBtnId: "clearPurchaseReqSearch",
+        rowClass: "searchable-purchase-req-row",
+        tbodyId: "purchaseRequestsTableBody",
+        badgeId: "purchaseRequestsBadge",
+        paginationInfoId: "purchaseReqPaginationInfo",
+        paginationControlsId: "purchaseReqPaginationControls",
+        pageSizeSelectId: "purchaseReqPageSizeSelect",
+        sectionId: "purchaseRequestsSection",
+        snCellClass: "purchase-req-sn-cell",
+        labelSingular: "request",
+        labelPlural: "requests"
+    });
+
+    // 2. Initialize Purchase Supplier Quotations (Search + Pagination + Auto-Scroll)
+    initializeTableManager({
+        inputId: "purchaseQuotationsSearchInput",
+        clearBtnId: "clearPurchaseQuotSearch",
+        rowClass: "searchable-purchase-quot-row",
+        tbodyId: "purchaseQuotationsTableBody",
+        badgeId: "purchaseQuotationsBadge",
+        paginationInfoId: "purchaseQuotPaginationInfo",
+        paginationControlsId: "purchaseQuotPaginationControls",
+        pageSizeSelectId: "purchaseQuotPageSizeSelect",
+        sectionId: "purchaseQuotationsSection",
+        snCellClass: "purchase-quot-sn-cell",
+        labelSingular: "quotation",
+        labelPlural: "quotations"
+    });
+
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Material Request | Prestigious Trading & Construction
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   CLEAN MODERN MATERIAL REQUEST UPLOAD THEME
+========================================================= */
+:root {
+  --pch-bg: #f8fafc;
+  --pch-surface: #ffffff;
+  --pch-border: #e2e8f0;
+  --pch-border-hover: #cbd5e1;
+  --pch-border-focus: #1e4b38;
+  --pch-text-dark: #0f172a;
+  --pch-text-body: #334155;
+  --pch-text-muted: #64748b;
+
+  --pch-forest: #1e4b38;
+  --pch-forest-dark: #143829;
+  --pch-forest-soft: #ecfdf5;
+
+  --pch-radius: 16px;
+  --pch-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --pch-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+   PAGE CONTAINER
+========================================================= */
+.material-request-page {
+  background: var(--pch-bg);
+  min-height: calc(100vh - 70px);
+  padding: 32px 36px 60px;
+  color: var(--pch-text-dark);
+}
+
+.material-request-container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   EXECUTIVE HEADER (34px TITLE)
+========================================================= */
+.material-header {
+  margin-bottom: 30px;
+}
+
+.material-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pch-forest);
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  background: var(--pch-forest-soft);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #a7f3d0;
+  margin-bottom: 12px;
+}
+
+.material-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.material-header p {
+  margin: 6px 0 0;
+  color: var(--pch-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CARD CONTAINER
+========================================================= */
+.material-card {
+  background: var(--pch-surface);
+  border: 1px solid var(--pch-border);
+  border-radius: var(--pch-radius);
+  overflow: hidden;
+  box-shadow: var(--pch-shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.material-card:hover {
+  box-shadow: var(--pch-shadow-md);
+  border-color: var(--pch-border-hover);
+}
+
+.material-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  background: #ffffff;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.card-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.material-card-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+  letter-spacing: -0.3px;
+}
+
+.material-card-header p {
+  margin: 2px 0 0;
+  color: var(--pch-text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   FORM STYLING
+========================================================= */
+.material-form {
+  padding: 28px 32px 34px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--pch-text-dark);
+  font-size: 12.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.form-group label span.required-star {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.form-control {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--pch-border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  background: #f8fafc;
+  color: var(--pch-text-dark);
+  font-size: 13.5px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  background: #ffffff;
+  border-color: var(--pch-forest);
+  box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FILE UPLOAD DROPZONE
+========================================================= */
+.file-upload-dropzone {
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.file-upload-dropzone:hover,
+.file-upload-dropzone.dragover {
+  border-color: var(--pch-forest);
+  background: #f1f8f4;
+}
+
+.file-upload-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--pch-border);
+  color: var(--pch-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.file-upload-dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.file-upload-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--pch-text-dark);
+  margin-bottom: 4px;
+}
+
+.file-upload-subtitle {
+  font-size: 12px;
+  color: var(--pch-text-muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.file-chosen-name {
+  display: none;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--pch-forest);
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #a7f3d0;
+  margin-top: 10px;
+  word-break: break-all;
+}
+
+.file-badges {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.file-type-pill {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid #edf2f7;
+  flex-wrap: wrap;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 12px 22px;
+  text-decoration: none !important;
+  font-size: 13px;
+  font-weight: 750;
+  background: #ffffff;
+  color: var(--pch-text-body);
+  border: 1px solid var(--pch-border);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: var(--pch-text-dark);
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 12px 26px;
+  font-size: 13.5px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  background: var(--pch-forest);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(30, 75, 56, 0.25);
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  background: var(--pch-forest-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(30, 75, 56, 0.32);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 640px) {
+  .material-request-page {
+    padding: 22px 18px 45px;
+  }
+  .material-header h1 {
+    font-size: 28px;
+  }
+  .material-form {
+    padding: 20px 18px;
+  }
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .back-button,
+  .submit-button {
+    width: 100%;
+  }
+}
+</style>
+
+<div class="material-request-page">
+    <div class="material-request-container">
+
+        <!-- ==================================================
+             HEADER
+             ================================================== -->
+        <div class="material-header">
+            <div class="material-eyebrow">
+                <i class="fas fa-boxes-stacked"></i>
+                <span>Purchase Department</span>
+            </div>
+
+            <h1>Upload Material Request</h1>
+            <p>Upload and document the material request received from the project site or engineering department.</p>
+        </div>
+
+        <!-- ==================================================
+             CARD FORM
+             ================================================== -->
+        <div class="material-card">
+            <div class="material-card-header">
+                <div class="card-header-icon">
+                    <i class="fas fa-file-circle-plus"></i>
+                </div>
+                <div>
+                    <h2>Material Request Details</h2>
+                    <p>Complete the requisition fields below and attach the approved material request document.</p>
+                </div>
+            </div>
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="material-form"
+            >
+                <!-- PROJECT NAME -->
+                <div class="form-group">
+                    <label>
+                        Project Name <span class="required-star">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="project_name"
+                        class="form-control"
+                        placeholder="e.g. Lusail Marina Tower B / West Bay Compound"
+                        required
+                    >
+                </div>
+
+                <!-- REQUESTED BY -->
+                <div class="form-group">
+                    <label>
+                        Requested By (Engineer / Site Team)
+                    </label>
+                    <input
+                        type="text"
+                        name="requested_by"
+                        class="form-control"
+                        placeholder="e.g. Eng. Tariq Mahmoud / Site Supervisor"
+                    >
+                </div>
+
+                <!-- REQUEST DATE -->
+                <div class="form-group">
+                    <label>
+                        Request Date <span class="required-star">*</span>
+                    </label>
+                    <input
+                        type="date"
+                        name="request_date"
+                        class="form-control"
+                        required
+                    >
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="form-group">
+                    <label>
+                        Requisition Description / Items Summary
+                    </label>
+                    <textarea
+                        name="description"
+                        class="form-control"
+                        placeholder="Provide details on required materials, batch specifications, or delivery deadlines..."
+                    ></textarea>
+                </div>
+
+                <!-- FILE UPLOAD DROPZONE -->
+                <div class="form-group">
+                    <label>
+                        Material Request File Attachment <span class="required-star">*</span>
+                    </label>
+                    <div class="file-upload-dropzone" id="fileDropzone">
+                        <input
+                            type="file"
+                            name="material_file"
+                            id="materialFileInput"
+                            accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx"
+                            required
+                        >
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-arrow-up"></i>
+                        </div>
+                        <div class="file-upload-title">Click or drag & drop file to upload</div>
+                        <div class="file-upload-subtitle">Attach the scanned or signed requisition document</div>
+
+                        <div class="file-chosen-name" id="fileChosenName">
+                            <i class="fas fa-file-lines me-1"></i> <span id="fileNameText"></span>
+                        </div>
+
+                        <div class="file-badges">
+                            <span class="file-type-pill">PDF</span>
+                            <span class="file-type-pill">Word</span>
+                            <span class="file-type-pill">Excel</span>
+                            <span class="file-type-pill">PNG / JPG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM ACTIONS -->
+                <div class="form-actions">
+                    <a
+                        href="{{ url_for('construction_purchase_dashboard') }}"
+                        class="back-button"
+                    >
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <span>Upload Material Request</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     DRAG-AND-DROP FILE ATTACHMENT CONTROLLER
+========================================================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById("materialFileInput");
+    const dropzone = document.getElementById("fileDropzone");
+    const fileChosenBox = document.getElementById("fileChosenName");
+    const fileNameText = document.getElementById("fileNameText");
+
+    if (fileInput && dropzone) {
+        fileInput.addEventListener("change", function () {
+            if (this.files && this.files.length > 0) {
+                const file = this.files[0];
+                fileNameText.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                fileChosenBox.style.display = "inline-block";
+            } else {
+                fileChosenBox.style.display = "none";
+            }
+        });
+
+        // Drag-and-drop feedback
+        ["dragenter", "dragover"].forEach(eventName => {
+            dropzone.addEventListener(eventName, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add("dragover");
+            }, false);
+        });
+
+        ["dragleave", "drop"].forEach(eventName => {
+            dropzone.addEventListener(eventName, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove("dragover");
+            }, false);
+        });
+    }
+});
+</script>
+
+{% endblock %}

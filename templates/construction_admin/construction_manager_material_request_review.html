@@ -1,0 +1,1327 @@
+{% extends "base.html" %}
+
+{% block title %}
+Material Request Review | Manager
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   MATERIAL REQUEST REVIEW
+   ========================================================= */
+
+:root {
+
+    --review-bg: #f5f7fb;
+    --review-card: #ffffff;
+    --review-border: #e2e8f0;
+
+    --review-text: #172033;
+    --review-muted: #64748b;
+
+    --review-primary: #7f1d1d;
+    --review-primary-dark: #5f1515;
+
+    --review-green: #15803d;
+    --review-red: #b91c1c;
+
+    --review-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.07);
+
+    --review-radius: 16px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.material-review-page {
+
+    min-height: calc(100vh - 70px);
+
+    background: var(--review-bg);
+
+    padding: 28px;
+
+    color: var(--review-text);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.material-review-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+
+.material-review-title h1 {
+
+    margin: 0;
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.4px;
+}
+
+
+.material-review-title p {
+
+    margin: 7px 0 0;
+
+    color: var(--review-muted);
+
+    font-size: 14px;
+}
+
+
+.back-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 10px 14px;
+
+    background: white;
+
+    color: #334155;
+
+    border: 1px solid var(--review-border);
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    box-shadow: var(--review-shadow);
+
+    transition: 0.2s ease;
+}
+
+
+.back-button:hover {
+
+    background: #f8fafc;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.material-review-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        360px;
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.review-card {
+
+    background: var(--review-card);
+
+    border: 1px solid var(--review-border);
+
+    border-radius: var(--review-radius);
+
+    box-shadow: var(--review-shadow);
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+}
+
+
+.review-card-header {
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid var(--review-border);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.review-card-header h2 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+
+.review-card-header span {
+
+    color: var(--review-muted);
+
+    font-size: 12px;
+}
+
+
+.review-card-body {
+
+    padding: 22px;
+}
+
+
+/* =========================================================
+   REQUEST NUMBER
+   ========================================================= */
+
+.request-number {
+
+    font-size: 22px;
+
+    font-weight: 850;
+
+    color: var(--review-primary);
+}
+
+
+.request-date {
+
+    margin-top: 5px;
+
+    color: var(--review-muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 20px;
+}
+
+
+.info-item {
+
+    padding: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf1f5;
+
+    border-radius: 11px;
+}
+
+
+.info-label {
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    color: #64748b;
+
+    margin-bottom: 6px;
+}
+
+
+.info-value {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #172033;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.description-box {
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border: 1px solid var(--review-border);
+
+    border-radius: 11px;
+
+    background: white;
+}
+
+
+.description-title {
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    color: #64748b;
+
+    margin-bottom: 8px;
+}
+
+
+.description-text {
+
+    color: #334155;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+.status-pending {
+
+    background: #fff7ed;
+
+    color: #c2410c;
+}
+
+
+.status-review {
+
+    background: #eff6ff;
+
+    color: #1d4ed8;
+}
+
+
+.status-approved {
+
+    background: #f0fdf4;
+
+    color: #15803d;
+}
+
+
+.status-declined {
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+.status-other {
+
+    background: #f1f5f9;
+
+    color: #475569;
+}
+
+
+/* =========================================================
+   DOCUMENT
+   ========================================================= */
+
+.document-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    background: #eff6ff;
+
+    color: #1d4ed8;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    transition: 0.2s ease;
+}
+
+
+.document-button:hover {
+
+    background: #dbeafe;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DECISION PANEL
+   ========================================================= */
+
+.decision-panel {
+
+    background: white;
+
+    border: 1px solid var(--review-border);
+
+    border-radius: var(--review-radius);
+
+    box-shadow: var(--review-shadow);
+
+    overflow: hidden;
+
+    position: sticky;
+
+    top: 20px;
+}
+
+
+.decision-header {
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--review-border);
+}
+
+
+.decision-header h2 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+
+.decision-header p {
+
+    margin: 6px 0 0;
+
+    color: var(--review-muted);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+.decision-body {
+
+    padding: 20px;
+}
+
+
+/* =========================================================
+   COMMENT
+   ========================================================= */
+
+.form-label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    color: #334155;
+}
+
+
+.comment-input {
+
+    width: 100%;
+
+    min-height: 120px;
+
+    resize: vertical;
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    color: #172033;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition: 0.2s ease;
+}
+
+
+.comment-input:focus {
+
+    border-color: var(--review-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 29, 29, 0.08);
+}
+
+
+.comment-help {
+
+    margin-top: 6px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   DECISION BUTTONS
+   ========================================================= */
+
+.decision-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+.decision-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 10px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.decision-button:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.approve-button {
+
+    background: #15803d;
+
+    color: white;
+}
+
+
+.approve-button:hover {
+
+    background: #166534;
+}
+
+
+.decline-button {
+
+    background: #b91c1c;
+
+    color: white;
+}
+
+
+.decline-button:hover {
+
+    background: #991b1b;
+}
+
+
+/* =========================================================
+   COMPLETED DECISION
+   ========================================================= */
+
+.completed-decision {
+
+    padding: 16px;
+
+    border-radius: 11px;
+
+    text-align: center;
+}
+
+
+.completed-approved {
+
+    background: #f0fdf4;
+
+    color: #15803d;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+.completed-declined {
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+
+.completed-decision i {
+
+    font-size: 25px;
+
+    margin-bottom: 8px;
+}
+
+
+.completed-decision strong {
+
+    display: block;
+
+    font-size: 14px;
+}
+
+
+.completed-decision span {
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.review-footer {
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+
+    padding: 8px 0 20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .material-review-layout {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .decision-panel {
+
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .material-review-page {
+
+        padding: 16px;
+    }
+
+
+    .material-review-header {
+
+        flex-direction: column;
+    }
+
+
+    .info-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .decision-actions {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+<div class="material-review-page">
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="material-review-header">
+
+        <div class="material-review-title">
+
+            <h1>
+                Material Request Review
+            </h1>
+
+            <p>
+                Review this purchase request and make an
+                independent approval decision.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('construction_manager_dashboard') }}"
+            class="back-button"
+        >
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN LAYOUT
+         ===================================================== -->
+
+    <div class="material-review-layout">
+
+
+        <!-- =================================================
+             REQUEST INFORMATION
+             ================================================= -->
+
+        <div>
+
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Material Request
+                        </h2>
+
+                        <span>
+                            Purchase request information
+                        </span>
+
+                    </div>
+
+
+                    {% if material_request.status == "Approved" %}
+
+                        <span class="status-badge status-approved">
+
+                            Approved
+
+                        </span>
+
+                    {% elif material_request.status == "Declined" %}
+
+                        <span class="status-badge status-declined">
+
+                            Declined
+
+                        </span>
+
+                    {% elif material_request.status == "Quotation Uploaded" %}
+
+                        <span class="status-badge status-review">
+
+                            Quotation Uploaded
+
+                        </span>
+
+                    {% elif material_request.status == "Pending Quotation" %}
+
+                        <span class="status-badge status-pending">
+
+                            Pending Quotation
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="status-badge status-other">
+
+                            {{ material_request.status }}
+
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="review-card-body">
+
+
+                    <div class="request-number">
+
+                        {{ material_request.request_number }}
+
+                    </div>
+
+
+                    {% if material_request.created_at %}
+
+                        <div class="request-date">
+
+                            Created
+
+                            {{ material_request.created_at.strftime(
+                                '%d %b %Y %H:%M'
+                            ) }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =====================================
+                         REQUEST INFORMATION
+                         ===================================== -->
+
+                    <div class="info-grid">
+
+
+                        <div class="info-item">
+
+                            <div class="info-label">
+                                Project
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ material_request.project_name
+                                   or "Not specified" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-label">
+                                Requested By
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ material_request.requested_by
+                                   or "Not specified" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-label">
+                                Request Date
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ material_request.request_date
+                                   or "Not specified" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-label">
+                                Current Status
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ material_request.status
+                                   or "Pending" }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =====================================
+                         DESCRIPTION
+                         ===================================== -->
+
+                    {% if material_request.description %}
+
+                        <div class="description-box">
+
+                            <div class="description-title">
+
+                                Request Description
+
+                            </div>
+
+                            <div class="description-text">
+
+                                {{ material_request.description }}
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DOCUMENT
+                 ================================================= -->
+
+            {% if material_request.file_url %}
+
+                <div class="review-card">
+
+                    <div class="review-card-header">
+
+                        <div>
+
+                            <h2>
+                                Supporting Document
+                            </h2>
+
+                            <span>
+                                Material request attachment
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-card-body">
+
+                        <a
+                            href="{{ material_request.file_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="document-button"
+                        >
+
+                            <i class="fas fa-file-pdf"></i>
+
+                            Open Material Request Document
+
+                            <i class="fas fa-external-link-alt"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 EXTRA REQUEST INFORMATION
+                 ================================================= -->
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+
+                    <div>
+
+                        <h2>
+                            Request Details
+                        </h2>
+
+                        <span>
+                            Additional information recorded in the system
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-card-body">
+
+                    {% if material_request.description %}
+
+                        <div class="description-box"
+                             style="margin-top:0;">
+
+                            <div class="description-title">
+
+                                Description
+
+                            </div>
+
+                            <div class="description-text">
+
+                                {{ material_request.description }}
+
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <div
+                            style="
+                                color:#64748b;
+                                font-size:13px;
+                            "
+                        >
+
+                            No additional description was provided
+                            with this material request.
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             DECISION PANEL
+             ================================================= -->
+
+        <div class="decision-panel">
+
+
+            <div class="decision-header">
+
+                <h2>
+                    Manager Decision
+                </h2>
+
+                <p>
+                    This decision is independent of any supplier
+                    quotation associated with the request.
+                </p>
+
+            </div>
+
+
+            <div class="decision-body">
+
+
+                {% if material_request.status == "Approved" %}
+
+
+                    <div class="completed-decision completed-approved">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        <strong>
+                            Material Request Approved
+                        </strong>
+
+                        {% if material_request.decision_date %}
+
+                            <span>
+
+                                Decision made
+
+                                {{ material_request.decision_date.strftime(
+                                    '%d %b %Y %H:%M'
+                                ) }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                {% elif material_request.status == "Declined" %}
+
+
+                    <div class="completed-decision completed-declined">
+
+                        <i class="fas fa-times-circle"></i>
+
+                        <strong>
+                            Material Request Declined
+                        </strong>
+
+                        {% if material_request.decision_date %}
+
+                            <span>
+
+                                Decision made
+
+                                {{ material_request.decision_date.strftime(
+                                    '%d %b %Y %H:%M'
+                                ) }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'construction_manager_material_request_review',
+                            request_id=material_request.id
+                        ) }}"
+                    >
+
+
+                        <!-- =================================
+                             COMMENT
+                             ================================= -->
+
+                        <label
+                            for="manager_comment"
+                            class="form-label"
+                        >
+
+                            Manager Comment
+
+                        </label>
+
+
+                        <textarea
+                            id="manager_comment"
+                            name="manager_comment"
+                            class="comment-input"
+                            placeholder="Enter your reason, observation or instruction..."
+                        ></textarea>
+
+
+                        <div class="comment-help">
+
+                            Adding a clear reason is recommended,
+                            especially when declining a request.
+
+                        </div>
+
+
+                        <!-- =================================
+                             DECISION BUTTONS
+                             ================================= -->
+
+                        <div class="decision-actions">
+
+
+                            <button
+                                type="submit"
+                                name="decision"
+                                value="Approved"
+                                class="decision-button approve-button"
+                                onclick="
+                                    return confirm(
+                                        'Are you sure you want to APPROVE this material request?'
+                                    );
+                                "
+                            >
+
+                                <i class="fas fa-check"></i>
+
+                                Approve
+
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                name="decision"
+                                value="Declined"
+                                class="decision-button decline-button"
+                                onclick="
+                                    return confirm(
+                                        'Are you sure you want to DECLINE this material request?'
+                                    );
+                                "
+                            >
+
+                                <i class="fas fa-times"></i>
+
+                                Decline
+
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <div class="review-footer">
+
+        Prestigious Trading & Construction
+        · Procurement Management System
+
+    </div>
+
+</div>
+
+{% endblock %}
