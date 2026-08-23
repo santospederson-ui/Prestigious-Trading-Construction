@@ -507,6 +507,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: pan-y;
 }
 
 .gallery-lightbox-content img {
@@ -517,6 +518,7 @@
     border: 1px solid rgba(255,255,255,.12);
     border-radius: 4px;
     transition: transform .2s ease;
+    touch-action: pan-y;
 }
 
 /* CLOSE */
@@ -542,40 +544,12 @@
     transform: rotate(90deg);
 }
 
-/* NAVIGATION */
+/* =========================================================
+   NAVIGATION ARROWS REMOVED
+========================================================= */
 
 .lightbox-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
-    background: rgba(23, 32, 27, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all .25s ease;
-    border-radius: 50%;
-    z-index: 10;
-}
-
-.lightbox-nav-btn:hover {
-    background: var(--pd-accent);
-    border-color: var(--pd-accent);
-    color: #ffffff;
-    transform: translateY(-50%) scale(1.1);
-}
-
-.lightbox-prev-btn {
-    left: -70px;
-}
-
-.lightbox-next-btn {
-    right: -70px;
+    display: none !important;
 }
 
 .lightbox-counter {
@@ -761,13 +735,6 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .lightbox-prev-btn {
-        left: -15px;
-    }
-
-    .lightbox-next-btn {
-        right: -15px;
-    }
 }
 
 @media (max-width: 650px) {
@@ -847,19 +814,26 @@
         font-size: 32px;
     }
 
-    .lightbox-nav-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 15px;
+}
+
+/* =========================================================
+   MOBILE SWIPE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .gallery-lightbox-content {
+        width: 100%;
+        max-width: 100%;
+        touch-action: pan-y;
     }
 
-    .lightbox-prev-btn {
-        left: 5px;
+    .gallery-lightbox-content img {
+        max-width: 100%;
+        max-height: 80vh;
+        touch-action: pan-y;
     }
 
-    .lightbox-next-btn {
-        right: 5px;
-    }
 }
 
 </style>
@@ -1189,27 +1163,16 @@
             <i class="fas fa-times"></i>
         </button>
 
-        <button
-            class="lightbox-nav-btn lightbox-prev-btn"
-            id="lightboxPrev"
-            aria-label="Previous image"
-        >
-            <i class="fas fa-chevron-left"></i>
-        </button>
+        <!--
+            LEFT AND RIGHT ARROWS REMOVED.
+            MOBILE USERS CAN SWIPE THE IMAGE.
+        -->
 
         <img
             src=""
             id="lightboxImage"
             alt="Enlarged project view"
         >
-
-        <button
-            class="lightbox-nav-btn lightbox-next-btn"
-            id="lightboxNext"
-            aria-label="Next image"
-        >
-            <i class="fas fa-chevron-right"></i>
-        </button>
 
         <div
             class="lightbox-counter"
@@ -1342,7 +1305,7 @@
 </div>
 
 <!-- =========================================================
-     LIGHTBOX & KEYBOARD SLIDER
+     LIGHTBOX & MOBILE SWIPE
 ========================================================= -->
 
 <script>
@@ -1357,12 +1320,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const closeBtn =
         document.getElementById("lightboxClose");
-
-    const prevBtn =
-        document.getElementById("lightboxPrev");
-
-    const nextBtn =
-        document.getElementById("lightboxNext");
 
     const counterDisplay =
         document.getElementById("lightboxCounter");
@@ -1504,36 +1461,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    if (prevBtn) {
-
-        prevBtn.addEventListener(
-            "click",
-            function (e) {
-
-                e.stopPropagation();
-
-                showPrev();
-
-            }
-        );
-
-    }
-
-    if (nextBtn) {
-
-        nextBtn.addEventListener(
-            "click",
-            function (e) {
-
-                e.stopPropagation();
-
-                showNext();
-
-            }
-        );
-
-    }
-
     if (closeBtn) {
 
         closeBtn.addEventListener(
@@ -1560,6 +1487,145 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     );
+
+    /* =====================================================
+       MOBILE SWIPE
+       Swipe LEFT  = NEXT IMAGE
+       Swipe RIGHT = PREVIOUS IMAGE
+    ===================================================== */
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const swipeArea =
+        document.getElementById("lightboxImage");
+
+    if (swipeArea) {
+
+        swipeArea.addEventListener(
+            "touchstart",
+            function (e) {
+
+                if (
+                    !lightboxModal.classList.contains(
+                        "active"
+                    )
+                ) {
+                    return;
+                }
+
+                if (!e.touches || !e.touches.length) {
+                    return;
+                }
+
+                touchStartX =
+                    e.touches[0].clientX;
+
+                touchStartY =
+                    e.touches[0].clientY;
+
+                touchEndX =
+                    touchStartX;
+
+                touchEndY =
+                    touchStartY;
+
+            },
+            { passive: true }
+        );
+
+
+        swipeArea.addEventListener(
+            "touchmove",
+            function (e) {
+
+                if (
+                    !lightboxModal.classList.contains(
+                        "active"
+                    )
+                ) {
+                    return;
+                }
+
+                if (!e.touches || !e.touches.length) {
+                    return;
+                }
+
+                touchEndX =
+                    e.touches[0].clientX;
+
+                touchEndY =
+                    e.touches[0].clientY;
+
+            },
+            { passive: true }
+        );
+
+
+        swipeArea.addEventListener(
+            "touchend",
+            function () {
+
+                if (
+                    !lightboxModal.classList.contains(
+                        "active"
+                    )
+                ) {
+                    return;
+                }
+
+                const horizontalDistance =
+                    touchEndX - touchStartX;
+
+                const verticalDistance =
+                    touchEndY - touchStartY;
+
+                const minimumSwipeDistance = 50;
+
+                /*
+                   Only treat the gesture as a swipe when
+                   horizontal movement is greater than
+                   vertical movement.
+                */
+
+                if (
+                    Math.abs(horizontalDistance) >
+                    Math.abs(verticalDistance) &&
+                    Math.abs(horizontalDistance) >=
+                    minimumSwipeDistance
+                ) {
+
+                    if (horizontalDistance < 0) {
+
+                        /* Swipe left = next image */
+                        showNext();
+
+                    } else {
+
+                        /* Swipe right = previous image */
+                        showPrev();
+
+                    }
+
+                }
+
+                touchStartX = 0;
+                touchStartY = 0;
+                touchEndX = 0;
+                touchEndY = 0;
+
+            },
+            { passive: true }
+        );
+
+    }
+
+    /* =====================================================
+       KEYBOARD CONTROL
+       Arrow keys still work on desktop keyboards.
+    ===================================================== */
 
     document.addEventListener(
         "keydown",
