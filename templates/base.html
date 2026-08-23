@@ -66,7 +66,6 @@ Prestigious Trading & Constructions | Qatar
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -89,7 +88,6 @@ body {
   margin: 0 auto;
   padding: 0 24px;
 }
-
 
 /* NAVBAR DESIGN */
 
@@ -197,13 +195,11 @@ nav .nav-btn:hover {
   cursor: pointer;
 }
 
-
 /* MAIN CONTENT */
 
 main {
   flex: 1;
 }
-
 
 /* FLASH ALERTS */
 
@@ -251,7 +247,6 @@ main {
   color: #0369a1;
   border-color: #bae6fd;
 }
-
 
 /* FOOTER */
 
@@ -310,7 +305,6 @@ footer a:hover {
   color: #64748b;
   font-size: 13px;
 }
-
 
 /* RESPONSIVE DESIGN */
 
@@ -413,7 +407,7 @@ NAVBAR
 
 <!-- MOBILE MENU BUTTON -->
 
-<button class="mobile-menu-btn" id="mobileMenuBtn">
+<button class="mobile-menu-btn" id="mobileMenuBtn" type="button">
 
     <i class="fas fa-bars"></i>
 
@@ -600,6 +594,10 @@ SERVICES LINKS
 </div>
 
 
+<!-- =========================
+CONTACT
+========================= -->
+
 <div>
 
 <h4>Contact</h4>
@@ -635,10 +633,7 @@ SERVICES LINKS
 
 <p>
     ✉
-    <a
-        href="https://mail.google.com/mail/u/0/#inbox?compose=new&to=info@theprestigious.net"
-        target="_blank"
-        rel="noopener noreferrer">
+    <a href="mailto:info@theprestigious.net">
         info@theprestigious.net
     </a>
 </p>
@@ -676,9 +671,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(function(){
 
-      alert.style.transition="opacity .8s ease";
+      alert.style.transition = "opacity .8s ease";
 
-      alert.style.opacity="0";
+      alert.style.opacity = "0";
 
       setTimeout(function(){
 
