@@ -15,7 +15,6 @@
         Construction Dashboard | Prestigious Trading & Construction
     </title>
 
-
     <!-- GOOGLE FONTS -->
 
     <link rel="preconnect"
@@ -25,15 +24,13 @@
           href="https://fonts.gstatic.com"
           crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap"
           rel="stylesheet">
-
 
     <!-- FONT AWESOME -->
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 
     <style>
 
@@ -44,10 +41,21 @@
             --construction-accent: #8BAF8B;
             --construction-light: #F4F8F4;
 
-            --text-primary: #24352D;
-            --text-secondary: #687A70;
+            --text-primary: #1E2D27;
+            --text-secondary: #4E6157;
 
-            --border-color: #DCE7DE;
+            --border-color: #D8E3DA;
+
+            --white: #ffffff;
+
+            --success: #16803C;
+            --success-bg: #E9F8EE;
+
+            --danger: #C62828;
+            --danger-bg: #FFF0F0;
+
+            --warning: #B45309;
+            --warning-bg: #FFF7E6;
 
             --font-serif: 'Playfair Display', Georgia, serif;
 
@@ -59,7 +67,6 @@
 
         }
 
-
         * {
 
             box-sizing: border-box;
@@ -70,19 +77,288 @@
 
         }
 
-
         body {
 
             font-family: var(--font-sans);
 
-            background: #F4F8F4;
+            background:
+                linear-gradient(
+                    135deg,
+                    #F4F8F4 0%,
+                    #F8FAF8 50%,
+                    #EEF5EF 100%
+                );
 
             color: var(--text-primary);
 
             min-height: 100vh;
 
+            font-size: 14px;
+
         }
 
+        /* =====================================
+           FLASH MESSAGES
+        ===================================== */
+
+        .flash-container {
+
+            position: fixed;
+
+            top: 92px;
+
+            right: 30px;
+
+            z-index: 5000;
+
+            width: min(460px, calc(100vw - 40px));
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+        }
+
+        .flash-message {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+
+            padding: 17px 20px;
+
+            border-radius: 13px;
+
+            background: #ffffff;
+
+            border: 1px solid;
+
+            box-shadow:
+                0 18px 45px rgba(30, 45, 39, .10),
+                0 4px 12px rgba(30, 45, 39, .05);
+
+            animation:
+                flashSlideIn .45s ease forwards;
+
+            overflow: hidden;
+
+        }
+
+        .flash-message::before {
+
+            content: '';
+
+            position: absolute;
+
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            width: 5px;
+
+        }
+
+        .flash-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            min-width: 38px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+        }
+
+        .flash-content {
+
+            flex: 1;
+
+        }
+
+        .flash-content strong {
+
+            display: block;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 3px;
+
+            color: var(--text-primary);
+
+        }
+
+        .flash-content span {
+
+            display: block;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            color: var(--text-secondary);
+
+            font-weight: 500;
+
+        }
+
+        .flash-close {
+
+            width: 30px;
+
+            height: 30px;
+
+            border: none;
+
+            background: transparent;
+
+            color: #64748B;
+
+            cursor: pointer;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: .2s ease;
+
+        }
+
+        .flash-close:hover {
+
+            background: #F1F5F9;
+
+            color: var(--text-primary);
+
+        }
+
+        .flash-success {
+
+            border-color: #B8E3C5;
+
+        }
+
+        .flash-success::before {
+
+            background: var(--success);
+
+        }
+
+        .flash-success .flash-icon {
+
+            background: var(--success-bg);
+
+            color: var(--success);
+
+        }
+
+        .flash-danger {
+
+            border-color: #F3BABA;
+
+        }
+
+        .flash-danger::before {
+
+            background: var(--danger);
+
+        }
+
+        .flash-danger .flash-icon {
+
+            background: var(--danger-bg);
+
+            color: var(--danger);
+
+        }
+
+        .flash-warning {
+
+            border-color: #F2D49A;
+
+        }
+
+        .flash-warning::before {
+
+            background: var(--warning);
+
+        }
+
+        .flash-warning .flash-icon {
+
+            background: var(--warning-bg);
+
+            color: var(--warning);
+
+        }
+
+        @keyframes flashSlideIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(35px)
+                    translateY(-10px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0)
+                    translateY(0);
+
+            }
+
+        }
+
+        @keyframes flashSlideOut {
+
+            from {
+
+                opacity: 1;
+
+                transform: translateX(0);
+
+            }
+
+            to {
+
+                opacity: 0;
+
+                transform: translateX(40px);
+
+            }
+
+        }
 
         /* =====================================
            SIDEBAR
@@ -100,7 +376,12 @@
 
             height: 100vh;
 
-            background: var(--construction-dark);
+            background:
+                linear-gradient(
+                    180deg,
+                    #234236 0%,
+                    #1b362c 100%
+                );
 
             color: #ffffff;
 
@@ -112,44 +393,64 @@
 
             flex-direction: column;
 
+            box-shadow:
+                5px 0 25px rgba(35,66,54,.10);
+
         }
 
+        .brand {
 
-       .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 5px 10px 28px;
-    border-bottom: 1px solid rgba(255,255,255,.15);
-}
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 5px 10px 28px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.15);
+
+        }
 
         .brand img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    background: #f8faf7;
-    padding: 5px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-}
 
+            width: 48px;
+
+            height: 48px;
+
+            object-fit: contain;
+
+            background: #f8faf7;
+
+            padding: 5px;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.08);
+
+        }
 
         .brand-text h2 {
 
             font-family: var(--font-serif);
 
-            font-size: 17px;
+            font-size: 18px;
 
             line-height: 1.1;
 
-        }
+            color: #ffffff;
 
+            font-weight: 700;
+
+        }
 
         .brand-text span {
 
             display: block;
 
-            color: var(--construction-accent);
+            color: #B0CDB4;
 
             font-size: 8px;
 
@@ -163,7 +464,6 @@
 
         }
 
-
         /* =====================================
            NAVIGATION
         ===================================== */
@@ -176,7 +476,6 @@
 
         }
 
-
         .nav-title {
 
             font-size: 10px;
@@ -185,16 +484,15 @@
 
             letter-spacing: 1.5px;
 
-            color: #789084;
+            color: #A3BDB0;
 
-            font-weight: 700;
+            font-weight: 800;
 
             padding: 0 12px;
 
             margin-bottom: 10px;
 
         }
-
 
         .sidebar-nav a {
 
@@ -212,16 +510,15 @@
 
             text-decoration: none;
 
-            color: #C8D7CE;
+            color: #DDE8E1;
 
-            font-size: 13px;
+            font-size: 14px;
 
             font-weight: 600;
 
             transition: all .25s ease;
 
         }
-
 
         .sidebar-nav a i {
 
@@ -231,28 +528,33 @@
 
         }
 
-
         .sidebar-nav a:hover {
 
             background:
-                rgba(139,175,139,.10);
+                rgba(139,175,139,.15);
 
             color: #ffffff;
 
-        }
+            transform: translateX(2px);
 
+        }
 
         .sidebar-nav a.active {
 
-            background: var(--construction-primary);
+            background:
+                linear-gradient(
+                    135deg,
+                    #3F6B57,
+                    #4D7C64
+                );
 
             color: #ffffff;
 
             box-shadow:
-                inset 3px 0 0 var(--construction-accent);
+                inset 3px 0 0 #B0CDB4,
+                0 5px 15px rgba(0,0,0,.10);
 
         }
-
 
         .logout {
 
@@ -263,13 +565,29 @@
 
         }
 
-
         .logout a {
 
-            color: #C8D7CE;
+            color: #DDE8E1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: .25s ease;
 
         }
-
 
         .logout a:hover {
 
@@ -278,7 +596,6 @@
             background: #6B3535;
 
         }
-
 
         /* =====================================
            MAIN
@@ -292,7 +609,6 @@
 
         }
 
-
         /* =====================================
            TOPBAR
         ===================================== */
@@ -301,7 +617,7 @@
 
             height: 78px;
 
-            background: #ffffff;
+            background: rgba(255,255,255,.96);
 
             border-bottom:
                 1px solid var(--border-color);
@@ -314,30 +630,39 @@
 
             padding: 0 35px;
 
-        }
+            position: sticky;
 
+            top: 0;
+
+            z-index: 900;
+
+            backdrop-filter: blur(12px);
+
+        }
 
         .topbar-title h1 {
 
             font-family: var(--font-serif);
 
-            font-size: 23px;
+            font-size: 25px;
 
-            color: var(--construction-primary);
+            color: var(--text-primary);
+
+            font-weight: 800;
 
         }
-
 
         .topbar-title p {
 
             color: var(--text-secondary);
 
-            font-size: 12px;
+            font-size: 13px;
 
-            margin-top: 2px;
+            margin-top: 3px;
+
+            font-weight: 500;
 
         }
-
 
         .admin-user {
 
@@ -345,20 +670,24 @@
 
             align-items: center;
 
-            gap: 10px;
+            gap: 11px;
 
         }
 
-
         .admin-avatar {
 
-            width: 38px;
+            width: 42px;
 
-            height: 38px;
+            height: 42px;
 
             border-radius: 50%;
 
-            background: var(--construction-primary);
+            background:
+                linear-gradient(
+                    135deg,
+                    #3F6B57,
+                    #5A896D
+                );
 
             color: #ffffff;
 
@@ -368,17 +697,20 @@
 
             justify-content: center;
 
-        }
+            box-shadow:
+                0 5px 14px rgba(63,107,87,.22);
 
+        }
 
         .admin-user strong {
 
-            font-size: 13px;
+            font-size: 14px;
 
-            color: var(--construction-primary);
+            color: var(--text-primary);
+
+            font-weight: 700;
 
         }
-
 
         .admin-user span {
 
@@ -388,8 +720,11 @@
 
             color: var(--text-secondary);
 
-        }
+            margin-top: 2px;
 
+            font-weight: 600;
+
+        }
 
         /* =====================================
            CONTENT
@@ -399,23 +734,29 @@
 
             padding: 35px;
 
+            max-width: 1600px;
+
         }
 
+        /* =====================================
+           WELCOME
+        ===================================== */
 
         .welcome {
 
             background:
                 linear-gradient(
                     135deg,
-                    var(--construction-primary),
-                    #527864
+                    #3F6B57 0%,
+                    #4A7862 60%,
+                    #5B866E 100%
                 );
 
             color: #ffffff;
 
-            border-radius: 14px;
+            border-radius: 16px;
 
-            padding: 28px 30px;
+            padding: 30px 32px;
 
             margin-bottom: 28px;
 
@@ -423,8 +764,31 @@
 
             overflow: hidden;
 
+            box-shadow:
+                0 12px 30px rgba(63,107,87,.16);
+
         }
 
+        .welcome::before {
+
+            content: '';
+
+            position: absolute;
+
+            width: 280px;
+
+            height: 280px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(255,255,255,.13);
+
+            right: -90px;
+
+            top: -130px;
+
+        }
 
         .welcome::after {
 
@@ -432,41 +796,50 @@
 
             position: absolute;
 
-            width: 220px;
+            width: 150px;
 
-            height: 220px;
+            height: 150px;
 
             border-radius: 50%;
 
             border: 1px solid
-                rgba(255,255,255,.12);
+                rgba(255,255,255,.09);
 
-            right: -70px;
+            right: 80px;
 
-            top: -100px;
+            bottom: -110px;
 
         }
-
 
         .welcome h2 {
 
             font-family: var(--font-serif);
 
-            font-size: 25px;
+            font-size: 27px;
 
-            margin-bottom: 6px;
+            margin-bottom: 7px;
+
+            position: relative;
+
+            z-index: 2;
+
+            color: #ffffff;
 
         }
-
 
         .welcome p {
 
-            color: #D9E7DE;
+            color: #E8F4EB;
 
-            font-size: 13px;
+            font-size: 14px;
+
+            position: relative;
+
+            z-index: 2;
+
+            font-weight: 500;
 
         }
-
 
         /* =====================================
            STATISTICS
@@ -485,16 +858,15 @@
 
         }
 
-
         .stat-card {
 
             background: #ffffff;
 
             border: 1px solid var(--border-color);
 
-            border-radius: 12px;
+            border-radius: 14px;
 
-            padding: 22px;
+            padding: 23px;
 
             display: flex;
 
@@ -504,19 +876,22 @@
 
             transition: all .25s ease;
 
-        }
+            box-shadow:
+                0 5px 18px rgba(30,45,39,.04);
 
+        }
 
         .stat-card:hover {
 
-            transform: translateY(-3px);
+            transform: translateY(-4px);
 
             box-shadow:
-                0 10px 25px
-                rgba(35,66,54,.08);
+                0 14px 30px
+                rgba(35,66,54,.10);
+
+            border-color: #C2D6C7;
 
         }
-
 
         .stat-info span {
 
@@ -524,31 +899,33 @@
 
             color: var(--text-secondary);
 
-            font-size: 12px;
+            font-size: 13px;
 
-            font-weight: 600;
+            font-weight: 700;
 
             margin-bottom: 8px;
 
         }
 
-
         .stat-info strong {
 
-            font-size: 27px;
+            font-size: 30px;
 
-            color: var(--construction-primary);
+            color: var(--text-primary);
+
+            font-weight: 850;
+
+            line-height: 1;
 
         }
 
-
         .stat-icon {
 
-            width: 48px;
+            width: 52px;
 
-            height: 48px;
+            height: 52px;
 
-            border-radius: 10px;
+            border-radius: 12px;
 
             display: flex;
 
@@ -556,14 +933,18 @@
 
             justify-content: center;
 
-            background: #EDF5EE;
+            background:
+                linear-gradient(
+                    135deg,
+                    #EDF5EE,
+                    #E3F0E6
+                );
 
             color: var(--construction-primary);
 
-            font-size: 19px;
+            font-size: 20px;
 
         }
-
 
         /* =====================================
            CARDS
@@ -580,23 +961,24 @@
 
         }
 
-
         .card {
 
             background: #ffffff;
 
             border: 1px solid var(--border-color);
 
-            border-radius: 12px;
+            border-radius: 14px;
 
             overflow: hidden;
 
-        }
+            box-shadow:
+                0 5px 18px rgba(30,45,39,.04);
 
+        }
 
         .card-header {
 
-            padding: 20px 22px;
+            padding: 21px 23px;
 
             border-bottom:
                 1px solid var(--border-color);
@@ -607,19 +989,24 @@
 
             align-items: center;
 
-        }
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff,
+                    #FBFDFC
+                );
 
+        }
 
         .card-header h3 {
 
-            font-size: 15px;
+            font-size: 16px;
 
-            color: var(--construction-primary);
+            color: var(--text-primary);
 
-            font-weight: 700;
+            font-weight: 750;
 
         }
-
 
         .card-header a {
 
@@ -631,12 +1018,19 @@
 
             font-weight: 700;
 
+            transition: .2s ease;
+
         }
 
+        .card-header a:hover {
+
+            color: var(--construction-dark);
+
+        }
 
         .empty-state {
 
-            padding: 50px 20px;
+            padding: 55px 20px;
 
             text-align: center;
 
@@ -644,24 +1038,171 @@
 
         }
 
-
         .empty-state i {
 
-            font-size: 35px;
+            font-size: 38px;
 
-            color: #C5D4C9;
+            color: #A6C2AC;
 
-            margin-bottom: 12px;
+            margin-bottom: 13px;
 
         }
-
 
         .empty-state p {
 
             font-size: 13px;
 
+            font-weight: 500;
+
+            color: var(--text-secondary);
+
         }
 
+        /* =====================================
+           MESSAGE ITEMS
+        ===================================== */
+
+        .message-item {
+
+            padding: 17px 23px;
+
+            border-bottom:
+                1px solid #E2E8E4;
+
+            transition: .2s ease;
+
+        }
+
+        .message-item:hover {
+
+            background: #FAFCFA;
+
+        }
+
+        .message-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+        .message-name {
+
+            font-size: 14px;
+
+            color: var(--text-primary);
+
+            font-weight: 750;
+
+        }
+
+        .message-subject {
+
+            margin-top: 5px;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+        }
+
+        .new-badge {
+
+            background: #E7F5EA;
+
+            color: #24583C;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: .4px;
+
+            white-space: nowrap;
+
+            border: 1px solid #c2e5cc;
+
+        }
+
+        /* =====================================
+           QUICK ACTIONS
+        ===================================== */
+
+        .quick-actions {
+
+            padding: 22px;
+
+        }
+
+        .quick-action {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            background: #F7FAF7;
+
+            border: 1px solid #DCE7DE;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: var(--text-primary);
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: all .22s ease;
+
+        }
+
+        .quick-action:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+        .quick-action i {
+
+            color: #3F6B57;
+
+            width: 20px;
+
+            text-align: center;
+
+        }
+
+        .quick-action:hover {
+
+            background: #EDF5EE;
+
+            border-color: #BFD3C4;
+
+            transform: translateX(3px);
+
+            box-shadow:
+                0 5px 15px rgba(63,107,87,.07);
+
+            color: var(--construction-dark);
+
+        }
 
         /* =====================================
            RESPONSIVE
@@ -684,7 +1225,6 @@
 
         }
 
-
         @media (max-width: 768px) {
 
             .sidebar {
@@ -695,7 +1235,6 @@
 
             }
 
-
             .brand {
 
                 justify-content: center;
@@ -704,13 +1243,11 @@
 
             }
 
-
             .brand-text {
 
                 display: none;
 
             }
-
 
             .sidebar-nav a {
 
@@ -720,13 +1257,11 @@
 
             }
 
-
             .sidebar-nav a span {
 
                 display: none;
 
             }
-
 
             .nav-title {
 
@@ -734,20 +1269,19 @@
 
             }
 
-
             .main {
 
                 margin-left: 70px;
 
             }
 
-
             .topbar {
 
                 padding: 0 20px;
 
-            }
+                height: 72px;
 
+            }
 
             .admin-user > div:last-child {
 
@@ -755,15 +1289,24 @@
 
             }
 
-
             .content {
 
                 padding: 22px 16px;
 
             }
 
-        }
+            .flash-container {
 
+                top: 82px;
+
+                right: 15px;
+
+                width:
+                    calc(100vw - 30px);
+
+            }
+
+        }
 
         @media (max-width: 520px) {
 
@@ -773,24 +1316,39 @@
 
             }
 
-
             .topbar-title h1 {
 
-                font-size: 19px;
+                font-size: 20px;
 
             }
 
+            .topbar-title p {
+
+                font-size: 11px;
+
+            }
 
             .welcome {
 
-                padding: 23px;
+                padding: 24px;
 
             }
 
-
             .welcome h2 {
 
-                font-size: 21px;
+                font-size: 22px;
+
+            }
+
+            .welcome p {
+
+                font-size: 13px;
+
+            }
+
+            .flash-message {
+
+                padding: 15px;
 
             }
 
@@ -800,16 +1358,94 @@
 
 </head>
 
-
 <body>
 
+<!-- ==========================================
+     FLASH MESSAGES
+=========================================== -->
+
+<div class="flash-container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash-message flash-{{ category }}">
+
+                    <div class="flash-icon">
+
+                        {% if category == "success" %}
+
+                            <i class="fas fa-check"></i>
+
+                        {% elif category == "danger" %}
+
+                            <i class="fas fa-exclamation"></i>
+
+                        {% elif category == "warning" %}
+
+                            <i class="fas fa-triangle-exclamation"></i>
+
+                        {% else %}
+
+                            <i class="fas fa-info"></i>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="flash-content">
+
+                        {% if category == "success" %}
+
+                            <strong>Success</strong>
+
+                        {% elif category == "danger" %}
+
+                            <strong>Action Required</strong>
+
+                        {% elif category == "warning" %}
+
+                            <strong>Warning</strong>
+
+                        {% else %}
+
+                            <strong>Information</strong>
+
+                        {% endif %}
+
+                        <span>
+                            {{ message }}
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="flash-close"
+                        onclick="this.closest('.flash-message').remove()">
+
+                        <i class="fas fa-times"></i>
+
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
 
 <!-- ==========================================
      SIDEBAR
 =========================================== -->
 
 <aside class="sidebar">
-
 
     <div class="brand">
 
@@ -832,14 +1468,11 @@
 
     </div>
 
-
-
     <nav class="sidebar-nav">
 
         <div class="nav-title">
             Construction
         </div>
-
 
         <a href="{{ url_for('admin_dashboard') }}"
            class="active">
@@ -852,7 +1485,6 @@
 
         </a>
 
-
         <a href="{{ url_for('projects') }}">
 
             <i class="fas fa-building"></i>
@@ -862,8 +1494,6 @@
             </span>
 
         </a>
-
-
 
         <a href="{{ url_for('add_project') }}">
 
@@ -875,23 +1505,15 @@
 
         </a>
 
-
-
-
         <a href="{{ url_for('manage_construction_projects') }}">
 
-                <i class="fas fa-screwdriver-wrench"></i>
+            <i class="fas fa-screwdriver-wrench"></i>
 
-                <span>
-                    Project Maintenance
-                </span>
+            <span>
+                Project Maintenance
+            </span>
 
         </a>
-
-
-
-
-
 
         <a href="{{ url_for('construction_contact_messages') }}">
 
@@ -903,8 +1525,6 @@
 
         </a>
 
-
-
         <a href="{{ url_for('construction_vacancies') }}">
 
             <i class="fas fa-briefcase"></i>
@@ -915,48 +1535,35 @@
 
         </a>
 
-
-
-
-
         <a href="{{ url_for('construction_applications') }}">
+
             <i class="fas fa-user-tie"></i>
-            <span>Job Applications</span>
+
+            <span>
+                Job Applications
+            </span>
+
         </a>
 
+        <a href="{{ url_for('construction_email_settings') }}">
 
+            <i class="fas fa-envelope-open-text"></i>
 
+            <span>
+                Email Settings
+            </span>
 
-
-            <a href="{{ url_for('construction_email_settings') }}">
-
-     <i class="fas fa-envelope-open-text"></i>
-
-    <span>
-        Email Settings
-    </span>
-
-</a>
-
-
-
-
-
+        </a>
 
         <a href="{{ url_for('construction_qids') }}">
 
-    <i class="fas fa-id-card"></i>
+            <i class="fas fa-id-card"></i>
 
-    <span>
-        Staff QID Management
-    </span>
+            <span>
+                Staff QID Management
+            </span>
 
         </a>
-
-
-
-
-
 
         <a href="{{ url_for('home') }}">
 
@@ -969,8 +1576,6 @@
         </a>
 
     </nav>
-
-
 
     <div class="logout">
 
@@ -986,10 +1591,7 @@
 
     </div>
 
-
 </aside>
-
-
 
 <!-- ==========================================
      MAIN
@@ -997,11 +1599,9 @@
 
 <div class="main">
 
-
     <!-- TOPBAR -->
 
     <header class="topbar">
-
 
         <div class="topbar-title">
 
@@ -1014,8 +1614,6 @@
             </p>
 
         </div>
-
-
 
         <div class="admin-user">
 
@@ -1039,38 +1637,35 @@
 
         </div>
 
-
     </header>
-
-
 
     <!-- CONTENT -->
 
     <main class="content">
-
 
         <!-- WELCOME -->
 
         <section class="welcome">
 
             <h2>
+
                 Welcome back,
                 {{ session.get("admin_name", "Administrator") }}
+
             </h2>
 
             <p>
+
                 Manage your construction website,
                 projects and customer enquiries from one place.
+
             </p>
 
         </section>
 
-
-
         <!-- STATISTICS -->
 
         <section class="stats-grid">
-
 
             <!-- PROJECTS -->
 
@@ -1096,8 +1691,6 @@
 
             </div>
 
-
-
             <!-- CONTACT MESSAGES -->
 
             <div class="stat-card">
@@ -1121,8 +1714,6 @@
                 </div>
 
             </div>
-
-
 
             <!-- UNREAD -->
 
@@ -1148,8 +1739,6 @@
 
             </div>
 
-
-
             <!-- ADMIN -->
 
             <div class="stat-card">
@@ -1160,7 +1749,7 @@
                         Admin Status
                     </span>
 
-                    <strong style="font-size:18px;">
+                    <strong style="font-size:19px;">
                         Active
                     </strong>
 
@@ -1174,20 +1763,15 @@
 
             </div>
 
-
         </section>
-
-
 
         <!-- DASHBOARD LOWER SECTION -->
 
         <section class="dashboard-grid">
 
-
             <!-- RECENT MESSAGES -->
 
             <div class="card">
-
 
                 <div class="card-header">
 
@@ -1203,44 +1787,23 @@
 
                 </div>
 
-
-
                 {% if recent_messages %}
-
 
                     {% for message in recent_messages %}
 
-                        <div style="
-                            padding:16px 22px;
-                            border-bottom:1px solid #DCE7DE;
-                        ">
+                        <div class="message-item">
 
-                            <div style="
-                                display:flex;
-                                justify-content:space-between;
-                                gap:15px;
-                            ">
+                            <div class="message-top">
 
-                                <strong style="
-                                    font-size:13px;
-                                    color:#263238;
-                                ">
+                                <strong class="message-name">
 
                                     {{ message.name }}
 
                                 </strong>
 
-
                                 {% if message.is_read == 0 %}
 
-                                    <span style="
-                                        background:#E7F1E8;
-                                        color:#3F6B57;
-                                        padding:4px 8px;
-                                        border-radius:20px;
-                                        font-size:10px;
-                                        font-weight:700;
-                                    ">
+                                    <span class="new-badge">
 
                                         NEW
 
@@ -1250,12 +1813,7 @@
 
                             </div>
 
-
-                            <p style="
-                                margin-top:5px;
-                                color:#687A70;
-                                font-size:12px;
-                            ">
+                            <p class="message-subject">
 
                                 {{ message.subject or "Website Enquiry" }}
 
@@ -1265,9 +1823,7 @@
 
                     {% endfor %}
 
-
                 {% else %}
-
 
                     <div class="empty-state">
 
@@ -1279,18 +1835,13 @@
 
                     </div>
 
-
                 {% endif %}
 
-
             </div>
-
-
 
             <!-- QUICK ACTIONS -->
 
             <div class="card">
-
 
                 <div class="card-header">
 
@@ -1300,129 +1851,90 @@
 
                 </div>
 
-
-
-                <div style="padding:22px;">
-
-
-
-
+                <div class="quick-actions">
 
                     <a href="{{ url_for('add_project') }}"
-                       style="
-                       display:flex;
-                       align-items:center;
-                       gap:12px;
-                       padding:14px;
-                       margin-bottom:10px;
-                       background:#F4F8F4;
-                       border:1px solid #DCE7DE;
-                       border-radius:9px;
-                       text-decoration:none;
-                       color:#3F6B57;
-                       font-size:13px;
-                       font-weight:700;
-                       ">
+                       class="quick-action">
 
-                        <i class="fas fa-plus-circle"
-                           style="color:#3F6B57;"></i>
+                        <i class="fas fa-plus-circle"></i>
 
                         Add Project
 
                     </a>
 
-
-
-
-
-
                     <a href="{{ url_for('projects') }}"
-                       style="
-                       display:flex;
-                       align-items:center;
-                       gap:12px;
-                       padding:14px;
-                       margin-bottom:10px;
-                       background:#F4F8F4;
-                       border:1px solid #DCE7DE;
-                       border-radius:9px;
-                       text-decoration:none;
-                       color:#3F6B57;
-                       font-size:13px;
-                       font-weight:700;
-                       ">
+                       class="quick-action">
 
-                        <i class="fas fa-building"
-                           style="color:#3F6B57;"></i>
+                        <i class="fas fa-building"></i>
 
                         View Projects
 
                     </a>
 
-
-
                     <a href="{{ url_for('construction_contact_messages') }}"
-                       style="
-                       display:flex;
-                       align-items:center;
-                       gap:12px;
-                       padding:14px;
-                       margin-bottom:10px;
-                       background:#F4F8F4;
-                       border:1px solid #DCE7DE;
-                       border-radius:9px;
-                       text-decoration:none;
-                       color:#3F6B57;
-                       font-size:13px;
-                       font-weight:700;
-                       ">
+                       class="quick-action">
 
-                        <i class="fas fa-envelope"
-                           style="color:#3F6B57;"></i>
+                        <i class="fas fa-envelope"></i>
 
                         Contact Messages
 
                     </a>
 
-
-
                     <a href="{{ url_for('home') }}"
-                       style="
-                       display:flex;
-                       align-items:center;
-                       gap:12px;
-                       padding:14px;
-                       background:#F4F8F4;
-                       border:1px solid #DCE7DE;
-                       border-radius:9px;
-                       text-decoration:none;
-                       color:#3F6B57;
-                       font-size:13px;
-                       font-weight:700;
-                       ">
+                       class="quick-action">
 
-                        <i class="fas fa-globe"
-                           style="color:#3F6B57;"></i>
+                        <i class="fas fa-globe"></i>
 
                         Visit Website
 
                     </a>
 
-
                 </div>
-
 
             </div>
 
-
         </section>
-
 
     </main>
 
-
 </div>
 
+<!-- ==========================================
+     FLASH MESSAGE AUTO DISMISS
+=========================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const messages =
+            document.querySelectorAll(
+                ".flash-message"
+            );
+
+        messages.forEach(function(message) {
+
+            setTimeout(function() {
+
+                message.style.animation =
+                    "flashSlideOut .45s ease forwards";
+
+                setTimeout(function() {
+
+                    message.remove();
+
+                }, 450);
+
+            }, 7000);
+
+        });
+
+    }
+);
+
+</script>
 
 </body>
 
