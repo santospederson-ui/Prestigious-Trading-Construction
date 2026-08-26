@@ -3312,13 +3312,20 @@ def add_project():
                 # CLOUDINARY UPLOAD
                 # ==========================
 
-                result = (
-                    cloudinary.uploader.upload(
-                        image,
-                        folder=
-                        "prestigious_construction/projects"
-                    )
-                )
+                result = cloudinary.uploader.upload(
+                image,
+                folder="prestigious_construction/projects",
+                resource_type="image",
+                transformation=[
+                    {
+                        "width": 1600,
+                        "height": 1200,
+                        "crop": "limit",
+                        "quality": "auto",
+                        "fetch_format": "auto"
+                    }
+                ]
+            )
 
 
                 image_url = result[
