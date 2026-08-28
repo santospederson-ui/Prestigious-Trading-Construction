@@ -25,12 +25,19 @@ Account Dashboard | Procurement & Cash Control
 
   --pch-blue: #0284c7;
   --pch-blue-soft: #f0f9ff;
+
   --pch-green: #16a34a;
   --pch-green-soft: #f0fdf4;
+
   --pch-amber: #d97706;
   --pch-amber-soft: #fffbeb;
+
   --pch-purple: #7c3aed;
   --pch-purple-soft: #f5f3ff;
+
+  --pch-red: #dc2626;
+  --pch-red-soft: #fef2f2;
+
   --pch-maroon: #8a1538;
 
   --pch-radius: 16px;
@@ -54,7 +61,7 @@ Account Dashboard | Procurement & Cash Control
 }
 
 /* =========================================================
-   EXECUTIVE HEADER (34px TITLE)
+   EXECUTIVE HEADER
 ========================================================= */
 .account-header {
   display: flex;
@@ -97,7 +104,9 @@ Account Dashboard | Procurement & Cash Control
   font-weight: 500;
 }
 
-/* USER PROFILE BADGE */
+/* =========================================================
+   USER PROFILE
+========================================================= */
 .account-user {
   display: flex;
   align-items: center;
@@ -116,7 +125,11 @@ Account Dashboard | Procurement & Cash Control
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--pch-forest) 0%, var(--pch-forest-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--pch-forest) 0%,
+    var(--pch-forest-dark) 100%
+  );
   color: #ffffff;
   font-weight: 800;
   font-size: 16px;
@@ -229,6 +242,7 @@ Account Dashboard | Procurement & Cash Control
   background: var(--pch-green-soft);
   color: var(--pch-green);
 }
+
 .card-green .account-card-number {
   color: var(--pch-green);
 }
@@ -237,6 +251,7 @@ Account Dashboard | Procurement & Cash Control
   background: var(--pch-blue-soft);
   color: var(--pch-blue);
 }
+
 .card-blue .account-card-number {
   color: var(--pch-blue);
 }
@@ -245,6 +260,7 @@ Account Dashboard | Procurement & Cash Control
   background: var(--pch-amber-soft);
   color: var(--pch-amber);
 }
+
 .card-amber .account-card-number {
   color: var(--pch-amber);
 }
@@ -253,12 +269,13 @@ Account Dashboard | Procurement & Cash Control
   background: var(--pch-purple-soft);
   color: var(--pch-purple);
 }
+
 .card-purple .account-card-number {
   color: var(--pch-purple);
 }
 
 /* =========================================================
-   SECTIONS, TOOLBAR & SEARCH
+   SECTIONS
 ========================================================= */
 .account-section {
   background: var(--pch-surface);
@@ -322,7 +339,9 @@ Account Dashboard | Procurement & Cash Control
   font-weight: 850;
 }
 
-/* GOOGLE-STYLE LIVE SEARCH BAR */
+/* =========================================================
+   SEARCH TOOLBAR
+========================================================= */
 .table-toolbar {
   padding: 14px 26px;
   background: #f8fafc;
@@ -369,7 +388,7 @@ Account Dashboard | Procurement & Cash Control
 }
 
 /* =========================================================
-   TABLE & HORIZONTAL SEPARATING BORDERS
+   TABLE
 ========================================================= */
 .table-wrapper {
   width: 100%;
@@ -378,7 +397,7 @@ Account Dashboard | Procurement & Cash Control
 
 .account-table {
   width: 100%;
-  min-width: 1100px;
+  min-width: 1250px;
   border-collapse: collapse;
 }
 
@@ -398,7 +417,7 @@ Account Dashboard | Procurement & Cash Control
 .account-table td {
   padding: 16px 20px;
   font-size: 13.5px;
-  border-bottom: 1px solid #edf2f7; /* HORIZONTAL SEPARATING LINE */
+  border-bottom: 1px solid #edf2f7;
   vertical-align: middle;
 }
 
@@ -417,7 +436,9 @@ Account Dashboard | Procurement & Cash Control
   font-size: 12px;
 }
 
-/* TYPOGRAPHY */
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
 .primary-text {
   font-weight: 800;
   color: var(--pch-text-dark);
@@ -463,7 +484,7 @@ Account Dashboard | Procurement & Cash Control
 }
 
 /* =========================================================
-   BUTTONS & ACTIONS
+   DOCUMENT BUTTON
 ========================================================= */
 .btn-document {
   display: inline-flex;
@@ -486,6 +507,9 @@ Account Dashboard | Procurement & Cash Control
   color: #0369a1;
 }
 
+/* =========================================================
+   RELEASE BUTTON
+========================================================= */
 .btn-release {
   display: inline-flex;
   align-items: center;
@@ -523,7 +547,239 @@ Account Dashboard | Procurement & Cash Control
 }
 
 /* =========================================================
-   PAGINATION BAR
+   RELEASE MODAL
+========================================================= */
+.release-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.release-modal.active {
+  display: flex;
+}
+
+.release-modal-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid var(--pch-border);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  animation: releaseModalIn 0.2s ease;
+}
+
+@keyframes releaseModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.release-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--pch-border);
+}
+
+.release-modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.release-modal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pch-forest-soft);
+  color: var(--pch-forest);
+  font-size: 18px;
+}
+
+.release-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 850;
+  color: var(--pch-text-dark);
+}
+
+.release-modal-header p {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--pch-text-muted);
+  font-weight: 500;
+}
+
+.release-modal-close {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.release-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.release-modal-body {
+  padding: 24px;
+}
+
+.release-request-summary {
+  background: #f8fafc;
+  border: 1px solid var(--pch-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.release-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.release-summary-row span:first-child {
+  color: var(--pch-text-muted);
+  font-weight: 600;
+}
+
+.release-summary-row span:last-child {
+  color: var(--pch-text-dark);
+  font-weight: 800;
+  text-align: right;
+}
+
+.release-form-group {
+  margin-bottom: 18px;
+}
+
+.release-form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--pch-text-dark);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.release-required {
+  color: #dc2626;
+}
+
+.release-form-row {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 12px;
+}
+
+.release-form-control {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--pch-border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  background: #f8fafc;
+  color: var(--pch-text-dark);
+  font-size: 13.5px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.release-form-control:focus {
+  background: #ffffff;
+  border-color: var(--pch-forest);
+  box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
+}
+
+.release-form-control::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+textarea.release-form-control {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.release-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 24px;
+  background: #f8fafc;
+  border-top: 1px solid var(--pch-border);
+}
+
+.release-cancel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  border: 1px solid var(--pch-border);
+  background: #ffffff;
+  color: var(--pch-text-body);
+  font-size: 12.5px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.release-cancel-button:hover {
+  background: #f1f5f9;
+}
+
+.release-confirm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 9px;
+  background: var(--pch-forest);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30, 75, 56, 0.2);
+}
+
+.release-confirm-button:hover {
+  background: var(--pch-forest-dark);
+}
+
+/* =========================================================
+   PAGINATION
 ========================================================= */
 .pagination-bar {
   display: flex;
@@ -621,44 +877,78 @@ Account Dashboard | Procurement & Cash Control
    RESPONSIVE
 ========================================================= */
 @media (max-width: 1100px) {
+
   .account-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
 }
 
 @media (max-width: 768px) {
+
   .account-page {
     padding: 22px 18px 45px;
   }
+
   .account-header {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .account-header-left h1 {
     font-size: 28px;
   }
+
   .account-user {
     width: 100%;
     justify-content: space-between;
   }
+
   .account-summary {
     grid-template-columns: 1fr;
     gap: 14px;
   }
+
   .account-section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
+
   .table-toolbar {
     flex-direction: column;
     align-items: stretch;
   }
+
   .live-search-box {
     max-width: 100%;
   }
+
+  .release-modal {
+    padding: 12px;
+  }
+
+  .release-modal-card {
+    max-height: 94vh;
+    overflow-y: auto;
+  }
+
+  .release-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .release-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .release-cancel-button,
+  .release-confirm-button {
+    width: 100%;
+  }
+
 }
 </style>
+
 
 <div class="account-page">
     <div class="account-container">
@@ -667,37 +957,61 @@ Account Dashboard | Procurement & Cash Control
              HEADER
              ===================================================== -->
         <div class="account-header">
+
             <div class="account-header-left">
+
                 <div class="account-eyebrow">
                     <i class="fas fa-shield-halved"></i>
                     <span>Financial Operations</span>
                 </div>
+
                 <h1>Account Dashboard</h1>
-                <p>Approved procurement documents, vendor invoices, and cash release control center.</p>
+
+                <p>
+                    Approved procurement documents, vendor invoices,
+                    and cash release control center.
+                </p>
+
             </div>
 
+
             <div class="account-user">
+
                 <div class="account-avatar">
                     {{ account_user.fullname[:1] | upper if account_user.fullname else "A" }}
                 </div>
+
                 <div>
+
                     <div class="account-user-name">
                         {{ account_user.fullname }}
                     </div>
+
                     <div class="account-user-role">
+
                         {{ account_user.role | title }}
+
                         {% if account_user.username %}
                             · {{ account_user.username }}
                         {% endif %}
+
                     </div>
+
                 </div>
 
-                <a href="{{ url_for('admin_logout') }}" class="account-logout">
+
+                <a
+                    href="{{ url_for('admin_logout') }}"
+                    class="account-logout"
+                >
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
+
             </div>
+
         </div>
+
 
         <!-- =====================================================
              SUMMARY CARDS
@@ -706,89 +1020,169 @@ Account Dashboard | Procurement & Cash Control
 
             <!-- APPROVED MATERIAL REQUESTS -->
             <div class="account-card card-green">
+
                 <div class="account-card-top">
-                    <div class="account-card-label">Approved Requests</div>
+
+                    <div class="account-card-label">
+                        Approved Requests
+                    </div>
+
                     <div class="account-card-icon">
                         <i class="fas fa-boxes-stacked"></i>
                     </div>
+
                 </div>
+
                 <div class="account-card-number">
                     {{ approved_material_count or 0 }}
                 </div>
-                <div class="account-card-subtext">Material requisitions cleared</div>
+
+                <div class="account-card-subtext">
+                    Material requisitions cleared
+                </div>
+
             </div>
+
 
             <!-- APPROVED QUOTATIONS -->
             <div class="account-card card-blue">
+
                 <div class="account-card-top">
-                    <div class="account-card-label">Approved Quotations</div>
+
+                    <div class="account-card-label">
+                        Approved Quotations
+                    </div>
+
                     <div class="account-card-icon">
                         <i class="fas fa-file-invoice-dollar"></i>
                     </div>
+
                 </div>
+
                 <div class="account-card-number">
                     {{ approved_quotation_count or 0 }}
                 </div>
-                <div class="account-card-subtext">Supplier quotations reviewed</div>
+
+                <div class="account-card-subtext">
+                    Supplier quotations reviewed
+                </div>
+
             </div>
+
 
             <!-- CASH AWAITING RELEASE -->
             <div class="account-card card-amber">
+
                 <div class="account-card-top">
-                    <div class="account-card-label">Awaiting Release</div>
+
+                    <div class="account-card-label">
+                        Awaiting Release
+                    </div>
+
                     <div class="account-card-icon">
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
+
                 </div>
+
                 <div class="account-card-number">
                     {{ cash_pending_count or 0 }}
                 </div>
+
                 {% if pending_cash_amount %}
-                    <div class="account-card-subtext" style="color: var(--pch-amber);">
+
+                    <div
+                        class="account-card-subtext"
+                        style="color: var(--pch-amber);"
+                    >
                         QAR {{ "{:,.2f}".format(pending_cash_amount) }}
                     </div>
+
                 {% else %}
-                    <div class="account-card-subtext">Pending cash approvals</div>
+
+                    <div class="account-card-subtext">
+                        Pending cash approvals
+                    </div>
+
                 {% endif %}
+
             </div>
+
 
             <!-- CASH RELEASED -->
             <div class="account-card card-purple">
+
                 <div class="account-card-top">
-                    <div class="account-card-label">Cash Released</div>
+
+                    <div class="account-card-label">
+                        Cash Released
+                    </div>
+
                     <div class="account-card-icon">
                         <i class="fas fa-circle-check"></i>
                     </div>
+
                 </div>
+
                 <div class="account-card-number">
                     {{ cash_released_count or 0 }}
                 </div>
-                <div class="account-card-subtext">Disbursements finalized</div>
+
+                <div class="account-card-subtext">
+                    {{ quotation_cash_released_count or 0 }}
+                    quotation{{ '' if (quotation_cash_released_count or 0) == 1 else 's' }}
+                    ·
+                    {{ material_cash_released_count or 0 }}
+                    material request{{ '' if (material_cash_released_count or 0) == 1 else 's' }}
+                </div>
+
             </div>
 
         </div>
 
+
         <!-- =====================================================
-             APPROVED MATERIAL REQUESTS TABLE
+             APPROVED MATERIAL REQUESTS
              ===================================================== -->
         <div class="account-section">
+
             <div class="account-section-header">
+
                 <div class="account-section-title">
-                    <h2>Approved Material Requests</h2>
-                    <p>Approved purchase requests and original requisition documents from site teams.</p>
+
+                    <h2>
+                        Approved Material Requests
+                    </h2>
+
+                    <p>
+                        Approved purchase requests and original
+                        requisition documents from site teams.
+                    </p>
+
                 </div>
+
                 <div class="section-header-right">
-                    <div class="section-count" id="materialReqTotalCount">
+
+                    <div
+                        class="section-count"
+                        id="materialReqTotalCount"
+                    >
                         {{ approved_material_requests | length }}
                     </div>
+
                 </div>
+
             </div>
 
+
             {% if approved_material_requests %}
-                <!-- GOOGLE LIVE SEARCH TOOLBAR -->
+
                 <div class="table-toolbar">
+
                     <div class="live-search-box">
+
                         <i class="fas fa-search"></i>
+
                         <input
                             type="text"
                             id="materialSearchInput"
@@ -796,118 +1190,435 @@ Account Dashboard | Procurement & Cash Control
                             placeholder="Live search requests, projects, engineers..."
                             autocomplete="off"
                         >
+
                     </div>
-                    <div class="pagination-info" id="materialPaginationInfo">
+
+                    <div
+                        class="pagination-info"
+                        id="materialPaginationInfo"
+                    >
                         Showing 0 to 0 of 0 entries
                     </div>
+
                 </div>
 
+
                 <div class="table-wrapper">
-                    <table class="account-table" id="materialTable">
+
+                    <table
+                        class="account-table"
+                        id="materialTable"
+                    >
+
                         <thead>
+
                             <tr>
-                                <th class="sn-col">S/N</th>
-                                <th>Request Number</th>
-                                <th>Project Name</th>
-                                <th>Requested By</th>
-                                <th>Approved Date</th>
-                                <th>Approved By</th>
-                                <th>Original Document</th>
+
+                                <th class="sn-col">
+                                    S/N
+                                </th>
+
+                                <th>
+                                    Request Number
+                                </th>
+
+                                <th>
+                                    Project Name
+                                </th>
+
+                                <th>
+                                    Requested By
+                                </th>
+
+                                <th>
+                                    Approved Date
+                                </th>
+
+                                <th>
+                                    Approved By
+                                </th>
+
+                                <th>
+                                    Original Document
+                                </th>
+
+                                <th>
+                                    Cash Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
                             </tr>
+
                         </thead>
+
+
                         <tbody id="materialTableBody">
+
                         {% for request in approved_material_requests %}
+
                             <tr class="material-row">
-                                <!-- SERIAL NUMBER COLUMN -->
+
+                                <!-- S/N -->
                                 <td class="sn-col sn-cell">
                                     #{{ "%02d"|format(loop.index) }}
                                 </td>
+
+
+                                <!-- REQUEST NUMBER -->
                                 <td>
+
                                     <div class="primary-text searchable-cell">
                                         {{ request.request_number }}
                                     </div>
+
                                     {% if request.description %}
+
                                         <div class="secondary-text searchable-cell">
-                                            {{ request.description[:70] }}{% if request.description|length > 70 %}...{% endif %}
+
+                                            {{ request.description[:70] }}
+
+                                            {% if request.description|length > 70 %}
+                                                ...
+                                            {% endif %}
+
                                         </div>
+
                                     {% endif %}
+
                                 </td>
+
+
+                                <!-- PROJECT -->
                                 <td>
+
                                     <div class="primary-text searchable-cell">
                                         {{ request.project_name }}
                                     </div>
+
                                 </td>
+
+
+                                <!-- REQUESTED BY -->
                                 <td class="searchable-cell">
+
                                     {{ request.requested_by or "Not specified" }}
+
                                 </td>
+
+
+                                <!-- APPROVED DATE -->
                                 <td>
+
                                     {% if request.decision_date %}
+
                                         {{ request.decision_date.strftime('%d %b %Y %H:%M') }}
+
                                     {% else %}
-                                        <span class="status-pill status-approved">Approved</span>
+
+                                        <span class="status-pill status-approved">
+                                            Approved
+                                        </span>
+
                                     {% endif %}
+
                                 </td>
+
+
+                                <!-- APPROVED BY -->
                                 <td>
-                                    <span class="primary-text searchable-cell">{{ request.manager_name or "Manager" }}</span>
+
+                                    <span class="primary-text searchable-cell">
+                                        {{ request.manager_name or "Manager" }}
+                                    </span>
+
                                 </td>
+
+
+                                <!-- DOCUMENTS -->
+<td>
+
+    <!-- ORIGINAL DOCUMENT -->
+    {% if request.file_url %}
+
+        <a
+            href="{{ request.file_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-document"
+        >
+
+            <i class="fas fa-file-lines"></i>
+
+            <span>
+                Original Document
+            </span>
+
+        </a>
+
+    {% endif %}
+
+
+    <!-- APPROVED DOCUMENT -->
+    {% if request.finalized_file_url %}
+
+        <a
+            href="{{ request.finalized_file_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-document"
+            style="
+                margin-top:6px;
+                background:var(--pch-green-soft);
+                color:var(--pch-green);
+                border-color:#bbf7d0;
+            "
+        >
+
+            <i class="fas fa-file-circle-check"></i>
+
+            <span>
+                Approved Document
+            </span>
+
+        </a>
+
+    {% endif %}
+
+
+    <!-- NO DOCUMENTS -->
+    {% if not request.file_url and not request.finalized_file_url %}
+
+        <span class="secondary-text">
+            No documents
+        </span>
+
+    {% endif %}
+
+</td>
+
+
+                                <!-- =================================================
+                                     CASH STATUS
+
+                                     IMPORTANT:
+                                     Material requests use:
+                                     cash_release_id
+                                     cash_release_amount
+                                     cash_release_currency
+                                     cash_released_at
+                                     cash_released_by_name
+                                     ================================================= -->
                                 <td>
-                                    {% if request.file_url %}
-                                        <a
-                                            href="{{ request.file_url }}"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="btn-document"
+
+                                    {% if request.cash_release_id %}
+
+                                        <span class="status-pill status-released">
+
+                                            <i class="fas fa-check-double"></i>
+
+                                            <span>
+                                                Cash Released
+                                            </span>
+
+                                        </span>
+
+
+                                        {% if request.cash_release_amount is not none %}
+
+                                            <div class="secondary-text">
+
+                                                {{ request.cash_release_currency or "QAR" }}
+
+                                                {{ "{:,.2f}".format(
+                                                    request.cash_release_amount
+                                                ) }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if request.cash_released_at %}
+
+                                            <div class="secondary-text">
+
+                                                {{ request.cash_released_at.strftime('%d %b %Y %H:%M') }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if request.cash_released_by_name %}
+
+                                            <div class="secondary-text">
+
+                                                By:
+                                                {{ request.cash_released_by_name }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <span class="status-pill status-pending">
+
+                                            <i class="fas fa-clock"></i>
+
+                                            <span>
+                                                Awaiting Release
+                                            </span>
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =================================================
+                                     ACTION
+
+                                     BEFORE:
+                                     Release Cash
+
+                                     AFTER:
+                                     Disbursed
+                                     ================================================= -->
+                                <td>
+
+                                    {% if request.cash_release_id %}
+
+                                        <span class="btn-released">
+
+                                            <i class="fas fa-check"></i>
+
+                                            <span>
+                                                Disbursed
+                                            </span>
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <button
+                                            type="button"
+                                            class="btn-release"
+                                            onclick="openMaterialReleaseModal(
+                                                '{{ request.id }}',
+                                                '{{ request.request_number | e }}',
+                                                '{{ request.project_name | e }}'
+                                            )"
                                         >
-                                            <i class="fas fa-file-lines"></i>
-                                            <span>Original Document</span>
-                                        </a>
-                                    {% else %}
-                                        <span class="secondary-text">No document</span>
+
+                                            <i class="fas fa-money-bill-wave"></i>
+
+                                            <span>
+                                                Release Cash
+                                            </span>
+
+                                        </button>
+
                                     {% endif %}
+
                                 </td>
+
                             </tr>
+
                         {% endfor %}
+
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <!-- PAGINATION BAR -->
+
+                <!-- PAGINATION -->
                 <div class="pagination-bar">
-                    <div class="pagination-info" id="materialBottomInfo"></div>
-                    <div class="pagination-controls" id="materialPaginationControls"></div>
+
+                    <div
+                        class="pagination-info"
+                        id="materialBottomInfo"
+                    ></div>
+
+                    <div
+                        class="pagination-controls"
+                        id="materialPaginationControls"
+                    ></div>
+
                 </div>
+
             {% else %}
+
                 <div class="empty-state">
+
                     <div class="empty-icon">
                         <i class="fas fa-box-open"></i>
                     </div>
-                    <h3>No Approved Material Requests</h3>
-                    <p>Approved material requests will appear here once cleared by project management.</p>
+
+                    <h3>
+                        No Approved Material Requests
+                    </h3>
+
+                    <p>
+                        Approved material requests will appear here
+                        once cleared by project management.
+                    </p>
+
                 </div>
+
             {% endif %}
+
         </div>
 
+
         <!-- =====================================================
-             APPROVED QUOTATIONS TABLE
+             APPROVED QUOTATIONS
              ===================================================== -->
         <div class="account-section">
+
             <div class="account-section-header">
+
                 <div class="account-section-title">
-                    <h2>Approved Supplier Quotations</h2>
-                    <p>Review approved vendor proposals and execute cash release actions.</p>
+
+                    <h2>
+                        Approved Supplier Quotations
+                    </h2>
+
+                    <p>
+                        Review approved vendor proposals and execute
+                        cash release actions.
+                    </p>
+
                 </div>
+
                 <div class="section-header-right">
-                    <div class="section-count" id="quotationTotalCount">
+
+                    <div
+                        class="section-count"
+                        id="quotationTotalCount"
+                    >
                         {{ approved_quotations | length }}
                     </div>
+
                 </div>
+
             </div>
 
+
             {% if approved_quotations %}
-                <!-- GOOGLE LIVE SEARCH TOOLBAR -->
+
                 <div class="table-toolbar">
+
                     <div class="live-search-box">
+
                         <i class="fas fa-search"></i>
+
                         <input
                             type="text"
                             id="quotationSearchInput"
@@ -915,314 +1626,1311 @@ Account Dashboard | Procurement & Cash Control
                             placeholder="Live search quotations, suppliers, amounts..."
                             autocomplete="off"
                         >
+
                     </div>
-                    <div class="pagination-info" id="quotationPaginationInfo">
+
+                    <div
+                        class="pagination-info"
+                        id="quotationPaginationInfo"
+                    >
                         Showing 0 to 0 of 0 entries
                     </div>
+
                 </div>
 
+
                 <div class="table-wrapper">
-                    <table class="account-table" id="quotationTable">
+
+                    <table
+                        class="account-table"
+                        id="quotationTable"
+                    >
+
                         <thead>
+
                             <tr>
-                                <th class="sn-col">S/N</th>
-                                <th>Quotation Details</th>
-                                <th>Supplier Name</th>
-                                <th>Quotation Total</th>
-                                <th>Manager Approval</th>
-                                <th>Quotation File</th>
-                                <th>Cash Status</th>
-                                <th>Action</th>
+
+                                <th class="sn-col">
+                                    S/N
+                                </th>
+
+                                <th>
+                                    Quotation Details
+                                </th>
+
+                                <th>
+                                    Supplier Name
+                                </th>
+
+                                <th>
+                                    Quotation Total
+                                </th>
+
+                                <th>
+                                    Manager Approval
+                                </th>
+
+                                <th>
+                                    Quotation File
+                                </th>
+
+                                <th>
+                                    Cash Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
                             </tr>
+
                         </thead>
+
+
                         <tbody id="quotationTableBody">
+
                         {% for quotation in approved_quotations %}
+
                             <tr class="quotation-row">
-                                <!-- SERIAL NUMBER COLUMN -->
+
+                                <!-- S/N -->
                                 <td class="sn-col sn-cell">
                                     #{{ "%02d"|format(loop.index) }}
                                 </td>
+
+
+                                <!-- QUOTATION DETAILS -->
                                 <td>
+
                                     <div class="primary-text searchable-cell">
                                         {{ quotation.quotation_number }}
                                     </div>
+
                                     <div class="secondary-text searchable-cell">
-                                        <i class="fas fa-calendar-day me-1"></i> {{ quotation.quotation_date }}
+
+                                        <i class="fas fa-calendar-day me-1"></i>
+
+                                        {{ quotation.quotation_date }}
+
                                     </div>
+
                                 </td>
+
 
                                 <!-- SUPPLIER -->
                                 <td>
+
                                     <div class="primary-text searchable-cell">
                                         {{ quotation.supplier_name }}
                                     </div>
+
                                 </td>
+
 
                                 <!-- AMOUNT -->
                                 <td>
+
                                     <div class="primary-text searchable-cell">
+
                                         {% if quotation.quotation_amount is not none %}
-                                            <span style="color: var(--pch-forest); font-weight: 850;">
-                                                {{ quotation.currency or "QAR" }} {{ "{:,.2f}".format(quotation.quotation_amount) }}
+
+                                            <span
+                                                style="
+                                                    color:var(--pch-forest);
+                                                    font-weight:850;
+                                                "
+                                            >
+
+                                                {{ quotation.currency or "QAR" }}
+
+                                                {{ "{:,.2f}".format(
+                                                    quotation.quotation_amount
+                                                ) }}
+
                                             </span>
+
                                         {% else %}
-                                            <span class="secondary-text">Not specified</span>
+
+                                            <span class="secondary-text">
+                                                Not specified
+                                            </span>
+
                                         {% endif %}
+
                                     </div>
+
                                 </td>
+
 
                                 <!-- MANAGER -->
                                 <td>
+
                                     <span class="status-pill status-approved">
+
                                         <i class="fas fa-check"></i>
-                                        <span>Approved</span>
+
+                                        <span>
+                                            Approved
+                                        </span>
+
                                     </span>
+
                                     <div class="secondary-text searchable-cell">
+
                                         {{ quotation.manager_name or "Manager" }}
+
                                         {% if quotation.decision_date %}
-                                            · {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+
+                                            ·
+                                            {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+
                                         {% endif %}
+
                                     </div>
+
                                 </td>
 
-                                <!-- ORIGINAL DOCUMENT -->
-                                <td>
-                                    {% if quotation.file_url %}
-                                        <a
-                                            href="{{ quotation.file_url }}"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="btn-document"
-                                        >
-                                            <i class="fas fa-file-pdf"></i>
-                                            <span>Original Quotation</span>
-                                        </a>
-                                    {% else %}
-                                        <span class="secondary-text">No document</span>
-                                    {% endif %}
-                                </td>
+
+                                <!-- DOCUMENTS -->
+<td>
+
+    <!-- ORIGINAL QUOTATION -->
+    {% if quotation.file_url %}
+
+        <a
+            href="{{ quotation.file_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-document"
+        >
+
+            <i class="fas fa-file-pdf"></i>
+
+            <span>
+                Original Quotation
+            </span>
+
+        </a>
+
+    {% endif %}
+
+
+    <!-- APPROVED QUOTATION -->
+    {% if quotation.finalized_file_url %}
+
+        <a
+            href="{{ quotation.finalized_file_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-document"
+            style="
+                margin-top:6px;
+                background:var(--pch-green-soft);
+                color:var(--pch-green);
+                border-color:#bbf7d0;
+            "
+        >
+
+            <i class="fas fa-file-circle-check"></i>
+
+            <span>
+                Approved Quotation
+            </span>
+
+        </a>
+
+    {% endif %}
+
+
+    <!-- NO DOCUMENTS -->
+    {% if not quotation.file_url and not quotation.finalized_file_url %}
+
+        <span class="secondary-text">
+            No documents
+        </span>
+
+    {% endif %}
+
+</td>
+
 
                                 <!-- CASH STATUS -->
                                 <td>
+
                                     {% if quotation.cash_released %}
+
                                         <span class="status-pill status-released">
+
                                             <i class="fas fa-check-double"></i>
-                                            <span>Cash Released</span>
+
+                                            <span>
+                                                Cash Released
+                                            </span>
+
                                         </span>
+
+
                                         {% if quotation.cash_released_at %}
+
                                             <div class="secondary-text">
+
                                                 {{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
+
                                             </div>
+
                                         {% endif %}
+
+
                                         {% if quotation.cash_released_by_name %}
+
                                             <div class="secondary-text">
-                                                By: {{ quotation.cash_released_by_name }}
+
+                                                By:
+                                                {{ quotation.cash_released_by_name }}
+
                                             </div>
+
                                         {% endif %}
+
                                     {% else %}
+
                                         <span class="status-pill status-pending">
+
                                             <i class="fas fa-clock"></i>
-                                            <span>Awaiting Release</span>
+
+                                            <span>
+                                                Awaiting Release
+                                            </span>
+
                                         </span>
+
                                     {% endif %}
+
                                 </td>
+
 
                                 <!-- ACTION -->
                                 <td>
+
                                     {% if quotation.cash_released %}
+
                                         <span class="btn-released">
+
                                             <i class="fas fa-check"></i>
-                                            <span>Disbursed</span>
+
+                                            <span>
+                                                Disbursed
+                                            </span>
+
                                         </span>
+
                                     {% else %}
+
                                         <form
                                             method="POST"
-                                            action="{{ url_for('construction_account_release_cash', quotation_id=quotation.id) }}"
-                                            onsubmit="return confirm('Confirm that cash has been released for quotation {{ quotation.quotation_number }}?');"
+                                            action="{{ url_for(
+                                                'construction_account_release_cash',
+                                                quotation_id=quotation.id
+                                            ) }}"
+                                            onsubmit="
+                                                return confirm(
+                                                    'Confirm that cash has been released for quotation {{ quotation.quotation_number }}?'
+                                                );
+                                            "
                                         >
+
                                             <button
                                                 type="submit"
                                                 class="btn-release"
                                             >
+
                                                 <i class="fas fa-money-bill-wave"></i>
-                                                <span>Release Cash</span>
+
+                                                <span>
+                                                    Release Cash
+                                                </span>
+
                                             </button>
+
                                         </form>
+
                                     {% endif %}
+
                                 </td>
+
                             </tr>
+
                         {% endfor %}
+
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <!-- PAGINATION BAR -->
+
+                <!-- PAGINATION -->
                 <div class="pagination-bar">
-                    <div class="pagination-info" id="quotationBottomInfo"></div>
-                    <div class="pagination-controls" id="quotationPaginationControls"></div>
+
+                    <div
+                        class="pagination-info"
+                        id="quotationBottomInfo"
+                    ></div>
+
+                    <div
+                        class="pagination-controls"
+                        id="quotationPaginationControls"
+                    ></div>
+
                 </div>
+
             {% else %}
+
                 <div class="empty-state">
+
                     <div class="empty-icon">
                         <i class="fas fa-file-invoice-dollar"></i>
                     </div>
-                    <h3>No Approved Quotations</h3>
-                    <p>Approved supplier quotations will appear here ready for account verification and cash disbursement.</p>
+
+                    <h3>
+                        No Approved Quotations
+                    </h3>
+
+                    <p>
+                        Approved supplier quotations will appear here
+                        ready for account verification and cash disbursement.
+                    </p>
+
                 </div>
+
             {% endif %}
+
         </div>
+
 
         <!-- =====================================================
              FOOTER
              ===================================================== -->
-        <div style="text-align:center; color:#94a3b8; font-size:12.5px; padding:16px 0 24px; font-weight:500;">
-            Prestigious Trading & Constructions · Account & Procurement Control
+        <div
+            style="
+                text-align:center;
+                color:#94a3b8;
+                font-size:12.5px;
+                padding:16px 0 24px;
+                font-weight:500;
+            "
+        >
+
+            Prestigious Trading & Constructions
+            · Account & Procurement Control
+
         </div>
 
     </div>
 </div>
 
+
 <!-- =========================================================
-     CLIENT-SIDE LIVE SEARCH, S/N & PAGINATION CONTROLLER
+     MATERIAL REQUEST CASH RELEASE MODAL
+========================================================= -->
+<div
+    class="release-modal"
+    id="materialReleaseModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="release-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="materialReleaseModalTitle"
+    >
+
+        <!-- MODAL HEADER -->
+        <div class="release-modal-header">
+
+            <div class="release-modal-title-wrap">
+
+                <div class="release-modal-icon">
+                    <i class="fas fa-money-bill-transfer"></i>
+                </div>
+
+                <div>
+
+                    <h3 id="materialReleaseModalTitle">
+                        Release Material Cash
+                    </h3>
+
+                    <p>
+                        Record the cash disbursement for this approved request.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="release-modal-close"
+                onclick="closeMaterialReleaseModal()"
+                aria-label="Close"
+            >
+
+                <i class="fas fa-times"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+        <div class="release-modal-body">
+
+            <div class="release-request-summary">
+
+                <div class="release-summary-row">
+
+                    <span>
+                        Request Number
+                    </span>
+
+                    <span id="releaseRequestNumber">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="release-summary-row">
+
+                    <span>
+                        Project
+                    </span>
+
+                    <span id="releaseProjectName">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- RELEASE FORM -->
+            <form
+                method="POST"
+                id="materialReleaseForm"
+            >
+
+                <!-- AMOUNT + CURRENCY -->
+                <div class="release-form-group">
+
+                    <label>
+                        Cash Release Amount
+                        <span class="release-required">*</span>
+                    </label>
+
+                    <div class="release-form-row">
+
+                        <input
+                            type="number"
+                            name="amount"
+                            id="materialReleaseAmount"
+                            class="release-form-control"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="Enter amount"
+                            required
+                        >
+
+
+                        <select
+                            name="currency"
+                            id="materialReleaseCurrency"
+                            class="release-form-control"
+                            required
+                        >
+
+                            <option value="QAR" selected>
+                                QAR
+                            </option>
+
+                            <option value="USD">
+                                USD
+                            </option>
+
+                            <option value="EUR">
+                                EUR
+                            </option>
+
+                            <option value="GBP">
+                                GBP
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTES -->
+                <div class="release-form-group">
+
+                    <label>
+                        Release Notes
+                    </label>
+
+                    <textarea
+                        name="notes"
+                        id="materialReleaseNotes"
+                        class="release-form-control"
+                        placeholder="Optional: payment details, cheque reference, bank transfer reference, etc."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- MODAL FOOTER -->
+                <div class="release-modal-footer">
+
+                    <button
+                        type="button"
+                        class="release-cancel-button"
+                        onclick="closeMaterialReleaseModal()"
+                    >
+
+                        <i class="fas fa-times"></i>
+
+                        <span>
+                            Cancel
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="release-confirm-button"
+                    >
+
+                        <i class="fas fa-money-bill-wave"></i>
+
+                        <span>
+                            Confirm Cash Release
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
 ========================================================= -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    /**
-     * Initializes Google Live Search, Auto S/N numbering, and Dynamic Pagination for any table
-     */
-    function initDynamicTable(config) {
-        const searchInput = document.getElementById(config.searchInputId);
-        const rows = Array.from(document.querySelectorAll(config.rowSelector));
-        const paginationControls = document.getElementById(config.paginationControlsId);
-        const topInfo = document.getElementById(config.topInfoId);
-        const bottomInfo = document.getElementById(config.bottomInfoId);
 
-        if (rows.length === 0) return;
+    /* =====================================================
+       MATERIAL CASH RELEASE MODAL
+    ===================================================== */
 
-        let filteredRows = [...rows];
-        let currentPage = 1;
-        const rowsPerPage = config.rowsPerPage || 8;
+    window.openMaterialReleaseModal = function (
+        materialRequestId,
+        requestNumber,
+        projectName
+    ) {
 
-        function render() {
-            const total = filteredRows.length;
-            const totalPages = Math.ceil(total / rowsPerPage) || 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
+        const modal =
+            document.getElementById("materialReleaseModal");
 
-            const startIdx = (currentPage - 1) * rowsPerPage;
-            const endIdx = startIdx + rowsPerPage;
+        const form =
+            document.getElementById("materialReleaseForm");
 
-            // Hide all rows first
-            rows.forEach(r => r.style.display = "none");
+        const requestNumberElement =
+            document.getElementById("releaseRequestNumber");
 
-            // Display current page rows and recalculate S/N
-            filteredRows.forEach((row, idx) => {
-                if (idx >= startIdx && idx < endIdx) {
-                    row.style.display = "";
-                    const snCell = row.querySelector(".sn-cell");
-                    if (snCell) {
-                        const serialNum = String(idx + 1).padStart(2, '0');
-                        snCell.textContent = `#${serialNum}`;
-                    }
-                }
-            });
+        const projectNameElement =
+            document.getElementById("releaseProjectName");
 
-            // Update Entries Info Text
-            const startDisplay = total === 0 ? 0 : startIdx + 1;
-            const endDisplay = Math.min(endIdx, total);
-            const infoString = `Showing ${startDisplay} to ${endDisplay} of ${total} entries`;
+        const amountInput =
+            document.getElementById("materialReleaseAmount");
 
-            if (topInfo) topInfo.textContent = infoString;
-            if (bottomInfo) bottomInfo.textContent = infoString;
+        const currencyInput =
+            document.getElementById("materialReleaseCurrency");
 
-            // Build Pagination Buttons
-            if (paginationControls) {
-                paginationControls.innerHTML = "";
 
-                // Prev Button
-                const prevBtn = document.createElement("button");
-                prevBtn.className = "page-btn";
-                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                prevBtn.disabled = currentPage === 1;
-                prevBtn.addEventListener("click", () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        render();
-                    }
-                });
-                paginationControls.appendChild(prevBtn);
+        if (!modal || !form) {
+            return;
+        }
 
-                // Page Number Buttons
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-                        const numBtn = document.createElement("button");
-                        numBtn.className = `page-btn ${i === currentPage ? "active" : ""}`;
-                        numBtn.textContent = i;
-                        numBtn.addEventListener("click", () => {
-                            currentPage = i;
-                            render();
-                        });
-                        paginationControls.appendChild(numBtn);
-                    } else if (i === currentPage - 2 || i === currentPage + 2) {
-                        const dots = document.createElement("span");
-                        dots.style.padding = "0 4px";
-                        dots.style.color = "#94a3b8";
-                        dots.textContent = "...";
-                        paginationControls.appendChild(dots);
-                    }
-                }
 
-                // Next Button
-                const nextBtn = document.createElement("button");
-                nextBtn.className = "page-btn";
-                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                nextBtn.disabled = currentPage === totalPages || total === 0;
-                nextBtn.addEventListener("click", () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        render();
-                    }
-                });
-                paginationControls.appendChild(nextBtn);
+        /* ================================================
+           SET REQUEST INFORMATION
+        ================================================= */
+
+        requestNumberElement.textContent =
+            requestNumber || "—";
+
+        projectNameElement.textContent =
+            projectName || "—";
+
+
+        /* ================================================
+           SET BACKEND ROUTE
+        ================================================= */
+
+        form.action =
+            "{{ url_for('construction_account_release_material_cash', material_request_id=0) }}"
+                .replace(
+                    "/0",
+                    "/" + materialRequestId
+                );
+
+
+        /* ================================================
+           RESET FORM
+        ================================================= */
+
+        form.reset();
+
+        currencyInput.value = "QAR";
+
+
+        /* ================================================
+           SHOW MODAL
+        ================================================= */
+
+        modal.classList.add("active");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        /* ================================================
+           FOCUS AMOUNT
+        ================================================= */
+
+        setTimeout(function () {
+
+            if (amountInput) {
+                amountInput.focus();
             }
+
+        }, 100);
+
+    };
+
+
+    /* =====================================================
+       CLOSE MATERIAL RELEASE MODAL
+    ===================================================== */
+
+    window.closeMaterialReleaseModal = function () {
+
+        const modal =
+            document.getElementById("materialReleaseModal");
+
+        const form =
+            document.getElementById("materialReleaseForm");
+
+
+        if (!modal) {
+            return;
         }
 
-        // Live Search Input Listener
-        if (searchInput) {
-            searchInput.addEventListener("input", function () {
-                const query = this.value.toLowerCase().trim();
-                filteredRows = rows.filter(row => {
-                    const searchableText = row.innerText.toLowerCase();
-                    return searchableText.includes(query);
-                });
-                currentPage = 1;
-                render();
-            });
+
+        modal.classList.remove("active");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        if (form) {
+            form.reset();
         }
 
-        // Initial table render
-        render();
+    };
+
+
+    /* =====================================================
+       CLOSE WHEN CLICKING OUTSIDE MODAL
+    ===================================================== */
+
+    const materialReleaseModal =
+        document.getElementById("materialReleaseModal");
+
+
+    if (materialReleaseModal) {
+
+        materialReleaseModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    materialReleaseModal
+                ) {
+
+                    closeMaterialReleaseModal();
+
+                }
+
+            }
+        );
+
     }
 
-    // 1. Initialize Material Requests Table
+
+    /* =====================================================
+       ESC KEY CLOSE
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                closeMaterialReleaseModal();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CONFIRM MATERIAL CASH RELEASE
+    ===================================================== */
+
+    const materialReleaseForm =
+        document.getElementById("materialReleaseForm");
+
+
+    if (materialReleaseForm) {
+
+        materialReleaseForm.addEventListener(
+            "submit",
+            function (event) {
+
+                const amount =
+                    document.getElementById(
+                        "materialReleaseAmount"
+                    ).value;
+
+                const currency =
+                    document.getElementById(
+                        "materialReleaseCurrency"
+                    ).value;
+
+                const requestNumber =
+                    document.getElementById(
+                        "releaseRequestNumber"
+                    ).textContent;
+
+
+                const confirmed =
+                    confirm(
+                        "Confirm cash release of " +
+                        currency +
+                        " " +
+                        Number(amount).toLocaleString(
+                            undefined,
+                            {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }
+                        ) +
+                        " for material request " +
+                        requestNumber +
+                        "?"
+                    );
+
+
+                if (!confirmed) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       GENERIC LIVE SEARCH + PAGINATION
+    ===================================================== */
+
+    function initDynamicTable(config) {
+
+        const searchInput =
+            document.getElementById(
+                config.searchInputId
+            );
+
+        const rows =
+            Array.from(
+                document.querySelectorAll(
+                    config.rowSelector
+                )
+            );
+
+        const paginationControls =
+            document.getElementById(
+                config.paginationControlsId
+            );
+
+        const topInfo =
+            document.getElementById(
+                config.topInfoId
+            );
+
+        const bottomInfo =
+            document.getElementById(
+                config.bottomInfoId
+            );
+
+
+        if (rows.length === 0) {
+            return;
+        }
+
+
+        let filteredRows = [...rows];
+
+        let currentPage = 1;
+
+        const rowsPerPage =
+            config.rowsPerPage || 8;
+
+
+        function render() {
+
+            const total =
+                filteredRows.length;
+
+            const totalPages =
+                Math.ceil(
+                    total / rowsPerPage
+                ) || 1;
+
+
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+
+
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+
+            const startIdx =
+                (currentPage - 1) *
+                rowsPerPage;
+
+            const endIdx =
+                startIdx +
+                rowsPerPage;
+
+
+            /* ==========================================
+               HIDE ALL ROWS
+            ========================================== */
+
+            rows.forEach(function (row) {
+
+                row.style.display = "none";
+
+            });
+
+
+            /* ==========================================
+               SHOW CURRENT PAGE
+            ========================================== */
+
+            filteredRows.forEach(
+                function (row, idx) {
+
+                    if (
+                        idx >= startIdx &&
+                        idx < endIdx
+                    ) {
+
+                        row.style.display = "";
+
+                        const snCell =
+                            row.querySelector(
+                                ".sn-cell"
+                            );
+
+
+                        if (snCell) {
+
+                            const serialNum =
+                                String(
+                                    idx + 1
+                                ).padStart(
+                                    2,
+                                    "0"
+                                );
+
+
+                            snCell.textContent =
+                                "#" + serialNum;
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /* ==========================================
+               PAGINATION INFO
+            ========================================== */
+
+            const startDisplay =
+                total === 0
+                    ? 0
+                    : startIdx + 1;
+
+            const endDisplay =
+                Math.min(
+                    endIdx,
+                    total
+                );
+
+
+            const infoString =
+                "Showing " +
+                startDisplay +
+                " to " +
+                endDisplay +
+                " of " +
+                total +
+                " entries";
+
+
+            if (topInfo) {
+                topInfo.textContent =
+                    infoString;
+            }
+
+
+            if (bottomInfo) {
+                bottomInfo.textContent =
+                    infoString;
+            }
+
+
+            /* ==========================================
+               PAGINATION BUTTONS
+            ========================================== */
+
+            if (paginationControls) {
+
+                paginationControls.innerHTML =
+                    "";
+
+
+                /* PREVIOUS */
+
+                const prevBtn =
+                    document.createElement(
+                        "button"
+                    );
+
+                prevBtn.className =
+                    "page-btn";
+
+                prevBtn.innerHTML =
+                    '<i class="fas fa-chevron-left"></i>';
+
+                prevBtn.disabled =
+                    currentPage === 1;
+
+
+                prevBtn.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            currentPage > 1
+                        ) {
+
+                            currentPage--;
+
+                            render();
+
+                        }
+
+                    }
+                );
+
+
+                paginationControls.appendChild(
+                    prevBtn
+                );
+
+
+                /* PAGE NUMBERS */
+
+                for (
+                    let i = 1;
+                    i <= totalPages;
+                    i++
+                ) {
+
+                    if (
+                        i === 1 ||
+                        i === totalPages ||
+                        (
+                            i >=
+                            currentPage - 1 &&
+                            i <=
+                            currentPage + 1
+                        )
+                    ) {
+
+                        const numBtn =
+                            document.createElement(
+                                "button"
+                            );
+
+
+                        numBtn.className =
+                            "page-btn " +
+                            (
+                                i === currentPage
+                                    ? "active"
+                                    : ""
+                            );
+
+
+                        numBtn.textContent =
+                            i;
+
+
+                        numBtn.addEventListener(
+                            "click",
+                            function () {
+
+                                currentPage =
+                                    i;
+
+                                render();
+
+                            }
+                        );
+
+
+                        paginationControls.appendChild(
+                            numBtn
+                        );
+
+                    }
+
+                    else if (
+                        i === currentPage - 2 ||
+                        i === currentPage + 2
+                    ) {
+
+                        const dots =
+                            document.createElement(
+                                "span"
+                            );
+
+                        dots.style.padding =
+                            "0 4px";
+
+                        dots.style.color =
+                            "#94a3b8";
+
+                        dots.textContent =
+                            "...";
+
+
+                        paginationControls.appendChild(
+                            dots
+                        );
+
+                    }
+
+                }
+
+
+                /* NEXT */
+
+                const nextBtn =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                nextBtn.className =
+                    "page-btn";
+
+
+                nextBtn.innerHTML =
+                    '<i class="fas fa-chevron-right"></i>';
+
+
+                nextBtn.disabled =
+                    currentPage === totalPages ||
+                    total === 0;
+
+
+                nextBtn.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            currentPage <
+                            totalPages
+                        ) {
+
+                            currentPage++;
+
+                            render();
+
+                        }
+
+                    }
+                );
+
+
+                paginationControls.appendChild(
+                    nextBtn
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================
+           LIVE SEARCH
+        ========================================== */
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "input",
+                function () {
+
+                    const query =
+                        this.value
+                            .toLowerCase()
+                            .trim();
+
+
+                    filteredRows =
+                        rows.filter(
+                            function (row) {
+
+                                const searchableText =
+                                    row.innerText
+                                        .toLowerCase();
+
+
+                                return searchableText.includes(
+                                    query
+                                );
+
+                            }
+                        );
+
+
+                    currentPage = 1;
+
+                    render();
+
+                }
+            );
+
+        }
+
+
+        /* ==========================================
+           INITIAL RENDER
+        ========================================== */
+
+        render();
+
+    }
+
+
+    /* =====================================================
+       MATERIAL REQUEST TABLE
+    ===================================================== */
+
     initDynamicTable({
-        searchInputId: "materialSearchInput",
-        rowSelector: ".material-row",
-        paginationControlsId: "materialPaginationControls",
-        topInfoId: "materialPaginationInfo",
-        bottomInfoId: "materialBottomInfo",
-        rowsPerPage: 7
+
+        searchInputId:
+            "materialSearchInput",
+
+        rowSelector:
+            ".material-row",
+
+        paginationControlsId:
+            "materialPaginationControls",
+
+        topInfoId:
+            "materialPaginationInfo",
+
+        bottomInfoId:
+            "materialBottomInfo",
+
+        rowsPerPage:
+            7
+
     });
 
-    // 2. Initialize Quotations Table
+
+    /* =====================================================
+       QUOTATION TABLE
+    ===================================================== */
+
     initDynamicTable({
-        searchInputId: "quotationSearchInput",
-        rowSelector: ".quotation-row",
-        paginationControlsId: "quotationPaginationControls",
-        topInfoId: "quotationPaginationInfo",
-        bottomInfoId: "quotationBottomInfo",
-        rowsPerPage: 7
+
+        searchInputId:
+            "quotationSearchInput",
+
+        rowSelector:
+            ".quotation-row",
+
+        paginationControlsId:
+            "quotationPaginationControls",
+
+        topInfoId:
+            "quotationPaginationInfo",
+
+        bottomInfoId:
+            "quotationBottomInfo",
+
+        rowsPerPage:
+            7
+
     });
+
 });
 </script>
 
