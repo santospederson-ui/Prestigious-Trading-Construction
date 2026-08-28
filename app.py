@@ -3313,19 +3313,19 @@ def add_project():
                 # ==========================
 
                 result = cloudinary.uploader.upload(
-                image,
-                folder="prestigious_construction/projects",
-                resource_type="image",
-                transformation=[
-                    {
-                        "width": 1600,
-                        "height": 1200,
-                        "crop": "limit",
-                        "quality": "auto",
-                        "fetch_format": "auto"
-                    }
-                ]
-            )
+                    image,
+                    folder="prestigious_construction/projects",
+                    resource_type="image",
+                    transformation=[
+                        {
+                            "width": 1600,
+                            "height": 1200,
+                            "crop": "limit",
+                            "quality": "auto",
+                            "fetch_format": "auto"
+                        }
+                    ]
+                )
 
 
                 image_url = result[
@@ -8543,13 +8543,16 @@ def construction_purchase_dashboard():
         )
 
         # ==================================================
-        # TOTAL MATERIAL REQUESTS
+        # MATERIAL REQUEST STATISTICS
         # ==================================================
+
+        # --------------------------------------------------
+        # 1. TOTAL MATERIAL REQUESTS
+        # --------------------------------------------------
 
         cursor.execute(
             """
             SELECT COUNT(*) AS total
-
             FROM construction_purchase_material_requests
             """
         )
@@ -8558,32 +8561,142 @@ def construction_purchase_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # ==================================================
-        # PENDING QUOTATION
-        # ==================================================
+        # --------------------------------------------------
+        # 2. PENDING QUOTATION
+        # --------------------------------------------------
 
         cursor.execute(
             """
             SELECT COUNT(*) AS total
-
             FROM construction_purchase_material_requests
-
             WHERE status = 'Pending Quotation'
             """
         )
 
-        pending_quotation = (
+        pending_material_requests = (
             cursor.fetchone()["total"] or 0
         )
 
-        # ==================================================
-        # TOTAL QUOTATIONS
-        # ==================================================
+        # --------------------------------------------------
+        # 3. APPROVED MATERIAL REQUESTS
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM construction_purchase_material_requests
+            WHERE status = 'Approved'
+            """
+        )
+
+        approved_material_requests = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 4. DECLINED MATERIAL REQUESTS
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM construction_purchase_material_requests
+            WHERE status = 'Declined'
+            """
+        )
+
+        declined_material_requests = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 5. MATERIAL REQUESTS WITH CASH RELEASED
+        # --------------------------------------------------
+        #
+        # A material request has released cash if there is
+        # a record in:
+        #
+        # construction_purchase_material_request_cash_releases
+        #
+        # We do NOT depend on a cash_released column in the
+        # material request table.
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(DISTINCT mr.id) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            INNER JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+            """
+        )
+
+        material_cash_released_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 6. APPROVED MATERIAL REQUESTS
+        #    STILL WAITING FOR CASH
+        # --------------------------------------------------
 
         cursor.execute(
             """
             SELECT COUNT(*) AS total
 
+            FROM construction_purchase_material_requests mr
+
+            LEFT JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+
+              AND mcr.id IS NULL
+            """
+        )
+
+        material_cash_pending_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 7. TOTAL MATERIAL REQUEST CASH RELEASED
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT
+
+                COALESCE(
+                    SUM(mcr.amount),
+                    0
+                ) AS total
+
+            FROM construction_purchase_material_request_cash_releases mcr
+            """
+        )
+
+        material_cash_released_amount = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ==================================================
+        # QUOTATION STATISTICS
+        # ==================================================
+
+        # --------------------------------------------------
+        # 8. TOTAL QUOTATIONS
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
             FROM construction_purchase_quotations
             """
         )
@@ -8592,16 +8705,30 @@ def construction_purchase_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # ==================================================
-        # APPROVED QUOTATIONS
-        # ==================================================
+        # --------------------------------------------------
+        # 9. QUOTATIONS UNDER REVIEW
+        # --------------------------------------------------
 
         cursor.execute(
             """
             SELECT COUNT(*) AS total
-
             FROM construction_purchase_quotations
+            WHERE status = 'Under Review'
+            """
+        )
 
+        quotations_under_review = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 10. APPROVED QUOTATIONS
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM construction_purchase_quotations
             WHERE status = 'Approved'
             """
         )
@@ -8610,9 +8737,25 @@ def construction_purchase_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # ==================================================
-        # CASH RELEASED
-        # ==================================================
+        # --------------------------------------------------
+        # 11. DECLINED QUOTATIONS
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM construction_purchase_quotations
+            WHERE status = 'Declined'
+            """
+        )
+
+        declined_quotations = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 12. APPROVED QUOTATIONS AWAITING CASH
+        # --------------------------------------------------
 
         cursor.execute(
             """
@@ -8621,6 +8764,30 @@ def construction_purchase_dashboard():
             FROM construction_purchase_quotations
 
             WHERE status = 'Approved'
+
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
+            """
+        )
+
+        cash_pending_quotations = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 13. APPROVED QUOTATIONS WITH CASH RELEASED
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_quotations
+
+            WHERE status = 'Approved'
+
               AND cash_released = 1
             """
         )
@@ -8629,31 +8796,128 @@ def construction_purchase_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # ==================================================
-        # CASH PENDING
-        # ==================================================
+        # --------------------------------------------------
+        # 14. QUOTATION VALUE AWAITING CASH
+        # --------------------------------------------------
 
         cursor.execute(
             """
-            SELECT COUNT(*) AS total
+            SELECT
+
+                COALESCE(
+                    SUM(
+                        COALESCE(
+                            quotation_amount,
+                            0
+                        )
+                    ),
+                    0
+                ) AS total
 
             FROM construction_purchase_quotations
 
             WHERE status = 'Approved'
-              AND cash_released = 0
+
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """
         )
 
-        cash_pending_quotations = (
+        quotation_pending_cash_amount = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 15. QUOTATION VALUE WITH CASH RELEASED
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT
+
+                COALESCE(
+                    SUM(
+                        COALESCE(
+                            quotation_amount,
+                            0
+                        )
+                    ),
+                    0
+                ) AS total
+
+            FROM construction_purchase_quotations
+
+            WHERE status = 'Approved'
+
+              AND cash_released = 1
+            """
+        )
+
+        quotation_cash_released_amount = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # --------------------------------------------------
+        # 16. TOTAL APPROVED QUOTATION VALUE
+        # --------------------------------------------------
+
+        cursor.execute(
+            """
+            SELECT
+
+                COALESCE(
+                    SUM(
+                        COALESCE(
+                            quotation_amount,
+                            0
+                        )
+                    ),
+                    0
+                ) AS total
+
+            FROM construction_purchase_quotations
+
+            WHERE status = 'Approved'
+            """
+        )
+
+        approved_quotation_amount = (
             cursor.fetchone()["total"] or 0
         )
 
         # ==================================================
+        # COMBINED CASH STATISTICS
+        # ==================================================
+
+        cash_pending_count = (
+            cash_pending_quotations
+            +
+            material_cash_pending_count
+        )
+
+        cash_released_count = (
+            cash_released_quotations
+            +
+            material_cash_released_count
+        )
+
+        cash_released_total_amount = (
+            quotation_cash_released_amount
+            +
+            material_cash_released_amount
+        )
+
+        # Material Requests do not have a fixed quotation
+        # amount, so only quotation pending amount is known.
+
+        cash_pending_known_amount = (
+            quotation_pending_cash_amount
+        )
+
+        # ==================================================
         # RECENT MATERIAL REQUESTS
-        #
-        # ORIGINAL DOCUMENT
-        # +
-        # FINALIZED / STAMPED DOCUMENT
         # ==================================================
 
         cursor.execute(
@@ -8661,51 +8925,78 @@ def construction_purchase_dashboard():
             SELECT
 
                 mr.id,
-
                 mr.request_number,
-
                 mr.project_name,
-
                 mr.requested_by,
-
                 mr.request_date,
-
                 mr.description,
-
                 mr.file_name,
-
                 mr.file_url,
-
                 mr.uploaded_by,
-
                 mr.status,
-
                 mr.manager_id,
-
                 mr.manager_comment,
-
                 mr.decision_date,
-
                 mr.created_at,
-
                 mr.updated_at,
-
                 mr.finalized_file_name,
-
                 mr.finalized_file_url,
-
                 mr.finalized_public_id,
-
                 mr.finalized_at,
 
-                manager.fullname AS manager_name
+                manager.fullname AS manager_name,
+
+                -- =========================================
+                -- CASH RELEASE
+                -- =========================================
+
+                CASE
+                    WHEN mcr.id IS NOT NULL THEN 1
+                    ELSE 0
+                END AS cash_released,
+
+                mcr.id AS cash_release_id,
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * The dashboard HTML expects:
+                 *
+                 * amount_released
+                 *
+                 * Therefore we use that exact alias.
+                 */
+
+                mcr.amount AS amount_released,
+
+                mcr.currency AS currency,
+
+                mcr.released_by AS cash_released_by,
+
+                mcr.released_at AS cash_released_at,
+
+                mcr.notes AS cash_release_notes,
+
+                cash_account.fullname
+                    AS cash_released_by_name
 
             FROM construction_purchase_material_requests mr
 
             LEFT JOIN construction_admins manager
+
                 ON manager.id = mr.manager_id
 
+            LEFT JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+
+            LEFT JOIN construction_admins cash_account
+
+                ON cash_account.id = mcr.released_by
+
             ORDER BY
+
                 mr.created_at DESC,
                 mr.id DESC
 
@@ -8717,12 +9008,6 @@ def construction_purchase_dashboard():
 
         # ==================================================
         # RECENT SUPPLIER QUOTATIONS
-        #
-        # ORIGINAL QUOTATION
-        # +
-        # FINALIZED / STAMPED QUOTATION
-        # +
-        # CASH RELEASE INFORMATION
         # ==================================================
 
         cursor.execute(
@@ -8730,60 +9015,27 @@ def construction_purchase_dashboard():
             SELECT
 
                 q.id,
-
                 q.quotation_number,
-
                 q.supplier_name,
-
                 q.quotation_date,
-
                 q.quotation_amount,
-
                 q.currency,
-
                 q.file_name,
-
                 q.file_url,
-
                 q.uploaded_by,
-
                 q.status,
-
                 q.manager_id,
-
                 q.manager_comment,
-
                 q.decision_date,
-
                 q.cash_released,
-
                 q.cash_released_at,
-
                 q.cash_released_by,
-
                 q.created_at,
-
                 q.updated_at,
-
-                /*
-                ==================================================
-                FINALIZED / STAMPED QUOTATION DOCUMENT
-                ==================================================
-                */
-
                 q.finalized_file_name,
-
                 q.finalized_file_url,
-
                 q.finalized_public_id,
-
                 q.finalized_at,
-
-                /*
-                ==================================================
-                MANAGER / CASH RELEASE USER NAMES
-                ==================================================
-                */
 
                 manager.fullname AS manager_name,
 
@@ -8792,12 +9044,15 @@ def construction_purchase_dashboard():
             FROM construction_purchase_quotations q
 
             LEFT JOIN construction_admins manager
+
                 ON manager.id = q.manager_id
 
             LEFT JOIN construction_admins account
+
                 ON account.id = q.cash_released_by
 
             ORDER BY
+
                 q.created_at DESC,
                 q.id DESC
 
@@ -8839,7 +9094,7 @@ def construction_purchase_dashboard():
         }
 
         # ==================================================
-        # RENDER PURCHASE DASHBOARD
+        # RENDER DASHBOARD
         # ==================================================
 
         return render_template(
@@ -8849,37 +9104,65 @@ def construction_purchase_dashboard():
 
             purchase_user=purchase_user,
 
-            total_material_requests=(
-                total_material_requests
-            ),
+            # ------------------------------------------------
+            # MATERIAL REQUESTS
+            # ------------------------------------------------
 
-            pending_quotation=(
-                pending_quotation
-            ),
+            total_material_requests=total_material_requests,
 
-            total_quotations=(
-                total_quotations
-            ),
+            pending_material_requests=pending_material_requests,
 
-            approved_quotations=(
-                approved_quotations
-            ),
+            approved_material_requests=approved_material_requests,
 
-            cash_released_quotations=(
-                cash_released_quotations
-            ),
+            declined_material_requests=declined_material_requests,
 
-            cash_pending_quotations=(
-                cash_pending_quotations
-            ),
+            material_cash_pending_count=material_cash_pending_count,
 
-            recent_requests=(
-                recent_requests
-            ),
+            material_cash_released_count=material_cash_released_count,
 
-            recent_quotations=(
-                recent_quotations
-            )
+            material_cash_released_amount=material_cash_released_amount,
+
+            # ------------------------------------------------
+            # QUOTATIONS
+            # ------------------------------------------------
+
+            total_quotations=total_quotations,
+
+            quotations_under_review=quotations_under_review,
+
+            approved_quotations=approved_quotations,
+
+            declined_quotations=declined_quotations,
+
+            cash_pending_quotations=cash_pending_quotations,
+
+            cash_released_quotations=cash_released_quotations,
+
+            quotation_pending_cash_amount=quotation_pending_cash_amount,
+
+            quotation_cash_released_amount=quotation_cash_released_amount,
+
+            approved_quotation_amount=approved_quotation_amount,
+
+            # ------------------------------------------------
+            # COMBINED CASH
+            # ------------------------------------------------
+
+            cash_pending_count=cash_pending_count,
+
+            cash_released_count=cash_released_count,
+
+            cash_pending_known_amount=cash_pending_known_amount,
+
+            cash_released_total_amount=cash_released_total_amount,
+
+            # ------------------------------------------------
+            # RECENT RECORDS
+            # ------------------------------------------------
+
+            recent_requests=recent_requests,
+
+            recent_quotations=recent_quotations
         )
 
     # ======================================================
@@ -8928,7 +9211,6 @@ def construction_purchase_dashboard():
 
         if conn:
             conn.close()
-
 
 
 
@@ -10571,10 +10853,11 @@ def construction_manager_dashboard():
         # ====================================================
         # MATERIAL REQUESTS
         #
-        # NO CASH RELEASE LOGIC HERE.
+        # Material Request cash information comes from:
         #
-        # Material requests do not contain a specific purchase
-        # amount. They are simply requests for materials.
+        # construction_purchase_material_request_cash_releases
+        #
+        # This is separate from Supplier Quotation cash release.
         # ====================================================
 
         cursor.execute(
@@ -10621,7 +10904,33 @@ def construction_manager_dashboard():
 
                 a.fullname AS uploaded_by_name,
 
-                manager.fullname AS manager_name
+                manager.fullname AS manager_name,
+
+                /* ==========================================
+                   MATERIAL REQUEST CASH RELEASE
+                   ========================================== */
+
+                mrc.amount AS material_request_amount,
+
+                mrc.currency AS material_request_currency,
+
+                mrc.released_by AS material_cash_released_by,
+
+                mrc.released_at AS material_cash_released_at,
+
+                mrc.notes AS material_cash_release_notes,
+
+                release_admin.fullname
+                    AS material_cash_released_by_name,
+
+                CASE
+
+                    WHEN mrc.id IS NOT NULL
+                    THEN 1
+
+                    ELSE 0
+
+                END AS material_cash_released
 
             FROM construction_purchase_material_requests mr
 
@@ -10630,6 +10939,14 @@ def construction_manager_dashboard():
 
             LEFT JOIN construction_admins manager
                 ON manager.id = mr.manager_id
+
+            LEFT JOIN
+                construction_purchase_material_request_cash_releases mrc
+
+                ON mrc.material_request_id = mr.id
+
+            LEFT JOIN construction_admins release_admin
+                ON release_admin.id = mrc.released_by
 
             ORDER BY
                 mr.created_at DESC,
@@ -10643,16 +10960,8 @@ def construction_manager_dashboard():
         # ====================================================
         # SUPPLIER QUOTATIONS
         #
-        # CASH RELEASE INFORMATION IS INCLUDED HERE.
-        #
-        # Account releases cash after the quotation has been
-        # approved by the Manager.
-        #
-        # The quotation record therefore tells the Manager:
-        #
-        # 1. Whether cash has been released
-        # 2. When it was released
-        # 3. Who released it
+        # Quotation cash release remains independent from
+        # Material Request cash release.
         # ====================================================
 
         cursor.execute(
@@ -10748,6 +11057,152 @@ def construction_manager_dashboard():
         )
 
         # ====================================================
+        # MATERIAL REQUESTS UNDER MANAGER REVIEW
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests
+
+            WHERE status = 'Quotation Uploaded'
+            """
+        )
+
+        material_requests_under_review = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
+        # APPROVED MATERIAL REQUESTS
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests
+
+            WHERE status = 'Approved'
+            """
+        )
+
+        approved_material_requests = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
+        # DECLINED MATERIAL REQUESTS
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests
+
+            WHERE status IN ('Declined', 'Rejected')
+            """
+        )
+
+        declined_material_requests = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
+        # MATERIAL REQUEST CASH RELEASED
+        #
+        # A Material Request is considered cash-released
+        # when a corresponding record exists in:
+        #
+        # construction_purchase_material_request_cash_releases
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            INNER JOIN
+                construction_purchase_material_request_cash_releases mrc
+
+                ON mrc.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+            """
+        )
+
+        material_cash_released_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
+        # MATERIAL REQUEST CASH AWAITING RELEASE
+        #
+        # Approved Material Requests which do NOT yet have
+        # a cash-release record.
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            LEFT JOIN
+                construction_purchase_material_request_cash_releases mrc
+
+                ON mrc.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+
+              AND mrc.id IS NULL
+            """
+        )
+
+        material_cash_pending_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
+        # TOTAL MATERIAL REQUEST CASH RELEASED AMOUNT
+        #
+        # Amount comes directly from the dedicated
+        # material request cash release table.
+        # ====================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                COALESCE(
+                    SUM(
+                        COALESCE(
+                            mrc.amount,
+                            0
+                        )
+                    ),
+                    0
+                ) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            INNER JOIN
+                construction_purchase_material_request_cash_releases mrc
+
+                ON mrc.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+            """
+        )
+
+        material_cash_released_amount = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ====================================================
         # QUOTATIONS UNDER REVIEW
         # ====================================================
 
@@ -10802,10 +11257,7 @@ def construction_manager_dashboard():
         )
 
         # ====================================================
-        # CASH RELEASED
-        #
-        # Only approved quotations count as valid released
-        # procurement cash.
+        # QUOTATION CASH RELEASED
         # ====================================================
 
         cursor.execute(
@@ -10816,18 +11268,16 @@ def construction_manager_dashboard():
 
             WHERE status = 'Approved'
 
-            AND cash_released = 1
+              AND cash_released = 1
             """
         )
 
-        cash_released_count = (
+        quotation_cash_released_count = (
             cursor.fetchone()["total"] or 0
         )
 
         # ====================================================
-        # CASH AWAITING RELEASE
-        #
-        # Approved quotations which Account has not released.
+        # QUOTATION CASH AWAITING RELEASE
         # ====================================================
 
         cursor.execute(
@@ -10838,24 +11288,25 @@ def construction_manager_dashboard():
 
             WHERE status = 'Approved'
 
-            AND (
-                cash_released = 0
-                OR cash_released IS NULL
-            )
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """
         )
 
-        cash_pending_count = (
+        quotation_cash_pending_count = (
             cursor.fetchone()["total"] or 0
         )
 
         # ====================================================
-        # CASH AWAITING RELEASE AMOUNT
+        # QUOTATION CASH AWAITING RELEASE AMOUNT
         # ====================================================
 
         cursor.execute(
             """
             SELECT
+
                 COALESCE(
                     SUM(
                         COALESCE(
@@ -10870,16 +11321,56 @@ def construction_manager_dashboard():
 
             WHERE status = 'Approved'
 
-            AND (
-                cash_released = 0
-                OR cash_released IS NULL
-            )
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """
         )
 
-        cash_pending_amount = (
+        pending_cash_amount = (
             cursor.fetchone()["total"] or 0
         )
+
+        # ====================================================
+        # TOTAL CASH ITEMS AWAITING RELEASE
+        #
+        # BOTH:
+        #
+        # 1. Supplier Quotations
+        # 2. Material Requests
+        # ====================================================
+
+        cash_pending_count = (
+            quotation_cash_pending_count
+            + material_cash_pending_count
+        )
+
+        # ====================================================
+        # TOTAL CASH ITEMS RELEASED
+        #
+        # BOTH:
+        #
+        # 1. Supplier Quotations
+        # 2. Material Requests
+        # ====================================================
+
+        cash_released_count = (
+            quotation_cash_released_count
+            + material_cash_released_count
+        )
+
+        # ====================================================
+        # MATERIAL REQUEST CASH PENDING AMOUNT
+        #
+        # Material Requests have no predetermined amount before
+        # Account releases cash.
+        #
+        # Therefore this remains ZERO, exactly like the
+        # Account Dashboard.
+        # ====================================================
+
+        material_cash_pending_amount = 0
 
         # ====================================================
         # TOTAL MATERIAL REQUESTS
@@ -10959,9 +11450,49 @@ def construction_manager_dashboard():
 
             quotations=quotations,
 
+            # ------------------------------------------------
+            # MATERIAL REQUEST COUNTS
+            # ------------------------------------------------
+
             pending_material_requests=(
                 pending_material_requests
             ),
+
+            material_requests_under_review=(
+                material_requests_under_review
+            ),
+
+            approved_material_requests=(
+                approved_material_requests
+            ),
+
+            declined_material_requests=(
+                declined_material_requests
+            ),
+
+            # ------------------------------------------------
+            # MATERIAL REQUEST CASH
+            # ------------------------------------------------
+
+            material_cash_released_count=(
+                material_cash_released_count
+            ),
+
+            material_cash_pending_count=(
+                material_cash_pending_count
+            ),
+
+            material_cash_released_amount=(
+                material_cash_released_amount
+            ),
+
+            material_cash_pending_amount=(
+                material_cash_pending_amount
+            ),
+
+            # ------------------------------------------------
+            # QUOTATION COUNTS
+            # ------------------------------------------------
 
             quotations_under_review=(
                 quotations_under_review
@@ -10975,6 +11506,12 @@ def construction_manager_dashboard():
                 declined_quotations
             ),
 
+            # ------------------------------------------------
+            # COMBINED CASH CONTROL
+            #
+            # Same structure as Account Dashboard.
+            # ------------------------------------------------
+
             cash_released_count=(
                 cash_released_count
             ),
@@ -10983,9 +11520,36 @@ def construction_manager_dashboard():
                 cash_pending_count
             ),
 
-            cash_pending_amount=(
-                cash_pending_amount
+            # ------------------------------------------------
+            # QUOTATION CASH DETAILS
+            # ------------------------------------------------
+
+            quotation_cash_pending_count=(
+                quotation_cash_pending_count
             ),
+
+            quotation_cash_released_count=(
+                quotation_cash_released_count
+            ),
+
+            pending_cash_amount=(
+                pending_cash_amount
+            ),
+
+            # ------------------------------------------------
+            # MATERIAL CASH DETAILS
+            # ------------------------------------------------
+
+            # Already supplied above:
+            #
+            # material_cash_pending_count
+            # material_cash_released_count
+            # material_cash_released_amount
+            # material_cash_pending_amount
+
+            # ------------------------------------------------
+            # TOTALS
+            # ------------------------------------------------
 
             total_material_requests=(
                 total_material_requests
@@ -11044,7 +11608,6 @@ def construction_manager_dashboard():
         if conn:
 
             conn.close()
-
 
 
 
@@ -13432,77 +13995,105 @@ def construction_manager_material_request_review(request_id):
                     )
 
                 # ==================================================
-                # ACCOUNT USERS
+                # APPROVED MATERIAL REQUESTS
                 #
-                # ONLY APPROVED MATERIAL REQUESTS
+                # Account sees approved material requests only.
+                # Cash amount comes from the separate
+                # material request cash release table.
                 # ==================================================
 
-                if new_status == "Approved":
+                cursor.execute(
+                    """
+                    SELECT
 
-                    try:
+                        mr.id,
 
-                        account_cursor = conn.cursor(
-                            dictionary=True
-                        )
+                        mr.request_number,
 
-                        account_cursor.execute(
-                            """
-                            SELECT
-                                id,
-                                fullname,
-                                email
+                        mr.project_name,
 
-                            FROM construction_admins
+                        mr.requested_by,
 
-                            WHERE LOWER(role) = 'account'
+                        mr.request_date,
 
-                              AND email IS NOT NULL
+                        mr.description,
 
-                              AND TRIM(email) != ''
+                        mr.file_name,
 
-                            ORDER BY id ASC
-                            """
-                        )
+                        mr.file_url,
 
-                        account_users = (
-                            account_cursor.fetchall()
-                        )
+                        mr.uploaded_by,
 
-                        account_cursor.close()
+                        mr.status,
 
-                        for account_user in account_users:
+                        mr.manager_id,
 
-                            account_email = (
-                                account_user.get(
-                                    "email"
-                                ) or ""
-                            ).strip()
+                        mr.manager_comment,
 
-                            if not account_email:
-                                continue
+                        mr.decision_date,
 
-                            account_name = (
-                                account_user.get(
-                                    "fullname"
-                                )
-                                or "Accounts"
-                            )
+                        mr.created_at,
 
-                            recipients.append(
-                                (
-                                    account_email,
-                                    account_name,
-                                    "Accounts"
-                                )
-                            )
+                        mr.updated_at,
 
-                    except Exception as account_lookup_error:
+                        mr.finalized_file_name,
 
-                        print(
-                            "MATERIAL REQUEST ACCOUNT "
-                            "LOOKUP ERROR:",
-                            repr(account_lookup_error)
-                        )
+                        mr.finalized_file_url,
+
+                        mr.finalized_public_id,
+
+                        mr.finalized_at,
+
+                        mr.cash_released,
+
+                        mr.cash_released_at,
+
+                        mr.cash_released_by,
+
+                        uploader.fullname AS uploaded_by_name,
+
+                        manager.fullname AS manager_name,
+
+                        account.fullname AS cash_released_by_name,
+
+                        COALESCE(
+                            mcr.amount,
+                            0
+                        ) AS cash_release_amount,
+
+                        COALESCE(
+                            mcr.currency,
+                            'QAR'
+                        ) AS cash_release_currency,
+
+                        mcr.notes AS cash_release_notes
+
+                    FROM construction_purchase_material_requests mr
+
+                    LEFT JOIN construction_admins uploader
+                        ON uploader.id = mr.uploaded_by
+
+                    LEFT JOIN construction_admins manager
+                        ON manager.id = mr.manager_id
+
+                    LEFT JOIN construction_admins account
+                        ON account.id = mr.cash_released_by
+
+                    LEFT JOIN construction_purchase_material_request_cash_releases mcr
+                        ON mcr.material_request_id = mr.id
+
+                    WHERE mr.status = 'Approved'
+
+                    ORDER BY
+                        mr.decision_date DESC,
+                        mr.id DESC
+                    """
+                )
+
+                approved_material_requests = cursor.fetchall()
+
+
+
 
                 # ==================================================
                 # REMOVE DUPLICATE EMAIL ADDRESSES
@@ -13922,7 +14513,7 @@ def construction_manager_material_request_review(request_id):
 
 # ======================================================
 # ACCOUNT ROUTE
-#======================================================
+# ======================================================
 @app.route("/construction/account/dashboard")
 def construction_account_dashboard():
 
@@ -13978,8 +14569,17 @@ def construction_account_dashboard():
         # ==================================================
         # APPROVED MATERIAL REQUESTS
         #
-        # Account sees approved requests only.
-        # Original document remains untouched.
+        # Material Request itself has NO fixed amount.
+        #
+        # Account releases cash through:
+        # construction_purchase_material_request_cash_releases
+        #
+        # The query therefore includes:
+        #
+        # - Original document
+        # - Approved/finalized document
+        # - Manager information
+        # - Cash release information
         # ==================================================
 
         cursor.execute(
@@ -14026,7 +14626,21 @@ def construction_account_dashboard():
 
                 uploader.fullname AS uploaded_by_name,
 
-                manager.fullname AS manager_name
+                manager.fullname AS manager_name,
+
+                mcr.id AS cash_release_id,
+
+                mcr.amount AS cash_release_amount,
+
+                mcr.currency AS cash_release_currency,
+
+                mcr.released_by AS cash_released_by,
+
+                mcr.released_at AS cash_released_at,
+
+                mcr.notes AS cash_release_notes,
+
+                cash_account.fullname AS cash_released_by_name
 
             FROM construction_purchase_material_requests mr
 
@@ -14035,6 +14649,12 @@ def construction_account_dashboard():
 
             LEFT JOIN construction_admins manager
                 ON manager.id = mr.manager_id
+
+            LEFT JOIN construction_purchase_material_request_cash_releases mcr
+                ON mcr.material_request_id = mr.id
+
+            LEFT JOIN construction_admins cash_account
+                ON cash_account.id = mcr.released_by
 
             WHERE mr.status = 'Approved'
 
@@ -14045,12 +14665,19 @@ def construction_account_dashboard():
             """
         )
 
-        approved_material_requests = cursor.fetchall()
+        approved_material_requests = (
+            cursor.fetchall()
+        )
 
         # ==================================================
         # APPROVED QUOTATIONS
         #
-        # Only approved quotations appear here.
+        # Includes:
+        #
+        # - Original quotation
+        # - Approved/finalized quotation
+        # - Manager approval
+        # - Cash release information
         # ==================================================
 
         cursor.execute(
@@ -14093,6 +14720,14 @@ def construction_account_dashboard():
 
                 q.updated_at,
 
+                q.finalized_file_name,
+
+                q.finalized_file_url,
+
+                q.finalized_public_id,
+
+                q.finalized_at,
+
                 uploader.fullname AS uploaded_by_name,
 
                 manager.fullname AS manager_name,
@@ -14119,15 +14754,27 @@ def construction_account_dashboard():
             """
         )
 
-        approved_quotations = cursor.fetchall()
+        approved_quotations = (
+            cursor.fetchall()
+        )
 
         # ==================================================
         # ACCOUNT SUMMARY
+        #
+        # IMPORTANT:
+        #
+        # The following statistics represent BOTH:
+        #
+        # 1. Supplier Quotations
+        # 2. Material Requests
+        #
+        # This makes the Account dashboard a true
+        # financial control dashboard.
         # ==================================================
 
-        # --------------------------------------------------
+        # ==================================================
         # APPROVED MATERIAL REQUESTS
-        # --------------------------------------------------
+        # ==================================================
 
         cursor.execute(
             """
@@ -14143,9 +14790,9 @@ def construction_account_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # --------------------------------------------------
+        # ==================================================
         # APPROVED QUOTATIONS
-        # --------------------------------------------------
+        # ==================================================
 
         cursor.execute(
             """
@@ -14161,9 +14808,9 @@ def construction_account_dashboard():
             cursor.fetchone()["total"] or 0
         )
 
-        # --------------------------------------------------
-        # CASH WAITING FOR RELEASE
-        # --------------------------------------------------
+        # ==================================================
+        # QUOTATIONS AWAITING CASH RELEASE
+        # ==================================================
 
         cursor.execute(
             """
@@ -14173,17 +14820,56 @@ def construction_account_dashboard():
 
             WHERE status = 'Approved'
 
-              AND cash_released = 0
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """
         )
 
-        cash_pending_count = (
+        quotation_cash_pending_count = (
             cursor.fetchone()["total"] or 0
         )
 
-        # --------------------------------------------------
-        # CASH ALREADY RELEASED
-        # --------------------------------------------------
+        # ==================================================
+        # MATERIAL REQUESTS AWAITING CASH RELEASE
+        # ==================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            LEFT JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+
+              AND mcr.id IS NULL
+            """
+        )
+
+        material_cash_pending_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ==================================================
+        # TOTAL CASH ITEMS AWAITING RELEASE
+        #
+        # BOTH QUOTATIONS + MATERIAL REQUESTS
+        # ==================================================
+
+        cash_pending_count = (
+            quotation_cash_pending_count
+            + material_cash_pending_count
+        )
+
+        # ==================================================
+        # QUOTATIONS WITH CASH RELEASED
+        # ==================================================
 
         cursor.execute(
             """
@@ -14197,20 +14883,64 @@ def construction_account_dashboard():
             """
         )
 
-        cash_released_count = (
+        quotation_cash_released_count = (
             cursor.fetchone()["total"] or 0
         )
 
-        # --------------------------------------------------
-        # TOTAL APPROVED VALUE AWAITING RELEASE
-        # --------------------------------------------------
+        # ==================================================
+        # MATERIAL REQUESTS WITH CASH RELEASED
+        # ==================================================
+
+        cursor.execute(
+            """
+            SELECT COUNT(*) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            INNER JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+            """
+        )
+
+        material_cash_released_count = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ==================================================
+        # TOTAL CASH RELEASED ITEMS
+        #
+        # BOTH QUOTATIONS + MATERIAL REQUESTS
+        # ==================================================
+
+        cash_released_count = (
+            quotation_cash_released_count
+            + material_cash_released_count
+        )
+
+        # ==================================================
+        # TOTAL QUOTATION VALUE AWAITING RELEASE
+        #
+        # NOTE:
+        #
+        # This remains quotation-only because material
+        # requests have no predetermined cash amount.
+        # ==================================================
 
         cursor.execute(
             """
             SELECT
 
                 COALESCE(
-                    SUM(quotation_amount),
+                    SUM(
+                        COALESCE(
+                            quotation_amount,
+                            0
+                        )
+                    ),
                     0
                 ) AS total
 
@@ -14218,11 +14948,47 @@ def construction_account_dashboard():
 
             WHERE status = 'Approved'
 
-              AND cash_released = 0
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """
         )
 
         pending_cash_amount = (
+            cursor.fetchone()["total"] or 0
+        )
+
+        # ==================================================
+        # TOTAL MATERIAL REQUEST CASH RELEASED
+        # ==================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                COALESCE(
+                    SUM(
+                        COALESCE(
+                            mcr.amount,
+                            0
+                        )
+                    ),
+                    0
+                ) AS total
+
+            FROM construction_purchase_material_requests mr
+
+            INNER JOIN
+                construction_purchase_material_request_cash_releases mcr
+
+                ON mcr.material_request_id = mr.id
+
+            WHERE mr.status = 'Approved'
+            """
+        )
+
+        material_cash_released_amount = (
             cursor.fetchone()["total"] or 0
         )
 
@@ -14266,7 +15032,15 @@ def construction_account_dashboard():
             "construction_admin/"
             "construction_account_dashboard.html",
 
+            # ------------------------------------------------
+            # USER
+            # ------------------------------------------------
+
             account_user=account_user,
+
+            # ------------------------------------------------
+            # APPROVED DOCUMENTS
+            # ------------------------------------------------
 
             approved_material_requests=(
                 approved_material_requests
@@ -14276,6 +15050,10 @@ def construction_account_dashboard():
                 approved_quotations
             ),
 
+            # ------------------------------------------------
+            # APPROVED COUNTS
+            # ------------------------------------------------
+
             approved_material_count=(
                 approved_material_count
             ),
@@ -14283,6 +15061,12 @@ def construction_account_dashboard():
             approved_quotation_count=(
                 approved_quotation_count
             ),
+
+            # ------------------------------------------------
+            # CASH CONTROL
+            #
+            # These now represent BOTH workflows.
+            # ------------------------------------------------
 
             cash_pending_count=(
                 cash_pending_count
@@ -14292,10 +15076,48 @@ def construction_account_dashboard():
                 cash_released_count
             ),
 
+            # ------------------------------------------------
+            # DETAILED CASH COUNTS
+            #
+            # Useful for the dashboard subtitles.
+            # ------------------------------------------------
+
+            quotation_cash_pending_count=(
+                quotation_cash_pending_count
+            ),
+
+            material_cash_pending_count=(
+                material_cash_pending_count
+            ),
+
+            quotation_cash_released_count=(
+                quotation_cash_released_count
+            ),
+
+            material_cash_released_count=(
+                material_cash_released_count
+            ),
+
+            # ------------------------------------------------
+            # CASH AMOUNTS
+            # ------------------------------------------------
+
             pending_cash_amount=(
                 pending_cash_amount
+            ),
+
+            material_cash_released_amount=(
+                material_cash_released_amount
+            ),
+
+            material_cash_pending_amount=(
+                0
             )
         )
+
+    # ======================================================
+    # ERROR HANDLING
+    # ======================================================
 
     except Exception as e:
 
@@ -14328,22 +15150,28 @@ def construction_account_dashboard():
             url_for("admin_login")
         )
 
+    # ======================================================
+    # CLOSE DATABASE
+    # ======================================================
+
     finally:
 
         if cursor:
-
             cursor.close()
 
         if conn:
-
             conn.close()
 
 
 
 
+
+
+
+
 # ======================================================
-# ACCOUNT RELEASE CASH QUOTATION ROUTE
-#======================================================
+# ACCOUNT RELEASE CASH - SUPPLIER QUOTATION
+# ======================================================
 @app.route(
     "/construction/account/release-cash/<int:quotation_id>",
     methods=["POST"]
@@ -14390,7 +15218,7 @@ def construction_account_release_cash(quotation_id):
     try:
 
         # ==================================================
-        # DATABASE CONNECTION
+        # DATABASE
         # ==================================================
 
         conn = get_db_connection()
@@ -14401,14 +15229,12 @@ def construction_account_release_cash(quotation_id):
 
         # ==================================================
         # FIND APPROVED QUOTATION
-        #
-        # uploaded_by is important because it identifies
-        # the Purchase Officer who submitted the quotation.
         # ==================================================
 
         cursor.execute(
             """
             SELECT
+
                 id,
                 quotation_number,
                 supplier_name,
@@ -14419,6 +15245,9 @@ def construction_account_release_cash(quotation_id):
                 file_url,
                 uploaded_by,
                 status,
+                manager_id,
+                manager_comment,
+                decision_date,
                 cash_released,
                 cash_released_at,
                 cash_released_by
@@ -14437,7 +15266,7 @@ def construction_account_release_cash(quotation_id):
         quotation = cursor.fetchone()
 
         # ==================================================
-        # QUOTATION NOT FOUND
+        # NOT FOUND
         # ==================================================
 
         if not quotation:
@@ -14471,7 +15300,7 @@ def construction_account_release_cash(quotation_id):
             )
 
         # ==================================================
-        # PREVENT DOUBLE RELEASE
+        # PREVENT DUPLICATE RELEASE
         # ==================================================
 
         if quotation.get("cash_released") == 1:
@@ -14488,7 +15317,7 @@ def construction_account_release_cash(quotation_id):
             )
 
         # ==================================================
-        # ACCOUNT OFFICER DETAILS
+        # ACCOUNT OFFICER
         # ==================================================
 
         account_id = session.get(
@@ -14510,7 +15339,28 @@ def construction_account_release_cash(quotation_id):
         ).strip()
 
         # ==================================================
+        # QUOTATION AMOUNT
+        # ==================================================
+
+        quotation_amount = (
+            quotation.get(
+                "quotation_amount"
+            )
+            or 0
+        )
+
+        currency = (
+            quotation.get(
+                "currency"
+            )
+            or "QAR"
+        ).strip().upper()
+
+        # ==================================================
         # RELEASE CASH
+        #
+        # Cash release is recorded directly inside
+        # construction_purchase_quotations.
         # ==================================================
 
         cursor.execute(
@@ -14518,15 +15368,21 @@ def construction_account_release_cash(quotation_id):
             UPDATE construction_purchase_quotations
 
             SET
+
                 cash_released = 1,
+
                 cash_released_at = NOW(),
+
                 cash_released_by = %s
 
             WHERE id = %s
 
               AND status = 'Approved'
 
-              AND cash_released = 0
+              AND (
+                    cash_released = 0
+                    OR cash_released IS NULL
+                  )
             """,
             (
                 account_id,
@@ -14535,16 +15391,16 @@ def construction_account_release_cash(quotation_id):
         )
 
         # ==================================================
-        # VERIFY UPDATE
+        # MAKE SURE UPDATE HAPPENED
         # ==================================================
 
-        if cursor.rowcount != 1:
+        if cursor.rowcount == 0:
 
             conn.rollback()
 
             flash(
-                "Cash release could not be completed. "
-                "The quotation may already have been released.",
+                "Cash was not released. The quotation may already "
+                "have been released.",
                 "warning"
             )
 
@@ -14555,91 +15411,43 @@ def construction_account_release_cash(quotation_id):
             )
 
         # ==================================================
-        # COMMIT FIRST
-        #
-        # IMPORTANT:
-        # The cash release is now permanently saved.
-        # Email problems below must NOT undo it.
+        # COMMIT
         # ==================================================
 
         conn.commit()
 
-        # ==================================================
-        # RELEASE TIMESTAMP
-        # ==================================================
-
         release_time = datetime.now()
 
+        formatted_amount = (
+            f"{currency} {float(quotation_amount):,.2f}"
+        )
+
         print("========================================")
-        print("CASH RELEASED")
+        print("SUPPLIER QUOTATION CASH RELEASED")
         print(
             "Quotation:",
-            quotation.get("quotation_number")
+            quotation.get(
+                "quotation_number"
+            )
         )
         print(
             "Supplier:",
-            quotation.get("supplier_name")
+            quotation.get(
+                "supplier_name"
+            )
         )
         print(
             "Amount:",
-            quotation.get("quotation_amount")
-        )
-        print(
-            "Currency:",
-            quotation.get("currency")
+            formatted_amount
         )
         print(
             "Released By:",
             account_name
         )
-        print(
-            "Account Email:",
-            account_email
-        )
         print("========================================")
 
         # ==================================================
-        # FORMAT AMOUNT
-        # ==================================================
-
-        quotation_amount = (
-            quotation.get(
-                "quotation_amount"
-            )
-        )
-
-        quotation_currency = (
-            quotation.get(
-                "currency"
-            )
-            or "QAR"
-        )
-
-        if quotation_amount is not None:
-
-            try:
-
-                formatted_amount = (
-                    f"{quotation_currency} "
-                    f"{float(quotation_amount):,.2f}"
-                )
-
-            except (ValueError, TypeError):
-
-                formatted_amount = (
-                    f"{quotation_currency} "
-                    f"{quotation_amount}"
-                )
-
-        else:
-
-            formatted_amount = "Not specified"
-
-        # ==================================================
         # FIND PURCHASE OFFICER
-        #
-        # uploaded_by identifies the person who uploaded
-        # the supplier quotation.
         # ==================================================
 
         purchase_email = ""
@@ -14696,83 +15504,11 @@ def construction_account_release_cash(quotation_id):
         except Exception as purchase_lookup_error:
 
             print(
-                "CASH RELEASE PURCHASE LOOKUP ERROR:",
+                "QUOTATION CASH PURCHASE LOOKUP ERROR:",
                 repr(
                     purchase_lookup_error
                 )
             )
-
-        # ==================================================
-        # FIND MANAGERS
-        #
-        # Notify every manager with a valid email.
-        # ==================================================
-
-        managers = []
-
-        try:
-
-            manager_cursor = conn.cursor(
-                dictionary=True
-            )
-
-            manager_cursor.execute(
-                """
-                SELECT
-                    id,
-                    fullname,
-                    email
-
-                FROM construction_admins
-
-                WHERE LOWER(role) = 'manager'
-
-                  AND email IS NOT NULL
-
-                  AND TRIM(email) != ''
-
-                ORDER BY id ASC
-                """
-            )
-
-            managers = (
-                manager_cursor.fetchall()
-            )
-
-            manager_cursor.close()
-
-        except Exception as manager_lookup_error:
-
-            print(
-                "CASH RELEASE MANAGER LOOKUP ERROR:",
-                repr(
-                    manager_lookup_error
-                )
-            )
-
-        # ==================================================
-        # COMMON EMAIL CONTENT
-        # ==================================================
-
-        quotation_number = (
-            quotation.get(
-                "quotation_number"
-            )
-        )
-
-        supplier_name = (
-            quotation.get(
-                "supplier_name"
-            )
-            or "Supplier"
-        )
-
-        quotation_date = (
-            quotation.get(
-                "quotation_date"
-            )
-            or "Not specified"
-        )
 
         # ==================================================
         # DOCUMENT LINK
@@ -14802,8 +15538,7 @@ def construction_account_release_cash(quotation_id):
 
             document_section = """
             <p>
-                Supplier quotation document is currently
-                unavailable.
+                Supplier quotation document is currently unavailable.
             </p>
             """
 
@@ -14815,13 +15550,13 @@ def construction_account_release_cash(quotation_id):
 
             try:
 
-                purchase_email_result = send_email(
+                send_email(
 
                     purchase_email,
 
                     (
-                        "Cash Released for Approved Quotation - "
-                        f"{quotation_number}"
+                        "Cash Released for Supplier Quotation - "
+                        f"{quotation.get('quotation_number')}"
                     ),
 
                     f"""
@@ -14834,54 +15569,33 @@ def construction_account_release_cash(quotation_id):
                     >
 
                         <h2>
-                            Purchase Cash Released
+                            Supplier Quotation Cash Released
                         </h2>
 
                         <p>
-                            Hello
-                            <b>{purchase_name}</b>,
+                            Hello <b>{purchase_name}</b>,
                         </p>
 
                         <p>
-                            The cash for the approved supplier
-                            quotation has been released by the
-                            Account Department.
+                            The Account Department has released
+                            cash for the approved supplier quotation.
                         </p>
 
                         <hr>
 
-                        <h3>
-                            Quotation Details
-                        </h3>
-
                         <p>
                             <b>Quotation Number:</b>
-                            {quotation_number}
+                            {quotation.get('quotation_number')}
                         </p>
 
                         <p>
                             <b>Supplier:</b>
-                            {supplier_name}
+                            {quotation.get('supplier_name')}
                         </p>
 
                         <p>
-                            <b>Quotation Date:</b>
-                            {quotation_date}
-                        </p>
-
-                        <p>
-                            <b>Approved Amount:</b>
+                            <b>Quotation Amount:</b>
                             {formatted_amount}
-                        </p>
-
-                        <p>
-                            <b>Status:</b>
-                            Approved
-                        </p>
-
-                        <p>
-                            <b>Cash Status:</b>
-                            <b>Released</b>
                         </p>
 
                         <p>
@@ -14891,9 +15605,7 @@ def construction_account_release_cash(quotation_id):
 
                         <p>
                             <b>Release Date:</b>
-                            {release_time.strftime(
-                                "%d %b %Y %H:%M"
-                            )}
+                            {release_time.strftime('%d %b %Y %H:%M')}
                         </p>
 
                         <hr>
@@ -14918,46 +15630,30 @@ def construction_account_release_cash(quotation_id):
                     """
                 )
 
-                print(
-                    "CASH RELEASE PURCHASE EMAIL:",
-                    purchase_email,
-                    purchase_email_result
-                )
-
             except Exception as purchase_email_error:
 
                 print(
-                    "CASH RELEASE PURCHASE EMAIL ERROR:",
+                    "QUOTATION CASH PURCHASE EMAIL ERROR:",
                     repr(
                         purchase_email_error
                     )
                 )
 
-        else:
-
-            print(
-                "CASH RELEASE EMAIL: "
-                "Purchase officer has no valid email."
-            )
-
         # ==================================================
         # ACCOUNT OFFICER EMAIL
-        #
-        # Send confirmation to the account officer who
-        # actually released the cash.
         # ==================================================
 
         if account_email:
 
             try:
 
-                account_email_result = send_email(
+                send_email(
 
                     account_email,
 
                     (
-                        "Cash Release Confirmation - "
-                        f"{quotation_number}"
+                        "Quotation Cash Release Confirmation - "
+                        f"{quotation.get('quotation_number')}"
                     ),
 
                     f"""
@@ -14974,30 +15670,24 @@ def construction_account_release_cash(quotation_id):
                         </h2>
 
                         <p>
-                            Hello
-                            <b>{account_name}</b>,
+                            Hello <b>{account_name}</b>,
                         </p>
 
                         <p>
-                            Your cash release action has been
-                            recorded successfully in the
-                            procurement system.
+                            Your quotation cash release action
+                            has been successfully recorded.
                         </p>
 
                         <hr>
 
-                        <h3>
-                            Release Details
-                        </h3>
-
                         <p>
                             <b>Quotation Number:</b>
-                            {quotation_number}
+                            {quotation.get('quotation_number')}
                         </p>
 
                         <p>
                             <b>Supplier:</b>
-                            {supplier_name}
+                            {quotation.get('supplier_name')}
                         </p>
 
                         <p>
@@ -15006,35 +15696,14 @@ def construction_account_release_cash(quotation_id):
                         </p>
 
                         <p>
-                            <b>Quotation Status:</b>
-                            Approved
-                        </p>
-
-                        <p>
-                            <b>Cash Status:</b>
-                            <b>Released</b>
-                        </p>
-
-                        <p>
-                            <b>Released By:</b>
-                            {account_name}
-                        </p>
-
-                        <p>
                             <b>Release Date:</b>
-                            {release_time.strftime(
-                                "%d %b %Y %H:%M"
-                            )}
+                            {release_time.strftime('%d %b %Y %H:%M')}
                         </p>
 
                         <hr>
 
-                        {document_section}
-
-                        <hr>
-
                         <p>
-                            This action has been permanently
+                            This release has been permanently
                             recorded in the procurement system.
                         </p>
 
@@ -15049,193 +15718,1037 @@ def construction_account_release_cash(quotation_id):
                     """
                 )
 
-                print(
-                    "CASH RELEASE ACCOUNT EMAIL:",
-                    account_email,
-                    account_email_result
-                )
-
             except Exception as account_email_error:
 
                 print(
-                    "CASH RELEASE ACCOUNT EMAIL ERROR:",
+                    "QUOTATION CASH ACCOUNT EMAIL ERROR:",
                     repr(
                         account_email_error
                     )
                 )
 
-        else:
+        # ==================================================
+        # FIND MANAGERS
+        # ==================================================
+
+        managers = []
+
+        try:
+
+            manager_cursor = conn.cursor(
+                dictionary=True
+            )
+
+            manager_cursor.execute(
+                """
+                SELECT
+                    id,
+                    fullname,
+                    email
+
+                FROM construction_admins
+
+                WHERE LOWER(role) = 'manager'
+
+                  AND email IS NOT NULL
+
+                  AND TRIM(email) != ''
+
+                ORDER BY id ASC
+                """
+            )
+
+            managers = manager_cursor.fetchall()
+
+            manager_cursor.close()
+
+        except Exception as manager_lookup_error:
 
             print(
-                "CASH RELEASE EMAIL: "
-                "Account officer has no valid email."
+                "QUOTATION CASH MANAGER LOOKUP ERROR:",
+                repr(
+                    manager_lookup_error
+                )
             )
 
         # ==================================================
         # MANAGER EMAILS
         # ==================================================
 
-        if managers:
+        for manager in managers:
 
-            for manager in managers:
+            manager_email = (
+                manager.get(
+                    "email"
+                )
+                or ""
+            ).strip()
 
-                manager_email = (
-                    manager.get(
-                        "email"
-                    )
-                    or ""
-                ).strip()
+            if not manager_email:
+                continue
 
-                if not manager_email:
-                    continue
+            manager_name = (
+                manager.get(
+                    "fullname"
+                )
+                or "Manager"
+            )
 
-                manager_name = (
-                    manager.get(
-                        "fullname"
-                    )
-                    or "Manager"
+            try:
+
+                send_email(
+
+                    manager_email,
+
+                    (
+                        "Cash Released for Approved Quotation - "
+                        f"{quotation.get('quotation_number')}"
+                    ),
+
+                    f"""
+                    <div
+                        style="
+                            font-family:Arial,sans-serif;
+                            color:#172033;
+                            line-height:1.6;
+                        "
+                    >
+
+                        <h2>
+                            Supplier Quotation Cash Released
+                        </h2>
+
+                        <p>
+                            Hello <b>{manager_name}</b>,
+                        </p>
+
+                        <p>
+                            The Account Department has released
+                            cash for the supplier quotation you approved.
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <b>Quotation Number:</b>
+                            {quotation.get('quotation_number')}
+                        </p>
+
+                        <p>
+                            <b>Supplier:</b>
+                            {quotation.get('supplier_name')}
+                        </p>
+
+                        <p>
+                            <b>Quotation Amount:</b>
+                            {formatted_amount}
+                        </p>
+
+                        <p>
+                            <b>Released By:</b>
+                            {account_name}
+                        </p>
+
+                        <p>
+                            <b>Release Date:</b>
+                            {release_time.strftime('%d %b %Y %H:%M')}
+                        </p>
+
+                        <hr>
+
+                        {document_section}
+
+                        <hr>
+
+                        <p>
+                            The cash release has been successfully
+                            recorded in the procurement system.
+                        </p>
+
+                        <p>
+                            Regards,<br>
+                            <b>
+                                Prestigious Trading & Constructions
+                            </b>
+                        </p>
+
+                    </div>
+                    """
                 )
 
-                try:
+            except Exception as manager_email_error:
 
-                    manager_email_result = send_email(
-
-                        manager_email,
-
-                        (
-                            "Cash Released for Approved "
-                            "Quotation - "
-                            f"{quotation_number}"
-                        ),
-
-                        f"""
-                        <div
-                            style="
-                                font-family:Arial,sans-serif;
-                                color:#172033;
-                                line-height:1.6;
-                            "
-                        >
-
-                            <h2>
-                                Purchase Cash Released
-                            </h2>
-
-                            <p>
-                                Hello
-                                <b>{manager_name}</b>,
-                            </p>
-
-                            <p>
-                                This is to notify you that the
-                                Account Department has released
-                                cash for the supplier quotation
-                                you approved.
-                            </p>
-
-                            <hr>
-
-                            <h3>
-                                Quotation Details
-                            </h3>
-
-                            <p>
-                                <b>Quotation Number:</b>
-                                {quotation_number}
-                            </p>
-
-                            <p>
-                                <b>Supplier:</b>
-                                {supplier_name}
-                            </p>
-
-                            <p>
-                                <b>Quotation Date:</b>
-                                {quotation_date}
-                            </p>
-
-                            <p>
-                                <b>Approved Amount:</b>
-                                {formatted_amount}
-                            </p>
-
-                            <p>
-                                <b>Quotation Status:</b>
-                                Approved
-                            </p>
-
-                            <p>
-                                <b>Cash Status:</b>
-                                <b>Released</b>
-                            </p>
-
-                            <p>
-                                <b>Released By:</b>
-                                {account_name}
-                            </p>
-
-                            <p>
-                                <b>Release Date:</b>
-                                {release_time.strftime(
-                                    "%d %b %Y %H:%M"
-                                )}
-                            </p>
-
-                            <hr>
-
-                            {document_section}
-
-                            <hr>
-
-                            <p>
-                                The cash release has been
-                                successfully recorded in the
-                                procurement system.
-                            </p>
-
-                            <p>
-                                Regards,<br>
-                                <b>
-                                    Prestigious Trading & Constructions
-                                </b>
-                            </p>
-
-                        </div>
-                        """
+                print(
+                    "QUOTATION CASH MANAGER EMAIL ERROR:",
+                    repr(
+                        manager_email_error
                     )
-
-                    print(
-                        "CASH RELEASE MANAGER EMAIL:",
-                        manager_email,
-                        manager_name,
-                        manager_email_result
-                    )
-
-                except Exception as manager_email_error:
-
-                    print(
-                        "CASH RELEASE MANAGER EMAIL ERROR:",
-                        manager_email,
-                        repr(
-                            manager_email_error
-                        )
-                    )
-
-        else:
-
-            print(
-                "CASH RELEASE EMAIL: "
-                "No manager with a valid email address was found."
-            )
+                )
 
         # ==================================================
         # SUCCESS
         # ==================================================
 
         flash(
-            f"Cash released successfully for "
-            f"{quotation_number}. "
-            "Purchase, Account and Management have been notified.",
+            f"Cash of {formatted_amount} released successfully "
+            f"for quotation "
+            f"{quotation.get('quotation_number')}.",
+            "success"
+        )
+
+        return redirect(
+            url_for(
+                "construction_account_dashboard"
+            )
+        )
+
+    # ======================================================
+    # ERROR HANDLING
+    # ======================================================
+
+    except Exception as e:
+
+        if conn:
+
+            conn.rollback()
+
+        print(
+            "=================================================="
+        )
+
+        print(
+            "CONSTRUCTION QUOTATION CASH RELEASE ERROR"
+        )
+
+        print(
+            type(e).__name__
+        )
+
+        print(
+            repr(e)
+        )
+
+        print(
+            "=================================================="
+        )
+
+        flash(
+            "Unable to release quotation cash. "
+            "Please try again.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_account_dashboard"
+            )
+        )
+
+    # ======================================================
+    # CLOSE DATABASE
+    # ======================================================
+
+    finally:
+
+        if cursor:
+
+            cursor.close()
+
+        if conn:
+
+            conn.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ======================================================
+# ACCOUNT RELEASE CASH - MATERIAL REQUEST
+# ======================================================
+@app.route(
+    "/construction/account/release-material-cash/<int:material_request_id>",
+    methods=["POST"]
+)
+def construction_account_release_material_cash(
+    material_request_id
+):
+
+    # ======================================================
+    # LOGIN PROTECTION
+    # ======================================================
+
+    if "construction_admin_id" not in session:
+
+        flash(
+            "Please sign in to access the Account Department.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    # ======================================================
+    # ROLE PROTECTION
+    # ======================================================
+
+    role = (
+        session.get("construction_admin_role") or ""
+    ).strip().lower()
+
+    if role != "account":
+
+        flash(
+            "You are not authorized to release purchase cash.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    conn = None
+    cursor = None
+
+    try:
+
+        # ==================================================
+        # GET FORM DATA
+        # ==================================================
+
+        amount_input = (
+            request.form.get("amount") or ""
+        ).strip()
+
+        currency = (
+            request.form.get("currency")
+            or "QAR"
+        ).strip().upper()
+
+        notes = (
+            request.form.get("notes")
+            or ""
+        ).strip()
+
+        # ==================================================
+        # VALIDATE AMOUNT
+        # ==================================================
+
+        if not amount_input:
+
+            flash(
+                "Please enter the cash release amount.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        try:
+
+            amount = float(
+                amount_input
+            )
+
+        except (ValueError, TypeError):
+
+            flash(
+                "Please enter a valid cash release amount.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        if amount <= 0:
+
+            flash(
+                "Cash release amount must be greater than zero.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        # ==================================================
+        # DATABASE
+        # ==================================================
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(
+            dictionary=True
+        )
+
+        # ==================================================
+        # FIND APPROVED MATERIAL REQUEST
+        # ==================================================
+
+        cursor.execute(
+            """
+            SELECT
+
+                id,
+                request_number,
+                project_name,
+                requested_by,
+                description,
+                file_name,
+                file_url,
+                uploaded_by,
+                status
+
+            FROM construction_purchase_material_requests
+
+            WHERE id = %s
+
+            LIMIT 1
+            """,
+            (
+                material_request_id,
+            )
+        )
+
+        material_request = cursor.fetchone()
+
+        # ==================================================
+        # NOT FOUND
+        # ==================================================
+
+        if not material_request:
+
+            flash(
+                "The selected material request could not be found.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        # ==================================================
+        # MUST BE APPROVED
+        # ==================================================
+
+        if material_request.get("status") != "Approved":
+
+            flash(
+                "Cash can only be released for an approved material request.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        # ==================================================
+        # PREVENT MULTIPLE RELEASE
+        # ==================================================
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                amount,
+                currency,
+                released_by,
+                released_at
+
+            FROM construction_purchase_material_request_cash_releases
+
+            WHERE material_request_id = %s
+
+            LIMIT 1
+            """,
+            (
+                material_request_id,
+            )
+        )
+
+        existing_release = cursor.fetchone()
+
+        if existing_release:
+
+            flash(
+                "Cash has already been released for this material request.",
+                "info"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_account_dashboard"
+                )
+            )
+
+        # ==================================================
+        # ACCOUNT OFFICER
+        # ==================================================
+
+        account_id = session.get(
+            "construction_admin_id"
+        )
+
+        account_name = (
+            session.get(
+                "construction_admin_name"
+            )
+            or "Account Officer"
+        )
+
+        account_email = (
+            session.get(
+                "construction_admin_email"
+            )
+            or ""
+        ).strip()
+
+        # ==================================================
+        # RELEASE CASH
+        # ==================================================
+
+        cursor.execute(
+            """
+            INSERT INTO
+                construction_purchase_material_request_cash_releases
+            (
+                material_request_id,
+                amount,
+                currency,
+                released_by,
+                released_at,
+                notes,
+                created_at
+            )
+
+            VALUES
+            (
+                %s,
+                %s,
+                %s,
+                %s,
+                NOW(),
+                %s,
+                NOW()
+            )
+            """,
+            (
+                material_request_id,
+                amount,
+                currency,
+                account_id,
+                notes or None
+            )
+        )
+
+        # ==================================================
+        # COMMIT
+        # ==================================================
+
+        conn.commit()
+
+        release_time = datetime.now()
+
+        formatted_amount = (
+            f"{currency} {amount:,.2f}"
+        )
+
+        print("========================================")
+        print("MATERIAL REQUEST CASH RELEASED")
+        print(
+            "Request:",
+            material_request.get(
+                "request_number"
+            )
+        )
+        print(
+            "Project:",
+            material_request.get(
+                "project_name"
+            )
+        )
+        print(
+            "Amount:",
+            formatted_amount
+        )
+        print(
+            "Released By:",
+            account_name
+        )
+        print("========================================")
+
+        # ==================================================
+        # FIND PURCHASE OFFICER
+        # ==================================================
+
+        purchase_email = ""
+        purchase_name = "Purchase Officer"
+
+        try:
+
+            purchase_cursor = conn.cursor(
+                dictionary=True
+            )
+
+            purchase_cursor.execute(
+                """
+                SELECT
+                    id,
+                    fullname,
+                    email
+
+                FROM construction_admins
+
+                WHERE id = %s
+
+                LIMIT 1
+                """,
+                (
+                    material_request.get(
+                        "uploaded_by"
+                    ),
+                )
+            )
+
+            purchase_user = (
+                purchase_cursor.fetchone()
+            )
+
+            purchase_cursor.close()
+
+            if purchase_user:
+
+                purchase_email = (
+                    purchase_user.get(
+                        "email"
+                    )
+                    or ""
+                ).strip()
+
+                purchase_name = (
+                    purchase_user.get(
+                        "fullname"
+                    )
+                    or "Purchase Officer"
+                )
+
+        except Exception as purchase_lookup_error:
+
+            print(
+                "MATERIAL CASH PURCHASE LOOKUP ERROR:",
+                repr(
+                    purchase_lookup_error
+                )
+            )
+
+        # ==================================================
+        # DOCUMENT LINK
+        # ==================================================
+
+        material_file_url = (
+            material_request.get(
+                "file_url"
+            )
+            or ""
+        )
+
+        if material_file_url:
+
+            document_section = f"""
+            <p>
+                <a
+                    href="{material_file_url}"
+                    target="_blank"
+                >
+                    View Material Request
+                </a>
+            </p>
+            """
+
+        else:
+
+            document_section = """
+            <p>
+                Material request document is currently unavailable.
+            </p>
+            """
+
+        # ==================================================
+        # PURCHASE OFFICER EMAIL
+        # ==================================================
+
+        if purchase_email:
+
+            try:
+
+                send_email(
+
+                    purchase_email,
+
+                    (
+                        "Cash Released for Material Request - "
+                        f"{material_request.get('request_number')}"
+                    ),
+
+                    f"""
+                    <div
+                        style="
+                            font-family:Arial,sans-serif;
+                            color:#172033;
+                            line-height:1.6;
+                        "
+                    >
+
+                        <h2>
+                            Material Request Cash Released
+                        </h2>
+
+                        <p>
+                            Hello <b>{purchase_name}</b>,
+                        </p>
+
+                        <p>
+                            The Account Department has released
+                            cash for the approved material request.
+                        </p>
+
+                        <hr>
+
+                        <h3>Material Request Details</h3>
+
+                        <p>
+                            <b>Request Number:</b>
+                            {material_request.get('request_number')}
+                        </p>
+
+                        <p>
+                            <b>Project:</b>
+                            {material_request.get('project_name')}
+                        </p>
+
+                        <p>
+                            <b>Requested By:</b>
+                            {material_request.get('requested_by') or 'Not specified'}
+                        </p>
+
+                        <p>
+                            <b>Cash Released:</b>
+                            {formatted_amount}
+                        </p>
+
+                        <p>
+                            <b>Released By:</b>
+                            {account_name}
+                        </p>
+
+                        <p>
+                            <b>Release Date:</b>
+                            {release_time.strftime('%d %b %Y %H:%M')}
+                        </p>
+
+                        <hr>
+
+                        {document_section}
+
+                        <hr>
+
+                        <p>
+                            The material request is now financially
+                            cleared for the next procurement step.
+                        </p>
+
+                        <p>
+                            Regards,<br>
+                            <b>
+                                Prestigious Trading & Constructions
+                            </b>
+                        </p>
+
+                    </div>
+                    """
+                )
+
+            except Exception as purchase_email_error:
+
+                print(
+                    "MATERIAL CASH PURCHASE EMAIL ERROR:",
+                    repr(
+                        purchase_email_error
+                    )
+                )
+
+        # ==================================================
+        # ACCOUNT OFFICER EMAIL
+        # ==================================================
+
+        if account_email:
+
+            try:
+
+                send_email(
+
+                    account_email,
+
+                    (
+                        "Material Request Cash Release Confirmation - "
+                        f"{material_request.get('request_number')}"
+                    ),
+
+                    f"""
+                    <div
+                        style="
+                            font-family:Arial,sans-serif;
+                            color:#172033;
+                            line-height:1.6;
+                        "
+                    >
+
+                        <h2>
+                            Cash Release Confirmation
+                        </h2>
+
+                        <p>
+                            Hello <b>{account_name}</b>,
+                        </p>
+
+                        <p>
+                            Your cash release action has been
+                            successfully recorded.
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <b>Request Number:</b>
+                            {material_request.get('request_number')}
+                        </p>
+
+                        <p>
+                            <b>Project:</b>
+                            {material_request.get('project_name')}
+                        </p>
+
+                        <p>
+                            <b>Amount Released:</b>
+                            {formatted_amount}
+                        </p>
+
+                        <p>
+                            <b>Release Date:</b>
+                            {release_time.strftime('%d %b %Y %H:%M')}
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            This release has been permanently
+                            recorded in the procurement system.
+                        </p>
+
+                        <p>
+                            Regards,<br>
+                            <b>
+                                Prestigious Trading & Constructions
+                            </b>
+                        </p>
+
+                    </div>
+                    """
+                )
+
+            except Exception as account_email_error:
+
+                print(
+                    "MATERIAL CASH ACCOUNT EMAIL ERROR:",
+                    repr(
+                        account_email_error
+                    )
+                )
+
+        # ==================================================
+        # FIND MANAGERS
+        # ==================================================
+
+        managers = []
+
+        try:
+
+            manager_cursor = conn.cursor(
+                dictionary=True
+            )
+
+            manager_cursor.execute(
+                """
+                SELECT
+                    id,
+                    fullname,
+                    email
+
+                FROM construction_admins
+
+                WHERE LOWER(role) = 'manager'
+
+                  AND email IS NOT NULL
+
+                  AND TRIM(email) != ''
+
+                ORDER BY id ASC
+                """
+            )
+
+            managers = manager_cursor.fetchall()
+
+            manager_cursor.close()
+
+        except Exception as manager_lookup_error:
+
+            print(
+                "MATERIAL CASH MANAGER LOOKUP ERROR:",
+                repr(
+                    manager_lookup_error
+                )
+            )
+
+        # ==================================================
+        # MANAGER EMAILS
+        # ==================================================
+
+        for manager in managers:
+
+            manager_email = (
+                manager.get("email") or ""
+            ).strip()
+
+            if not manager_email:
+                continue
+
+            manager_name = (
+                manager.get("fullname")
+                or "Manager"
+            )
+
+            try:
+
+                send_email(
+
+                    manager_email,
+
+                    (
+                        "Cash Released for Approved Material Request - "
+                        f"{material_request.get('request_number')}"
+                    ),
+
+                    f"""
+                    <div
+                        style="
+                            font-family:Arial,sans-serif;
+                            color:#172033;
+                            line-height:1.6;
+                        "
+                    >
+
+                        <h2>
+                            Material Request Cash Released
+                        </h2>
+
+                        <p>
+                            Hello <b>{manager_name}</b>,
+                        </p>
+
+                        <p>
+                            The Account Department has released
+                            cash for the material request you approved.
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <b>Request Number:</b>
+                            {material_request.get('request_number')}
+                        </p>
+
+                        <p>
+                            <b>Project:</b>
+                            {material_request.get('project_name')}
+                        </p>
+
+                        <p>
+                            <b>Requested By:</b>
+                            {material_request.get('requested_by') or 'Not specified'}
+                        </p>
+
+                        <p>
+                            <b>Cash Released:</b>
+                            {formatted_amount}
+                        </p>
+
+                        <p>
+                            <b>Released By:</b>
+                            {account_name}
+                        </p>
+
+                        <p>
+                            <b>Release Date:</b>
+                            {release_time.strftime('%d %b %Y %H:%M')}
+                        </p>
+
+                        <hr>
+
+                        {document_section}
+
+                        <hr>
+
+                        <p>
+                            The cash release has been successfully
+                            recorded in the procurement system.
+                        </p>
+
+                        <p>
+                            Regards,<br>
+                            <b>
+                                Prestigious Trading & Constructions
+                            </b>
+                        </p>
+
+                    </div>
+                    """
+                )
+
+            except Exception as manager_email_error:
+
+                print(
+                    "MATERIAL CASH MANAGER EMAIL ERROR:",
+                    manager_email_error
+                )
+
+        # ==================================================
+        # SUCCESS
+        # ==================================================
+
+        flash(
+            f"Cash of {formatted_amount} released successfully "
+            f"for material request "
+            f"{material_request.get('request_number')}.",
             "success"
         )
 
@@ -15256,7 +16769,7 @@ def construction_account_release_cash(quotation_id):
         )
 
         print(
-            "CONSTRUCTION CASH RELEASE ERROR"
+            "CONSTRUCTION MATERIAL REQUEST CASH RELEASE ERROR"
         )
 
         print(
@@ -15272,7 +16785,8 @@ def construction_account_release_cash(quotation_id):
         )
 
         flash(
-            "Unable to release cash. Please try again.",
+            "Unable to release material request cash. "
+            "Please try again.",
             "danger"
         )
 
@@ -15285,12 +16799,13 @@ def construction_account_release_cash(quotation_id):
     finally:
 
         if cursor:
-
             cursor.close()
 
         if conn:
-
             conn.close()
+
+
+
 
 
 
