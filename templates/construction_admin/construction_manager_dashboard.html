@@ -206,12 +206,41 @@ Manager Dashboard | Purchase Control
   flex-shrink: 0;
 }
 
-.summary-pending .summary-icon-box { background: var(--mgr-amber-soft); color: var(--mgr-amber); border: 1px solid var(--mgr-amber-border); }
-.summary-review .summary-icon-box { background: var(--mgr-blue-soft); color: var(--mgr-blue); border: 1px solid var(--mgr-blue-border); }
-.summary-approved .summary-icon-box { background: var(--mgr-emerald-soft); color: var(--mgr-emerald); border: 1px solid var(--mgr-emerald-border); }
-.summary-declined .summary-icon-box { background: var(--mgr-rose-soft); color: var(--mgr-rose); border: 1px solid var(--mgr-rose-border); }
-.summary-cash-pending .summary-icon-box { background: var(--mgr-amber-soft); color: var(--mgr-amber); border: 1px solid var(--mgr-amber-border); }
-.summary-cash-released .summary-icon-box { background: var(--mgr-purple-soft); color: var(--mgr-purple); border: 1px solid var(--mgr-purple-border); }
+.summary-pending .summary-icon-box {
+  background: var(--mgr-amber-soft);
+  color: var(--mgr-amber);
+  border: 1px solid var(--mgr-amber-border);
+}
+
+.summary-review .summary-icon-box {
+  background: var(--mgr-blue-soft);
+  color: var(--mgr-blue);
+  border: 1px solid var(--mgr-blue-border);
+}
+
+.summary-approved .summary-icon-box {
+  background: var(--mgr-emerald-soft);
+  color: var(--mgr-emerald);
+  border: 1px solid var(--mgr-emerald-border);
+}
+
+.summary-declined .summary-icon-box {
+  background: var(--mgr-rose-soft);
+  color: var(--mgr-rose);
+  border: 1px solid var(--mgr-rose-border);
+}
+
+.summary-cash-pending .summary-icon-box {
+  background: var(--mgr-amber-soft);
+  color: var(--mgr-amber);
+  border: 1px solid var(--mgr-amber-border);
+}
+
+.summary-cash-released .summary-icon-box {
+  background: var(--mgr-purple-soft);
+  color: var(--mgr-purple);
+  border: 1px solid var(--mgr-purple-border);
+}
 
 .summary-number {
   font-size: 32px;
@@ -378,7 +407,7 @@ Manager Dashboard | Purchase Control
 }
 
 /* =========================================================
-   TABLE ARCHITECTURE (COLOR & HORIZONTAL ROW DEMARCATION)
+   TABLE ARCHITECTURE
 ========================================================= */
 .table-wrapper {
   width: 100%;
@@ -392,7 +421,6 @@ Manager Dashboard | Purchase Control
   font-size: 13.5px;
 }
 
-/* DEMARCATED DARK NAVY THEAD */
 .manager-table thead th {
   background: #0f172a;
   color: #f8fafc;
@@ -407,7 +435,6 @@ Manager Dashboard | Purchase Control
   white-space: nowrap;
 }
 
-/* CRISP HORIZONTAL LINE SEPARATORS BETWEEN ROWS */
 .manager-table tbody td {
   padding: 16px 18px;
   border-top: 1px solid #e2e8f0 !important;
@@ -427,7 +454,6 @@ Manager Dashboard | Purchase Control
   display: none !important;
 }
 
-/* S/N Cell */
 .row-sn-cell {
   font-weight: 800;
   color: var(--mgr-text-muted);
@@ -556,11 +582,35 @@ Manager Dashboard | Purchase Control
   white-space: nowrap;
 }
 
-.status-pending { background: var(--mgr-amber-soft); color: var(--mgr-amber); border: 1px solid var(--mgr-amber-border); }
-.status-review { background: var(--mgr-blue-soft); color: var(--mgr-blue); border: 1px solid var(--mgr-blue-border); }
-.status-approved { background: var(--mgr-emerald-soft); color: var(--mgr-emerald); border: 1px solid var(--mgr-emerald-border); }
-.status-declined { background: var(--mgr-rose-soft); color: var(--mgr-rose); border: 1px solid var(--mgr-rose-border); }
-.status-other { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.status-pending {
+  background: var(--mgr-amber-soft);
+  color: var(--mgr-amber);
+  border: 1px solid var(--mgr-amber-border);
+}
+
+.status-review {
+  background: var(--mgr-blue-soft);
+  color: var(--mgr-blue);
+  border: 1px solid var(--mgr-blue-border);
+}
+
+.status-approved {
+  background: var(--mgr-emerald-soft);
+  color: var(--mgr-emerald);
+  border: 1px solid var(--mgr-emerald-border);
+}
+
+.status-declined {
+  background: var(--mgr-rose-soft);
+  color: var(--mgr-rose);
+  border: 1px solid var(--mgr-rose-border);
+}
+
+.status-other {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
 
 .cash-status {
   display: inline-flex;
@@ -573,8 +623,17 @@ Manager Dashboard | Purchase Control
   white-space: nowrap;
 }
 
-.cash-awaiting { background: var(--mgr-amber-soft); color: var(--mgr-amber); border: 1px solid var(--mgr-amber-border); }
-.cash-released { background: var(--mgr-emerald-soft); color: var(--mgr-emerald); border: 1px solid var(--mgr-emerald-border); }
+.cash-awaiting {
+  background: var(--mgr-amber-soft);
+  color: var(--mgr-amber);
+  border: 1px solid var(--mgr-amber-border);
+}
+
+.cash-released {
+  background: var(--mgr-emerald-soft);
+  color: var(--mgr-emerald);
+  border: 1px solid var(--mgr-emerald-border);
+}
 
 .cash-release-info {
   margin-top: 5px;
@@ -630,9 +689,17 @@ Manager Dashboard | Purchase Control
   letter-spacing: 0.4px;
 }
 
-.finalized-badge-approved { color: var(--mgr-emerald); }
-.finalized-badge-declined { color: var(--mgr-rose); }
-.finalized-badge-review { color: var(--mgr-amber); }
+.finalized-badge-approved {
+  color: var(--mgr-emerald);
+}
+
+.finalized-badge-declined {
+  color: var(--mgr-rose);
+}
+
+.finalized-badge-review {
+  color: var(--mgr-amber);
+}
 
 .finalized-date {
   margin-top: 6px;
@@ -787,22 +854,54 @@ Manager Dashboard | Purchase Control
    RESPONSIVE
 ========================================================= */
 @media (max-width: 1400px) {
-  .manager-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .manager-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 992px) {
-  .manager-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .manager-page { padding: 22px 18px; }
-  .manager-header-left h1 { font-size: 28px; }
-  .manager-section-title h2 { font-size: 20px; }
-  .table-search-box { width: 100%; }
+  .manager-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .manager-page {
+    padding: 22px 18px;
+  }
+
+  .manager-header-left h1 {
+    font-size: 28px;
+  }
+
+  .manager-section-title h2 {
+    font-size: 20px;
+  }
+
+  .table-search-box {
+    width: 100%;
+  }
 }
 
 @media (max-width: 640px) {
-  .manager-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .manager-user-widget { width: 100%; justify-content: space-between; }
-  .manager-summary { grid-template-columns: 1fr; gap: 12px; }
-  .pagination-footer { flex-direction: column; align-items: stretch; }
+  .manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .manager-user-widget {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .manager-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pagination-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 </style>
 
@@ -822,575 +921,1539 @@ Manager Dashboard | Purchase Control
                 <div class="manager-avatar-badge">
                     {{ manager_user.fullname[:1]|upper if manager_user.fullname else "M" }}
                 </div>
+
                 <div class="manager-user-meta">
-                    <div class="manager-user-name">{{ manager_user.fullname }}</div>
+                    <div class="manager-user-name">
+                        {{ manager_user.fullname }}
+                    </div>
+
                     <div class="manager-user-role">
                         {{ manager_user.role|title }}
-                        {% if manager_user.username %} · {{ manager_user.username }}{% endif %}
+                        {% if manager_user.username %}
+                            · {{ manager_user.username }}
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
-            <a href="{{ url_for('admin_logout') }}" class="manager-logout-btn" title="Logout">
+            <a
+                href="{{ url_for('admin_logout') }}"
+                class="manager-logout-btn"
+                title="Logout"
+            >
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
         </div>
     </div>
 
+
     <!-- =====================================================
          SUMMARY / KPI METRICS
          ===================================================== -->
     <div class="manager-summary">
+
         <!-- PENDING MATERIAL REQUESTS -->
         <div class="summary-card summary-pending">
+
             <div class="summary-top">
-                <div class="summary-label">Pending Material Requests</div>
+
+                <div class="summary-label">
+                    Pending Material Requests
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-box-open"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ pending_material_requests or 0 }}</div>
+
+            <div class="summary-number">
+                {{ pending_material_requests or 0 }}
+            </div>
+
         </div>
+
 
         <!-- QUOTATIONS UNDER REVIEW -->
         <div class="summary-card summary-review">
+
             <div class="summary-top">
-                <div class="summary-label">Quotations Under Review</div>
+
+                <div class="summary-label">
+                    Quotations Under Review
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-file-invoice-dollar"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ quotations_under_review or 0 }}</div>
+
+            <div class="summary-number">
+                {{ quotations_under_review or 0 }}
+            </div>
+
         </div>
+
 
         <!-- APPROVED QUOTATIONS -->
         <div class="summary-card summary-approved">
+
             <div class="summary-top">
-                <div class="summary-label">Approved Quotations</div>
+
+                <div class="summary-label">
+                    Approved Quotations
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-check-circle"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ approved_quotations or 0 }}</div>
+
+            <div class="summary-number">
+                {{ approved_quotations or 0 }}
+            </div>
+
         </div>
+
 
         <!-- DECLINED QUOTATIONS -->
         <div class="summary-card summary-declined">
+
             <div class="summary-top">
-                <div class="summary-label">Declined Quotations</div>
+
+                <div class="summary-label">
+                    Declined Quotations
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-times-circle"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ declined_quotations or 0 }}</div>
+
+            <div class="summary-number">
+                {{ declined_quotations or 0 }}
+            </div>
+
         </div>
 
-        <!-- CASH AWAITING RELEASE -->
+
+        <!-- CASH AWAITING RELEASE
+             QUOTATIONS
+        -->
         <div class="summary-card summary-cash-pending">
+
             <div class="summary-top">
-                <div class="summary-label">Cash Awaiting Release</div>
+
+                <div class="summary-label">
+                    Cash Awaiting Release
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ cash_pending_count or 0 }}</div>
+
+            <div class="summary-number">
+                {{ cash_pending_count or 0 }}
+            </div>
+
             {% if cash_pending_amount %}
+
                 <div class="summary-amount">
                     QAR {{ "{:,.2f}".format(cash_pending_amount) }}
                 </div>
+
             {% endif %}
+
         </div>
 
-        <!-- CASH RELEASED -->
+
+        <!-- CASH RELEASED
+             QUOTATIONS
+        -->
         <div class="summary-card summary-cash-released">
+
             <div class="summary-top">
-                <div class="summary-label">Cash Released</div>
+
+                <div class="summary-label">
+                    Cash Released
+                </div>
+
                 <div class="summary-icon-box">
                     <i class="fas fa-check-double"></i>
                 </div>
+
             </div>
-            <div class="summary-number">{{ cash_released_count or 0 }}</div>
+
+            <div class="summary-number">
+                {{ cash_released_count or 0 }}
+            </div>
+
         </div>
+
     </div>
+
 
     <!-- =====================================================
          MATERIAL REQUESTS SECTION
          ===================================================== -->
-    <div class="manager-section" id="materialRequestsSection">
+    <div
+        class="manager-section"
+        id="materialRequestsSection"
+    >
+
         <div class="manager-section-header">
+
             <div class="manager-section-title">
+
                 <div class="section-icon-pill">
                     <i class="fas fa-boxes-stacked"></i>
                 </div>
+
                 <div>
-                    <h2>Material Requests</h2>
-                    <span>Purchase requests received by the department</span>
+
+                    <h2>
+                        Material Requests
+                    </h2>
+
+                    <span>
+                        Purchase requests received by the department
+                    </span>
+
                 </div>
+
             </div>
+
 
             <!-- INSTANT LIVE SEARCH BAR -->
             <div class="section-header-right">
+
                 <div class="table-search-box">
+
                     <i class="fas fa-search search-icon"></i>
+
                     <input
                         type="text"
                         id="materialRequestsSearchInput"
-                        placeholder="Search request, project, requester, status..."
+                        placeholder="Search request, project, requester, amount, status..."
                         autocomplete="off"
                     >
-                    <button type="button" class="table-search-clear" id="clearMaterialSearch" title="Clear search">✕</button>
+
+                    <button
+                        type="button"
+                        class="table-search-clear"
+                        id="clearMaterialSearch"
+                        title="Clear search"
+                    >
+                        ✕
+                    </button>
+
                 </div>
 
-                <div class="section-badge" id="materialRequestsBadge">
+
+                <div
+                    class="section-badge"
+                    id="materialRequestsBadge"
+                >
                     {{ material_requests|length }} requests
                 </div>
+
             </div>
+
         </div>
 
+
         {% if material_requests %}
+
             <div class="table-wrapper">
-                <table class="manager-table" id="materialRequestsTable">
+
+                <table
+                    class="manager-table"
+                    id="materialRequestsTable"
+                >
+
                     <thead>
+
                         <tr>
-                            <th style="width: 50px; text-align: center;">#</th>
-                            <th>Request</th>
-                            <th>Project</th>
-                            <th>Requested By</th>
-                            <th>Request Date</th>
-                            <th>Status</th>
-                            <th>Documents</th>
-                            <th class="text-end">Action</th>
+
+                            <th style="width: 50px; text-align: center;">
+                                #
+                            </th>
+
+                            <th>
+                                Request
+                            </th>
+
+                            <th>
+                                Project
+                            </th>
+
+                            <th>
+                                Requested By
+                            </th>
+
+                            <th>
+                                Request Date
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Cash Status
+                            </th>
+
+                            <th>
+                                Documents
+                            </th>
+
+                            <th class="text-end">
+                                Action
+                            </th>
+
                         </tr>
+
                     </thead>
+
+
                     <tbody id="materialRequestsTableBody">
+
                     {% for request in material_requests %}
+
                         <tr class="searchable-material-row">
+
                             <!-- S/N -->
                             <td class="row-sn-cell material-sn-cell">
                                 {{ loop.index }}
                             </td>
 
+
                             <!-- REQUEST -->
                             <td>
-                                <div class="primary-text">{{ request.request_number }}</div>
-                                <div class="secondary-text">
-                                    Uploaded {% if request.created_at %}{{ request.created_at.strftime('%d %b %Y %H:%M') }}{% endif %}
+
+                                <div class="primary-text">
+                                    {{ request.request_number }}
                                 </div>
+
+                                <div class="secondary-text">
+
+                                    Uploaded
+
+                                    {% if request.created_at %}
+                                        {{ request.created_at.strftime('%d %b %Y %H:%M') }}
+                                    {% endif %}
+
+                                </div>
+
                             </td>
+
 
                             <!-- PROJECT -->
                             <td>
-                                <div class="primary-text">{{ request.project_name }}</div>
+
+                                <div class="primary-text">
+                                    {{ request.project_name }}
+                                </div>
+
                                 {% if request.description %}
+
                                     <div class="secondary-text">
-                                        {{ request.description[:80] }}{% if request.description|length > 80 %}...{% endif %}
+
+                                        {{ request.description[:80] }}
+
+                                        {% if request.description|length > 80 %}
+                                            ...
+                                        {% endif %}
+
                                     </div>
+
                                 {% endif %}
+
                             </td>
 
+
                             <!-- REQUESTED BY -->
-                            <td>{{ request.requested_by or "Not specified" }}</td>
+                            <td>
+                                {{ request.requested_by or "Not specified" }}
+                            </td>
+
 
                             <!-- DATE -->
-                            <td>{{ request.request_date }}</td>
+                            <td>
+                                {{ request.request_date }}
+                            </td>
+
+
+                            <!-- =================================================
+                                 MATERIAL REQUEST AMOUNT
+                                 ================================================= -->
+                            <td>
+
+                                {% if request.material_request_amount is not none %}
+
+                                    <span class="amount">
+
+                                        {{ request.material_request_currency or "QAR" }}
+
+                                        {{ "{:,.2f}".format(request.material_request_amount) }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="secondary-text">
+                                        Not released
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
 
                             <!-- STATUS -->
                             <td>
+
                                 {% if request.status == "Pending Quotation" %}
-                                    <span class="status-badge status-pending">Pending Quotation</span>
+
+                                    <span class="status-badge status-pending">
+                                        Pending Quotation
+                                    </span>
+
                                 {% elif request.status == "Quotation Uploaded" %}
-                                    <span class="status-badge status-review">Quotation Uploaded</span>
+
+                                    <span class="status-badge status-review">
+                                        Quotation Uploaded
+                                    </span>
+
                                 {% elif request.status == "Approved" %}
-                                    <span class="status-badge status-approved">Approved</span>
+
+                                    <span class="status-badge status-approved">
+                                        Approved
+                                    </span>
+
+                                    {% if request.decision_date %}
+
+                                        <div class="decision-info">
+                                            {{ request.decision_date.strftime('%d %b %Y %H:%M') }}
+                                        </div>
+
+                                    {% endif %}
+
                                 {% elif request.status in ["Declined", "Rejected"] %}
-                                    <span class="status-badge status-declined">{{ request.status }}</span>
+
+                                    <span class="status-badge status-declined">
+                                        {{ request.status }}
+                                    </span>
+
+                                    {% if request.decision_date %}
+
+                                        <div class="decision-info">
+                                            {{ request.decision_date.strftime('%d %b %Y %H:%M') }}
+                                        </div>
+
+                                    {% endif %}
+
                                 {% else %}
-                                    <span class="status-badge status-other">{{ request.status or "Under Review" }}</span>
+
+                                    <span class="status-badge status-other">
+                                        {{ request.status or "Under Review" }}
+                                    </span>
+
                                 {% endif %}
+
                             </td>
 
-                            <!-- DOCUMENTS -->
+
+                            <!-- =================================================
+                                 MATERIAL REQUEST CASH STATUS
+                                 ================================================= -->
                             <td>
+
+                                {% if request.status == "Approved" %}
+
+                                    {% if request.material_cash_released %}
+
+                                        <span class="cash-status cash-released">
+
+                                            <i class="fas fa-check-double"></i>
+
+                                            Cash Released
+
+                                        </span>
+
+
+                                        {% if request.material_cash_released_at %}
+
+                                            <div class="cash-release-info">
+
+                                                <strong>
+                                                    Released:
+                                                </strong>
+
+                                                {{ request.material_cash_released_at.strftime('%d %b %Y %H:%M') }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if request.material_cash_released_by_name %}
+
+                                            <div class="cash-release-info">
+
+                                                <strong>
+                                                    By:
+                                                </strong>
+
+                                                {{ request.material_cash_released_by_name }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if request.material_cash_release_notes %}
+
+                                            <div class="cash-release-info">
+
+                                                <strong>
+                                                    Note:
+                                                </strong>
+
+                                                {{ request.material_cash_release_notes }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <span class="cash-status cash-awaiting">
+
+                                            <i class="fas fa-clock"></i>
+
+                                            Awaiting Release
+
+                                        </span>
+
+                                        <div class="cash-release-info">
+
+                                            Account has not released the approved cash yet.
+
+                                        </div>
+
+                                    {% endif %}
+
+                                {% elif request.status in ["Declined", "Rejected"] %}
+
+                                    <span class="status-badge status-declined">
+
+                                        <i class="fas fa-ban"></i>
+
+                                        Not Applicable
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="secondary-text">
+                                        Not applicable
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 DOCUMENTS
+                                 ================================================= -->
+                            <td>
+
                                 <div class="document-stack">
+
                                     {% if request.finalized_file_url %}
+
                                         <div class="finalized-document">
+
                                             {% if request.status == "Approved" %}
+
                                                 <div class="finalized-badge finalized-badge-approved">
-                                                    <i class="fas fa-stamp"></i> Manager Approved — Stamped
+
+                                                    <i class="fas fa-stamp"></i>
+
+                                                    Manager Approved — Stamped
+
                                                 </div>
-                                                <a href="{{ request.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-final-approved">
-                                                    <i class="fas fa-circle-check"></i> View Approved
+
+
+                                                <a
+                                                    href="{{ request.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-final-approved"
+                                                >
+
+                                                    <i class="fas fa-circle-check"></i>
+
+                                                    View Approved
+
                                                 </a>
+
+
                                             {% elif request.status in ["Declined", "Rejected"] %}
+
                                                 <div class="finalized-badge finalized-badge-declined">
-                                                    <i class="fas fa-stamp"></i> Manager Declined — Stamped
+
+                                                    <i class="fas fa-stamp"></i>
+
+                                                    Manager Declined — Stamped
+
                                                 </div>
-                                                <a href="{{ request.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-final-declined">
-                                                    <i class="fas fa-circle-xmark"></i> View Declined
+
+
+                                                <a
+                                                    href="{{ request.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-final-declined"
+                                                >
+
+                                                    <i class="fas fa-circle-xmark"></i>
+
+                                                    View Declined
+
                                                 </a>
+
+
                                             {% else %}
+
                                                 <div class="finalized-badge finalized-badge-review">
-                                                    <i class="fas fa-file-signature"></i> Finalized Document
+
+                                                    <i class="fas fa-file-signature"></i>
+
+                                                    Finalized Document
+
                                                 </div>
-                                                <a href="{{ request.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-view">
-                                                    <i class="fas fa-file-pdf"></i> View Finalized
+
+
+                                                <a
+                                                    href="{{ request.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-view"
+                                                >
+
+                                                    <i class="fas fa-file-pdf"></i>
+
+                                                    View Finalized
+
                                                 </a>
+
                                             {% endif %}
+
 
                                             {% if request.finalized_at %}
+
                                                 <div class="finalized-date">
-                                                    Finalized: {{ request.finalized_at.strftime('%d %b %Y %H:%M') }}
+
+                                                    Finalized:
+
+                                                    {{ request.finalized_at.strftime('%d %b %Y %H:%M') }}
+
                                                 </div>
+
                                             {% endif %}
+
                                         </div>
+
                                     {% endif %}
+
 
                                     {% if request.file_url %}
+
                                         <div class="original-document">
-                                            <span class="document-label">Original Material Request</span>
-                                            <a href="{{ request.file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-view">
-                                                <i class="fas fa-file-alt"></i> View Original
+
+                                            <span class="document-label">
+                                                Original Material Request
+                                            </span>
+
+                                            <a
+                                                href="{{ request.file_url }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="manager-btn btn-view"
+                                            >
+
+                                                <i class="fas fa-file-alt"></i>
+
+                                                View Original
+
                                             </a>
+
                                         </div>
+
                                     {% endif %}
+
 
                                     {% if not request.file_url and not request.finalized_file_url %}
-                                        <span class="secondary-text">No documents available.</span>
+
+                                        <span class="secondary-text">
+                                            No documents available.
+                                        </span>
+
                                     {% endif %}
+
                                 </div>
+
                             </td>
 
-                            <!-- ACTION -->
+
+                            <!-- =================================================
+                                 ACTION
+                                 ================================================= -->
                             <td class="text-end">
+
                                 <div class="manager-actions justify-content-end">
+
                                     {% if request.status not in ["Approved", "Declined", "Rejected"] %}
-                                        <a href="{{ url_for('construction_manager_material_request_review', request_id=request.id) }}" class="manager-btn btn-review">
-                                            <i class="fas fa-search"></i> Review
+
+                                        <a
+                                            href="{{ url_for('construction_manager_material_request_review', request_id=request.id) }}"
+                                            class="manager-btn btn-review"
+                                        >
+
+                                            <i class="fas fa-search"></i>
+
+                                            Review
+
                                         </a>
+
                                     {% elif request.status == "Approved" %}
+
                                         <span class="manager-btn btn-approved">
-                                            <i class="fas fa-check"></i> Approved
+
+                                            <i class="fas fa-check"></i>
+
+                                            Approved
+
                                         </span>
+
                                     {% elif request.status in ["Declined", "Rejected"] %}
+
                                         <span class="manager-btn btn-declined">
-                                            <i class="fas fa-times"></i> Declined
+
+                                            <i class="fas fa-times"></i>
+
+                                            Declined
+
                                         </span>
+
                                     {% endif %}
+
                                 </div>
+
                             </td>
+
                         </tr>
+
                     {% endfor %}
+
                     </tbody>
+
                 </table>
+
             </div>
 
-            <!-- MATERIAL REQUESTS PAGINATION FOOTER -->
-            <div class="pagination-footer" id="materialPaginationFooter">
-                <div class="pagination-info" id="materialPaginationInfo">
-                    Showing <strong>1</strong> to <strong>10</strong> of <strong>{{ material_requests|length }}</strong> entries
+
+            <!-- =================================================
+                 MATERIAL REQUESTS PAGINATION FOOTER
+                 ================================================= -->
+            <div
+                class="pagination-footer"
+                id="materialPaginationFooter"
+            >
+
+                <div
+                    class="pagination-info"
+                    id="materialPaginationInfo"
+                >
+
+                    Showing
+                    <strong>1</strong>
+                    to
+                    <strong>10</strong>
+                    of
+                    <strong>{{ material_requests|length }}</strong>
+                    entries
+
                 </div>
+
 
                 <div class="d-flex align-items-center gap-3">
+
                     <div class="page-size-select-wrapper">
-                        <span>Rows per page:</span>
-                        <select class="page-size-select" id="materialPageSizeSelect">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="all">All</option>
+
+                        <span>
+                            Rows per page:
+                        </span>
+
+                        <select
+                            class="page-size-select"
+                            id="materialPageSizeSelect"
+                        >
+
+                            <option value="5">
+                                5
+                            </option>
+
+                            <option value="10" selected>
+                                10
+                            </option>
+
+                            <option value="25">
+                                25
+                            </option>
+
+                            <option value="all">
+                                All
+                            </option>
+
                         </select>
+
                     </div>
 
-                    <div class="pagination-controls" id="materialPaginationControls"></div>
+
+                    <div
+                        class="pagination-controls"
+                        id="materialPaginationControls"
+                    ></div>
+
                 </div>
+
             </div>
+
+
         {% else %}
+
             <div class="empty-state">
-                <div class="empty-icon"><i class="fas fa-box-open"></i></div>
-                <h3>No material requests</h3>
-                <p>There are currently no material requests recorded in the system.</p>
+
+                <div class="empty-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+
+                <h3>
+                    No material requests
+                </h3>
+
+                <p>
+                    There are currently no material requests recorded in the system.
+                </p>
+
             </div>
+
         {% endif %}
+
     </div>
+
 
     <!-- =====================================================
          SUPPLIER QUOTATIONS SECTION
          ===================================================== -->
-    <div class="manager-section" id="supplierQuotationsSection">
+    <div
+        class="manager-section"
+        id="supplierQuotationsSection"
+    >
+
         <div class="manager-section-header">
+
             <div class="manager-section-title">
+
                 <div class="section-icon-pill">
                     <i class="fas fa-file-invoice-dollar"></i>
                 </div>
+
                 <div>
-                    <h2>Supplier Quotations</h2>
-                    <span>Review, approve and monitor procurement cash release</span>
+
+                    <h2>
+                        Supplier Quotations
+                    </h2>
+
+                    <span>
+                        Review, approve and monitor procurement cash release
+                    </span>
+
                 </div>
+
             </div>
+
 
             <!-- INSTANT LIVE SEARCH BAR -->
             <div class="section-header-right">
+
                 <div class="table-search-box">
+
                     <i class="fas fa-search search-icon"></i>
+
                     <input
                         type="text"
                         id="supplierQuotationsSearchInput"
                         placeholder="Search quotation, supplier, amount, status..."
                         autocomplete="off"
                     >
-                    <button type="button" class="table-search-clear" id="clearQuotationSearch" title="Clear search">✕</button>
+
+                    <button
+                        type="button"
+                        class="table-search-clear"
+                        id="clearQuotationSearch"
+                        title="Clear search"
+                    >
+                        ✕
+                    </button>
+
                 </div>
 
-                <div class="section-badge" id="supplierQuotationsBadge">
+
+                <div
+                    class="section-badge"
+                    id="supplierQuotationsBadge"
+                >
                     {{ quotations|length }} quotations
                 </div>
+
             </div>
+
         </div>
 
+
         {% if quotations %}
+
             <div class="table-wrapper">
-                <table class="manager-table" id="supplierQuotationsTable">
+
+                <table
+                    class="manager-table"
+                    id="supplierQuotationsTable"
+                >
+
                     <thead>
+
                         <tr>
-                            <th style="width: 50px; text-align: center;">#</th>
-                            <th>Quotation</th>
-                            <th>Supplier</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Uploaded By</th>
-                            <th>Status</th>
-                            <th>Manager Comment</th>
-                            <th>Cash Status</th>
-                            <th>Documents</th>
-                            <th class="text-end">Action</th>
+
+                            <th style="width: 50px; text-align: center;">
+                                #
+                            </th>
+
+                            <th>
+                                Quotation
+                            </th>
+
+                            <th>
+                                Supplier
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Uploaded By
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Manager Comment
+                            </th>
+
+                            <th>
+                                Cash Status
+                            </th>
+
+                            <th>
+                                Documents
+                            </th>
+
+                            <th class="text-end">
+                                Action
+                            </th>
+
                         </tr>
+
                     </thead>
+
+
                     <tbody id="supplierQuotationsTableBody">
+
                     {% for quotation in quotations %}
+
                         <tr class="searchable-quotation-row">
+
                             <!-- S/N -->
                             <td class="row-sn-cell quotation-sn-cell">
                                 {{ loop.index }}
                             </td>
 
+
                             <!-- QUOTATION -->
                             <td>
-                                <div class="primary-text">{{ quotation.quotation_number }}</div>
-                                <div class="secondary-text">
-                                    Created {% if quotation.created_at %}{{ quotation.created_at.strftime('%d %b %Y %H:%M') }}{% endif %}
+
+                                <div class="primary-text">
+                                    {{ quotation.quotation_number }}
                                 </div>
+
+                                <div class="secondary-text">
+
+                                    Created
+
+                                    {% if quotation.created_at %}
+                                        {{ quotation.created_at.strftime('%d %b %Y %H:%M') }}
+                                    {% endif %}
+
+                                </div>
+
                             </td>
+
 
                             <!-- SUPPLIER -->
                             <td>
-                                <div class="primary-text">{{ quotation.supplier_name }}</div>
+
+                                <div class="primary-text">
+                                    {{ quotation.supplier_name }}
+                                </div>
+
                                 {% if quotation.file_name %}
-                                    <div class="secondary-text">{{ quotation.file_name }}</div>
+
+                                    <div class="secondary-text">
+                                        {{ quotation.file_name }}
+                                    </div>
+
                                 {% endif %}
+
                             </td>
 
+
                             <!-- DATE -->
-                            <td>{{ quotation.quotation_date }}</td>
+                            <td>
+                                {{ quotation.quotation_date }}
+                            </td>
+
 
                             <!-- AMOUNT -->
                             <td>
+
                                 <span class="amount">
+
                                     {% if quotation.quotation_amount is not none %}
-                                        {{ quotation.currency or "QAR" }} {{ "{:,.2f}".format(quotation.quotation_amount) }}
+
+                                        {{ quotation.currency or "QAR" }}
+
+                                        {{ "{:,.2f}".format(quotation.quotation_amount) }}
+
                                     {% else %}
+
                                         Not specified
+
                                     {% endif %}
+
                                 </span>
+
                             </td>
 
+
                             <!-- UPLOADED BY -->
-                            <td>{{ quotation.uploaded_by_name or "Unknown" }}</td>
+                            <td>
+                                {{ quotation.uploaded_by_name or "Unknown" }}
+                            </td>
+
 
                             <!-- STATUS -->
                             <td>
+
                                 {% if quotation.status == "Under Review" %}
+
                                     <span class="status-badge status-review">
-                                        <i class="fas fa-clock"></i> Under Review
+
+                                        <i class="fas fa-clock"></i>
+
+                                        Under Review
+
                                     </span>
+
                                 {% elif quotation.status == "Approved" %}
+
                                     <span class="status-badge status-approved">
-                                        <i class="fas fa-check"></i> Approved
+
+                                        <i class="fas fa-check"></i>
+
+                                        Approved
+
                                     </span>
+
                                     {% if quotation.decision_date %}
-                                        <div class="decision-info">{{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}</div>
+
+                                        <div class="decision-info">
+
+                                            {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+
+                                        </div>
+
                                     {% endif %}
+
                                 {% elif quotation.status == "Declined" %}
+
                                     <span class="status-badge status-declined">
-                                        <i class="fas fa-times"></i> Declined
+
+                                        <i class="fas fa-times"></i>
+
+                                        Declined
+
                                     </span>
+
                                     {% if quotation.decision_date %}
-                                        <div class="decision-info">{{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}</div>
+
+                                        <div class="decision-info">
+
+                                            {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
+
+                                        </div>
+
                                     {% endif %}
+
                                 {% else %}
-                                    <span class="status-badge status-other">{{ quotation.status or "Under Review" }}</span>
+
+                                    <span class="status-badge status-other">
+
+                                        {{ quotation.status or "Under Review" }}
+
+                                    </span>
+
                                 {% endif %}
+
                             </td>
+
 
                             <!-- MANAGER COMMENT -->
                             <td>
+
                                 {% if quotation.manager_comment %}
-                                    <div class="comment-preview">{{ quotation.manager_comment }}</div>
+
+                                    <div class="comment-preview">
+                                        {{ quotation.manager_comment }}
+                                    </div>
+
                                 {% elif quotation.status in ["Approved", "Declined"] %}
-                                    <div class="secondary-text">No comment provided.</div>
+
+                                    <div class="secondary-text">
+                                        No comment provided.
+                                    </div>
+
                                 {% else %}
+
                                     —
+
                                 {% endif %}
+
                             </td>
+
 
                             <!-- CASH STATUS -->
                             <td>
+
                                 {% if quotation.status == "Approved" %}
+
                                     {% if quotation.cash_released %}
+
                                         <span class="cash-status cash-released">
-                                            <i class="fas fa-check-double"></i> Cash Released
+
+                                            <i class="fas fa-check-double"></i>
+
+                                            Cash Released
+
                                         </span>
+
                                         {% if quotation.cash_released_at %}
+
                                             <div class="cash-release-info">
-                                                <strong>Released:</strong> {{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
+
+                                                <strong>
+                                                    Released:
+                                                </strong>
+
+                                                {{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
+
                                             </div>
+
                                         {% endif %}
+
                                         {% if quotation.cash_released_by_name %}
+
                                             <div class="cash-release-info">
-                                                <strong>By:</strong> {{ quotation.cash_released_by_name }}
+
+                                                <strong>
+                                                    By:
+                                                </strong>
+
+                                                {{ quotation.cash_released_by_name }}
+
                                             </div>
+
                                         {% endif %}
+
                                     {% else %}
+
                                         <span class="cash-status cash-awaiting">
-                                            <i class="fas fa-clock"></i> Awaiting Release
+
+                                            <i class="fas fa-clock"></i>
+
+                                            Awaiting Release
+
                                         </span>
+
                                         <div class="cash-release-info">
+
                                             Account has not released the approved cash yet.
+
                                         </div>
+
                                     {% endif %}
+
                                 {% elif quotation.status == "Declined" %}
+
                                     <span class="status-badge status-declined">
-                                        <i class="fas fa-ban"></i> Not Applicable
+
+                                        <i class="fas fa-ban"></i>
+
+                                        Not Applicable
+
                                     </span>
+
                                 {% else %}
-                                    <span class="secondary-text">Not applicable</span>
+
+                                    <span class="secondary-text">
+                                        Not applicable
+                                    </span>
+
                                 {% endif %}
+
                             </td>
+
 
                             <!-- DOCUMENTS -->
                             <td>
+
                                 <div class="document-stack">
-                                    <!-- FINALIZED QUOTATION -->
+
                                     {% if quotation.finalized_file_url %}
+
                                         <div class="finalized-document">
+
                                             {% if quotation.status == "Approved" %}
+
                                                 <div class="finalized-badge finalized-badge-approved">
-                                                    <i class="fas fa-stamp"></i> Manager Approved — Stamped
+
+                                                    <i class="fas fa-stamp"></i>
+
+                                                    Manager Approved — Stamped
+
                                                 </div>
-                                                <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-final-approved">
-                                                    <i class="fas fa-circle-check"></i> View Approved
+
+                                                <a
+                                                    href="{{ quotation.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-final-approved"
+                                                >
+
+                                                    <i class="fas fa-circle-check"></i>
+
+                                                    View Approved
+
                                                 </a>
+
                                             {% elif quotation.status == "Declined" %}
+
                                                 <div class="finalized-badge finalized-badge-declined">
-                                                    <i class="fas fa-stamp"></i> Manager Declined — Stamped
+
+                                                    <i class="fas fa-stamp"></i>
+
+                                                    Manager Declined — Stamped
+
                                                 </div>
-                                                <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-final-declined">
-                                                    <i class="fas fa-circle-xmark"></i> View Declined
+
+                                                <a
+                                                    href="{{ quotation.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-final-declined"
+                                                >
+
+                                                    <i class="fas fa-circle-xmark"></i>
+
+                                                    View Declined
+
                                                 </a>
+
                                             {% else %}
+
                                                 <div class="finalized-badge finalized-badge-review">
-                                                    <i class="fas fa-file-signature"></i> Finalized Document
+
+                                                    <i class="fas fa-file-signature"></i>
+
+                                                    Finalized Document
+
                                                 </div>
-                                                <a href="{{ quotation.finalized_file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-view">
-                                                    <i class="fas fa-file-pdf"></i> View Finalized
+
+                                                <a
+                                                    href="{{ quotation.finalized_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="manager-btn btn-view"
+                                                >
+
+                                                    <i class="fas fa-file-pdf"></i>
+
+                                                    View Finalized
+
                                                 </a>
+
                                             {% endif %}
+
 
                                             {% if quotation.finalized_at %}
+
                                                 <div class="finalized-date">
-                                                    Finalized: {{ quotation.finalized_at.strftime('%d %b %Y %H:%M') }}
+
+                                                    Finalized:
+
+                                                    {{ quotation.finalized_at.strftime('%d %b %Y %H:%M') }}
+
                                                 </div>
+
                                             {% endif %}
+
                                         </div>
+
                                     {% endif %}
 
-                                    <!-- ORIGINAL QUOTATION -->
+
                                     {% if quotation.file_url %}
+
                                         <div class="original-document">
-                                            <span class="document-label">Original Supplier Quotation</span>
-                                            <a href="{{ quotation.file_url }}" target="_blank" rel="noopener noreferrer" class="manager-btn btn-view">
-                                                <i class="fas fa-file-invoice-dollar"></i> View Original
+
+                                            <span class="document-label">
+                                                Original Supplier Quotation
+                                            </span>
+
+                                            <a
+                                                href="{{ quotation.file_url }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="manager-btn btn-view"
+                                            >
+
+                                                <i class="fas fa-file-invoice-dollar"></i>
+
+                                                View Original
+
                                             </a>
+
                                         </div>
+
                                     {% endif %}
+
 
                                     {% if not quotation.file_url and not quotation.finalized_file_url %}
-                                        <span class="secondary-text">No documents available.</span>
+
+                                        <span class="secondary-text">
+                                            No documents available.
+                                        </span>
+
                                     {% endif %}
+
                                 </div>
+
                             </td>
+
 
                             <!-- ACTION -->
                             <td class="text-end">
+
                                 <div class="manager-actions justify-content-end">
+
                                     {% if quotation.status == "Under Review" %}
-                                        <a href="{{ url_for('construction_manager_quotation_review', quotation_id=quotation.id) }}" class="manager-btn btn-review">
-                                            <i class="fas fa-search"></i> Review
+
+                                        <a
+                                            href="{{ url_for('construction_manager_quotation_review', quotation_id=quotation.id) }}"
+                                            class="manager-btn btn-review"
+                                        >
+
+                                            <i class="fas fa-search"></i>
+
+                                            Review
+
                                         </a>
+
                                     {% elif quotation.status == "Approved" %}
+
                                         <span class="manager-btn btn-approved">
-                                            <i class="fas fa-check"></i> Approved
+
+                                            <i class="fas fa-check"></i>
+
+                                            Approved
+
                                         </span>
+
                                     {% elif quotation.status == "Declined" %}
+
                                         <span class="manager-btn btn-declined">
-                                            <i class="fas fa-times"></i> Declined
+
+                                            <i class="fas fa-times"></i>
+
+                                            Declined
+
                                         </span>
+
                                     {% endif %}
+
                                 </div>
+
                             </td>
+
                         </tr>
+
                     {% endfor %}
+
                     </tbody>
+
                 </table>
+
             </div>
 
-            <!-- SUPPLIER QUOTATIONS PAGINATION FOOTER -->
-            <div class="pagination-footer" id="quotationPaginationFooter">
-                <div class="pagination-info" id="quotationPaginationInfo">
-                    Showing <strong>1</strong> to <strong>10</strong> of <strong>{{ quotations|length }}</strong> entries
+
+            <!-- =================================================
+                 SUPPLIER QUOTATIONS PAGINATION FOOTER
+                 ================================================= -->
+            <div
+                class="pagination-footer"
+                id="quotationPaginationFooter"
+            >
+
+                <div
+                    class="pagination-info"
+                    id="quotationPaginationInfo"
+                >
+
+                    Showing
+                    <strong>1</strong>
+                    to
+                    <strong>10</strong>
+                    of
+                    <strong>{{ quotations|length }}</strong>
+                    entries
+
                 </div>
+
 
                 <div class="d-flex align-items-center gap-3">
+
                     <div class="page-size-select-wrapper">
-                        <span>Rows per page:</span>
-                        <select class="page-size-select" id="quotationPageSizeSelect">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="all">All</option>
+
+                        <span>
+                            Rows per page:
+                        </span>
+
+                        <select
+                            class="page-size-select"
+                            id="quotationPageSizeSelect"
+                        >
+
+                            <option value="5">
+                                5
+                            </option>
+
+                            <option value="10" selected>
+                                10
+                            </option>
+
+                            <option value="25">
+                                25
+                            </option>
+
+                            <option value="all">
+                                All
+                            </option>
+
                         </select>
+
                     </div>
 
-                    <div class="pagination-controls" id="quotationPaginationControls"></div>
+
+                    <div
+                        class="pagination-controls"
+                        id="quotationPaginationControls"
+                    ></div>
+
                 </div>
+
             </div>
+
+
         {% else %}
+
             <div class="empty-state">
-                <div class="empty-icon"><i class="fas fa-file-invoice"></i></div>
-                <h3>No supplier quotations</h3>
-                <p>Supplier quotations uploaded by the Purchase Department will appear here.</p>
+
+                <div class="empty-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+
+                <h3>
+                    No supplier quotations
+                </h3>
+
+                <p>
+                    Supplier quotations uploaded by the Purchase Department will appear here.
+                </p>
+
             </div>
+
         {% endif %}
+
     </div>
+
 
     <!-- =====================================================
          FOOTER
          ===================================================== -->
-    <div style="text-align: center; color: #94a3b8; font-size: 13px; font-weight: 600; padding: 12px 0 20px;">
+    <div
+        style="
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 12px 0 20px;
+        "
+    >
         Prestigious Trading & Constructions · Procurement Management System
     </div>
 
 </div>
+
 
 <!-- =========================================================
      INSTANT SEARCH & DYNAMIC PAGINATION ENGINE
@@ -1399,244 +2462,714 @@ Manager Dashboard | Purchase Control
 document.addEventListener("DOMContentLoaded", function () {
 
     /* High-Performance Table Manager with Search + Pagination + Auto-Scroll */
+
     function initializeTableManager(config) {
-        const input = document.getElementById(config.inputId);
-        const clearBtn = document.getElementById(config.clearBtnId);
-        const tbody = document.getElementById(config.tbodyId);
-        const badge = document.getElementById(config.badgeId);
-        const paginationInfo = document.getElementById(config.paginationInfoId);
-        const paginationControls = document.getElementById(config.paginationControlsId);
-        const pageSizeSelect = document.getElementById(config.pageSizeSelectId);
-        const sectionElement = document.getElementById(config.sectionId);
+
+        const input =
+            document.getElementById(config.inputId);
+
+        const clearBtn =
+            document.getElementById(config.clearBtnId);
+
+        const tbody =
+            document.getElementById(config.tbodyId);
+
+        const badge =
+            document.getElementById(config.badgeId);
+
+        const paginationInfo =
+            document.getElementById(config.paginationInfoId);
+
+        const paginationControls =
+            document.getElementById(config.paginationControlsId);
+
+        const pageSizeSelect =
+            document.getElementById(config.pageSizeSelectId);
+
+        const sectionElement =
+            document.getElementById(config.sectionId);
+
 
         if (!tbody) return;
 
-        const allRows = Array.from(tbody.querySelectorAll("." + config.rowClass));
+
+        const allRows =
+            Array.from(
+                tbody.querySelectorAll(
+                    "." + config.rowClass
+                )
+            );
+
+
         let filteredRows = [...allRows];
+
         let currentPage = 1;
-        let pageSize = parseInt(pageSizeSelect ? pageSizeSelect.value : 10) || 10;
+
+        let pageSize =
+            parseInt(
+                pageSizeSelect
+                    ? pageSizeSelect.value
+                    : 10
+            ) || 10;
+
 
         function updateDisplay(shouldScroll = false) {
-            // Remove existing no-match placeholder
-            const existingNoMatch = tbody.querySelector(".no-match-row");
-            if (existingNoMatch) existingNoMatch.remove();
 
-            const totalFiltered = filteredRows.length;
-            const isAll = (pageSizeSelect && pageSizeSelect.value === "all");
-            const effectivePageSize = isAll ? (totalFiltered || 1) : pageSize;
-            const totalPages = Math.ceil(totalFiltered / effectivePageSize) || 1;
+            /* Remove existing no-match placeholder */
 
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
+            const existingNoMatch =
+                tbody.querySelector(".no-match-row");
 
-            const startIndex = (currentPage - 1) * effectivePageSize;
-            const endIndex = isAll ? totalFiltered : Math.min(startIndex + effectivePageSize, totalFiltered);
+            if (existingNoMatch) {
+                existingNoMatch.remove();
+            }
 
-            // Hide all rows first
+
+            const totalFiltered =
+                filteredRows.length;
+
+
+            const isAll =
+                (
+                    pageSizeSelect &&
+                    pageSizeSelect.value === "all"
+                );
+
+
+            const effectivePageSize =
+                isAll
+                    ? (totalFiltered || 1)
+                    : pageSize;
+
+
+            const totalPages =
+                Math.ceil(
+                    totalFiltered /
+                    effectivePageSize
+                ) || 1;
+
+
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+
+            const startIndex =
+                (currentPage - 1) *
+                effectivePageSize;
+
+
+            const endIndex =
+                isAll
+                    ? totalFiltered
+                    : Math.min(
+                        startIndex +
+                        effectivePageSize,
+                        totalFiltered
+                    );
+
+
+            /* Hide all rows first */
+
             allRows.forEach(row => {
-                row.classList.add("page-hidden");
+
+                row.classList.add(
+                    "page-hidden"
+                );
+
             });
 
-            // Show current page subset of filtered rows and update S/N index
-            filteredRows.slice(startIndex, endIndex).forEach((row, idx) => {
-                row.classList.remove("page-hidden");
-                const snCell = row.querySelector("." + config.snCellClass);
-                if (snCell) {
-                    const realIndex = startIndex + idx + 1;
-                    snCell.textContent = realIndex < 10 ? "0" + realIndex : realIndex;
-                }
-            });
 
-            // Update Badge Count
+            /* Show current page subset */
+
+            filteredRows
+                .slice(startIndex, endIndex)
+                .forEach((row, idx) => {
+
+                    row.classList.remove(
+                        "page-hidden"
+                    );
+
+
+                    const snCell =
+                        row.querySelector(
+                            "." +
+                            config.snCellClass
+                        );
+
+
+                    if (snCell) {
+
+                        const realIndex =
+                            startIndex +
+                            idx +
+                            1;
+
+
+                        snCell.textContent =
+                            realIndex < 10
+                                ? "0" + realIndex
+                                : realIndex;
+
+                    }
+
+                });
+
+
+            /* Update Badge Count */
+
             if (badge) {
-                const query = input ? input.value.trim() : "";
+
+                const query =
+                    input
+                        ? input.value.trim()
+                        : "";
+
+
                 if (query === "") {
-                    badge.textContent = `${allRows.length} ${allRows.length === 1 ? config.labelSingular : config.labelPlural}`;
+
+                    badge.textContent =
+                        `${allRows.length} ${
+                            allRows.length === 1
+                                ? config.labelSingular
+                                : config.labelPlural
+                        }`;
+
                 } else {
-                    badge.textContent = `${totalFiltered} of ${allRows.length} found`;
+
+                    badge.textContent =
+                        `${totalFiltered} of ${allRows.length} found`;
+
                 }
+
             }
 
-            // Update Pagination Info
+
+            /* Update Pagination Info */
+
             if (paginationInfo) {
+
                 if (totalFiltered === 0) {
-                    paginationInfo.innerHTML = `Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> entries`;
+
+                    paginationInfo.innerHTML =
+                        `Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> entries`;
+
                 } else {
-                    paginationInfo.innerHTML = `Showing <strong>${startIndex + 1}</strong> to <strong>${endIndex}</strong> of <strong>${totalFiltered}</strong> entries`;
+
+                    paginationInfo.innerHTML =
+                        `Showing <strong>${startIndex + 1}</strong> to <strong>${endIndex}</strong> of <strong>${totalFiltered}</strong> entries`;
+
                 }
+
             }
 
-            // Render Pagination Buttons
-            renderPaginationControls(totalPages);
 
-            // Smoothly scroll back to section header when changing pages
-            if (shouldScroll && sectionElement) {
-                sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            /* Render Pagination Buttons */
+
+            renderPaginationControls(
+                totalPages
+            );
+
+
+            /* Smoothly scroll back to section */
+
+            if (
+                shouldScroll &&
+                sectionElement
+            ) {
+
+                sectionElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
             }
 
-            // Show clean no-match row if zero results
-            if (totalFiltered === 0 && input && input.value.trim() !== "") {
-                const noMatchRow = document.createElement("tr");
-                noMatchRow.className = "no-match-row";
-                const colCount = allRows[0] ? allRows[0].cells.length : 8;
+
+            /* Show clean no-match row */
+
+            if (
+                totalFiltered === 0 &&
+                input &&
+                input.value.trim() !== ""
+            ) {
+
+                const noMatchRow =
+                    document.createElement("tr");
+
+
+                noMatchRow.className =
+                    "no-match-row";
+
+
+                const colCount =
+                    allRows[0]
+                        ? allRows[0].cells.length
+                        : 10;
+
+
                 noMatchRow.innerHTML = `
                     <td colspan="${colCount}">
                         <div class="py-4 text-center">
                             <i class="fas fa-search text-muted mb-2 fs-5"></i>
-                            <div>No matching records found for "<strong>${escapeHtml(input.value)}</strong>"</div>
+                            <div>
+                                No matching records found for
+                                "<strong>${escapeHtml(input.value)}</strong>"
+                            </div>
                         </div>
                     </td>
                 `;
-                tbody.appendChild(noMatchRow);
+
+
+                tbody.appendChild(
+                    noMatchRow
+                );
+
             }
+
         }
 
-        function renderPaginationControls(totalPages) {
-            if (!paginationControls) return;
-            paginationControls.innerHTML = "";
 
-            if (totalPages <= 1 && (pageSizeSelect && pageSizeSelect.value === "all")) {
+        function renderPaginationControls(
+            totalPages
+        ) {
+
+            if (!paginationControls) {
                 return;
             }
 
-            // Previous Button
-            const prevBtn = document.createElement("button");
+
+            paginationControls.innerHTML = "";
+
+
+            if (
+                totalPages <= 1 &&
+                (
+                    pageSizeSelect &&
+                    pageSizeSelect.value === "all"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            /* Previous Button */
+
+            const prevBtn =
+                document.createElement("button");
+
+
             prevBtn.type = "button";
-            prevBtn.className = "pagination-btn";
-            prevBtn.innerHTML = `<i class="fas fa-chevron-left me-1"></i> Prev`;
-            prevBtn.disabled = (currentPage === 1);
-            prevBtn.addEventListener("click", () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updateDisplay(true);
-                }
-            });
-            paginationControls.appendChild(prevBtn);
 
-            // Numbered Page Buttons
-            let startPage = Math.max(1, currentPage - 2);
-            let endPage = Math.min(totalPages, startPage + 4);
-            if (endPage - startPage < 4) {
-                startPage = Math.max(1, endPage - 4);
-            }
+            prevBtn.className =
+                "pagination-btn";
 
-            for (let i = startPage; i <= endPage; i++) {
-                const pageBtn = document.createElement("button");
-                pageBtn.type = "button";
-                pageBtn.className = `pagination-btn ${i === currentPage ? "active" : ""}`;
-                pageBtn.textContent = i;
-                pageBtn.addEventListener("click", () => {
-                    if (currentPage !== i) {
-                        currentPage = i;
+
+            prevBtn.innerHTML =
+                `<i class="fas fa-chevron-left me-1"></i> Prev`;
+
+
+            prevBtn.disabled =
+                currentPage === 1;
+
+
+            prevBtn.addEventListener(
+                "click",
+                () => {
+
+                    if (currentPage > 1) {
+
+                        currentPage--;
+
                         updateDisplay(true);
+
                     }
-                });
-                paginationControls.appendChild(pageBtn);
+
+                }
+            );
+
+
+            paginationControls.appendChild(
+                prevBtn
+            );
+
+
+            /* Numbered Page Buttons */
+
+            let startPage =
+                Math.max(
+                    1,
+                    currentPage - 2
+                );
+
+
+            let endPage =
+                Math.min(
+                    totalPages,
+                    startPage + 4
+                );
+
+
+            if (
+                endPage - startPage < 4
+            ) {
+
+                startPage =
+                    Math.max(
+                        1,
+                        endPage - 4
+                    );
+
             }
 
-            // Next Button
-            const nextBtn = document.createElement("button");
+
+            for (
+                let i = startPage;
+                i <= endPage;
+                i++
+            ) {
+
+                const pageBtn =
+                    document.createElement("button");
+
+
+                pageBtn.type = "button";
+
+                pageBtn.className =
+                    `pagination-btn ${
+                        i === currentPage
+                            ? "active"
+                            : ""
+                    }`;
+
+
+                pageBtn.textContent = i;
+
+
+                pageBtn.addEventListener(
+                    "click",
+                    () => {
+
+                        if (
+                            currentPage !== i
+                        ) {
+
+                            currentPage = i;
+
+                            updateDisplay(true);
+
+                        }
+
+                    }
+                );
+
+
+                paginationControls.appendChild(
+                    pageBtn
+                );
+
+            }
+
+
+            /* Next Button */
+
+            const nextBtn =
+                document.createElement("button");
+
+
             nextBtn.type = "button";
-            nextBtn.className = "pagination-btn";
-            nextBtn.innerHTML = `Next <i class="fas fa-chevron-right ms-1"></i>`;
-            nextBtn.disabled = (currentPage === totalPages);
-            nextBtn.addEventListener("click", () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updateDisplay(true);
+
+            nextBtn.className =
+                "pagination-btn";
+
+
+            nextBtn.innerHTML =
+                `Next <i class="fas fa-chevron-right ms-1"></i>`;
+
+
+            nextBtn.disabled =
+                currentPage === totalPages;
+
+
+            nextBtn.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        currentPage < totalPages
+                    ) {
+
+                        currentPage++;
+
+                        updateDisplay(true);
+
+                    }
+
                 }
-            });
-            paginationControls.appendChild(nextBtn);
+            );
+
+
+            paginationControls.appendChild(
+                nextBtn
+            );
+
         }
+
 
         function filterRows() {
-            const query = input ? input.value.trim().toLowerCase() : "";
+
+            const query =
+                input
+                    ? input.value.trim().toLowerCase()
+                    : "";
+
 
             if (clearBtn) {
-                clearBtn.style.display = query.length > 0 ? "inline-flex" : "none";
+
+                clearBtn.style.display =
+                    query.length > 0
+                        ? "inline-flex"
+                        : "none";
+
             }
 
-            filteredRows = allRows.filter(row => {
-                const text = row.innerText.toLowerCase();
-                const matches = (query === "" || text.includes(query));
-                if (matches) {
-                    row.classList.remove("search-hidden");
-                } else {
-                    row.classList.add("search-hidden");
-                }
-                return matches;
-            });
+
+            filteredRows =
+                allRows.filter(row => {
+
+                    const text =
+                        row.innerText.toLowerCase();
+
+
+                    const matches =
+                        (
+                            query === "" ||
+                            text.includes(query)
+                        );
+
+
+                    if (matches) {
+
+                        row.classList.remove(
+                            "search-hidden"
+                        );
+
+                    } else {
+
+                        row.classList.add(
+                            "search-hidden"
+                        );
+
+                    }
+
+
+                    return matches;
+
+                });
+
 
             currentPage = 1;
+
             updateDisplay(false);
+
         }
+
 
         function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+            return str
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                );
+
         }
 
-        // Event Listeners
+
+        /* =====================================================
+           EVENT LISTENERS
+        ===================================================== */
+
         if (input) {
-            input.addEventListener("input", filterRows);
-            input.addEventListener("keydown", function (e) {
-                if (e.key === "Escape") {
-                    input.value = "";
-                    filterRows();
-                    input.blur();
+
+            input.addEventListener(
+                "input",
+                filterRows
+            );
+
+
+            input.addEventListener(
+                "keydown",
+                function (e) {
+
+                    if (e.key === "Escape") {
+
+                        input.value = "";
+
+                        filterRows();
+
+                        input.blur();
+
+                    }
+
                 }
-            });
+            );
+
         }
+
 
         if (clearBtn) {
-            clearBtn.addEventListener("click", function () {
-                input.value = "";
-                filterRows();
-                input.focus();
-            });
+
+            clearBtn.addEventListener(
+                "click",
+                function () {
+
+                    input.value = "";
+
+                    filterRows();
+
+                    input.focus();
+
+                }
+            );
+
         }
+
 
         if (pageSizeSelect) {
-            pageSizeSelect.addEventListener("change", function () {
-                pageSize = this.value === "all" ? allRows.length : parseInt(this.value);
-                currentPage = 1;
-                updateDisplay(true);
-            });
+
+            pageSizeSelect.addEventListener(
+                "change",
+                function () {
+
+                    pageSize =
+                        this.value === "all"
+                            ? allRows.length
+                            : parseInt(this.value);
+
+
+                    currentPage = 1;
+
+                    updateDisplay(true);
+
+                }
+            );
+
         }
 
-        // Initial Render
+
+        /* Initial Render */
+
         updateDisplay(false);
+
     }
 
-    // 1. Initialize Material Requests (Search + Pagination + Auto-Scroll)
+
+    /* =========================================================
+       1. MATERIAL REQUESTS
+    ========================================================= */
+
     initializeTableManager({
-        inputId: "materialRequestsSearchInput",
-        clearBtnId: "clearMaterialSearch",
-        rowClass: "searchable-material-row",
-        tbodyId: "materialRequestsTableBody",
-        badgeId: "materialRequestsBadge",
-        paginationInfoId: "materialPaginationInfo",
-        paginationControlsId: "materialPaginationControls",
-        pageSizeSelectId: "materialPageSizeSelect",
-        sectionId: "materialRequestsSection",
-        snCellClass: "material-sn-cell",
-        labelSingular: "request",
-        labelPlural: "requests"
+
+        inputId:
+            "materialRequestsSearchInput",
+
+        clearBtnId:
+            "clearMaterialSearch",
+
+        rowClass:
+            "searchable-material-row",
+
+        tbodyId:
+            "materialRequestsTableBody",
+
+        badgeId:
+            "materialRequestsBadge",
+
+        paginationInfoId:
+            "materialPaginationInfo",
+
+        paginationControlsId:
+            "materialPaginationControls",
+
+        pageSizeSelectId:
+            "materialPageSizeSelect",
+
+        sectionId:
+            "materialRequestsSection",
+
+        snCellClass:
+            "material-sn-cell",
+
+        labelSingular:
+            "request",
+
+        labelPlural:
+            "requests"
+
     });
 
-    // 2. Initialize Supplier Quotations (Search + Pagination + Auto-Scroll)
+
+    /* =========================================================
+       2. SUPPLIER QUOTATIONS
+    ========================================================= */
+
     initializeTableManager({
-        inputId: "supplierQuotationsSearchInput",
-        clearBtnId: "clearQuotationSearch",
-        rowClass: "searchable-quotation-row",
-        tbodyId: "supplierQuotationsTableBody",
-        badgeId: "supplierQuotationsBadge",
-        paginationInfoId: "quotationPaginationInfo",
-        paginationControlsId: "quotationPaginationControls",
-        pageSizeSelectId: "quotationPageSizeSelect",
-        sectionId: "supplierQuotationsSection",
-        snCellClass: "quotation-sn-cell",
-        labelSingular: "quotation",
-        labelPlural: "quotations"
+
+        inputId:
+            "supplierQuotationsSearchInput",
+
+        clearBtnId:
+            "clearQuotationSearch",
+
+        rowClass:
+            "searchable-quotation-row",
+
+        tbodyId:
+            "supplierQuotationsTableBody",
+
+        badgeId:
+            "supplierQuotationsBadge",
+
+        paginationInfoId:
+            "quotationPaginationInfo",
+
+        paginationControlsId:
+            "quotationPaginationControls",
+
+        pageSizeSelectId:
+            "quotationPageSizeSelect",
+
+        sectionId:
+            "supplierQuotationsSection",
+
+        snCellClass:
+            "quotation-sn-cell",
+
+        labelSingular:
+            "quotation",
+
+        labelPlural:
+            "quotations"
+
     });
 
 });
