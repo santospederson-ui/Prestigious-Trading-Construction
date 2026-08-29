@@ -11,6 +11,7 @@ Material Request | Prestigious Trading & Construction
 /* =========================================================
    PRESTIGIOUS TRADING & CONSTRUCTION
    EXECUTIVE MATERIAL REQUEST SYSTEM
+   UI/UX ENHANCED — LOGIC & ROUTES UNCHANGED
 ========================================================= */
 
 :root {
@@ -25,6 +26,7 @@ Material Request | Prestigious Trading & Construction
 
     --mr-bg: #f4f6f8;
     --mr-card-bg: #ffffff;
+
     --mr-border: #e2e8f0;
     --mr-border-dark: #cbd5e1;
 
@@ -36,73 +38,251 @@ Material Request | Prestigious Trading & Construction
     --mr-danger-soft: #fef2f2;
     --mr-danger-border: #fecaca;
 
-    --mr-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-    --mr-shadow-md: 0 10px 25px rgba(15, 23, 42, 0.06);
+    --mr-success: #198754;
+
+    --mr-shadow-sm:
+        0 2px 8px rgba(15, 23, 42, 0.04);
+
+    --mr-shadow-md:
+        0 12px 30px rgba(15, 23, 42, 0.07);
+
+    --mr-shadow-lg:
+        0 20px 45px rgba(15, 23, 42, 0.09);
+
     --mr-radius: 14px;
 }
 
+
 /* =========================================================
-   PAGE CONTAINER
+   PAGE
 ========================================================= */
 
 .material-request-page {
     min-height: calc(100vh - 70px);
-    background: var(--mr-bg);
-    padding: 40px 20px 80px;
+    background:
+        linear-gradient(
+            180deg,
+            #f8fafc 0%,
+            var(--mr-bg) 100%
+        );
+
+    padding: 30px 20px 80px;
 }
 
 .request-container {
-    max-width: 1060px;
+    max-width: 1100px;
     margin: 0 auto;
 }
+
+
+/* =========================================================
+   TOP NAVIGATION / BACK
+========================================================= */
+
+.page-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--mr-border-dark);
+    border-radius: 9px;
+
+    color: #475569;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        all 0.2s ease;
+
+    box-shadow:
+        0 2px 6px rgba(15, 23, 42, 0.03);
+}
+
+.back-button:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: var(--mr-primary);
+
+    transform: translateX(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(15, 23, 42, 0.06);
+}
+
+.back-button i {
+    font-size: 12px;
+}
+
 
 /* =========================================================
    PAGE HEADER
 ========================================================= */
 
 .page-header {
-    margin-bottom: 24px;
+    position: relative;
+
     display: flex;
     flex-wrap: wrap;
+
     justify-content: space-between;
-    align-items: flex-end;
-    gap: 16px;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    margin-bottom: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--mr-border);
+
+    border-radius: var(--mr-radius);
+
+    box-shadow: var(--mr-shadow-sm);
+
+    overflow: hidden;
 }
+
+
+/* Decorative left accent */
+
+.page-header::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--mr-primary),
+            var(--mr-gold)
+        );
+}
+
 
 .page-header-title {
     display: flex;
     align-items: center;
+
     gap: 14px;
 }
 
+
 .page-header-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--mr-primary-soft);
+    width: 50px;
+    height: 50px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mr-primary-soft),
+            #ffffff
+        );
+
     color: var(--mr-primary);
+
     border: 1px solid var(--mr-primary-border);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 20px;
+
     flex-shrink: 0;
+
+    box-shadow:
+        0 4px 10px rgba(30, 75, 56, 0.06);
 }
 
+
 .page-header h1 {
-    margin: 0 0 4px;
-    font-size: 24px;
-    font-weight: 800;
+    margin: 0 0 5px;
+
+    font-size: 25px;
+    font-weight: 850;
+
     color: var(--mr-text-main);
-    letter-spacing: -0.3px;
+
+    letter-spacing: -0.4px;
 }
+
 
 .page-header p {
     margin: 0;
+
     color: var(--mr-text-muted);
-    font-size: 13.5px;
+
+    font-size: 13px;
     font-weight: 500;
+
+    line-height: 1.5;
 }
+
+
+/* =========================================================
+   HEADER STATUS
+========================================================= */
+
+.header-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 7px 11px;
+
+    border-radius: 20px;
+
+    background: var(--mr-primary-soft);
+
+    border: 1px solid var(--mr-primary-border);
+
+    color: var(--mr-primary);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.header-status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--mr-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(30, 75, 56, 0.10);
+}
+
 
 /* =========================================================
    SEGMENTED TABS
@@ -110,220 +290,513 @@ Material Request | Prestigious Trading & Construction
 
 .request-tabs {
     display: flex;
+
     gap: 6px;
+
     padding: 6px;
+
     background: #e2e8f0;
+
     border-radius: 12px;
+
     margin-bottom: 24px;
+
     border: 1px solid #cbd5e1;
+
+    box-shadow:
+        0 2px 5px rgba(15, 23, 42, 0.03);
 }
+
 
 .request-tab {
     flex: 1;
+
     border: none;
+
     background: transparent;
+
     color: var(--mr-text-muted);
-    padding: 12px 20px;
+
+    padding: 13px 20px;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 750;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 9px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    transition:
+        all 0.2s cubic-bezier(
+            0.4,
+            0,
+            0.2,
+            1
+        );
 }
+
+
+.request-tab i {
+    font-size: 14px;
+}
+
 
 .request-tab:hover {
     color: var(--mr-text-main);
+
+    background:
+        rgba(255, 255, 255, 0.45);
 }
+
 
 .request-tab.active {
     background: var(--mr-card-bg);
+
     color: var(--mr-primary);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
+
 /* =========================================================
-   CARDS & SECTIONS
+   CARDS
 ========================================================= */
 
 .request-card {
     background: var(--mr-card-bg);
+
     border: 1px solid var(--mr-border);
+
     border-radius: var(--mr-radius);
+
     box-shadow: var(--mr-shadow-sm);
+
     margin-bottom: 24px;
+
     overflow: hidden;
+
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
+
+.request-card:hover {
+    box-shadow: var(--mr-shadow-md);
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
 .card-header-bar {
-    padding: 18px 24px;
+    padding: 17px 24px;
+
     border-bottom: 1px solid var(--mr-border);
-    background: #ffffff;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fbfcfd
+        );
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 16px;
 }
 
+
 .card-header-bar h3 {
     margin: 0;
+
     color: var(--mr-text-main);
-    font-size: 14px;
-    font-weight: 800;
+
+    font-size: 13px;
+
+    font-weight: 850;
+
     text-transform: uppercase;
-    letter-spacing: 0.6px;
+
+    letter-spacing: 0.7px;
+
     display: flex;
+
     align-items: center;
-    gap: 9px;
+
+    gap: 10px;
 }
+
 
 .card-header-bar h3 i {
     color: var(--mr-primary);
+
     font-size: 16px;
 }
 
+
+.card-header-meta {
+    color: var(--mr-text-muted);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
 /* =========================================================
-   FORM GRID & INPUTS
+   FORM GRID
 ========================================================= */
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
     gap: 20px;
+
     padding: 24px;
 }
 
+
 .form-group {
     display: flex;
+
     flex-direction: column;
 }
+
 
 .form-group.full {
     grid-column: 1 / -1;
 }
 
+
 .form-group label {
     margin-bottom: 8px;
+
     color: #475569;
+
     font-size: 11px;
-    font-weight: 800;
+
+    font-weight: 850;
+
     text-transform: uppercase;
+
     letter-spacing: 0.5px;
 }
+
+
+.form-group label::after {
+    content: "";
+}
+
 
 .form-group input,
 .form-group textarea,
 .form-group select {
     width: 100%;
+
     box-sizing: border-box;
-    border: 1.5px solid var(--mr-border);
+
+    border:
+        1.5px solid var(--mr-border);
+
     border-radius: 9px;
+
     padding: 11px 14px;
+
     color: var(--mr-text-main);
+
     background: #fafbfc;
+
     font-family: inherit;
+
     font-size: 13px;
+
     font-weight: 500;
-    transition: all 0.2s ease;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
+
+
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+    border-color: #cbd5e1;
+
+    background: #ffffff;
+}
+
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: #94a3b8;
 }
 
+
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--mr-primary);
+
+    border-color:
+        var(--mr-primary);
+
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.12);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            30,
+            75,
+            56,
+            0.12
+        );
 }
+
 
 .form-group textarea {
     min-height: 90px;
+
     resize: vertical;
+
     line-height: 1.6;
 }
 
+
 /* =========================================================
-   MATERIAL ITEMS SPREADSHEET TABLE
+   MATERIAL ITEMS HEADER ENHANCEMENT
+========================================================= */
+
+.material-section-intro {
+    padding: 14px 24px 0;
+
+    color: var(--mr-text-muted);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MATERIAL ITEMS TABLE
 ========================================================= */
 
 .table-responsive-box {
     margin: 20px 24px;
-    border: 1px solid var(--mr-border);
+
+    border:
+        1px solid var(--mr-border);
+
     border-radius: 10px;
+
     overflow-x: auto;
+
     background: #ffffff;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+
+    box-shadow:
+        0 2px 6px
+        rgba(
+            15,
+            23,
+            42,
+            0.02
+        );
 }
+
 
 .material-table {
     width: 100%;
+
     min-width: 900px;
+
     border-collapse: separate;
+
     border-spacing: 0;
 }
 
+
 .material-table th {
     padding: 13px 12px;
+
     background: #f8fafc;
+
     color: #475569;
-    border-bottom: 1.5px solid var(--mr-border);
-    font-size: 11px;
-    font-weight: 800;
+
+    border-bottom:
+        1.5px solid
+        var(--mr-border);
+
+    font-size: 10.5px;
+
+    font-weight: 850;
+
     text-align: left;
+
     text-transform: uppercase;
+
     letter-spacing: 0.5px;
+
     white-space: nowrap;
 }
 
+
 .material-table td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #edf2f7;
+    padding: 9px 10px;
+
+    border-bottom:
+        1px solid #edf2f7;
+
     vertical-align: middle;
+
     background: #ffffff;
 }
+
 
 .material-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-.material-table tbody tr:hover td {
-    background: #fcfdfd;
+
+.material-table tbody tr {
+    transition:
+        background 0.15s ease;
 }
+
+
+.material-table tbody tr:hover td {
+    background: #f9fcfa;
+}
+
 
 .material-table input {
     width: 100%;
+
     box-sizing: border-box;
+
     padding: 9px 11px;
-    border: 1px solid var(--mr-border);
+
+    border:
+        1px solid
+        var(--mr-border);
+
     border-radius: 7px;
+
     background: #ffffff;
+
     color: var(--mr-text-main);
+
     font-family: inherit;
+
     font-size: 12.5px;
+
     font-weight: 500;
-    transition: all 0.2s ease;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+
+.material-table input:hover {
+    border-color: #cbd5e1;
+}
+
 
 .material-table input:focus {
     outline: none;
-    border-color: var(--mr-primary);
-    box-shadow: 0 0 0 3px rgba(30, 75, 56, 0.1);
+
+    border-color:
+        var(--mr-primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            30,
+            75,
+            56,
+            0.10
+        );
 }
 
-.description-column { min-width: 250px; }
-.brand-column { min-width: 150px; }
-.unit-column { min-width: 100px; }
-.quantity-column { min-width: 110px; }
-.specification-column { min-width: 200px; }
-.action-column { width: 85px; text-align: center; }
+
+.description-column {
+    min-width: 250px;
+}
+
+
+.brand-column {
+    min-width: 150px;
+}
+
+
+.unit-column {
+    min-width: 100px;
+}
+
+
+.quantity-column {
+    min-width: 110px;
+}
+
+
+.specification-column {
+    min-width: 200px;
+}
+
+
+.action-column {
+    width: 85px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+========================================================= */
+
+.table-responsive-box::-webkit-scrollbar {
+    height: 8px;
+}
+
+
+.table-responsive-box::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+
+.table-responsive-box::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+
+    border-radius: 10px;
+}
+
+
+.table-responsive-box::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
 
 /* =========================================================
    BUTTON SYSTEM
@@ -331,231 +804,728 @@ Material Request | Prestigious Trading & Construction
 
 .btn {
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
+
     gap: 8px;
-    border: 1px solid transparent;
+
+    border:
+        1px solid transparent;
+
     border-radius: 9px;
-    padding: 11px 20px;
+
+    padding: 10px 18px;
+
     font-family: inherit;
-    font-size: 13px;
+
+    font-size: 12.5px;
+
     font-weight: 800;
+
     cursor: pointer;
+
     text-decoration: none !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    transition:
+        all 0.2s
+        cubic-bezier(
+            0.4,
+            0,
+            0.2,
+            1
+        );
+
     white-space: nowrap;
 }
 
+
 .btn:hover {
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 }
+
+
+.btn:active {
+    transform:
+        translateY(0);
+}
+
+
+/* PRIMARY */
 
 .btn-primary {
-    background: var(--mr-primary);
-    border-color: var(--mr-primary);
+    background:
+        linear-gradient(
+            135deg,
+            var(--mr-primary),
+            var(--mr-primary-light)
+        );
+
+    border-color:
+        var(--mr-primary);
+
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(30, 75, 56, 0.2);
+
+    box-shadow:
+        0 4px 14px
+        rgba(
+            30,
+            75,
+            56,
+            0.20
+        );
 }
 
+
 .btn-primary:hover {
-    background: var(--mr-primary-dark);
-    border-color: var(--mr-primary-dark);
+    background:
+        linear-gradient(
+            135deg,
+            var(--mr-primary-dark),
+            var(--mr-primary)
+        );
+
+    border-color:
+        var(--mr-primary-dark);
+
     color: #ffffff;
-    box-shadow: 0 6px 18px rgba(30, 75, 56, 0.28);
+
+    box-shadow:
+        0 7px 20px
+        rgba(
+            30,
+            75,
+            56,
+            0.28
+        );
 }
+
+
+/* SECONDARY */
 
 .btn-secondary {
     background: #ffffff;
-    border-color: var(--mr-border-dark);
+
+    border-color:
+        var(--mr-border-dark);
+
     color: #334155;
 }
 
+
 .btn-secondary:hover {
     background: #f8fafc;
+
     border-color: #94a3b8;
+
     color: #0f172a;
 }
 
+
+/* SUCCESS */
+
 .btn-success {
-    background: var(--mr-primary);
-    border-color: var(--mr-primary);
+    background:
+        linear-gradient(
+            135deg,
+            #198754,
+            #157347
+        );
+
+    border-color:
+        #198754;
+
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(30, 75, 56, 0.2);
+
+    box-shadow:
+        0 4px 14px
+        rgba(
+            25,
+            135,
+            84,
+            0.18
+        );
 }
+
 
 .btn-success:hover {
-    background: var(--mr-primary-dark);
-    border-color: var(--mr-primary-dark);
+    background:
+        linear-gradient(
+            135deg,
+            #157347,
+            #105c39
+        );
+
     color: #ffffff;
 }
 
+
+/* DELETE */
+
 .btn-danger-sm {
-    background: var(--mr-danger-soft);
-    border: 1px solid var(--mr-danger-border);
-    color: var(--mr-danger);
-    padding: 6px 12px;
-    font-size: 11px;
+    background:
+        var(--mr-danger-soft);
+
+    border:
+        1px solid
+        var(--mr-danger-border);
+
+    color:
+        var(--mr-danger);
+
+    padding:
+        6px 11px;
+
+    font-size: 10.5px;
+
     border-radius: 6px;
 }
 
+
 .btn-danger-sm:hover {
     background: #fee2e2;
+
     border-color: #f87171;
+
     color: #b91c1c;
+
+    box-shadow:
+        0 3px 8px
+        rgba(
+            220,
+            38,
+            38,
+            0.10
+        );
 }
 
+
 /* =========================================================
-   FORM ACTIONS BAR
+   FORM ACTIONS
 ========================================================= */
 
 .form-actions-bar {
     display: flex;
+
     justify-content: flex-end;
+
     align-items: center;
+
     gap: 12px;
+
     padding: 18px 24px;
-    background: #fafbfc;
-    border-top: 1px solid var(--mr-border);
+
+    background:
+        linear-gradient(
+            180deg,
+            #fafbfc,
+            #f8fafc
+        );
+
+    border-top:
+        1px solid
+        var(--mr-border);
 }
 
+
 /* =========================================================
-   UPLOAD INTERFACE
+   UPLOAD INFORMATION
 ========================================================= */
 
 .upload-info-box {
-    margin: 20px 24px;
-    padding: 16px 20px;
-    background: var(--mr-primary-soft);
-    border: 1px solid var(--mr-primary-border);
-    border-left: 4px solid var(--mr-primary);
-    border-radius: 8px;
+    margin:
+        20px 24px;
+
+    padding:
+        16px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mr-primary-soft),
+            #f7fbf9
+        );
+
+    border:
+        1px solid
+        var(--mr-primary-border);
+
+    border-left:
+        4px solid
+        var(--mr-primary);
+
+    border-radius: 9px;
+
     color: #334155;
+
     font-size: 13px;
-    line-height: 1.6;
+
+    line-height: 1.65;
 }
+
 
 .upload-info-box strong {
-    color: var(--mr-primary);
-    font-weight: 800;
+    color:
+        var(--mr-primary);
+
+    font-weight: 850;
 }
 
+
+/* =========================================================
+   UPLOAD DROPZONE
+========================================================= */
+
 .upload-dropzone {
-    margin: 0 24px 24px;
-    padding: 40px 24px;
+    position: relative;
+
+    margin:
+        0 24px 24px;
+
+    padding:
+        42px 24px;
+
     text-align: center;
-    background: #fafbfc;
-    border: 2px dashed #cbd5e1;
-    border-radius: 12px;
-    transition: all 0.2s ease;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fafbfc,
+            #ffffff
+        );
+
+    border:
+        2px dashed
+        #cbd5e1;
+
+    border-radius: 13px;
+
+    transition:
+        all 0.2s ease;
 }
+
 
 .upload-dropzone:hover {
     background: #ffffff;
-    border-color: var(--mr-primary);
-    box-shadow: 0 6px 20px rgba(30, 75, 56, 0.05);
+
+    border-color:
+        var(--mr-primary);
+
+    box-shadow:
+        0 8px 25px
+        rgba(
+            30,
+            75,
+            56,
+            0.07
+        );
 }
 
+
 .upload-dropzone-icon {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
+
     border-radius: 50%;
-    background: var(--mr-primary-soft);
-    color: var(--mr-primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mr-primary-soft),
+            #ffffff
+        );
+
+    color:
+        var(--mr-primary);
+
+    border:
+        1px solid
+        var(--mr-primary-border);
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
-    font-size: 24px;
-    margin-bottom: 14px;
+
+    font-size: 25px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(
+            30,
+            75,
+            56,
+            0.07
+        );
 }
+
 
 .upload-dropzone strong {
     display: block;
-    color: var(--mr-text-main);
+
+    color:
+        var(--mr-text-main);
+
     font-size: 14px;
-    font-weight: 800;
-    margin-bottom: 4px;
+
+    font-weight: 850;
+
+    margin-bottom: 5px;
 }
+
+
+.upload-dropzone-subtitle {
+    color:
+        var(--mr-text-muted);
+
+    font-size: 11px;
+
+    margin-bottom: 5px;
+}
+
 
 .upload-dropzone input[type="file"] {
     width: 100%;
+
     max-width: 480px;
-    margin: 16px auto 0;
+
+    margin:
+        16px auto 0;
+
     display: block;
+
     box-sizing: border-box;
-    padding: 10px 14px;
-    border: 1px solid var(--mr-border);
+
+    padding:
+        10px 14px;
+
+    border:
+        1px solid
+        var(--mr-border);
+
     border-radius: 8px;
+
     background: #ffffff;
+
     color: #475569;
+
     font-family: inherit;
+
     font-size: 12px;
+
+    cursor: pointer;
 }
+
+
+.upload-dropzone input[type="file"]:focus {
+    outline: none;
+
+    border-color:
+        var(--mr-primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            30,
+            75,
+            56,
+            0.10
+        );
+}
+
 
 .allowed-files-pill {
     display: inline-block;
+
     margin-top: 14px;
-    padding: 4px 12px;
+
+    padding:
+        5px 13px;
+
     background: #edf2f7;
+
     border-radius: 20px;
+
     color: #64748b;
-    font-size: 11px;
-    font-weight: 600;
+
+    font-size: 10.5px;
+
+    font-weight: 700;
 }
 
+
 /* =========================================================
-   RESPONSIVE DESIGN
+   FORM FIELD HELPER
+========================================================= */
+
+.required-note {
+    color:
+        var(--mr-danger);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    margin-left: 4px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
 ========================================================= */
 
 @media (max-width: 768px) {
+
     .material-request-page {
-        padding: 24px 12px 60px;
+        padding:
+            20px 12px 60px;
     }
+
+
+    .request-container {
+        width: 100%;
+    }
+
+
+    .page-navigation {
+        margin-bottom: 12px;
+    }
+
+
+    .back-button {
+        padding:
+            9px 13px;
+    }
+
+
+    .page-header {
+        padding:
+            18px;
+
+        align-items: flex-start;
+    }
+
+
+    .page-header-title {
+        align-items: flex-start;
+    }
+
+
+    .page-header-icon {
+        width: 44px;
+        height: 44px;
+
+        font-size: 17px;
+    }
+
+
+    .page-header h1 {
+        font-size: 21px;
+    }
+
+
+    .page-header p {
+        font-size: 12px;
+    }
+
+
+    .header-status {
+        margin-left: 58px;
+    }
+
+
+    .request-tabs {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+
+    .request-tab {
+        width: 100%;
+    }
+
 
     .form-grid {
         grid-template-columns: 1fr;
+
         padding: 18px;
+
         gap: 16px;
     }
+
 
     .form-group.full {
         grid-column: auto;
     }
 
+
     .card-header-bar {
-        padding: 16px 18px;
+        padding:
+            16px 18px;
+
         flex-direction: column;
+
         align-items: flex-start;
     }
+
 
     .card-header-bar .btn {
         width: 100%;
     }
 
-    .table-responsive-box {
-        margin: 16px;
+
+    .material-section-intro {
+        padding:
+            13px 18px 0;
     }
 
+
+    .table-responsive-box {
+        margin:
+            16px;
+    }
+
+
     .form-actions-bar {
-        padding: 16px 18px;
+        padding:
+            16px 18px;
+
         flex-direction: column-reverse;
     }
+
 
     .form-actions-bar .btn {
         width: 100%;
     }
 
-    .upload-info-box,
-    .upload-dropzone {
+
+    .upload-info-box {
         margin-left: 16px;
         margin-right: 16px;
     }
+
+
+    .upload-dropzone {
+        margin-left: 16px;
+        margin-right: 16px;
+
+        padding:
+            32px 18px;
+    }
+
+
+    .upload-dropzone input[type="file"] {
+        max-width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .material-request-page {
+        padding:
+            15px 9px 45px;
+    }
+
+
+    .page-header {
+        padding:
+            16px;
+    }
+
+
+    .page-header-title {
+        gap: 11px;
+    }
+
+
+    .page-header-icon {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 10px;
+
+        font-size: 16px;
+    }
+
+
+    .page-header h1 {
+        font-size: 19px;
+    }
+
+
+    .page-header p {
+        font-size: 11px;
+    }
+
+
+    .header-status {
+        margin-left: 51px;
+
+        font-size: 10px;
+    }
+
+
+    .request-tabs {
+        margin-bottom: 18px;
+    }
+
+
+    .request-tab {
+        font-size: 12px;
+
+        padding:
+            11px 14px;
+    }
+
+
+    .card-header-bar h3 {
+        font-size: 12px;
+    }
+
+
+    .btn {
+        font-size: 12px;
+    }
+
 }
 
 </style>
 
+
 <div class="material-request-page">
 
     <div class="request-container">
+
+
+        <!-- =====================================================
+             BACK NAVIGATION
+        ====================================================== -->
+
+        <div class="page-navigation">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="window.history.back()"
+            >
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+
+        </div>
+
 
         <!-- =====================================================
              PAGE HEADER
@@ -570,13 +1540,31 @@ Material Request | Prestigious Trading & Construction
                 </div>
 
                 <div>
-                    <h1>Material Request</h1>
-                    <p>Create a structured material procurement request or upload existing documentation.</p>
+
+                    <h1>
+                        Material Request
+                    </h1>
+
+                    <p>
+                        Create a structured material procurement request
+                        or upload existing documentation.
+                    </p>
+
                 </div>
 
             </div>
 
+
+            <div class="header-status">
+
+                <span class="header-status-dot"></span>
+
+                Purchase Department
+
+            </div>
+
         </div>
+
 
         <!-- =====================================================
              SEGMENTED NAVIGATION TABS
@@ -590,9 +1578,13 @@ Material Request | Prestigious Trading & Construction
                 id="manualTab"
                 onclick="showRequestSection('manual')"
             >
+
                 <i class="fas fa-file-circle-plus"></i>
+
                 Create Manual Request
+
             </button>
+
 
             <button
                 type="button"
@@ -600,11 +1592,15 @@ Material Request | Prestigious Trading & Construction
                 id="uploadTab"
                 onclick="showRequestSection('upload')"
             >
+
                 <i class="fas fa-cloud-arrow-up"></i>
+
                 Upload Existing Request
+
             </button>
 
         </div>
+
 
         <!-- =====================================================
              MANUAL REQUEST FORM
@@ -625,21 +1621,42 @@ Material Request | Prestigious Trading & Construction
                     value="1"
                 >
 
-                <!-- REQUEST INFORMATION -->
+
+                <!-- =================================================
+                     REQUEST INFORMATION
+                ================================================== -->
 
                 <div class="request-card">
 
                     <div class="card-header-bar">
+
                         <h3>
+
                             <i class="fas fa-circle-info"></i>
+
                             Request Information
+
                         </h3>
+
+                        <span class="card-header-meta">
+                            Basic request details
+                        </span>
+
                     </div>
+
 
                     <div class="form-grid">
 
+
+                        <!-- PROJECT -->
+
                         <div class="form-group">
-                            <label for="project_name">Project Name *</label>
+
+                            <label for="project_name">
+                                Project Name
+                                <span class="required-note">*</span>
+                            </label>
+
                             <input
                                 type="text"
                                 id="project_name"
@@ -647,77 +1664,144 @@ Material Request | Prestigious Trading & Construction
                                 placeholder="Enter project name"
                                 required
                             >
+
                         </div>
 
+
+                        <!-- REQUESTED BY -->
+
                         <div class="form-group">
-                            <label for="requested_by">Requested By</label>
+
+                            <label for="requested_by">
+                                Requested By
+                            </label>
+
                             <input
                                 type="text"
                                 id="requested_by"
                                 name="requested_by"
                                 placeholder="Name of person requesting material"
                             >
+
                         </div>
 
+
+                        <!-- REQUEST DATE -->
+
                         <div class="form-group">
-                            <label for="request_date">Request Date *</label>
+
+                            <label for="request_date">
+                                Request Date
+                                <span class="required-note">*</span>
+                            </label>
+
                             <input
                                 type="date"
                                 id="request_date"
                                 name="request_date"
                                 required
                             >
+
                         </div>
 
+
+                        <!-- DESCRIPTION -->
+
                         <div class="form-group full">
-                            <label for="description">General Description</label>
+
+                            <label for="description">
+                                General Description
+                            </label>
+
                             <textarea
                                 id="description"
                                 name="description"
                                 placeholder="Optional general description or notes for this material request..."
                             ></textarea>
+
                         </div>
 
                     </div>
 
                 </div>
 
-                <!-- MATERIAL ITEMS SPREADSHEET -->
+
+                <!-- =================================================
+                     MATERIAL ITEMS
+                ================================================== -->
 
                 <div class="request-card">
 
                     <div class="card-header-bar">
 
                         <h3>
+
                             <i class="fas fa-layer-group"></i>
+
                             Material Items
+
                         </h3>
+
 
                         <button
                             type="button"
                             class="btn btn-secondary"
                             onclick="addMaterialRow()"
                         >
+
                             <i class="fas fa-plus"></i>
+
                             Add Material Row
+
                         </button>
 
                     </div>
+
+
+                    <div class="material-section-intro">
+
+                        Add each required material below.
+                        You can add multiple items to the same request.
+
+                    </div>
+
 
                     <div class="table-responsive-box">
 
                         <table class="material-table">
 
                             <thead>
+
                                 <tr>
-                                    <th class="description-column">Item Description *</th>
-                                    <th class="brand-column">Brand</th>
-                                    <th class="unit-column">Unit</th>
-                                    <th class="quantity-column">Quantity *</th>
-                                    <th class="specification-column">Specification</th>
-                                    <th class="action-column">Action</th>
+
+                                    <th class="description-column">
+                                        Item Description *
+                                    </th>
+
+                                    <th class="brand-column">
+                                        Brand
+                                    </th>
+
+                                    <th class="unit-column">
+                                        Unit
+                                    </th>
+
+                                    <th class="quantity-column">
+                                        Quantity *
+                                    </th>
+
+                                    <th class="specification-column">
+                                        Specification
+                                    </th>
+
+                                    <th class="action-column">
+                                        Action
+                                    </th>
+
                                 </tr>
+
                             </thead>
+
 
                             <tbody id="materialItemsBody">
                             </tbody>
@@ -726,6 +1810,7 @@ Material Request | Prestigious Trading & Construction
 
                     </div>
 
+
                     <div class="form-actions-bar">
 
                         <button
@@ -733,16 +1818,23 @@ Material Request | Prestigious Trading & Construction
                             class="btn btn-secondary"
                             onclick="resetMaterialRows()"
                         >
+
                             <i class="fas fa-rotate-left"></i>
+
                             Reset Items
+
                         </button>
+
 
                         <button
                             type="submit"
                             class="btn btn-primary"
                         >
+
                             <i class="fas fa-file-circle-check"></i>
+
                             Preview Material Request
+
                         </button>
 
                     </div>
@@ -752,6 +1844,7 @@ Material Request | Prestigious Trading & Construction
             </form>
 
         </div>
+
 
         <!-- =====================================================
              UPLOAD EXISTING MATERIAL REQUEST
@@ -770,22 +1863,58 @@ Material Request | Prestigious Trading & Construction
 
                 <div class="request-card">
 
+
+                    <!-- CARD HEADER -->
+
                     <div class="card-header-bar">
+
                         <h3>
+
                             <i class="fas fa-cloud-arrow-up"></i>
+
                             Upload Existing Material Request
+
                         </h3>
+
+                        <span class="card-header-meta">
+                            Document archive
+                        </span>
+
                     </div>
 
+
+                    <!-- INFORMATION -->
+
                     <div class="upload-info-box">
-                        <strong>Pre-Prepared Request Document</strong><br>
-                        Use this section when your material request has already been finalized as a document. The uploaded file will be archived in the system and linked to the project details below.
+
+                        <strong>
+                            Pre-Prepared Request Document
+                        </strong>
+
+                        <br>
+
+                        Use this section when your material request
+                        has already been finalized as a document.
+                        The uploaded file will be archived in the
+                        system and linked to the project details below.
+
                     </div>
+
+
+                    <!-- PROJECT DETAILS -->
 
                     <div class="form-grid">
 
+
+                        <!-- PROJECT -->
+
                         <div class="form-group">
-                            <label for="upload_project_name">Project Name *</label>
+
+                            <label for="upload_project_name">
+                                Project Name
+                                <span class="required-note">*</span>
+                            </label>
+
                             <input
                                 type="text"
                                 id="upload_project_name"
@@ -793,46 +1922,91 @@ Material Request | Prestigious Trading & Construction
                                 placeholder="Enter project name"
                                 required
                             >
+
                         </div>
 
+
+                        <!-- REQUESTED BY -->
+
                         <div class="form-group">
-                            <label for="upload_requested_by">Requested By</label>
+
+                            <label for="upload_requested_by">
+                                Requested By
+                            </label>
+
                             <input
                                 type="text"
                                 id="upload_requested_by"
                                 name="requested_by"
                                 placeholder="Name of person requesting material"
                             >
+
                         </div>
 
+
+                        <!-- REQUEST DATE -->
+
                         <div class="form-group">
-                            <label for="upload_request_date">Request Date *</label>
+
+                            <label for="upload_request_date">
+                                Request Date
+                                <span class="required-note">*</span>
+                            </label>
+
                             <input
                                 type="date"
                                 id="upload_request_date"
                                 name="request_date"
                                 required
                             >
+
                         </div>
 
+
+                        <!-- DESCRIPTION -->
+
                         <div class="form-group full">
-                            <label for="upload_description">Description</label>
+
+                            <label for="upload_description">
+                                Description
+                            </label>
+
                             <textarea
                                 id="upload_description"
                                 name="description"
                                 placeholder="Optional notes regarding this upload..."
                             ></textarea>
+
                         </div>
 
                     </div>
 
+
+                    <!-- =================================================
+                         FILE UPLOAD
+                    ================================================== -->
+
                     <div class="upload-dropzone">
 
                         <div class="upload-dropzone-icon">
+
                             <i class="fas fa-file-arrow-up"></i>
+
                         </div>
 
-                        <strong>Select Material Request Document</strong>
+
+                        <strong>
+                            Select Material Request Document
+                        </strong>
+
+
+                        <div class="upload-dropzone-subtitle">
+
+                            Upload the prepared material request document
+                            for system archiving.
+
+                        </div>
+
 
                         <input
                             type="file"
@@ -842,13 +2016,24 @@ Material Request | Prestigious Trading & Construction
                             required
                         >
 
+
                         <div>
+
                             <span class="allowed-files-pill">
-                                Accepted Formats: PDF, Word, Excel, PNG, JPG, JPEG
+
+                                Accepted Formats:
+                                PDF, Word, Excel, PNG, JPG, JPEG
+
                             </span>
+
                         </div>
 
                     </div>
+
+
+                    <!-- =================================================
+                         UPLOAD ACTIONS
+                    ================================================== -->
 
                     <div class="form-actions-bar">
 
@@ -856,16 +2041,23 @@ Material Request | Prestigious Trading & Construction
                             type="reset"
                             class="btn btn-secondary"
                         >
+
                             <i class="fas fa-rotate-left"></i>
+
                             Reset
+
                         </button>
+
 
                         <button
                             type="submit"
                             class="btn btn-success"
                         >
+
                             <i class="fas fa-cloud-arrow-up"></i>
+
                             Upload Material Request
+
                         </button>
 
                     </div>
@@ -879,6 +2071,7 @@ Material Request | Prestigious Trading & Construction
     </div>
 
 </div>
+
 
 <script>
 
@@ -900,25 +2093,33 @@ function showRequestSection(section) {
     const uploadTab =
         document.getElementById("uploadTab");
 
+
     if (section === "manual") {
 
         manualSection.style.display = "block";
+
         uploadSection.style.display = "none";
 
         manualTab.classList.add("active");
+
         uploadTab.classList.remove("active");
 
-    } else {
+    }
+
+    else {
 
         manualSection.style.display = "none";
+
         uploadSection.style.display = "block";
 
         manualTab.classList.remove("active");
+
         uploadTab.classList.add("active");
 
     }
 
 }
+
 
 /* ==========================================================
    ADD MATERIAL ROW
@@ -927,39 +2128,53 @@ function showRequestSection(section) {
 function addMaterialRow() {
 
     const tbody =
-        document.getElementById("materialItemsBody");
+        document.getElementById(
+            "materialItemsBody"
+        );
+
 
     const row =
         document.createElement("tr");
 
+
     row.innerHTML = `
 
         <td>
+
             <input
                 type="text"
                 name="item_description[]"
                 placeholder="Material description"
                 required
             >
+
         </td>
 
+
         <td>
+
             <input
                 type="text"
                 name="item_brand[]"
                 placeholder="Brand"
             >
+
         </td>
 
+
         <td>
+
             <input
                 type="text"
                 name="item_unit[]"
                 placeholder="pcs"
             >
+
         </td>
 
+
         <td>
+
             <input
                 type="number"
                 name="item_quantity[]"
@@ -968,33 +2183,45 @@ function addMaterialRow() {
                 step="any"
                 required
             >
+
         </td>
 
+
         <td>
+
             <input
                 type="text"
                 name="item_specification[]"
                 placeholder="Size / specification"
             >
+
         </td>
 
+
         <td class="action-column">
+
             <button
                 type="button"
                 class="btn btn-danger-sm"
                 onclick="removeMaterialRow(this)"
                 title="Remove material row"
             >
+
                 <i class="fas fa-trash-can"></i>
+
                 Delete
+
             </button>
+
         </td>
 
     `;
 
+
     tbody.appendChild(row);
 
 }
+
 
 /* ==========================================================
    REMOVE MATERIAL ROW
@@ -1003,21 +2230,32 @@ function addMaterialRow() {
 function removeMaterialRow(button) {
 
     const tbody =
-        document.getElementById("materialItemsBody");
+        document.getElementById(
+            "materialItemsBody"
+        );
+
 
     const rows =
         tbody.querySelectorAll("tr");
 
+
     if (rows.length <= 1) {
 
-        alert("At least one material item is required.");
+        alert(
+            "At least one material item is required."
+        );
+
         return;
 
     }
 
-    button.closest("tr").remove();
+
+    button
+        .closest("tr")
+        .remove();
 
 }
+
 
 /* ==========================================================
    RESET MATERIAL ROWS
@@ -1028,14 +2266,20 @@ function resetMaterialRows() {
     setTimeout(function() {
 
         const tbody =
-            document.getElementById("materialItemsBody");
+            document.getElementById(
+                "materialItemsBody"
+            );
+
 
         tbody.innerHTML = "";
+
+
         addMaterialRow();
 
     }, 0);
 
 }
+
 
 /* ==========================================================
    MANUAL FORM VALIDATION
@@ -1052,43 +2296,75 @@ document
                     "#materialItemsBody tr"
                 );
 
+
             if (rows.length === 0) {
 
                 event.preventDefault();
-                alert("Please add at least one material item.");
+
+                alert(
+                    "Please add at least one material item."
+                );
+
                 return;
 
             }
 
+
             let valid = true;
+
 
             rows.forEach(function(row) {
 
                 const description =
-                    row.querySelector('input[name="item_description[]"]');
+                    row.querySelector(
+                        'input[name="item_description[]"]'
+                    );
+
 
                 const quantity =
-                    row.querySelector('input[name="item_quantity[]"]');
+                    row.querySelector(
+                        'input[name="item_quantity[]"]'
+                    );
 
-                if (!description || !description.value.trim()) {
+
+                if (
+                    !description ||
+                    !description.value.trim()
+                ) {
+
                     valid = false;
+
                 }
 
-                if (!quantity || !quantity.value || parseFloat(quantity.value) <= 0) {
+
+                if (
+                    !quantity ||
+                    !quantity.value ||
+                    parseFloat(
+                        quantity.value
+                    ) <= 0
+                ) {
+
                     valid = false;
+
                 }
 
             });
 
+
             if (!valid) {
 
                 event.preventDefault();
-                alert("Please provide a valid description and positive quantity for every material item.");
+
+                alert(
+                    "Please provide a valid description and positive quantity for every material item."
+                );
 
             }
 
         }
     );
+
 
 /* ==========================================================
    DEFAULT DATE INITIALIZATION
@@ -1098,20 +2374,57 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+
+        /* ----------------------------------------------
+           FIRST MATERIAL ROW
+        ---------------------------------------------- */
+
         addMaterialRow();
 
-        const requestDate =
-            document.getElementById("request_date");
 
-        if (requestDate && !requestDate.value) {
-            requestDate.value = new Date().toISOString().split("T")[0];
+        /* ----------------------------------------------
+           MANUAL REQUEST DATE
+        ---------------------------------------------- */
+
+        const requestDate =
+            document.getElementById(
+                "request_date"
+            );
+
+
+        if (
+            requestDate &&
+            !requestDate.value
+        ) {
+
+            requestDate.value =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
         }
 
-        const uploadDate =
-            document.getElementById("upload_request_date");
 
-        if (uploadDate && !uploadDate.value) {
-            uploadDate.value = new Date().toISOString().split("T")[0];
+        /* ----------------------------------------------
+           UPLOAD REQUEST DATE
+        ---------------------------------------------- */
+
+        const uploadDate =
+            document.getElementById(
+                "upload_request_date"
+            );
+
+
+        if (
+            uploadDate &&
+            !uploadDate.value
+        ) {
+
+            uploadDate.value =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
         }
 
     }
