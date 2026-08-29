@@ -9962,6 +9962,1980 @@ def construction_purchase_material_request():
 
 
 
+# ==========================================================
+# PURCHASE OFFICER - MANUAL MATERIAL REQUEST
+# CREATE → PREVIEW
+#
+# FLOW:
+#
+# Manual Form
+#     ↓
+# Validate
+#     ↓
+# Generate Request Number
+#     ↓
+# Store temporary preview in session
+#     ↓
+# Preview HTML
+#     ↓
+# Confirm Route
+#     ↓
+# Generate PDF
+#     ↓
+# Cloudinary
+#     ↓
+# Database
+#     ↓
+# Manager Notification
+#
+# IMPORTANT:
+# This route DOES NOT insert anything into the database.
+# ==========================================================
+
+@app.route(
+    "/construction/purchase/material-request/manual",
+    methods=["POST"]
+)
+def construction_purchase_material_request_manual():
+
+    # ======================================================
+    # LOGIN PROTECTION
+    # ======================================================
+
+    if "construction_admin_id" not in session:
+
+        flash(
+            "Please sign in to access the Purchase Department.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    # ======================================================
+    # ROLE PROTECTION
+    # ======================================================
+
+    role = (
+        session.get("construction_admin_role") or ""
+    ).strip().lower()
+
+    if role != "purchase":
+
+        flash(
+            "You are not authorized to access the Purchase Department.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    # ======================================================
+    # PURCHASE USER
+    # ======================================================
+
+    purchase_user = {
+
+        "fullname": session.get(
+            "construction_admin_name",
+            "Purchase Officer"
+        ),
+
+        "username": session.get(
+            "construction_admin_username",
+            ""
+        ),
+
+        "role": session.get(
+            "construction_admin_role",
+            "purchase"
+        )
+
+    }
+
+    # ======================================================
+    # MAKE SURE THIS IS THE MANUAL FORM
+    # ======================================================
+
+    if request.form.get("manual_request") != "1":
+
+        flash(
+            "Invalid manual material request submission.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # REQUEST INFORMATION
+    # ======================================================
+
+    project_name = (
+        request.form.get("project_name") or ""
+    ).strip()
+
+    requested_by = (
+        request.form.get("requested_by") or ""
+    ).strip()
+
+    request_date = (
+        request.form.get("request_date") or ""
+    ).strip()
+
+    description = (
+        request.form.get("description") or ""
+    ).strip()
+
+    # ======================================================
+    # BASIC VALIDATION
+    # ======================================================
+
+    if not project_name:
+
+        flash(
+            "Project name is required.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    if not request_date:
+
+        flash(
+            "Request date is required.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # READ MATERIAL ITEMS
+    # ======================================================
+
+    descriptions = request.form.getlist(
+        "item_description[]"
+    )
+
+    brands = request.form.getlist(
+        "item_brand[]"
+    )
+
+    units = request.form.getlist(
+        "item_unit[]"
+    )
+
+    quantities = request.form.getlist(
+        "item_quantity[]"
+    )
+
+    specifications = request.form.getlist(
+        "item_specification[]"
+    )
+
+    # ======================================================
+    # REQUIRE AT LEAST ONE ITEM
+    # ======================================================
+
+    if not descriptions:
+
+        flash(
+            "Please add at least one material item.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # BUILD PREVIEW ITEMS
+    # ======================================================
+
+    items = []
+
+    item_count = len(descriptions)
+
+    for i in range(item_count):
+
+        # ==================================================
+        # DESCRIPTION
+        # ==================================================
+
+        item_description = (
+
+            descriptions[i].strip()
+
+            if i < len(descriptions)
+
+            else ""
+
+        )
+
+        # ==================================================
+        # BRAND
+        # ==================================================
+
+        brand = (
+
+            brands[i].strip()
+
+            if i < len(brands)
+
+            else ""
+
+        )
+
+        # ==================================================
+        # UNIT
+        # ==================================================
+
+        unit = (
+
+            units[i].strip()
+
+            if i < len(units)
+
+            else ""
+
+        )
+
+        # ==================================================
+        # QUANTITY
+        # ==================================================
+
+        quantity = (
+
+            quantities[i].strip()
+
+            if i < len(quantities)
+
+            else ""
+
+        )
+
+        # ==================================================
+        # SPECIFICATION
+        # ==================================================
+
+        specification = (
+
+            specifications[i].strip()
+
+            if i < len(specifications)
+
+            else ""
+
+        )
+
+        # ==================================================
+        # DESCRIPTION VALIDATION
+        # ==================================================
+
+        if not item_description:
+
+            flash(
+                f"Material item #{i + 1} "
+                "requires a description.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_purchase_material_request"
+                )
+            )
+
+        # ==================================================
+        # QUANTITY VALIDATION
+        # ==================================================
+
+        if not quantity:
+
+            flash(
+                f"Material item #{i + 1} "
+                "requires a quantity.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_purchase_material_request"
+                )
+            )
+
+        # ==================================================
+        # CONVERT QUANTITY
+        # ==================================================
+
+        try:
+
+            quantity_value = float(
+                quantity
+            )
+
+            if quantity_value <= 0:
+
+                raise ValueError
+
+        except (
+            ValueError,
+            TypeError
+        ):
+
+            flash(
+                f"Material item #{i + 1} "
+                "has an invalid quantity.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_purchase_material_request"
+                )
+            )
+
+        # ==================================================
+        # PREVIEW ITEM
+        #
+        # Database structure:
+        #
+        # item_code
+        # size
+        # description
+        # brand
+        # quantity
+        # unit
+        # remark
+        #
+        # Manual form currently provides:
+        #
+        # description
+        # brand
+        # unit
+        # quantity
+        # specification
+        #
+        # Therefore:
+        #
+        # specification → remark
+        # item_code → NULL
+        # size → NULL
+        # ==================================================
+
+        items.append(
+            {
+
+                "item_code": None,
+
+                "size": None,
+
+                "description":
+                    item_description,
+
+                "brand":
+                    brand or None,
+
+                "quantity":
+                    quantity_value,
+
+                "unit":
+                    unit or None,
+
+                "remark":
+                    specification or None
+
+            }
+        )
+
+    # ======================================================
+    # GENERATE REQUEST NUMBER
+    #
+    # IMPORTANT:
+    # This is generated BEFORE preview so the preview document
+    # can display the actual request number.
+    #
+    # Nothing is inserted into the database yet.
+    # ======================================================
+
+    request_number = (
+        "MR-"
+        + datetime.now().strftime("%Y%m%d")
+        + "-"
+        + uuid.uuid4().hex[:6].upper()
+    )
+
+    # ======================================================
+    # CREATE PREVIEW DATA
+    # ======================================================
+
+    preview_data = {
+
+        "request_number":
+            request_number,
+
+        "project_name":
+            project_name,
+
+        "requested_by":
+            requested_by,
+
+        "request_date":
+            request_date,
+
+        "description":
+            description,
+
+        "items":
+            items,
+
+        "created_by":
+            purchase_user["fullname"],
+
+        "created_by_id":
+            session.get(
+                "construction_admin_id"
+            )
+
+    }
+
+    # ======================================================
+    # STORE PREVIEW IN SESSION
+    #
+    # NOTHING IS INSERTED INTO DATABASE HERE.
+    # ======================================================
+
+    session[
+        "material_request_preview"
+    ] = preview_data
+
+    session.modified = True
+
+    # ======================================================
+    # DEBUG
+    # ======================================================
+
+    print("========================================")
+    print("MANUAL MATERIAL REQUEST PREVIEW")
+    print("Request Number:", request_number)
+    print("Project:", project_name)
+    print("Requested By:", requested_by)
+    print("Request Date:", request_date)
+    print("Item Count:", len(items))
+    print("Created By:", purchase_user["fullname"])
+    print("========================================")
+
+    # ======================================================
+    # RENDER PREVIEW
+    # ======================================================
+
+    return render_template(
+
+        "construction_admin/"
+        "construction_purchase_material_request_preview.html",
+
+        material_request=preview_data,
+
+        purchase_user=purchase_user
+
+    )
+
+
+
+
+
+
+
+# ==========================================================
+# PURCHASE OFFICER - CONFIRM MANUAL MATERIAL REQUEST
+#
+# FLOW:
+#
+# Manual Form
+#     ↓
+# Preview
+#     ↓
+# Confirm
+#     ↓
+# Generate PDF
+#     ↓
+# Cloudinary
+#     ↓
+# Database Header
+#     ↓
+# Database Items
+#     ↓
+# Manager Notification
+#     ↓
+# Purchase Officer Notification
+#     ↓
+# Dashboard
+#
+# IMPORTANT:
+# This route is COMPLETELY SEPARATE from the
+# existing upload material request workflow.
+# ==========================================================
+
+@app.route(
+    "/construction/purchase/material-request/manual/confirm",
+    methods=["POST"]
+)
+def construction_purchase_material_request_confirm():
+
+    # ======================================================
+    # LOGIN PROTECTION
+    # ======================================================
+
+    if "construction_admin_id" not in session:
+
+        flash(
+            "Please sign in to access the Purchase Department.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    # ======================================================
+    # ROLE PROTECTION
+    # ======================================================
+
+    role = (
+        session.get("construction_admin_role") or ""
+    ).strip().lower()
+
+    if role != "purchase":
+
+        flash(
+            "You are not authorized to submit a material request.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("admin_login")
+        )
+
+    # ======================================================
+    # GET PREVIEW FROM SESSION
+    # ======================================================
+
+    preview_data = session.get(
+        "material_request_preview"
+    )
+
+    if not preview_data:
+
+        flash(
+            "Your material request preview has expired. "
+            "Please create the request again.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # EXTRACT DATA
+    # ======================================================
+
+    request_number = (
+        preview_data.get("request_number") or ""
+    ).strip()
+
+    project_name = (
+        preview_data.get("project_name") or ""
+    ).strip()
+
+    requested_by = (
+        preview_data.get("requested_by") or ""
+    ).strip()
+
+    request_date = (
+        preview_data.get("request_date") or ""
+    ).strip()
+
+    description = (
+        preview_data.get("description") or ""
+    ).strip()
+
+    items = (
+        preview_data.get("items") or []
+    )
+
+    created_by_id = (
+        preview_data.get("created_by_id")
+    )
+
+    created_by = (
+        preview_data.get("created_by")
+        or "Purchase Officer"
+    )
+
+    # ======================================================
+    # BASIC VALIDATION
+    # ======================================================
+
+    if not request_number:
+
+        flash(
+            "Invalid material request number.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    if not project_name:
+
+        flash(
+            "Project name is missing.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    if not request_date:
+
+        flash(
+            "Request date is missing.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    if not created_by_id:
+
+        flash(
+            "Unable to identify the Purchase Officer.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    if not items:
+
+        flash(
+            "At least one material item is required.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # VALIDATE ITEMS AGAIN
+    #
+    # The session data should not be blindly trusted.
+    # ======================================================
+
+    for index, item in enumerate(items, start=1):
+
+        item_description = (
+            item.get("description") or ""
+        ).strip()
+
+        quantity = item.get("quantity")
+
+        if not item_description:
+
+            flash(
+                f"Material item #{index} "
+                "requires a description.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_purchase_material_request"
+                )
+            )
+
+        try:
+
+            quantity_value = float(
+                quantity
+            )
+
+            if quantity_value <= 0:
+
+                raise ValueError
+
+        except (
+            ValueError,
+            TypeError
+        ):
+
+            flash(
+                f"Material item #{index} "
+                "has an invalid quantity.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "construction_purchase_material_request"
+                )
+            )
+
+    # ======================================================
+    # GENERATE PDF
+    #
+    # The database requires:
+    #
+    # file_name NOT NULL
+    # file_url  NOT NULL
+    #
+    # Therefore the PDF must be created before the
+    # database INSERT.
+    # ======================================================
+
+    pdf_path = None
+    file_url = None
+
+    try:
+
+        from reportlab.lib.pagesizes import A4
+        from reportlab.platypus import (
+            SimpleDocTemplate,
+            Paragraph,
+            Spacer,
+            Table,
+            TableStyle
+        )
+        from reportlab.lib import colors
+        from reportlab.lib.styles import (
+            getSampleStyleSheet,
+            ParagraphStyle
+        )
+        from reportlab.lib.enums import (
+            TA_CENTER
+        )
+
+        # ==================================================
+        # TEMP PDF DIRECTORY
+        # ==================================================
+
+        upload_folder = os.path.join(
+            app.root_path,
+            "temp_material_requests"
+        )
+
+        os.makedirs(
+            upload_folder,
+            exist_ok=True
+        )
+
+        # ==================================================
+        # PDF FILENAME
+        # ==================================================
+
+        pdf_filename = (
+            f"{request_number}.pdf"
+        )
+
+        pdf_path = os.path.join(
+            upload_folder,
+            pdf_filename
+        )
+
+        # ==================================================
+        # STYLES
+        # ==================================================
+
+        styles = getSampleStyleSheet()
+
+        title_style = ParagraphStyle(
+            "MRTitle",
+            parent=styles["Heading1"],
+            alignment=TA_CENTER,
+            fontSize=18,
+            spaceAfter=12
+        )
+
+        normal_style = ParagraphStyle(
+            "MRNormal",
+            parent=styles["Normal"],
+            fontSize=9,
+            leading=12
+        )
+
+        table_style = ParagraphStyle(
+            "MRTable",
+            parent=styles["Normal"],
+            fontSize=7,
+            leading=9
+        )
+
+        # ==================================================
+        # DOCUMENT
+        # ==================================================
+
+        document = SimpleDocTemplate(
+            pdf_path,
+            pagesize=A4,
+            rightMargin=35,
+            leftMargin=35,
+            topMargin=35,
+            bottomMargin=35
+        )
+
+        story = []
+
+        # ==================================================
+        # COMPANY
+        # ==================================================
+
+        story.append(
+            Paragraph(
+                "PRESTIGIOUS TRADING & CONSTRUCTION W.L.L",
+                styles["Heading2"]
+            )
+        )
+
+        story.append(
+            Paragraph(
+                "New Salata, Doha, Qatar",
+                normal_style
+            )
+        )
+
+        story.append(
+            Spacer(1, 10)
+        )
+
+        # ==================================================
+        # TITLE
+        # ==================================================
+
+        story.append(
+            Paragraph(
+                "MATERIAL REQUEST",
+                title_style
+            )
+        )
+
+        # ==================================================
+        # REQUEST DETAILS
+        # ==================================================
+
+        story.append(
+            Paragraph(
+                f"<b>Request Number:</b> "
+                f"{request_number}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                f"<b>Project:</b> "
+                f"{project_name}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                f"<b>Requested By:</b> "
+                f"{requested_by or 'Not specified'}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                f"<b>Request Date:</b> "
+                f"{request_date}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                f"<b>Prepared By:</b> "
+                f"{created_by}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                "<b>Status:</b> Under Review",
+                normal_style
+            )
+        )
+
+        story.append(
+            Spacer(1, 15)
+        )
+
+        # ==================================================
+        # MATERIAL TABLE
+        # ==================================================
+
+        table_data = [
+            [
+                "#",
+                "Description",
+                "Brand",
+                "Unit",
+                "Quantity",
+                "Specification / Remark"
+            ]
+        ]
+
+        for index, item in enumerate(
+            items,
+            start=1
+        ):
+
+            item_description = (
+                item.get("description") or "—"
+            )
+
+            brand = (
+                item.get("brand") or "—"
+            )
+
+            unit = (
+                item.get("unit") or "—"
+            )
+
+            quantity = (
+                item.get("quantity")
+                if item.get("quantity") is not None
+                else "—"
+            )
+
+            remark = (
+                item.get("remark") or "—"
+            )
+
+            table_data.append(
+                [
+                    Paragraph(
+                        str(index),
+                        table_style
+                    ),
+
+                    Paragraph(
+                        str(item_description),
+                        table_style
+                    ),
+
+                    Paragraph(
+                        str(brand),
+                        table_style
+                    ),
+
+                    Paragraph(
+                        str(unit),
+                        table_style
+                    ),
+
+                    Paragraph(
+                        str(quantity),
+                        table_style
+                    ),
+
+                    Paragraph(
+                        str(remark),
+                        table_style
+                    )
+                ]
+            )
+
+        material_table = Table(
+            table_data,
+            repeatRows=1,
+            colWidths=[
+                25,
+                145,
+                70,
+                45,
+                55,
+                130
+            ]
+        )
+
+        material_table.setStyle(
+            TableStyle(
+                [
+                    (
+                        "BACKGROUND",
+                        (0, 0),
+                        (-1, 0),
+                        colors.HexColor("#1e4b38")
+                    ),
+
+                    (
+                        "TEXTCOLOR",
+                        (0, 0),
+                        (-1, 0),
+                        colors.white
+                    ),
+
+                    (
+                        "FONTNAME",
+                        (0, 0),
+                        (-1, 0),
+                        "Helvetica-Bold"
+                    ),
+
+                    (
+                        "FONTSIZE",
+                        (0, 0),
+                        (-1, -1),
+                        7
+                    ),
+
+                    (
+                        "GRID",
+                        (0, 0),
+                        (-1, -1),
+                        0.5,
+                        colors.grey
+                    ),
+
+                    (
+                        "VALIGN",
+                        (0, 0),
+                        (-1, -1),
+                        "TOP"
+                    ),
+
+                    (
+                        "LEFTPADDING",
+                        (0, 0),
+                        (-1, -1),
+                        5
+                    ),
+
+                    (
+                        "RIGHTPADDING",
+                        (0, 0),
+                        (-1, -1),
+                        5
+                    ),
+
+                    (
+                        "TOPPADDING",
+                        (0, 0),
+                        (-1, -1),
+                        5
+                    ),
+
+                    (
+                        "BOTTOMPADDING",
+                        (0, 0),
+                        (-1, -1),
+                        5
+                    )
+                ]
+            )
+        )
+
+        story.append(
+            material_table
+        )
+
+        # ==================================================
+        # GENERAL DESCRIPTION
+        # ==================================================
+
+        story.append(
+            Spacer(1, 15)
+        )
+
+        story.append(
+            Paragraph(
+                "<b>General Description / Notes</b>",
+                normal_style
+            )
+        )
+
+        story.append(
+            Paragraph(
+                description
+                or "No additional description provided.",
+                normal_style
+            )
+        )
+
+        # ==================================================
+        # SIGNATURE SECTION
+        # ==================================================
+
+        story.append(
+            Spacer(1, 30)
+        )
+
+        story.append(
+            Paragraph(
+                f"<b>Prepared By:</b> {created_by}",
+                normal_style
+            )
+        )
+
+        story.append(
+            Spacer(1, 30)
+        )
+
+        story.append(
+            Paragraph(
+                "Manager Approval: "
+                "________________________________________",
+                normal_style
+            )
+        )
+
+        # ==================================================
+        # BUILD PDF
+        # ==================================================
+
+        document.build(
+            story
+        )
+
+        print(
+            "========================================"
+        )
+
+        print(
+            "MANUAL MATERIAL REQUEST PDF GENERATED"
+        )
+
+        print(
+            "Request Number:",
+            request_number
+        )
+
+        print(
+            "PDF:",
+            pdf_path
+        )
+
+        print(
+            "========================================"
+        )
+
+    except Exception as pdf_error:
+
+        print(
+            "MANUAL MATERIAL REQUEST PDF ERROR:",
+            repr(pdf_error)
+        )
+
+        flash(
+            "Unable to generate the Material Request document.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    # ======================================================
+    # CLOUDINARY
+    # ======================================================
+
+    try:
+
+        upload_result = cloudinary.uploader.upload(
+            pdf_path,
+            resource_type="raw",
+            folder=(
+                "prestigious_construction/"
+                "purchase/material_requests"
+            ),
+            public_id=request_number
+        )
+
+        file_url = upload_result.get(
+            "secure_url"
+        )
+
+        if not file_url:
+
+            raise Exception(
+                "Cloudinary did not return a secure URL."
+            )
+
+        print(
+            "========================================"
+        )
+
+        print(
+            "MANUAL MATERIAL REQUEST UPLOADED"
+        )
+
+        print(
+            "Request Number:",
+            request_number
+        )
+
+        print(
+            "Cloudinary URL:",
+            file_url
+        )
+
+        print(
+            "========================================"
+        )
+
+    except Exception as cloudinary_error:
+
+        print(
+            "MANUAL MATERIAL REQUEST CLOUDINARY ERROR:",
+            repr(cloudinary_error)
+        )
+
+        flash(
+            "Unable to upload the Material Request document.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    finally:
+
+        # ==================================================
+        # DELETE LOCAL TEMPORARY PDF
+        # ==================================================
+
+        if pdf_path and os.path.exists(
+            pdf_path
+        ):
+
+            try:
+
+                os.remove(
+                    pdf_path
+                )
+
+            except Exception as cleanup_error:
+
+                print(
+                    "PDF CLEANUP ERROR:",
+                    repr(cleanup_error)
+                )
+
+    # ======================================================
+    # DATABASE
+    # ======================================================
+
+    conn = None
+    cursor = None
+
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor()
+
+        # ==================================================
+        # INSERT MATERIAL REQUEST HEADER
+        # ==================================================
+
+        cursor.execute(
+            """
+            INSERT INTO construction_purchase_material_requests
+            (
+                request_number,
+                project_name,
+                requested_by,
+                request_date,
+                description,
+                file_name,
+                file_url,
+                uploaded_by,
+                status
+            )
+            VALUES
+            (
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                'Under Review'
+            )
+            """,
+            (
+                request_number,
+                project_name,
+                requested_by or None,
+                request_date,
+                description or None,
+                f"{request_number}.pdf",
+                file_url,
+                created_by_id
+            )
+        )
+
+        # ==================================================
+        # IMPORTANT
+        #
+        # SAVE THE HEADER ID IMMEDIATELY.
+        #
+        # DO NOT use cursor.lastrowid inside the item loop.
+        # It changes after every item INSERT.
+        # ==================================================
+
+        material_request_id = (
+            cursor.lastrowid
+        )
+
+        print(
+            "========================================"
+        )
+
+        print(
+            "MATERIAL REQUEST HEADER CREATED"
+        )
+
+        print(
+            "Material Request ID:",
+            material_request_id
+        )
+
+        print(
+            "Request Number:",
+            request_number
+        )
+
+        print(
+            "========================================"
+        )
+
+        # ==================================================
+        # INSERT MATERIAL ITEMS
+        # ==================================================
+
+        for item in items:
+
+            cursor.execute(
+                """
+                INSERT INTO
+                construction_purchase_material_request_items
+                (
+                    material_request_id,
+                    item_code,
+                    size,
+                    description,
+                    brand,
+                    quantity,
+                    unit,
+                    remark
+                )
+                VALUES
+                (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+                """,
+                (
+                    material_request_id,
+
+                    item.get(
+                        "item_code"
+                    ),
+
+                    item.get(
+                        "size"
+                    ),
+
+                    item.get(
+                        "description"
+                    ),
+
+                    item.get(
+                        "brand"
+                    ),
+
+                    item.get(
+                        "quantity"
+                    ),
+
+                    item.get(
+                        "unit"
+                    ),
+
+                    item.get(
+                        "remark"
+                    )
+                )
+            )
+
+        # ==================================================
+        # COMMIT
+        # ==================================================
+
+        conn.commit()
+
+        print(
+            "========================================"
+        )
+
+        print(
+            "MANUAL MATERIAL REQUEST DATABASE SAVED"
+        )
+
+        print(
+            "Request Number:",
+            request_number
+        )
+
+        print(
+            "Material Request ID:",
+            material_request_id
+        )
+
+        print(
+            "Items:",
+            len(items)
+        )
+
+        print(
+            "Status:",
+            "Under Review"
+        )
+
+        print(
+            "========================================"
+        )
+
+    except Exception as database_error:
+
+        if conn:
+
+            conn.rollback()
+
+        print(
+            "MANUAL MATERIAL REQUEST DATABASE ERROR:",
+            repr(database_error)
+        )
+
+        flash(
+            "Unable to save the Material Request.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "construction_purchase_material_request"
+            )
+        )
+
+    finally:
+
+        if cursor:
+
+            cursor.close()
+
+        if conn:
+
+            conn.close()
+
+    # ======================================================
+    # EMAIL NOTIFICATIONS
+    #
+    # IMPORTANT:
+    #
+    # Database has already been committed.
+    #
+    # Therefore an email failure MUST NOT undo the request.
+    # ======================================================
+
+    try:
+
+        notification_conn = get_db_connection()
+
+        notification_cursor = (
+            notification_conn.cursor(
+                dictionary=True
+            )
+        )
+
+        # ==================================================
+        # FIND PURCHASE OFFICER
+        # ==================================================
+
+        notification_cursor.execute(
+            """
+            SELECT
+                id,
+                fullname,
+                username,
+                email
+            FROM construction_admins
+            WHERE id = %s
+            LIMIT 1
+            """,
+            (
+                created_by_id,
+            )
+        )
+
+        purchaser = (
+            notification_cursor.fetchone()
+        )
+
+        # ==================================================
+        # FIND MANAGERS
+        # ==================================================
+
+        notification_cursor.execute(
+            """
+            SELECT
+                id,
+                fullname,
+                email
+            FROM construction_admins
+            WHERE LOWER(role) = 'manager'
+              AND email IS NOT NULL
+              AND TRIM(email) != ''
+            ORDER BY id ASC
+            """
+        )
+
+        managers = (
+            notification_cursor.fetchall()
+        )
+
+        notification_cursor.close()
+
+        notification_conn.close()
+
+        # ==================================================
+        # PURCHASER DETAILS
+        # ==================================================
+
+        purchaser_name = (
+            created_by
+        )
+
+        purchaser_email = ""
+
+        if purchaser:
+
+            purchaser_name = (
+                purchaser.get("fullname")
+                or purchaser_name
+            )
+
+            purchaser_email = (
+                purchaser.get("email")
+                or ""
+            ).strip()
+
+        # ==================================================
+        # SEND CONFIRMATION TO PURCHASE OFFICER
+        # ==================================================
+
+        if purchaser_email:
+
+            purchaser_email_result = send_email(
+
+                purchaser_email,
+
+                (
+                    "Material Request Submitted - "
+                    f"{request_number}"
+                ),
+
+                f"""
+                <h2>
+                    Material Request Submitted
+                </h2>
+
+                <p>
+                    Hello
+                    <b>{purchaser_name}</b>,
+                </p>
+
+                <p>
+                    Your manual material request has been
+                    successfully submitted to the Manager
+                    for review.
+                </p>
+
+                <hr>
+
+                <h3>
+                    Material Request Details
+                </h3>
+
+                <p>
+                    <b>Request Number:</b>
+                    {request_number}
+                </p>
+
+                <p>
+                    <b>Project:</b>
+                    {project_name}
+                </p>
+
+                <p>
+                    <b>Requested By:</b>
+                    {requested_by or "Not specified"}
+                </p>
+
+                <p>
+                    <b>Request Date:</b>
+                    {request_date}
+                </p>
+
+                <p>
+                    <b>Description:</b>
+                    {description or "No description provided"}
+                </p>
+
+                <p>
+                    <b>Material Lines:</b>
+                    {len(items)}
+                </p>
+
+                <p>
+                    <b>Status:</b>
+                    Under Review
+                </p>
+
+                <p>
+                    <b>Submitted By:</b>
+                    {purchaser_name}
+                </p>
+
+                <hr>
+
+                <p>
+                    <b>Material Request Document:</b>
+                </p>
+
+                <p>
+                    <a
+                        href="{file_url}"
+                        target="_blank"
+                    >
+                        View Material Request
+                    </a>
+                </p>
+
+                <hr>
+
+                <p>
+                    This is an automatic confirmation that
+                    your Material Request has been successfully
+                    submitted to the Manager.
+                </p>
+
+                <p>
+                    Regards,<br>
+                    <b>
+                        Prestigious Trading & Construction
+                    </b>
+                </p>
+                """
+            )
+
+            print(
+                "MANUAL MATERIAL REQUEST PURCHASER EMAIL:",
+                purchaser_email,
+                purchaser_name,
+                purchaser_email_result
+            )
+
+        else:
+
+            print(
+                "MANUAL MATERIAL REQUEST EMAIL: "
+                "Purchase Officer has no valid email address."
+            )
+
+        # ==================================================
+        # SEND TO MANAGERS
+        # ==================================================
+
+        if managers:
+
+            for manager in managers:
+
+                manager_email = (
+                    manager.get("email")
+                    or ""
+                ).strip()
+
+                if not manager_email:
+
+                    continue
+
+                manager_name = (
+                    manager.get(
+                        "fullname"
+                    )
+                    or "Manager"
+                )
+
+                manager_email_result = send_email(
+
+                    manager_email,
+
+                    (
+                        "New Material Request Requires "
+                        "Manager Approval - "
+                        f"{request_number}"
+                    ),
+
+                    f"""
+                    <h2>
+                        New Material Request
+                    </h2>
+
+                    <p>
+                        Hello
+                        <b>{manager_name}</b>,
+                    </p>
+
+                    <p>
+                        A new manual material request has
+                        been submitted by the Purchase Department
+                        and is awaiting your review and approval.
+                    </p>
+
+                    <hr>
+
+                    <h3>
+                        Material Request Details
+                    </h3>
+
+                    <p>
+                        <b>Request Number:</b>
+                        {request_number}
+                    </p>
+
+                    <p>
+                        <b>Project:</b>
+                        {project_name}
+                    </p>
+
+                    <p>
+                        <b>Requested By:</b>
+                        {requested_by or "Not specified"}
+                    </p>
+
+                    <p>
+                        <b>Request Date:</b>
+                        {request_date}
+                    </p>
+
+                    <p>
+                        <b>Description:</b>
+                        {description or "No description provided"}
+                    </p>
+
+                    <p>
+                        <b>Material Lines:</b>
+                        {len(items)}
+                    </p>
+
+                    <p>
+                        <b>Status:</b>
+                        Under Review
+                    </p>
+
+                    <p>
+                        <b>Submitted By:</b>
+                        {purchaser_name}
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        <b>Material Request Document:</b>
+                    </p>
+
+                    <p>
+                        <a
+                            href="{file_url}"
+                            target="_blank"
+                        >
+                            View Material Request
+                        </a>
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        This notification was generated
+                        automatically by the Purchase Department
+                        system.
+                    </p>
+
+                    <p>
+                        Please review the Material Request
+                        through the Manager Dashboard.
+                    </p>
+
+                    <p>
+                        Regards,<br>
+                        <b>
+                            Prestigious Trading & Construction
+                        </b>
+                    </p>
+                    """
+                )
+
+                print(
+                    "MANUAL MATERIAL REQUEST MANAGER EMAIL:",
+                    manager_email,
+                    manager_name,
+                    manager_email_result
+                )
+
+        else:
+
+            print(
+                "MANUAL MATERIAL REQUEST EMAIL: "
+                "No manager with a valid email address "
+                "was found."
+            )
+
+    except Exception as email_error:
+
+        print(
+            "MANUAL MATERIAL REQUEST EMAIL ERROR:",
+            repr(email_error)
+        )
+
+    # ======================================================
+    # CLEAR PREVIEW SESSION
+    #
+    # ONLY NOW.
+    #
+    # At this point:
+    #
+    # PDF generated
+    # Cloudinary uploaded
+    # Database committed
+    #
+    # Therefore the temporary preview can safely be removed.
+    # ======================================================
+
+    session.pop(
+        "material_request_preview",
+        None
+    )
+
+    session.modified = True
+
+    # ======================================================
+    # SUCCESS
+    # ======================================================
+
+    print(
+        "========================================"
+    )
+
+    print(
+        "MANUAL MATERIAL REQUEST CONFIRMED"
+    )
+
+    print(
+        "Request Number:",
+        request_number
+    )
+
+    print(
+        "Project:",
+        project_name
+    )
+
+    print(
+        "Items:",
+        len(items)
+    )
+
+    print(
+        "Status:",
+        "Under Review"
+    )
+
+    print(
+        "========================================"
+    )
+
+    flash(
+        f"Material Request {request_number} "
+        "has been successfully submitted to the Manager.",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "construction_purchase_dashboard"
+        )
+    )
+
+
+
+
+
+
+
+
+
 # ======================================================
 # PURCHASE ADD QUOTATION ROUTE
 # ======================================================
@@ -13789,7 +15763,7 @@ def construction_manager_material_request_review(request_id):
             # APPROVED:
             #   - Purchase Officer
             #   - Current Manager
-            #   - Account users
+            #   - All Account users
             #
             # DECLINED:
             #   - Purchase Officer
@@ -13799,6 +15773,12 @@ def construction_manager_material_request_review(request_id):
             # ==================================================
 
             try:
+
+                # ==================================================
+                # RECIPIENT LIST
+                # ==================================================
+
+                recipients = []
 
                 # ==================================================
                 # FIND CURRENT MANAGER EMAIL
@@ -13815,7 +15795,9 @@ def construction_manager_material_request_review(request_id):
                     manager_cursor.execute(
                         """
                         SELECT
+                            id,
                             fullname,
+                            username,
                             email
 
                         FROM construction_admins
@@ -13836,139 +15818,42 @@ def construction_manager_material_request_review(request_id):
                     manager_cursor.close()
 
                     if current_manager:
-
                         manager_email = (
-                            current_manager.get(
-                                "email"
-                            ) or ""
+                                current_manager.get(
+                                    "email"
+                                ) or ""
                         ).strip()
 
-                        if current_manager.get("fullname"):
-
-                            manager_name = (
+                        manager_name = (
                                 current_manager.get(
                                     "fullname"
                                 )
-                            )
+                                or manager_name
+                        )
 
                 except Exception as manager_lookup_error:
 
                     print(
-                        "MATERIAL REQUEST MANAGER LOOKUP ERROR:",
-                        repr(manager_lookup_error)
+                        "=================================================="
+                    )
+
+                    print(
+                        "MATERIAL REQUEST MANAGER LOOKUP ERROR"
+                    )
+
+                    print(
+                        repr(
+                            manager_lookup_error
+                        )
+                    )
+
+                    print(
+                        "=================================================="
                     )
 
                 # ==================================================
-                # BUILD COMMON EMAIL HTML
-                # ==================================================
-
-                email_body = f"""
-                <div
-                    style="
-                        font-family:Arial,sans-serif;
-                        color:#172033;
-                        line-height:1.6;
-                    "
-                >
-
-                    <h2>
-                        Material Request {new_status}
-                    </h2>
-
-                    <p>
-                        The material request has been
-                        <b>{decision_word}</b>
-                        by management.
-                    </p>
-
-                    <hr>
-
-                    <h3>
-                        Material Request Details
-                    </h3>
-
-                    <p>
-                        <b>Request Number:</b>
-                        {request_number}
-                    </p>
-
-                    <p>
-                        <b>Project:</b>
-                        {project_name}
-                    </p>
-
-                    <p>
-                        <b>Requested By:</b>
-                        {requested_by}
-                    </p>
-
-                    <p>
-                        <b>Request Date:</b>
-                        {request_date}
-                    </p>
-
-                    <p>
-                        <b>Description:</b>
-                        {description}
-                    </p>
-
-                    <p>
-                        <b>Decision:</b>
-                        {new_status}
-                    </p>
-
-                    <p>
-                        <b>Reviewed By:</b>
-                        {manager_name}
-                    </p>
-
-                    <p>
-                        <b>Decision Date:</b>
-                        {decision_date.strftime(
-                            "%d %b %Y %H:%M"
-                        )}
-                    </p>
-
-                    <p>
-                        <b>Manager Comment:</b>
-                        {manager_comment or "No comment provided."}
-                    </p>
-
-                    <hr>
-
-                    {document_section}
-
-                    <hr>
-
-                    <p>
-                        The original uploaded material request
-                        document remains unchanged.
-                    </p>
-
-                    <p>
-                        Regards,<br>
-                        <b>
-                            Prestigious Trading & Constructions
-                        </b>
-                    </p>
-
-                </div>
-                """
-
-                email_subject = (
-                    f"Material Request {new_status} - "
-                    f"{request_number}"
-                )
-
-                # ==================================================
-                # CREATE RECIPIENT LIST
-                # ==================================================
-
-                recipients = []
-
-                # --------------------------------------------------
                 # PURCHASE OFFICER
-                # --------------------------------------------------
+                # ==================================================
 
                 if purchase_email:
 
@@ -13980,9 +15865,16 @@ def construction_manager_material_request_review(request_id):
                         )
                     )
 
-                # --------------------------------------------------
+                else:
+
+                    print(
+                        "MATERIAL REQUEST EMAIL:"
+                        " Purchase Officer has no valid email."
+                    )
+
+                # ==================================================
                 # CURRENT MANAGER
-                # --------------------------------------------------
+                # ==================================================
 
                 if manager_email:
 
@@ -13994,113 +15886,314 @@ def construction_manager_material_request_review(request_id):
                         )
                     )
 
+                else:
+
+                    print(
+                        "MATERIAL REQUEST EMAIL:"
+                        " Current Manager has no valid email."
+                    )
+
                 # ==================================================
-                # APPROVED MATERIAL REQUESTS
+                # ACCOUNT USERS
                 #
-                # Account sees approved material requests only.
-                # Cash amount comes from the separate
-                # material request cash release table.
+                # ONLY APPROVED REQUESTS
                 # ==================================================
 
-                cursor.execute(
+                account_recipients = []
+
+                if new_status == "Approved":
+
+                    try:
+
+                        account_cursor = conn.cursor(
+                            dictionary=True
+                        )
+
+                        account_cursor.execute(
+                            """
+                            SELECT
+                                id,
+                                fullname,
+                                username,
+                                email
+
+                            FROM construction_admins
+
+                            WHERE LOWER(TRIM(role)) = 'account'
+
+                              AND email IS NOT NULL
+
+                              AND TRIM(email) != ''
+
+                            ORDER BY id ASC
+                            """
+                        )
+
+                        account_users = (
+                            account_cursor.fetchall()
+                        )
+
+                        account_cursor.close()
+
+                        # ==========================================
+                        # ADD ACCOUNT USERS
+                        # ==========================================
+
+                        for account_user in account_users:
+
+                            account_email = (
+                                    account_user.get(
+                                        "email"
+                                    ) or ""
+                            ).strip()
+
+                            account_name = (
+                                    account_user.get(
+                                        "fullname"
+                                    )
+                                    or "Account User"
+                            )
+
+                            if not account_email:
+                                continue
+
+                            account_recipients.append(
+                                (
+                                    account_email,
+                                    account_name,
+                                    "Account"
+                                )
+                            )
+
+                            recipients.append(
+                                (
+                                    account_email,
+                                    account_name,
+                                    "Account"
+                                )
+                            )
+
+                    except Exception as account_lookup_error:
+
+                        print(
+                            "=================================================="
+                        )
+
+                        print(
+                            "MATERIAL REQUEST ACCOUNT LOOKUP ERROR"
+                        )
+
+                        print(
+                            repr(
+                                account_lookup_error
+                            )
+                        )
+
+                        print(
+                            "=================================================="
+                        )
+
+                # ==================================================
+                # FINALIZED DOCUMENT URL
+                # ==================================================
+
+                finalized_url = ""
+
+                if finalized_document:
+                    finalized_url = (
+                            finalized_document.get(
+                                "secure_url"
+                            )
+                            or ""
+                    )
+
+                # ==================================================
+                # FALLBACK TO DATABASE
+                #
+                # IMPORTANT:
+                # material_request was loaded BEFORE the UPDATE,
+                # so its finalized_file_url may still be empty.
+                #
+                # Therefore query the database again if necessary.
+                # ==================================================
+
+                if not finalized_url:
+
+                    try:
+
+                        document_cursor = conn.cursor(
+                            dictionary=True
+                        )
+
+                        document_cursor.execute(
+                            """
+                            SELECT
+                                finalized_file_url
+
+                            FROM construction_purchase_material_requests
+
+                            WHERE id = %s
+
+                            LIMIT 1
+                            """,
+                            (
+                                request_id,
+                            )
+                        )
+
+                        finalized_record = (
+                            document_cursor.fetchone()
+                        )
+
+                        document_cursor.close()
+
+                        if finalized_record:
+                            finalized_url = (
+                                    finalized_record.get(
+                                        "finalized_file_url"
+                                    )
+                                    or ""
+                            )
+
+                    except Exception as document_lookup_error:
+
+                        print(
+                            "MATERIAL REQUEST FINALIZED DOCUMENT "
+                            "LOOKUP ERROR:",
+                            repr(
+                                document_lookup_error
+                            )
+                        )
+
+                # ==================================================
+                # DOCUMENT SECTION
+                # ==================================================
+
+                if finalized_url:
+
+                    document_section = f"""
+                    <div
+                        style="
+                            margin:20px 0;
+                            padding:18px;
+                            background:#f8fafc;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;
+                        "
+                    >
+
+                        <p>
+                            <b>
+                                Finalized Manager Decision Document
+                            </b>
+                        </p>
+
+                        <p>
+
+                            <a
+                                href="{finalized_url}"
+                                target="_blank"
+                                style="
+                                    display:inline-block;
+                                    padding:10px 16px;
+                                    background:#7f1d1d;
+                                    color:#ffffff;
+                                    text-decoration:none;
+                                    border-radius:7px;
+                                    font-weight:bold;
+                                "
+                            >
+                                View Finalized
+                                {new_status}
+                                Material Request
+                            </a>
+
+                        </p>
+
+                    </div>
                     """
-                    SELECT
 
-                        mr.id,
+                else:
 
-                        mr.request_number,
+                    document_section = """
+                    <div
+                        style="
+                            margin:20px 0;
+                            padding:15px;
+                            background:#fff7ed;
+                            border:1px solid #fed7aa;
+                            border-radius:10px;
+                        "
+                    >
 
-                        mr.project_name,
+                        <p>
+                            <b>Finalized document:</b>
+                            Currently unavailable.
+                        </p>
 
-                        mr.requested_by,
+                        <p>
+                            Please check the procurement system.
+                        </p>
 
-                        mr.request_date,
-
-                        mr.description,
-
-                        mr.file_name,
-
-                        mr.file_url,
-
-                        mr.uploaded_by,
-
-                        mr.status,
-
-                        mr.manager_id,
-
-                        mr.manager_comment,
-
-                        mr.decision_date,
-
-                        mr.created_at,
-
-                        mr.updated_at,
-
-                        mr.finalized_file_name,
-
-                        mr.finalized_file_url,
-
-                        mr.finalized_public_id,
-
-                        mr.finalized_at,
-
-                        mr.cash_released,
-
-                        mr.cash_released_at,
-
-                        mr.cash_released_by,
-
-                        uploader.fullname AS uploaded_by_name,
-
-                        manager.fullname AS manager_name,
-
-                        account.fullname AS cash_released_by_name,
-
-                        COALESCE(
-                            mcr.amount,
-                            0
-                        ) AS cash_release_amount,
-
-                        COALESCE(
-                            mcr.currency,
-                            'QAR'
-                        ) AS cash_release_currency,
-
-                        mcr.notes AS cash_release_notes
-
-                    FROM construction_purchase_material_requests mr
-
-                    LEFT JOIN construction_admins uploader
-                        ON uploader.id = mr.uploaded_by
-
-                    LEFT JOIN construction_admins manager
-                        ON manager.id = mr.manager_id
-
-                    LEFT JOIN construction_admins account
-                        ON account.id = mr.cash_released_by
-
-                    LEFT JOIN construction_purchase_material_request_cash_releases mcr
-                        ON mcr.material_request_id = mr.id
-
-                    WHERE mr.status = 'Approved'
-
-                    ORDER BY
-                        mr.decision_date DESC,
-                        mr.id DESC
+                    </div>
                     """
+
+                # ==================================================
+                # REQUEST INFORMATION
+                # ==================================================
+
+                request_number = (
+                        material_request.get(
+                            "request_number"
+                        )
+                        or "Material Request"
                 )
 
-                approved_material_requests = cursor.fetchall()
+                project_name = (
+                        material_request.get(
+                            "project_name"
+                        )
+                        or "Not specified"
+                )
 
+                requested_by = (
+                        material_request.get(
+                            "requested_by"
+                        )
+                        or "Not specified"
+                )
 
+                request_date = (
+                        material_request.get(
+                            "request_date"
+                        )
+                        or "Not specified"
+                )
 
+                description = (
+                        material_request.get(
+                            "description"
+                        )
+                        or "No description provided."
+                )
+
+                decision_word = (
+                    "approved"
+                    if new_status == "Approved"
+                    else "declined"
+                )
+
+                # ==================================================
+                # EMAIL SUBJECT
+                # ==================================================
+
+                email_subject = (
+                    f"Material Request {new_status} - "
+                    f"{request_number}"
+                )
 
                 # ==================================================
                 # REMOVE DUPLICATE EMAIL ADDRESSES
-                #
-                # Prevents someone from receiving the same
-                # notification twice if they somehow appear in
-                # more than one recipient category.
                 # ==================================================
 
                 unique_recipients = []
@@ -14110,7 +16203,7 @@ def construction_manager_material_request_review(request_id):
                 for recipient in recipients:
 
                     recipient_email = (
-                        recipient[0] or ""
+                            recipient[0] or ""
                     ).strip().lower()
 
                     if not recipient_email:
@@ -14134,9 +16227,9 @@ def construction_manager_material_request_review(request_id):
                 if unique_recipients:
 
                     for (
-                        recipient_email,
-                        recipient_name,
-                        recipient_role
+                            recipient_email,
+                            recipient_name,
+                            recipient_role
                     ) in unique_recipients:
 
                         try:
@@ -14151,7 +16244,8 @@ def construction_manager_material_request_review(request_id):
                             >
 
                                 <h2>
-                                    Material Request {new_status}
+                                    Material Request
+                                    {new_status}
                                 </h2>
 
                                 <p>
@@ -14209,17 +16303,19 @@ def construction_manager_material_request_review(request_id):
 
                                 <p>
                                     <b>Decision Date:</b>
-                                    {decision_date.strftime(
-                                        "%d %b %Y %H:%M"
-                                    )}
+                                    {
+                            decision_date.strftime(
+                                "%d %b %Y %H:%M"
+                            )
+                            }
                                 </p>
 
                                 <p>
                                     <b>Manager Comment:</b>
                                     {
-                                        manager_comment
-                                        or "No comment provided."
-                                    }
+                            manager_comment
+                            or "No comment provided."
+                            }
                                 </p>
 
                                 <hr>
@@ -14236,7 +16332,8 @@ def construction_manager_material_request_review(request_id):
                                 <p>
                                     Regards,<br>
                                     <b>
-                                        Prestigious Trading & Constructions
+                                        Prestigious Trading &
+                                        Construction
                                     </b>
                                 </p>
 
@@ -14244,42 +16341,103 @@ def construction_manager_material_request_review(request_id):
                             """
 
                             email_result = send_email(
-
                                 recipient_email,
-
                                 email_subject,
-
                                 personalized_body
-
                             )
 
                             print(
-                                "MATERIAL REQUEST DECISION EMAIL SENT:",
-                                recipient_email,
-                                recipient_name,
-                                recipient_role,
+                                "=================================================="
+                            )
+
+                            print(
+                                "MATERIAL REQUEST DECISION EMAIL SENT"
+                            )
+
+                            print(
+                                "Request:",
+                                request_number
+                            )
+
+                            print(
+                                "Recipient:",
+                                recipient_email
+                            )
+
+                            print(
+                                "Name:",
+                                recipient_name
+                            )
+
+                            print(
+                                "Role:",
+                                recipient_role
+                            )
+
+                            print(
+                                "Decision:",
+                                new_status
+                            )
+
+                            print(
+                                "Result:",
                                 email_result
+                            )
+
+                            print(
+                                "=================================================="
                             )
 
                         except Exception as individual_email_error:
 
                             print(
-                                "MATERIAL REQUEST INDIVIDUAL EMAIL ERROR:",
-                                recipient_email,
+                                "=================================================="
+                            )
+
+                            print(
+                                "MATERIAL REQUEST INDIVIDUAL EMAIL ERROR"
+                            )
+
+                            print(
+                                "Recipient:",
+                                recipient_email
+                            )
+
+                            print(
+                                "Role:",
+                                recipient_role
+                            )
+
+                            print(
                                 repr(
                                     individual_email_error
                                 )
                             )
 
+                            print(
+                                "=================================================="
+                            )
+
                 else:
 
                     print(
-                        "MATERIAL REQUEST DECISION EMAIL: "
-                        "No valid recipients were found."
+                        "=================================================="
+                    )
+
+                    print(
+                        "MATERIAL REQUEST DECISION EMAIL:"
+                    )
+
+                    print(
+                        "No valid email recipients were found."
+                    )
+
+                    print(
+                        "=================================================="
                     )
 
                 # ==================================================
-                # EMAIL SUMMARY LOG
+                # EMAIL SUMMARY
                 # ==================================================
 
                 print(
@@ -14310,19 +16468,10 @@ def construction_manager_material_request_review(request_id):
                     manager_email or "None"
                 )
 
-                if new_status == "Approved":
-
-                    print(
-                        "Accounts Notification:",
-                        "Enabled"
-                    )
-
-                else:
-
-                    print(
-                        "Accounts Notification:",
-                        "Not sent - request declined"
-                    )
+                print(
+                    "Account Recipients:",
+                    len(account_recipients)
+                )
 
                 print(
                     "Total Unique Recipients:",
@@ -14344,11 +16493,14 @@ def construction_manager_material_request_review(request_id):
                 )
 
                 print(
-                    repr(email_error)
+                    repr(
+                        email_error
+                    )
                 )
 
                 print(
                     "=================================================="
+
                 )
 
                 # IMPORTANT:
