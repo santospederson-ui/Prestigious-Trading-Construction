@@ -34,7 +34,8 @@
             --accent-gold: #c49a4a;
 
             --radius: 16px;
-            --shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+            --shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08),
+                       0 0 1px 1px rgba(15, 23, 42, 0.04);
         }
 
         * {
@@ -45,8 +46,15 @@
 
         body {
             min-height: 100vh;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(145deg, #f8fafc 0%, #edf3f0 100%);
+            font-family: 'Plus Jakarta Sans',
+                         -apple-system,
+                         BlinkMacSystemFont,
+                         sans-serif;
+            background: linear-gradient(
+                145deg,
+                #f8fafc 0%,
+                #edf3f0 100%
+            );
             color: var(--text-main);
             display: flex;
             align-items: center;
@@ -62,6 +70,7 @@
         /* =====================================
            CARD CONTAINER
         ===================================== */
+
         .login-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -78,6 +87,7 @@
         /* =====================================
            BRAND HEADER
         ===================================== */
+
         .brand-header {
             text-align: center;
             margin-bottom: 30px;
@@ -133,6 +143,7 @@
         /* =====================================
            FORM ELEMENTS
         ===================================== */
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -191,7 +202,10 @@
             color: var(--primary);
         }
 
-        /* SELECT ARROW */
+        /* =====================================
+           SELECT ARROW
+        ===================================== */
+
         .select-box {
             position: relative;
         }
@@ -217,7 +231,10 @@
             pointer-events: none;
         }
 
-        /* PASSWORD TOGGLE */
+        /* =====================================
+           PASSWORD TOGGLE
+        ===================================== */
+
         .password-box .form-control {
             padding-right: 44px;
         }
@@ -253,6 +270,7 @@
         /* =====================================
            SUBMIT BUTTON
         ===================================== */
+
         .btn-submit {
             width: 100%;
             height: 48px;
@@ -286,6 +304,7 @@
         /* =====================================
            ALERTS
         ===================================== */
+
         .alert {
             padding: 12px 15px;
             border-radius: 10px;
@@ -324,6 +343,7 @@
         /* =====================================
            FOOTER
         ===================================== */
+
         .login-footer {
             text-align: center;
             margin-top: 24px;
@@ -338,7 +358,12 @@
             font-weight: 700;
         }
 
+        /* =====================================
+           MOBILE
+        ===================================== */
+
         @media (max-width: 480px) {
+
             .login-card {
                 padding: 32px 24px 30px;
             }
@@ -358,59 +383,119 @@
 
         <!-- BRAND HEADER -->
         <div class="brand-header">
+
             <div class="brand-logo-wrap">
+
                 <img
                     src="{{ url_for('static', filename='images/logo.png') }}"
-                    alt="Logo"
+                    alt="Prestigious Logo"
                     class="brand-logo"
                 >
+
             </div>
 
             <h1>Prestigious</h1>
-            <span class="company-sub">Trading & Constructions</span>
-            <p>Sign in to access your dashboard</p>
+
+            <span class="company-sub">
+                Trading & Constructions
+            </span>
+
+            <p>
+                Sign in to access your dashboard
+            </p>
+
         </div>
 
         <!-- FLASH MESSAGES -->
         {% with messages = get_flashed_messages(with_categories=true) %}
+
             {% if messages %}
+
                 {% for category, message in messages %}
+
                     <div class="alert alert-{{ category }}">
+
                         <i class="fas fa-circle-info"></i>
-                        <span>{{ message }}</span>
+
+                        <span>
+                            {{ message }}
+                        </span>
+
                     </div>
+
                 {% endfor %}
+
             {% endif %}
+
         {% endwith %}
 
-        <!-- FORM -->
+        <!-- LOGIN FORM -->
         <form method="POST">
 
             <!-- ROLE -->
             <div class="form-group">
-                <label for="role">Department / Role</label>
+
+                <label for="role">
+                    Department / Role
+                </label>
+
                 <div class="input-box select-box">
+
                     <i class="fas fa-briefcase input-icon"></i>
+
                     <select
                         id="role"
                         name="role"
                         class="form-control"
                         required
                     >
-                        <option value="" disabled selected>Select role</option>
-                        <option value="admin">Admin</option>
-                        <option value="manager">Manager</option>
-                        <option value="purchase">Purchase</option>
-                        <option value="account">Account</option>
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Select role
+                        </option>
+
+                        <option value="admin">
+                            Admin
+                        </option>
+
+                        <option value="manager">
+                            Manager
+                        </option>
+
+                        <option value="purchase">
+                            Purchase
+                        </option>
+
+                        <option value="account">
+                            Account
+                        </option>
+
+                        <!-- NEW ENGINEER ROLE -->
+                        <option value="engineer">
+                            Engineer
+                        </option>
+
                     </select>
+
                 </div>
+
             </div>
 
             <!-- USERNAME -->
             <div class="form-group">
-                <label for="username">Username</label>
+
+                <label for="username">
+                    Username
+                </label>
+
                 <div class="input-box">
+
                     <i class="fas fa-user input-icon"></i>
+
                     <input
                         type="text"
                         id="username"
@@ -420,14 +505,22 @@
                         autocomplete="username"
                         required
                     >
+
                 </div>
+
             </div>
 
             <!-- PASSWORD -->
             <div class="form-group">
-                <label for="password">Password</label>
+
+                <label for="password">
+                    Password
+                </label>
+
                 <div class="input-box password-box">
+
                     <i class="fas fa-lock input-icon"></i>
+
                     <input
                         type="password"
                         id="password"
@@ -437,6 +530,7 @@
                         autocomplete="current-password"
                         required
                     >
+
                     <button
                         type="button"
                         class="btn-toggle-pwd"
@@ -445,13 +539,23 @@
                     >
                         <i class="fas fa-eye"></i>
                     </button>
+
                 </div>
+
             </div>
 
             <!-- SUBMIT BUTTON -->
-            <button type="submit" class="btn-submit">
-                <span>Sign In</span>
+            <button
+                type="submit"
+                class="btn-submit"
+            >
+
+                <span>
+                    Sign In
+                </span>
+
                 <i class="fas fa-arrow-right"></i>
+
             </button>
 
         </form>
@@ -460,34 +564,75 @@
 
     <!-- FOOTER -->
     <div class="login-footer">
-        © 2026 <strong>Prestigious Trading & Constructions</strong><br>
+
+        © 2026
+        <strong>
+            Prestigious Trading & Constructions
+        </strong>
+
+        <br>
+
         All rights reserved.
+
     </div>
 
 </div>
 
 <!-- PASSWORD VISIBILITY SCRIPT -->
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
-    const passwordInput = document.getElementById("password");
-    const passwordToggle = document.getElementById("passwordToggle");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const passwordToggle =
+        document.getElementById("passwordToggle");
 
     if (passwordInput && passwordToggle) {
-        passwordToggle.addEventListener("click", function () {
-            const isPassword = passwordInput.type === "password";
-            passwordInput.type = isPassword ? "text" : "password";
 
-            const icon = this.querySelector("i");
-            if (isPassword) {
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
+        passwordToggle.addEventListener(
+            "click",
+            function () {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+                passwordInput.type =
+                    isPassword ? "text" : "password";
+
+                const icon =
+                    this.querySelector("i");
+
+                if (isPassword) {
+
+                    icon.classList.remove(
+                        "fa-eye"
+                    );
+
+                    icon.classList.add(
+                        "fa-eye-slash"
+                    );
+
+                } else {
+
+                    icon.classList.remove(
+                        "fa-eye-slash"
+                    );
+
+                    icon.classList.add(
+                        "fa-eye"
+                    );
+
+                }
+
             }
-        });
+        );
+
     }
+
 });
+
 </script>
 
 </body>

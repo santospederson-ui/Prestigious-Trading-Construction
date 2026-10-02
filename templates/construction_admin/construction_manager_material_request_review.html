@@ -1,1034 +1,1789 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Manager Review -
+        {{ material_request.request_number }}
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        rel="stylesheet"
+    >
 
-{% block title %}
-Material Request Review | Manager
-{% endblock %}
+    <style>
+
+        :root {
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #FDF2F4;
+            --qatar-maroon-hover: #F9E7EC;
 
-{% block content %}
+            --qatar-gold: #C5A059;
 
-<style>
+            --navy-dark: #0F172A;
+            --navy-slate: #1E293B;
 
-/* =========================================================
-   MATERIAL REQUEST REVIEW
-   ========================================================= */
+            --blue-accent: #2563EB;
 
-:root {
+            --bg-canvas: #F8FAFC;
+            --card-surface: #FFFFFF;
 
-    --review-bg: #f5f7fb;
-    --review-card: #ffffff;
-    --review-border: #e2e8f0;
+            --border-color: #E2E8F0;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
 
-    --review-text: #172033;
-    --review-muted: #64748b;
+            --success: #15803D;
+            --success-bg: #F0FDF4;
 
-    --review-primary: #7f1d1d;
-    --review-primary-dark: #5f1515;
+            --danger: #B91C1C;
+            --danger-bg: #FEF2F2;
 
-    --review-green: #15803d;
-    --review-red: #b91c1c;
+            --warning: #B45309;
+            --warning-bg: #FFFBEB;
+        }
 
-    --review-shadow:
-        0 8px 25px rgba(15, 23, 42, 0.07);
+        * {
+            box-sizing: border-box;
+        }
 
-    --review-radius: 16px;
-}
+        body {
+            margin: 0;
+            background: var(--bg-canvas);
+            color: var(--text-main);
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+        }
 
+        a {
+            text-decoration: none;
+        }
 
-/* =========================================================
-   PAGE
-   ========================================================= */
+        /* ==============================
+           SIDEBAR
+        ============================== */
 
-.material-review-page {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
 
-    min-height: calc(100vh - 70px);
+            width: 255px;
+            height: 100vh;
 
-    background: var(--review-bg);
+            background: var(--navy-dark);
+            color: white;
 
-    padding: 28px;
+            z-index: 1000;
 
-    color: var(--review-text);
-}
+            display: flex;
+            flex-direction: column;
 
+            box-shadow:
+                4px 0 18px rgba(15, 23, 42, 0.10);
+        }
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+        .sidebar-brand {
+            min-height: 82px;
 
-.material-review-header {
+            display: flex;
+            align-items: center;
 
-    display: flex;
+            padding: 18px 20px;
 
-    justify-content: space-between;
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+        }
 
-    align-items: flex-start;
+        .brand-icon {
+            width: 42px;
+            height: 42px;
 
-    gap: 20px;
+            border-radius: 10px;
 
-    margin-bottom: 24px;
-}
+            background: var(--qatar-maroon);
 
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.material-review-title h1 {
+            margin-right: 12px;
 
-    margin: 0;
+            font-size: 18px;
+        }
 
-    font-size: 27px;
+        .brand-text {
+            min-width: 0;
+        }
 
-    font-weight: 800;
+        .brand-title {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+        }
 
-    letter-spacing: -0.4px;
-}
+        .brand-subtitle {
+            margin-top: 2px;
 
+            font-size: 11px;
+            color: #94A3B8;
+        }
 
-.material-review-title p {
+        .sidebar-content {
+            flex: 1;
 
-    margin: 7px 0 0;
+            padding: 18px 12px;
 
-    color: var(--review-muted);
+            overflow-y: auto;
+        }
 
-    font-size: 14px;
-}
+        .sidebar-label {
+            padding: 0 10px 8px;
 
+            color: #64748B;
 
-.back-button {
+            font-size: 10px;
+            font-weight: 800;
 
-    display: inline-flex;
+            text-transform: uppercase;
 
-    align-items: center;
+            letter-spacing: 1px;
+        }
 
-    gap: 7px;
+        .sidebar-link {
+            display: flex;
+            align-items: center;
 
-    padding: 10px 14px;
+            padding: 12px 13px;
 
-    background: white;
+            margin-bottom: 5px;
 
-    color: #334155;
+            border-radius: 9px;
 
-    border: 1px solid var(--review-border);
+            color: #CBD5E1;
 
-    border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
 
-    text-decoration: none;
+            transition: 0.2s ease;
+        }
 
-    font-size: 12px;
+        .sidebar-link:hover {
+            color: white;
+            background: rgba(255,255,255,0.07);
+        }
 
-    font-weight: 750;
+        .sidebar-link.active {
+            color: white;
+            background: var(--qatar-maroon);
 
-    box-shadow: var(--review-shadow);
+            box-shadow:
+                0 5px 15px rgba(138,21,56,0.25);
+        }
 
-    transition: 0.2s ease;
-}
+        .sidebar-link i {
+            width: 25px;
+            margin-right: 8px;
 
+            font-size: 14px;
+        }
 
-.back-button:hover {
+        .sidebar-footer {
+            padding: 15px;
 
-    background: #f8fafc;
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+        }
 
-    transform: translateY(-1px);
-}
+        .manager-badge {
+            display: flex;
+            align-items: center;
 
+            padding: 10px;
 
-/* =========================================================
-   LAYOUT
-   ========================================================= */
+            border-radius: 9px;
 
-.material-review-layout {
+            background: rgba(255,255,255,0.05);
+        }
 
-    display: grid;
+        .manager-avatar {
+            width: 34px;
+            height: 34px;
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        360px;
+            border-radius: 50%;
 
-    gap: 22px;
+            background: var(--qatar-maroon);
 
-    align-items: start;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            margin-right: 9px;
 
-/* =========================================================
-   CARD
-   ========================================================= */
+            font-size: 13px;
+            font-weight: 800;
+        }
 
-.review-card {
+        .manager-info {
+            min-width: 0;
+        }
 
-    background: var(--review-card);
+        .manager-name {
+            color: white;
 
-    border: 1px solid var(--review-border);
+            font-size: 12px;
+            font-weight: 700;
 
-    border-radius: var(--review-radius);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    box-shadow: var(--review-shadow);
+        .manager-role {
+            margin-top: 2px;
 
-    overflow: hidden;
+            color: #94A3B8;
 
-    margin-bottom: 22px;
-}
+            font-size: 10px;
+        }
 
+        /* ==============================
+           MAIN
+        ============================== */
 
-.review-card-header {
+        .main-content {
+            margin-left: 255px;
 
-    padding: 20px 22px;
+            min-height: 100vh;
 
-    border-bottom: 1px solid var(--review-border);
+            padding: 25px;
+        }
 
-    display: flex;
+        .page-container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
 
-    justify-content: space-between;
+        /* ==============================
+           TOP BAR
+        ============================== */
 
-    align-items: center;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-    gap: 15px;
-}
+            gap: 15px;
 
+            margin-bottom: 22px;
+        }
 
-.review-card-header h2 {
+        .page-title {
+            margin: 0;
 
-    margin: 0;
+            color: var(--navy-dark);
 
-    font-size: 17px;
+            font-size: 24px;
+            font-weight: 800;
+        }
 
-    font-weight: 800;
-}
+        .page-subtitle {
+            margin-top: 5px;
 
+            color: var(--text-muted);
 
-.review-card-header span {
+            font-size: 13px;
+        }
 
-    color: var(--review-muted);
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
 
-    font-size: 12px;
-}
+            padding: 10px 15px;
 
+            border:
+                1px solid var(--border-color);
 
-.review-card-body {
+            border-radius: 8px;
 
-    padding: 22px;
-}
+            background: white;
 
+            color: var(--text-main);
 
-/* =========================================================
-   REQUEST NUMBER
-   ========================================================= */
+            font-size: 13px;
+            font-weight: 700;
 
-.request-number {
+            transition: 0.2s ease;
+        }
 
-    font-size: 22px;
+        .back-btn:hover {
+            color: var(--qatar-maroon);
+            border-color: var(--qatar-maroon);
+            background: var(--qatar-maroon-light);
+        }
 
-    font-weight: 850;
+        /* ==============================
+           FLASH
+        ============================== */
 
-    color: var(--review-primary);
-}
+        .alert {
+            border-radius: 10px;
 
+            border: 1px solid transparent;
 
-.request-date {
+            font-size: 13px;
+            font-weight: 600;
+        }
 
-    margin-top: 5px;
+        .alert-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border-color: #BBF7D0;
+        }
 
-    color: var(--review-muted);
+        .alert-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: #FECACA;
+        }
 
-    font-size: 12px;
-}
+        .alert-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border-color: #FDE68A;
+        }
 
+        .alert-info {
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border-color: #BFDBFE;
+        }
 
-/* =========================================================
-   INFORMATION GRID
-   ========================================================= */
+        /* ==============================
+           DOCUMENT HEADER
+        ============================== */
 
-.info-grid {
+        .document-card {
+            background: var(--card-surface);
 
-    display: grid;
+            border:
+                1px solid var(--border-color);
 
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+            border-radius: 13px;
 
-    gap: 16px;
+            box-shadow:
+                0 5px 20px rgba(15,23,42,0.05);
 
-    margin-top: 20px;
-}
+            margin-bottom: 20px;
 
+            overflow: hidden;
+        }
 
-.info-item {
+        .document-header {
+            padding: 22px 25px;
 
-    padding: 14px;
+            border-bottom:
+                1px solid var(--border-color);
 
-    background: #f8fafc;
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFFFFF 0%,
+                    #FFF9FA 100%
+                );
+        }
 
-    border: 1px solid #edf1f5;
+        .document-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
 
-    border-radius: 11px;
-}
+            gap: 20px;
+        }
 
+        .document-label {
+            color: var(--text-muted);
 
-.info-label {
+            font-size: 10px;
+            font-weight: 800;
 
-    font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    font-weight: 800;
+        .request-number {
+            margin-top: 4px;
 
-    text-transform: uppercase;
+            color: var(--qatar-maroon);
 
-    letter-spacing: 0.5px;
+            font-size: 24px;
+            font-weight: 900;
 
-    color: #64748b;
+            letter-spacing: 0.4px;
+        }
 
-    margin-bottom: 6px;
-}
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
 
+            padding: 8px 13px;
 
-.info-value {
+            border-radius: 999px;
 
-    font-size: 14px;
+            background: var(--warning-bg);
+            color: var(--warning);
 
-    font-weight: 700;
+            border: 1px solid #FDE68A;
 
-    color: #172033;
+            font-size: 11px;
+            font-weight: 800;
 
-    word-break: break-word;
-}
+            white-space: nowrap;
+        }
 
+        .status-dot {
+            width: 7px;
+            height: 7px;
 
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
+            border-radius: 50%;
 
-.description-box {
+            background: currentColor;
+        }
 
-    margin-top: 18px;
+        /* ==============================
+           SECTION
+        ============================== */
 
-    padding: 16px;
+        .section {
+            padding: 24px 25px;
 
-    border: 1px solid var(--review-border);
+            border-bottom:
+                1px solid var(--border-color);
+        }
 
-    border-radius: 11px;
+        .section:last-child {
+            border-bottom: 0;
+        }
 
-    background: white;
-}
+        .section-title {
+            display: flex;
+            align-items: center;
 
+            gap: 9px;
 
-.description-title {
+            margin-bottom: 17px;
 
-    font-size: 11px;
+            color: var(--navy-dark);
 
-    font-weight: 800;
+            font-size: 14px;
+            font-weight: 800;
+        }
 
-    text-transform: uppercase;
+        .section-title i {
+            width: 29px;
+            height: 29px;
 
-    letter-spacing: 0.5px;
+            border-radius: 7px;
 
-    color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    margin-bottom: 8px;
-}
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
 
+            font-size: 12px;
+        }
 
-.description-text {
+        /* ==============================
+           META GRID
+        ============================== */
 
-    color: #334155;
+        .info-grid {
+            display: grid;
 
-    font-size: 14px;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
 
-    line-height: 1.7;
+            gap: 14px;
+        }
 
-    white-space: pre-wrap;
-}
+        .info-item {
+            min-width: 0;
 
+            padding: 13px;
 
-/* =========================================================
-   STATUS
-   ========================================================= */
+            border:
+                1px solid var(--border-color);
 
-.status-badge {
+            border-radius: 9px;
 
-    display: inline-flex;
+            background: #FAFBFC;
+        }
 
-    align-items: center;
+        .info-label {
+            margin-bottom: 5px;
 
-    justify-content: center;
+            color: var(--text-muted);
 
-    padding: 6px 11px;
+            font-size: 10px;
+            font-weight: 800;
 
-    border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
 
-    font-size: 11px;
+        .info-value {
+            color: var(--text-main);
 
-    font-weight: 800;
-}
+            font-size: 13px;
+            font-weight: 700;
 
+            overflow-wrap: anywhere;
+        }
 
-.status-pending {
+        .info-value.muted {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
-    background: #fff7ed;
+        /* ==============================
+           DESCRIPTION
+        ============================== */
 
-    color: #c2410c;
-}
+        .description-box {
+            padding: 16px;
 
+            border:
+                1px solid var(--border-color);
 
-.status-review {
+            border-radius: 9px;
 
-    background: #eff6ff;
+            background: #FAFBFC;
 
-    color: #1d4ed8;
-}
+            color: #334155;
 
+            font-size: 13px;
 
-.status-approved {
+            line-height: 1.7;
 
-    background: #f0fdf4;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
 
-    color: #15803d;
-}
+        /* ==============================
+           ENGINEERING APPROVAL
+        ============================== */
 
+        .engineering-box {
+            padding: 17px;
 
-.status-declined {
+            border:
+                1px solid #BBF7D0;
 
-    background: #fef2f2;
+            border-left:
+                4px solid var(--success);
 
-    color: #b91c1c;
-}
+            border-radius: 9px;
 
+            background: var(--success-bg);
+        }
 
-.status-other {
+        .engineering-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-    background: #f1f5f9;
+            gap: 15px;
 
-    color: #475569;
-}
+            margin-bottom: 12px;
+        }
 
+        .engineering-title {
+            color: var(--success);
 
-/* =========================================================
-   DOCUMENT
-   ========================================================= */
+            font-size: 13px;
+            font-weight: 800;
+        }
 
-.document-button {
+        .approved-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
 
-    display: inline-flex;
+            padding: 5px 9px;
 
-    align-items: center;
+            border-radius: 999px;
 
-    justify-content: center;
+            background: white;
 
-    gap: 8px;
+            border: 1px solid #BBF7D0;
 
-    width: 100%;
+            color: var(--success);
 
-    padding: 12px 15px;
+            font-size: 10px;
+            font-weight: 800;
+        }
 
-    background: #eff6ff;
+        .engineering-grid {
+            display: grid;
 
-    color: #1d4ed8;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
 
-    border: 1px solid #dbeafe;
+            gap: 12px;
+        }
 
-    border-radius: 10px;
+        .engineering-item label {
+            display: block;
 
-    text-decoration: none;
+            margin-bottom: 3px;
 
-    font-size: 13px;
+            color: #64748B;
 
-    font-weight: 750;
+            font-size: 10px;
+            font-weight: 700;
 
-    transition: 0.2s ease;
-}
+            text-transform: uppercase;
+        }
 
+        .engineering-item span {
+            color: #334155;
 
-.document-button:hover {
+            font-size: 12px;
+            font-weight: 700;
+        }
 
-    background: #dbeafe;
+        .engineer-comment {
+            margin-top: 14px;
 
-    transform: translateY(-1px);
-}
+            padding-top: 13px;
 
+            border-top:
+                1px solid #BBF7D0;
+        }
 
-/* =========================================================
-   DECISION PANEL
-   ========================================================= */
+        .engineer-comment-label {
+            margin-bottom: 5px;
 
-.decision-panel {
+            color: #64748B;
 
-    background: white;
+            font-size: 10px;
+            font-weight: 800;
 
-    border: 1px solid var(--review-border);
+            text-transform: uppercase;
+        }
 
-    border-radius: var(--review-radius);
+        .engineer-comment-text {
+            color: #334155;
 
-    box-shadow: var(--review-shadow);
+            font-size: 12px;
 
-    overflow: hidden;
+            line-height: 1.6;
 
-    position: sticky;
+            white-space: pre-wrap;
+        }
 
-    top: 20px;
-}
+        /* ==============================
+           DOCUMENT BUTTON
+        ============================== */
 
+        .document-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-.decision-header {
+            gap: 15px;
 
-    padding: 20px;
+            padding: 17px;
 
-    border-bottom: 1px solid var(--review-border);
-}
+            border:
+                1px solid #CBD5E1;
 
+            border-radius: 10px;
 
-.decision-header h2 {
+            background:
+                linear-gradient(
+                    135deg,
+                    #F8FAFC,
+                    #FFFFFF
+                );
+        }
 
-    margin: 0;
+        .document-action-info {
+            display: flex;
+            align-items: center;
 
-    font-size: 17px;
+            min-width: 0;
+        }
 
-    font-weight: 800;
-}
+        .document-icon {
+            width: 42px;
+            height: 42px;
 
+            flex-shrink: 0;
 
-.decision-header p {
+            margin-right: 11px;
 
-    margin: 6px 0 0;
+            border-radius: 9px;
 
-    color: var(--review-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    font-size: 12px;
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+        }
 
-    line-height: 1.5;
-}
+        .document-name {
+            color: var(--navy-dark);
 
+            font-size: 13px;
+            font-weight: 800;
 
-.decision-body {
+            overflow-wrap: anywhere;
+        }
 
-    padding: 20px;
-}
+        .document-note {
+            margin-top: 3px;
 
+            color: var(--text-muted);
 
-/* =========================================================
-   COMMENT
-   ========================================================= */
+            font-size: 11px;
+        }
 
-.form-label {
+        .view-document {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
-    display: block;
+            gap: 8px;
 
-    margin-bottom: 7px;
+            flex-shrink: 0;
 
-    font-size: 12px;
+            padding: 10px 15px;
 
-    font-weight: 800;
+            border-radius: 8px;
 
-    color: #334155;
-}
+            background: var(--qatar-maroon);
 
+            color: white;
 
-.comment-input {
+            font-size: 12px;
+            font-weight: 800;
 
-    width: 100%;
+            transition: 0.2s ease;
+        }
 
-    min-height: 120px;
+        .view-document:hover {
+            color: white;
+            background: var(--qatar-maroon-dark);
 
-    resize: vertical;
+            transform: translateY(-1px);
+        }
 
-    padding: 12px;
+        /* ==============================
+           MANAGER DECISION
+        ============================== */
 
-    border: 1px solid #cbd5e1;
+        .decision-section {
+            background:
+                linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FFFAFB
+                );
+        }
 
-    border-radius: 10px;
+        .decision-warning {
+            display: flex;
+            align-items: flex-start;
 
-    font-family: inherit;
+            gap: 10px;
 
-    font-size: 13px;
+            margin-bottom: 18px;
 
-    color: #172033;
+            padding: 13px 15px;
 
-    outline: none;
+            border:
+                1px solid #FDE68A;
 
-    box-sizing: border-box;
+            border-radius: 9px;
 
-    transition: 0.2s ease;
-}
+            background: var(--warning-bg);
 
+            color: #92400E;
 
-.comment-input:focus {
+            font-size: 12px;
 
-    border-color: var(--review-primary);
+            line-height: 1.55;
+        }
 
-    box-shadow:
-        0 0 0 3px rgba(127, 29, 29, 0.08);
-}
+        .decision-warning i {
+            margin-top: 2px;
+        }
 
+        .form-label {
+            margin-bottom: 7px;
 
-.comment-help {
+            color: var(--navy-dark);
 
-    margin-top: 6px;
+            font-size: 12px;
+            font-weight: 800;
+        }
 
-    color: #94a3b8;
+        .form-control {
+            border:
+                1px solid #CBD5E1;
 
-    font-size: 11px;
+            border-radius: 8px;
 
-    line-height: 1.5;
-}
+            padding: 11px 12px;
 
+            color: var(--text-main);
 
-/* =========================================================
-   DECISION BUTTONS
-   ========================================================= */
+            font-size: 13px;
 
-.decision-actions {
+            box-shadow: none;
+        }
 
-    display: grid;
+        .form-control:focus {
+            border-color: var(--qatar-maroon);
 
-    grid-template-columns:
-        1fr 1fr;
+            box-shadow:
+                0 0 0 3px
+                rgba(138,21,56,0.10);
+        }
 
-    gap: 10px;
+        textarea.form-control {
+            min-height: 110px;
 
-    margin-top: 18px;
-}
+            resize: vertical;
+        }
 
+        .field-note {
+            margin-top: 5px;
 
-.decision-button {
+            color: var(--text-muted);
 
-    display: inline-flex;
+            font-size: 10px;
+        }
 
-    align-items: center;
+        /* ==============================
+           SIGNATURE
+        ============================== */
 
-    justify-content: center;
+        .signature-wrapper {
+            margin-top: 20px;
+        }
 
-    gap: 7px;
+        .signature-pad-container {
+            position: relative;
 
-    border: none;
+            border:
+                1px solid #CBD5E1;
 
-    border-radius: 10px;
+            border-radius: 10px;
 
-    padding: 12px 10px;
+            background: white;
 
-    font-size: 12px;
+            overflow: hidden;
+        }
 
-    font-weight: 800;
+        #signatureCanvas {
+            display: block;
 
-    cursor: pointer;
+            width: 100%;
+            height: 190px;
 
-    transition: 0.2s ease;
-}
+            background:
+                linear-gradient(
+                    white,
+                    white
+                );
 
+            cursor: crosshair;
 
-.decision-button:hover {
+            touch-action: none;
+        }
 
-    transform: translateY(-1px);
-}
+        .signature-placeholder {
+            position: absolute;
 
+            top: 50%;
+            left: 50%;
 
-.approve-button {
+            transform: translate(-50%, -50%);
 
-    background: #15803d;
+            color: #CBD5E1;
 
-    color: white;
-}
+            font-size: 13px;
+            font-weight: 600;
 
+            pointer-events: none;
 
-.approve-button:hover {
+            text-align: center;
 
-    background: #166534;
-}
+            transition: 0.2s ease;
+        }
 
+        .signature-line {
+            position: absolute;
 
-.decline-button {
+            left: 35px;
+            right: 35px;
+            bottom: 38px;
 
-    background: #b91c1c;
+            border-bottom:
+                1px dashed #CBD5E1;
 
-    color: white;
-}
+            pointer-events: none;
+        }
 
+        .signature-line-label {
+            position: absolute;
 
-.decline-button:hover {
+            bottom: 15px;
+            left: 35px;
 
-    background: #991b1b;
-}
+            color: #94A3B8;
 
+            font-size: 9px;
+            font-weight: 700;
 
-/* =========================================================
-   COMPLETED DECISION
-   ========================================================= */
+            text-transform: uppercase;
 
-.completed-decision {
+            pointer-events: none;
+        }
 
-    padding: 16px;
+        .signature-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-    border-radius: 11px;
+            gap: 10px;
 
-    text-align: center;
-}
+            margin-top: 8px;
+        }
 
+        .signature-status {
+            color: var(--text-muted);
 
-.completed-approved {
+            font-size: 10px;
+            font-weight: 600;
+        }
 
-    background: #f0fdf4;
+        .clear-signature {
+            border: 0;
 
-    color: #15803d;
+            padding: 6px 10px;
 
-    border: 1px solid #bbf7d0;
-}
+            border-radius: 6px;
 
+            background: #F1F5F9;
+            color: #475569;
 
-.completed-declined {
+            font-size: 10px;
+            font-weight: 800;
+        }
 
-    background: #fef2f2;
+        .clear-signature:hover {
+            background: #E2E8F0;
+        }
 
-    color: #b91c1c;
+        /* ==============================
+           ACTION BAR
+        ============================== */
 
-    border: 1px solid #fecaca;
-}
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
 
+            gap: 10px;
 
-.completed-decision i {
+            padding: 20px 25px;
 
-    font-size: 25px;
+            background: #FAFBFC;
 
-    margin-bottom: 8px;
-}
+            border-top:
+                1px solid var(--border-color);
+        }
 
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
-.completed-decision strong {
+            gap: 8px;
 
-    display: block;
+            min-width: 135px;
 
-    font-size: 14px;
-}
+            padding: 11px 18px;
 
+            border-radius: 8px;
 
-.completed-decision span {
+            border: 0;
 
-    display: block;
+            font-size: 12px;
+            font-weight: 800;
 
-    margin-top: 5px;
+            cursor: pointer;
 
-    font-size: 11px;
+            transition: 0.2s ease;
+        }
 
-    opacity: 0.8;
-}
+        .btn-approve {
+            background: var(--success);
+            color: white;
 
+            box-shadow:
+                0 4px 12px rgba(21,128,61,0.18);
+        }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+        .btn-approve:hover {
+            background: #166534;
+            color: white;
 
-.review-footer {
+            transform: translateY(-1px);
+        }
 
-    text-align: center;
+        .btn-decline {
+            background: var(--danger);
+            color: white;
 
-    color: #94a3b8;
+            box-shadow:
+                0 4px 12px rgba(185,28,28,0.16);
+        }
 
-    font-size: 12px;
+        .btn-decline:hover {
+            background: #991B1B;
+            color: white;
 
-    padding: 8px 0 20px;
-}
+            transform: translateY(-1px);
+        }
 
+        /* ==============================
+           REVIEW HISTORY
+        ============================== */
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+        .history-table-wrapper {
+            overflow-x: auto;
 
-@media (max-width: 950px) {
+            border:
+                1px solid var(--border-color);
 
-    .material-review-layout {
+            border-radius: 9px;
+        }
 
-        grid-template-columns: 1fr;
-    }
+        .history-table {
+            width: 100%;
 
+            margin: 0;
 
-    .decision-panel {
+            border-collapse: collapse;
 
-        position: static;
-    }
+            min-width: 700px;
+        }
 
-}
+        .history-table th {
+            padding: 11px 12px;
 
+            background: #F8FAFC;
 
-@media (max-width: 650px) {
+            border-bottom:
+                1px solid var(--border-color);
 
-    .material-review-page {
+            color: var(--text-muted);
 
-        padding: 16px;
-    }
+            font-size: 10px;
+            font-weight: 800;
 
+            text-transform: uppercase;
 
-    .material-review-header {
+            letter-spacing: 0.5px;
 
-        flex-direction: column;
-    }
+            white-space: nowrap;
+        }
 
+        .history-table td {
+            padding: 12px;
 
-    .info-grid {
+            border-bottom:
+                1px solid #F1F5F9;
 
-        grid-template-columns: 1fr;
-    }
+            color: #334155;
 
+            font-size: 11px;
 
-    .decision-actions {
+            vertical-align: top;
+        }
 
-        grid-template-columns: 1fr;
-    }
+        .history-table tr:last-child td {
+            border-bottom: 0;
+        }
 
-}
+        .history-action {
+            display: inline-flex;
+            align-items: center;
 
-</style>
+            padding: 4px 8px;
 
+            border-radius: 999px;
 
-<div class="material-review-page">
+            font-size: 9px;
+            font-weight: 800;
+        }
 
+        .history-approved {
+            background: var(--success-bg);
+            color: var(--success);
+        }
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+        .history-declined {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
 
-    <div class="material-review-header">
+        .history-comment {
+            max-width: 320px;
 
-        <div class="material-review-title">
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
 
-            <h1>
-                Material Request Review
-            </h1>
+        .empty-history {
+            padding: 25px;
 
-            <p>
-                Review this purchase request and make an
-                independent approval decision.
-            </p>
+            text-align: center;
+
+            color: var(--text-muted);
+
+            font-size: 12px;
+        }
+
+        /* ==============================
+           MOBILE HEADER
+        ============================== */
+
+        .mobile-header {
+            display: none;
+
+            height: 60px;
+
+            padding: 0 15px;
+
+            background: var(--navy-dark);
+
+            color: white;
+
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-brand {
+            display: flex;
+            align-items: center;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .mobile-brand i {
+            margin-right: 8px;
+
+            color: var(--qatar-gold);
+        }
+
+        .sidebar-toggle {
+            border: 0;
+
+            background: transparent;
+
+            color: white;
+
+            font-size: 20px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15,23,42,0.45);
+
+            z-index: 999;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 1100px) {
+
+            .info-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .engineering-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+
+                transition: transform 0.25s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 18px;
+            }
+
+            .top-bar {
+                align-items: flex-start;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .main-content {
+                padding: 14px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .page-subtitle {
+                font-size: 11px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+            .document-header {
+                padding: 18px;
+            }
+
+            .document-header-top {
+                flex-direction: column;
+            }
+
+            .request-number {
+                font-size: 20px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .engineering-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .document-action {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .view-document {
+                width: 100%;
+            }
+
+            .action-bar {
+                padding: 17px 18px;
+
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .status-badge {
+                align-self: flex-start;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================================
+     MOBILE HEADER
+========================================== -->
+
+<div class="mobile-header">
+
+    <div class="mobile-brand">
+        <i class="fa-solid fa-building"></i>
+        Prestigious Construction
+    </div>
+
+    <button
+        type="button"
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Open menu"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</div>
+
+
+<!-- ==========================================
+     SIDEBAR
+========================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="brand-icon">
+            <i class="fa-solid fa-building"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <div class="brand-title">
+                Prestigious Construction
+            </div>
+
+            <div class="brand-subtitle">
+                Administration System
+            </div>
 
         </div>
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+        <div class="sidebar-label">
+            Manager
+        </div>
+
+        <a
+            href="{{ url_for('construction_manager_dashboard') }}"
+            class="sidebar-link"
+        >
+            <i class="fa-solid fa-chart-line"></i>
+            Manager Dashboard
+        </a>
 
 
         <a
             href="{{ url_for('construction_manager_dashboard') }}"
-            class="back-button"
+            class="sidebar-link active"
         >
-
-            <i class="fas fa-arrow-left"></i>
-
-            Back to Dashboard
-
+            <i class="fa-solid fa-file-circle-check"></i>
+            Material Requests
         </a>
 
     </div>
 
 
-    <!-- =====================================================
-         MAIN LAYOUT
-         ===================================================== -->
+    <div class="sidebar-footer">
 
-    <div class="material-review-layout">
+        <div class="manager-badge">
+
+            <div class="manager-avatar">
+                {{ (
+                    session.get(
+                        "construction_admin_name",
+                        "M"
+                    )
+                    )[0]|upper }}
+            </div>
+
+            <div class="manager-info">
+
+                <div class="manager-name">
+                    {{ session.get(
+                        "construction_admin_name",
+                        "Manager"
+                    ) }}
+                </div>
+
+                <div class="manager-role">
+                    Manager
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
 
 
-        <!-- =================================================
-             REQUEST INFORMATION
-             ================================================= -->
+<!-- ==========================================
+     MAIN CONTENT
+========================================== -->
 
-        <div>
+<main class="main-content">
+
+    <div class="page-container">
 
 
-            <div class="review-card">
+        <!-- ======================================
+             TOP BAR
+        ======================================= -->
 
-                <div class="review-card-header">
+        <div class="top-bar">
+
+            <div>
+
+                <h1 class="page-title">
+                    Manager Review
+                </h1>
+
+                <div class="page-subtitle">
+                    Review and authorize this Material Request
+                    after Engineering approval.
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for(
+                    'construction_manager_dashboard'
+                ) }}"
+                class="back-btn"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Manager Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- ======================================
+             FLASH MESSAGES
+        ======================================= -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+
+                        <i
+                            class="fa-solid
+                            {% if category == 'success' %}
+                                fa-circle-check
+                            {% elif category == 'danger' %}
+                                fa-circle-xmark
+                            {% elif category == 'warning' %}
+                                fa-triangle-exclamation
+                            {% else %}
+                                fa-circle-info
+                            {% endif %}
+                            me-2"
+                        ></i>
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- ======================================
+             DOCUMENT
+        ======================================= -->
+
+        <div class="document-card">
+
+
+            <!-- DOCUMENT HEADER -->
+
+            <div class="document-header">
+
+                <div class="document-header-top">
 
                     <div>
 
-                        <h2>
+                        <div class="document-label">
                             Material Request
-                        </h2>
+                        </div>
 
-                        <span>
-                            Purchase request information
-                        </span>
+                        <div class="request-number">
+                            {{ material_request.request_number }}
+                        </div>
 
                     </div>
 
 
-                    {% if material_request.status == "Approved" %}
+                    <div class="status-badge">
 
-                        <span class="status-badge status-approved">
+                        <span class="status-dot"></span>
 
-                            Approved
-
-                        </span>
-
-                    {% elif material_request.status == "Declined" %}
-
-                        <span class="status-badge status-declined">
-
-                            Declined
-
-                        </span>
-
-                    {% elif material_request.status == "Quotation Uploaded" %}
-
-                        <span class="status-badge status-review">
-
-                            Quotation Uploaded
-
-                        </span>
-
-                    {% elif material_request.status == "Pending Quotation" %}
-
-                        <span class="status-badge status-pending">
-
-                            Pending Quotation
-
-                        </span>
-
-                    {% else %}
-
-                        <span class="status-badge status-other">
-
-                            {{ material_request.status }}
-
-                        </span>
-
-                    {% endif %}
-
-                </div>
-
-
-                <div class="review-card-body">
-
-
-                    <div class="request-number">
-
-                        {{ material_request.request_number }}
+                        {{ material_request.status }}
 
                     </div>
-
-
-                    {% if material_request.created_at %}
-
-                        <div class="request-date">
-
-                            Created
-
-                            {{ material_request.created_at.strftime(
-                                '%d %b %Y %H:%M'
-                            ) }}
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <!-- =====================================
-                         REQUEST INFORMATION
-                         ===================================== -->
-
-                    <div class="info-grid">
-
-
-                        <div class="info-item">
-
-                            <div class="info-label">
-                                Project
-                            </div>
-
-                            <div class="info-value">
-
-                                {{ material_request.project_name
-                                   or "Not specified" }}
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <div class="info-label">
-                                Requested By
-                            </div>
-
-                            <div class="info-value">
-
-                                {{ material_request.requested_by
-                                   or "Not specified" }}
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <div class="info-label">
-                                Request Date
-                            </div>
-
-                            <div class="info-value">
-
-                                {{ material_request.request_date
-                                   or "Not specified" }}
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <div class="info-label">
-                                Current Status
-                            </div>
-
-                            <div class="info-value">
-
-                                {{ material_request.status
-                                   or "Pending" }}
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <!-- =====================================
-                         DESCRIPTION
-                         ===================================== -->
-
-                    {% if material_request.description %}
-
-                        <div class="description-box">
-
-                            <div class="description-title">
-
-                                Request Description
-
-                            </div>
-
-                            <div class="description-text">
-
-                                {{ material_request.description }}
-
-                            </div>
-
-                        </div>
-
-                    {% endif %}
-
 
                 </div>
 
             </div>
 
 
-            <!-- =================================================
-                 DOCUMENT
-                 ================================================= -->
+            <!-- ==================================
+                 REQUEST INFORMATION
+            =================================== -->
 
-            {% if material_request.file_url %}
+            <div class="section">
 
-                <div class="review-card">
+                <div class="section-title">
 
-                    <div class="review-card-header">
+                    <i class="fa-solid fa-circle-info"></i>
 
-                        <div>
+                    Request Information
 
-                            <h2>
-                                Supporting Document
-                            </h2>
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Project
+                        </div>
+
+                        <div class="info-value">
+                            {{ material_request.project_name
+                               or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Requested By
+                        </div>
+
+                        <div class="info-value">
+                            {{ material_request.requested_by_name
+                               or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Request Date
+                        </div>
+
+                        <div class="info-value">
+                            {{ material_request.request_date
+                               or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Procurement Method
+                        </div>
+
+                        <div class="info-value">
+                            {{ material_request.procurement_method
+                               or "—" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 DESCRIPTION
+            =================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-align-left"></i>
+
+                    Material Request Description
+
+                </div>
+
+
+                <div class="description-box">
+
+                    {{ material_request.description
+                       or "No description was provided." }}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 ENGINEERING APPROVAL
+            =================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                    Engineering Review
+
+                </div>
+
+
+                <div class="engineering-box">
+
+                    <div class="engineering-header">
+
+                        <div class="engineering-title">
+
+                            <i class="fa-solid fa-circle-check me-1"></i>
+
+                            Engineering Approved
+
+                        </div>
+
+
+                        <div class="approved-badge">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            APPROVED
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="engineering-grid">
+
+                        <div class="engineering-item">
+
+                            <label>
+                                Engineer
+                            </label>
 
                             <span>
-                                Material request attachment
+                                {{ material_request.engineer_name
+                                   or "—" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="engineering-item">
+
+                            <label>
+                                Review Date
+                            </label>
+
+                            <span>
+                                {{ material_request.engineer_reviewed_at
+                                   or "—" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="engineering-item">
+
+                            <label>
+                                Engineer ID
+                            </label>
+
+                            <span>
+                                {{ material_request.engineer_id
+                                   or "—" }}
                             </span>
 
                         </div>
@@ -1036,292 +1791,987 @@ Material Request Review | Manager
                     </div>
 
 
-                    <div class="review-card-body">
+                    {% if material_request.engineer_comment %}
+
+                        <div class="engineer-comment">
+
+                            <div class="engineer-comment-label">
+                                Engineering Comment
+                            </div>
+
+                            <div class="engineer-comment-text">
+                                {{ material_request.engineer_comment }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 STAMPED DOCUMENT
+            =================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-file-pdf"></i>
+
+                    Engineering-Stamped Document
+
+                </div>
+
+
+                {% if material_request.signed_file_url %}
+
+                    <div class="document-action">
+
+                        <div class="document-action-info">
+
+                            <div class="document-icon">
+
+                                <i class="fa-solid fa-file-pdf"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="document-name">
+
+                                    {{ material_request.signed_file_name
+                                       or "Stamped Material Request PDF" }}
+
+                                </div>
+
+                                <div class="document-note">
+
+                                    This document contains the
+                                    Purchase and Engineering approval
+                                    stamps.
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
 
                         <a
-                            href="{{ material_request.file_url }}"
+                            href="{{ material_request.signed_file_url }}"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="document-button"
+                            class="view-document"
                         >
 
-                            <i class="fas fa-file-pdf"></i>
+                            <i class="fa-solid
+                                      fa-arrow-up-right-from-square"></i>
 
-                            Open Material Request Document
-
-                            <i class="fas fa-external-link-alt"></i>
+                            Open Stamped Document
 
                         </a>
 
                     </div>
 
+                {% else %}
+
+                    <div class="alert alert-warning mb-0">
+
+                        <i class="fa-solid
+                                  fa-triangle-exclamation me-2"></i>
+
+                        No stamped document is currently available.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ==================================
+                 MANAGER DECISION
+            =================================== -->
+
+            <div class="section decision-section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-signature"></i>
+
+                    Manager Decision
+
                 </div>
 
-            {% endif %}
 
+                <div class="decision-warning">
 
-            <!-- =================================================
-                 EXTRA REQUEST INFORMATION
-                 ================================================= -->
-
-            <div class="review-card">
-
-                <div class="review-card-header">
+                    <i class="fa-solid fa-shield-halved"></i>
 
                     <div>
 
-                        <h2>
-                            Request Details
-                        </h2>
+                        <strong>Important:</strong>
 
-                        <span>
-                            Additional information recorded in the system
-                        </span>
+                        Approving this request will add the Manager
+                        approval stamp to the <strong>RIGHT</strong>
+                        side of the existing Engineering-stamped PDF.
+
+                        Declining the request will preserve the
+                        existing Engineering-stamped PDF without
+                        adding a Manager stamp.
 
                     </div>
 
                 </div>
 
 
-                <div class="review-card-body">
+                <form
+                    method="POST"
+                    id="managerReviewForm"
+                    novalidate
+                >
 
-                    {% if material_request.description %}
+                    <!-- ACTION -->
 
-                        <div class="description-box"
-                             style="margin-top:0;">
-
-                            <div class="description-title">
-
-                                Description
-
-                            </div>
-
-                            <div class="description-text">
-
-                                {{ material_request.description }}
-
-                            </div>
-
-                        </div>
-
-                    {% else %}
-
-                        <div
-                            style="
-                                color:#64748b;
-                                font-size:13px;
-                            "
-                        >
-
-                            No additional description was provided
-                            with this material request.
-
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- =================================================
-             DECISION PANEL
-             ================================================= -->
-
-        <div class="decision-panel">
-
-
-            <div class="decision-header">
-
-                <h2>
-                    Manager Decision
-                </h2>
-
-                <p>
-                    This decision is independent of any supplier
-                    quotation associated with the request.
-                </p>
-
-            </div>
-
-
-            <div class="decision-body">
-
-
-                {% if material_request.status == "Approved" %}
-
-
-                    <div class="completed-decision completed-approved">
-
-                        <i class="fas fa-check-circle"></i>
-
-                        <strong>
-                            Material Request Approved
-                        </strong>
-
-                        {% if material_request.decision_date %}
-
-                            <span>
-
-                                Decision made
-
-                                {{ material_request.decision_date.strftime(
-                                    '%d %b %Y %H:%M'
-                                ) }}
-
-                            </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-                {% elif material_request.status == "Declined" %}
-
-
-                    <div class="completed-decision completed-declined">
-
-                        <i class="fas fa-times-circle"></i>
-
-                        <strong>
-                            Material Request Declined
-                        </strong>
-
-                        {% if material_request.decision_date %}
-
-                            <span>
-
-                                Decision made
-
-                                {{ material_request.decision_date.strftime(
-                                    '%d %b %Y %H:%M'
-                                ) }}
-
-                            </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-                {% else %}
-
-
-                    <form
-                        method="POST"
-                        action="{{ url_for(
-                            'construction_manager_material_request_review',
-                            request_id=material_request.id
-                        ) }}"
+                    <input
+                        type="hidden"
+                        name="action"
+                        id="actionInput"
+                        value=""
                     >
 
 
-                        <!-- =================================
-                             COMMENT
-                             ================================= -->
+                    <!-- SIGNATURE -->
+
+                    <div class="signature-wrapper">
 
                         <label
-                            for="manager_comment"
                             class="form-label"
                         >
+                            Manager Digital Signature
+                            <span class="text-danger">*</span>
+                        </label>
 
+
+                        <div class="signature-pad-container">
+
+                            <canvas
+                                id="signatureCanvas"
+                            ></canvas>
+
+
+                            <div
+                                class="signature-placeholder"
+                                id="signaturePlaceholder"
+                            >
+
+                                Sign inside this area
+
+                            </div>
+
+
+                            <div class="signature-line"></div>
+
+                            <div class="signature-line-label">
+                                Manager Signature
+                            </div>
+
+                        </div>
+
+
+                        <div class="signature-toolbar">
+
+                            <div
+                                class="signature-status"
+                                id="signatureStatus"
+                            >
+                                Signature required before submitting.
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="clear-signature"
+                                id="clearSignature"
+                            >
+
+                                <i class="fa-solid fa-eraser me-1"></i>
+
+                                Clear Signature
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COMMENT -->
+
+                    <div class="mt-4">
+
+                        <label
+                            for="comment"
+                            class="form-label"
+                        >
                             Manager Comment
-
                         </label>
 
 
                         <textarea
-                            id="manager_comment"
-                            name="manager_comment"
-                            class="comment-input"
-                            placeholder="Enter your reason, observation or instruction..."
+                            name="comment"
+                            id="comment"
+                            class="form-control"
+                            placeholder="Enter your review comment..."
                         ></textarea>
 
 
-                        <div class="comment-help">
+                        <div class="field-note">
 
-                            Adding a clear reason is recommended,
-                            especially when declining a request.
-
-                        </div>
-
-
-                        <!-- =================================
-                             DECISION BUTTONS
-                             ================================= -->
-
-                        <div class="decision-actions">
-
-
-                            <button
-                                type="submit"
-                                name="decision"
-                                value="Approved"
-                                class="decision-button approve-button"
-                                onclick="
-                                    return confirm(
-                                        'Are you sure you want to APPROVE this material request?'
-                                    );
-                                "
-                            >
-
-                                <i class="fas fa-check"></i>
-
-                                Approve
-
-                            </button>
-
-
-                            <button
-                                type="submit"
-                                name="decision"
-                                value="Declined"
-                                class="decision-button decline-button"
-                                onclick="
-                                    return confirm(
-                                        'Are you sure you want to DECLINE this material request?'
-                                    );
-                                "
-                            >
-
-                                <i class="fas fa-times"></i>
-
-                                Decline
-
-                            </button>
-
+                            Add any instructions, observations,
+                            conditions, or reasons relevant to your
+                            decision.
 
                         </div>
 
+                    </div>
 
-                    </form>
 
+                    <!-- SIGNATURE DATA -->
+
+                    <input
+                        type="hidden"
+                        name="signature_data"
+                        id="signatureData"
+                    >
+
+
+                    <!-- ACTION BAR -->
+
+                    <div class="action-bar">
+
+                        <button
+                            type="button"
+                            class="action-btn btn-decline"
+                            id="declineButton"
+                        >
+
+                            <i class="fa-solid fa-circle-xmark"></i>
+
+                            Decline Request
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="action-btn btn-approve"
+                            id="approveButton"
+                        >
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Approve Request
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- ==================================
+                 MANAGER REVIEW HISTORY
+            =================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Manager Review History
+
+                </div>
+
+
+                {% if manager_reviews %}
+
+                    <div class="history-table-wrapper">
+
+                        <table class="history-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th>
+                                        Manager
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                    <th>
+                                        Comment
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for review in manager_reviews %}
+
+                                    <tr>
+
+                                        <td>
+                                            {{ review.created_at
+                                               or review.signed_at
+                                               or "—" }}
+                                        </td>
+
+
+                                        <td>
+                                            <strong>
+                                                {{ review.manager_name
+                                                   or "—" }}
+                                            </strong>
+                                        </td>
+
+
+                                        <td>
+
+                                            {% if review.action
+                                                  == "Approved" %}
+
+                                                <span
+                                                    class="history-action
+                                                           history-approved"
+                                                >
+
+                                                    <i
+                                                        class="fa-solid
+                                                              fa-check
+                                                              me-1"
+                                                    ></i>
+
+                                                    Approved
+
+                                                </span>
+
+                                            {% else %}
+
+                                                <span
+                                                    class="history-action
+                                                           history-declined"
+                                                >
+
+                                                    <i
+                                                        class="fa-solid
+                                                              fa-xmark
+                                                              me-1"
+                                                    ></i>
+
+                                                    {{ review.action
+                                                       or "Declined" }}
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <div
+                                                class="history-comment"
+                                            >
+
+                                                {{ review.comment
+                                                   or "No comment." }}
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-history">
+
+                        <i class="fa-solid fa-clock-rotate-left mb-2"
+                           style="font-size: 20px;"></i>
+
+                        <div>
+                            No Manager review history is available
+                            for this Material Request.
+                        </div>
+
+                    </div>
 
                 {% endif %}
 
-
             </div>
+
 
         </div>
 
     </div>
 
+</main>
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
 
-    <div class="review-footer">
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
 
-        Prestigious Trading & Construction
-        · Procurement Management System
+<script>
 
-    </div>
+document.addEventListener("DOMContentLoaded", function () {
 
-</div>
 
-{% endblock %}
+    /* =========================================
+       SIDEBAR
+    ========================================= */
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const sidebarToggle =
+        document.getElementById("sidebarToggle");
+
+    const sidebarOverlay =
+        document.getElementById("sidebarOverlay");
+
+
+    function closeSidebar() {
+
+        if (sidebar) {
+            sidebar.classList.remove("open");
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.classList.remove("open");
+        }
+
+    }
+
+
+    if (sidebarToggle) {
+
+        sidebarToggle.addEventListener(
+            "click",
+            function () {
+
+                sidebar.classList.toggle("open");
+                sidebarOverlay.classList.toggle("open");
+
+            }
+        );
+
+    }
+
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    }
+
+
+    /* =========================================
+       FLASH AUTO DISMISS
+    ========================================= */
+
+    const flashMessages =
+        document.querySelectorAll(".alert");
+
+
+    flashMessages.forEach(function (message) {
+
+        setTimeout(function () {
+
+            message.style.transition =
+                "opacity 0.5s ease, transform 0.5s ease";
+
+            message.style.opacity = "0";
+
+            message.style.transform =
+                "translateY(-10px)";
+
+
+            setTimeout(function () {
+
+                message.remove();
+
+            }, 500);
+
+        }, 5000);
+
+    });
+
+
+    /* =========================================
+       SIGNATURE PAD
+    ========================================= */
+
+    const canvas =
+        document.getElementById("signatureCanvas");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    const signatureData =
+        document.getElementById("signatureData");
+
+    const signaturePlaceholder =
+        document.getElementById(
+            "signaturePlaceholder"
+        );
+
+    const signatureStatus =
+        document.getElementById(
+            "signatureStatus"
+        );
+
+    const clearSignature =
+        document.getElementById(
+            "clearSignature"
+        );
+
+
+    let drawing = false;
+    let hasSignature = false;
+
+
+    function resizeCanvas() {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const existingImage =
+            hasSignature
+                ? canvas.toDataURL("image/png")
+                : null;
+
+
+        const ratio =
+            Math.max(
+                window.devicePixelRatio || 1,
+                1
+            );
+
+
+        canvas.width =
+            rect.width * ratio;
+
+        canvas.height =
+            rect.height * ratio;
+
+
+        ctx.setTransform(
+            ratio,
+            0,
+            0,
+            ratio,
+            0,
+            0
+        );
+
+
+        ctx.lineWidth = 2;
+
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        ctx.strokeStyle = "#0F172A";
+
+
+        if (existingImage) {
+
+            const image =
+                new Image();
+
+            image.onload = function () {
+
+                ctx.drawImage(
+                    image,
+                    0,
+                    0,
+                    rect.width,
+                    rect.height
+                );
+
+            };
+
+            image.src = existingImage;
+
+        }
+
+    }
+
+
+    resizeCanvas();
+
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            resizeCanvas();
+
+        }
+    );
+
+
+    function getPosition(event) {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        if (
+            event.touches &&
+            event.touches.length > 0
+        ) {
+
+            return {
+                x:
+                    event.touches[0].clientX
+                    - rect.left,
+
+                y:
+                    event.touches[0].clientY
+                    - rect.top
+            };
+
+        }
+
+
+        return {
+            x:
+                event.clientX
+                - rect.left,
+
+            y:
+                event.clientY
+                - rect.top
+        };
+
+    }
+
+
+    function startDrawing(event) {
+
+        event.preventDefault();
+
+        drawing = true;
+
+        hasSignature = true;
+
+
+        const position =
+            getPosition(event);
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            position.x,
+            position.y
+        );
+
+
+        if (signaturePlaceholder) {
+
+            signaturePlaceholder.style.opacity =
+                "0";
+
+        }
+
+
+        if (signatureStatus) {
+
+            signatureStatus.textContent =
+                "Signature captured.";
+
+            signatureStatus.style.color =
+                "#15803D";
+
+        }
+
+    }
+
+
+    function draw(event) {
+
+        if (!drawing) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        const position =
+            getPosition(event);
+
+
+        ctx.lineTo(
+            position.x,
+            position.y
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    function stopDrawing() {
+
+        if (!drawing) {
+            return;
+        }
+
+
+        drawing = false;
+
+        ctx.closePath();
+
+    }
+
+
+    canvas.addEventListener(
+        "mousedown",
+        startDrawing
+    );
+
+    canvas.addEventListener(
+        "mousemove",
+        draw
+    );
+
+    canvas.addEventListener(
+        "mouseup",
+        stopDrawing
+    );
+
+    canvas.addEventListener(
+        "mouseleave",
+        stopDrawing
+    );
+
+
+    canvas.addEventListener(
+        "touchstart",
+        startDrawing,
+        { passive: false }
+    );
+
+    canvas.addEventListener(
+        "touchmove",
+        draw,
+        { passive: false }
+    );
+
+    canvas.addEventListener(
+        "touchend",
+        stopDrawing
+    );
+
+
+    if (clearSignature) {
+
+        clearSignature.addEventListener(
+            "click",
+            function () {
+
+                const rect =
+                    canvas.getBoundingClientRect();
+
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    rect.width,
+                    rect.height
+                );
+
+
+                hasSignature = false;
+
+                signatureData.value = "";
+
+
+                if (signaturePlaceholder) {
+
+                    signaturePlaceholder.style.opacity =
+                        "1";
+
+                }
+
+
+                if (signatureStatus) {
+
+                    signatureStatus.textContent =
+                        "Signature required before submitting.";
+
+                    signatureStatus.style.color =
+                        "";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       FORM SUBMISSION
+    ========================================= */
+
+    const form =
+        document.getElementById(
+            "managerReviewForm"
+        );
+
+    const actionInput =
+        document.getElementById(
+            "actionInput"
+        );
+
+    const approveButton =
+        document.getElementById(
+            "approveButton"
+        );
+
+    const declineButton =
+        document.getElementById(
+            "declineButton"
+        );
+
+    const comment =
+        document.getElementById(
+            "comment"
+        );
+
+
+    function submitDecision(action) {
+
+        if (!hasSignature) {
+
+            alert(
+                "Please provide your digital signature before submitting the Manager decision."
+            );
+
+            return;
+
+        }
+
+
+        if (action === "Declined") {
+
+            const confirmed =
+                window.confirm(
+                    "Are you sure you want to DECLINE this Material Request?\n\nThe existing Engineering-stamped PDF will be preserved."
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+        }
+
+
+        if (action === "Approved") {
+
+            const confirmed =
+                window.confirm(
+                    "Are you sure you want to APPROVE this Material Request?\n\nYour Manager approval stamp will be added to the RIGHT side of the existing Engineering-stamped PDF."
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+        }
+
+
+        actionInput.value = action;
+
+
+        signatureData.value =
+            canvas.toDataURL("image/png");
+
+
+        form.submit();
+
+    }
+
+
+    if (approveButton) {
+
+        approveButton.addEventListener(
+            "click",
+            function () {
+
+                submitDecision("Approved");
+
+            }
+        );
+
+    }
+
+
+    if (declineButton) {
+
+        declineButton.addEventListener(
+            "click",
+            function () {
+
+                submitDecision("Declined");
+
+            }
+        );
+
+    }
+
+
+});
+
+</script>
+
+
+</body>
+</html>

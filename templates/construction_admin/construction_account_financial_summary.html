@@ -1,0 +1,4361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Financial Summary | Account
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        :root {
+
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #FDF2F4;
+            --qatar-maroon-hover: #F9E7EC;
+
+            --qatar-gold: #C5A059;
+
+            --text: #202124;
+            --muted: #6B7280;
+
+            --border: #E5E7EB;
+
+            --bg: #F7F7F8;
+            --white: #FFFFFF;
+
+            --green: #16794C;
+            --green-bg: #EAF7F0;
+
+            --blue: #2563EB;
+            --blue-bg: #EFF6FF;
+
+            --orange: #B45309;
+            --orange-bg: #FFF7ED;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 260px;
+
+            background:
+                var(--qatar-maroon-dark);
+
+            color: #FFFFFF;
+
+            padding: 24px 16px;
+
+            z-index: 1000;
+        }
+
+
+        .brand {
+
+            padding:
+                0 12px 26px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.15);
+
+            margin-bottom: 20px;
+        }
+
+
+        .brand small {
+
+            display: block;
+
+            opacity: .7;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .brand strong {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 17px;
+        }
+
+
+        .nav-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color:
+                rgba(255,255,255,.82);
+
+            text-decoration: none;
+
+            padding: 12px 13px;
+
+            border-radius: 9px;
+
+            margin-bottom: 5px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .nav-link:hover,
+        .nav-link.active {
+
+            background:
+                rgba(255,255,255,.12);
+
+            color: #FFFFFF;
+        }
+
+
+        .nav-link i {
+
+            width: 19px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 260px;
+
+            min-height: 100vh;
+
+            padding: 30px;
+        }
+
+
+        .page-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-start;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header-tag {
+
+            display: inline-block;
+
+            color:
+                var(--qatar-maroon);
+
+            background:
+                var(--qatar-maroon-light);
+
+            border:
+                1px solid #F0D5DC;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+        }
+
+
+        h1 {
+
+            margin:
+                10px 0 5px;
+
+            font-size: 28px;
+
+            line-height: 1.2;
+        }
+
+
+        .page-subtitle {
+
+            margin: 0;
+
+            color:
+                var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            gap: 9px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .btn {
+
+            border:
+                1px solid var(--border);
+
+            background:
+                var(--white);
+
+            color:
+                var(--text);
+
+            padding:
+                11px 15px;
+
+            border-radius: 9px;
+
+            font-family: inherit;
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            transition:
+                background .18s ease,
+                border-color .18s ease,
+                color .18s ease,
+                box-shadow .18s ease,
+                transform .18s ease;
+        }
+
+
+        .btn:hover {
+
+            border-color:
+                #D1D5DB;
+
+            background:
+                #F9FAFB;
+
+            color:
+                var(--text);
+        }
+
+
+        .btn-primary {
+
+            background:
+                var(--qatar-maroon);
+
+            border-color:
+                var(--qatar-maroon);
+
+            color: #FFFFFF;
+        }
+
+
+        .btn-primary:hover {
+
+            background:
+                var(--qatar-maroon-dark);
+
+            border-color:
+                var(--qatar-maroon-dark);
+
+            color: #FFFFFF;
+
+            box-shadow:
+                0 5px 14px
+                rgba(103,15,42,.20);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .print-button:hover {
+
+            background:
+                var(--qatar-maroon);
+
+            border-color:
+                var(--qatar-maroon);
+
+            color:
+                #FFFFFF;
+
+            box-shadow:
+                0 5px 14px
+                rgba(138,21,56,.18);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .print-button:hover i {
+
+            color:
+                #FFFFFF;
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .summary-card {
+
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 19px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.025);
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            gap: 12px;
+        }
+
+
+        .summary-card h3 {
+
+            margin:
+                8px 0 3px;
+
+            font-size: 22px;
+        }
+
+
+        .summary-card p {
+
+            margin: 0;
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .summary-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 10px;
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           DASHBOARD CARD
+        ===================================================== */
+
+        .dashboard-card {
+
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            margin-bottom: 20px;
+
+            overflow: visible;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.025);
+        }
+
+
+        .card-header {
+
+            padding: 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .card-header h2 {
+
+            margin:
+                0 0 4px;
+
+            font-size: 17px;
+        }
+
+
+        .card-header p {
+
+            margin: 0;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           FILTER TOOLBAR
+        ===================================================== */
+
+        .toolbar {
+
+            padding:
+                15px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            background:
+                #FCFCFD;
+
+            position: relative;
+
+            z-index: 20;
+        }
+
+
+        .filter-form {
+
+            display: grid;
+
+            grid-template-columns:
+                1.05fr
+                .9fr
+                .9fr
+                1.25fr
+                1.7fr
+                auto
+                auto;
+
+            gap: 9px;
+
+            align-items: end;
+        }
+
+
+        .field {
+
+            min-width: 0;
+        }
+
+
+        .field label {
+
+            display: block;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            color:
+                var(--muted);
+
+            margin:
+                0 0 5px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .4px;
+        }
+
+
+        .field input,
+        .field select {
+
+            width: 100%;
+
+            height: 39px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding:
+                0 10px;
+
+            background:
+                #FFFFFF;
+
+            color:
+                var(--text);
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            outline: none;
+        }
+
+
+        .field input:focus,
+        .field select:focus {
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(138,21,56,.08);
+        }
+
+
+        /* =====================================================
+           LIVE PROJECT SEARCH
+        ===================================================== */
+
+        .project-search-wrapper {
+
+            position: relative;
+
+            width: 100%;
+        }
+
+
+        .project-search-wrapper input {
+
+            padding-right: 36px;
+        }
+
+
+        .project-search-icon {
+
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color:
+                #94A3B8;
+
+            font-size: 11px;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+
+        .project-suggestions {
+
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            top:
+                calc(100% + 5px);
+
+            background:
+                #FFFFFF;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            box-shadow:
+                0 12px 28px
+                rgba(15,23,42,.14);
+
+            z-index: 5000;
+
+            max-height: 250px;
+
+            overflow-y: auto;
+
+            display: none;
+        }
+
+
+        .project-suggestions.show {
+
+            display: block;
+        }
+
+
+        .project-suggestion {
+
+            width: 100%;
+
+            border: 0;
+
+            border-bottom:
+                1px solid #F1F5F9;
+
+            background:
+                #FFFFFF;
+
+            padding:
+                10px 12px;
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            font-weight: 650;
+
+            color:
+                var(--text);
+
+            cursor: pointer;
+
+            transition:
+                background .15s ease,
+                color .15s ease;
+        }
+
+
+        .project-suggestion:last-child {
+
+            border-bottom: 0;
+        }
+
+
+        .project-suggestion:hover,
+        .project-suggestion.active {
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+        }
+
+
+        .project-suggestion strong {
+
+            color:
+                var(--qatar-maroon);
+        }
+
+
+        .project-no-results {
+
+            padding:
+                12px;
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           PAGE SIZE
+        ===================================================== */
+
+        .statement-options {
+
+            padding:
+                11px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .statement-options-left {
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        .statement-options-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        .statement-options-right label {
+
+            color:
+                var(--muted);
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        .page-size-select {
+
+            height: 34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding:
+                0 9px;
+
+            background:
+                #FFFFFF;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            outline: none;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1150px;
+        }
+
+
+        th {
+
+            background:
+                #FAFAFA;
+
+            color:
+                var(--muted);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .5px;
+
+            font-weight: 800;
+
+            text-align: left;
+
+            padding:
+                12px 14px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            white-space: nowrap;
+        }
+
+
+        td {
+
+            padding:
+                13px 14px;
+
+            border-bottom:
+                1px solid #F0F1F3;
+
+            font-size: 11px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                #FCFCFD;
+        }
+
+
+        .transaction-no {
+
+            color:
+                var(--qatar-maroon);
+
+            font-weight: 800;
+        }
+
+
+        .muted {
+
+            color:
+                var(--muted);
+        }
+
+
+        .amount {
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           SOURCE TYPE
+        ===================================================== */
+
+        .source-type {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 4px;
+
+            padding:
+                3px 7px;
+
+            border-radius: 6px;
+
+            background:
+                #F3F4F6;
+
+            color:
+                #6B7280;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        .source-type i {
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           BADGES
+        ===================================================== */
+
+        .method-badge,
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            border-radius: 999px;
+
+            padding:
+                5px 9px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .method-petty {
+
+            color:
+                var(--orange);
+
+            background:
+                var(--orange-bg);
+        }
+
+
+        .method-cheque {
+
+            color:
+                var(--qatar-maroon);
+
+            background:
+                var(--qatar-maroon-light);
+        }
+
+
+        .method-card {
+
+            color:
+                var(--blue);
+
+            background:
+                var(--blue-bg);
+        }
+
+
+        .method-bank {
+
+            color:
+                var(--green);
+
+            background:
+                var(--green-bg);
+        }
+
+
+        .method-other {
+
+            color:
+                var(--muted);
+
+            background:
+                #F3F4F6;
+        }
+
+
+        .status-recorded {
+
+            color:
+                var(--green);
+
+            background:
+                var(--green-bg);
+        }
+
+
+        .status-reviewed {
+
+            color:
+                var(--blue);
+
+            background:
+                var(--blue-bg);
+        }
+
+
+        .status-cancelled {
+
+            color:
+                #991B1B;
+
+            background:
+                #FEF2F2;
+        }
+
+
+        .table-footer {
+
+            padding:
+                14px 20px;
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .statement-total {
+
+            color:
+                var(--text);
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           PAGINATION
+        ===================================================== */
+
+        .pagination {
+
+            display: flex;
+
+            justify-content:
+                center;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding:
+                0 20px 18px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .page-link {
+
+            min-width: 34px;
+
+            height: 34px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                #FFFFFF;
+
+            color:
+                var(--text);
+
+            border-radius: 8px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            transition:
+                background .18s ease,
+                border-color .18s ease,
+                color .18s ease;
+        }
+
+
+        .page-link:hover {
+
+            border-color:
+                var(--qatar-maroon);
+
+            color:
+                var(--qatar-maroon);
+
+            background:
+                var(--qatar-maroon-light);
+        }
+
+
+        .page-link.active {
+
+            background:
+                var(--qatar-maroon);
+
+            border-color:
+                var(--qatar-maroon);
+
+            color:
+                #FFFFFF;
+        }
+
+
+        .page-link.disabled {
+
+            color:
+                #D1D5DB;
+
+            background:
+                #F9FAFB;
+
+            pointer-events: none;
+        }
+
+
+        .pagination-ellipsis {
+
+            min-width: 25px;
+
+            text-align: center;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           FLASH
+        ===================================================== */
+
+        .flash-container {
+
+            margin-bottom: 15px;
+        }
+
+
+        .flash {
+
+            padding:
+                11px 13px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+
+            border: 1px solid;
+        }
+
+
+        .flash-success {
+
+            background:
+                var(--green-bg);
+
+            color:
+                var(--green);
+
+            border-color:
+                #BDE7D0;
+        }
+
+
+        .flash-danger {
+
+            background:
+                #FEF2F2;
+
+            color:
+                #991B1B;
+
+            border-color:
+                #FECACA;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding:
+                55px 20px;
+
+            color:
+                var(--muted);
+        }
+
+
+        .empty-state i {
+
+            font-size: 32px;
+
+            color:
+                #D1D5DB;
+
+            margin-bottom: 12px;
+        }
+
+
+        .empty-state h3 {
+
+            color:
+                var(--text);
+
+            font-size: 15px;
+
+            margin:
+                0 0 5px;
+        }
+
+
+        .empty-state p {
+
+            margin: 0;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu {
+
+            display: none;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1400px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+
+            .filter-form {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+            }
+        }
+
+
+        @media (max-width: 1200px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .filter-form {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .2s ease;
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding:
+                    20px 14px;
+            }
+
+
+            .mobile-menu {
+
+                display: inline-flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                width: 40px;
+
+                height: 40px;
+
+                border:
+                    1px solid var(--border);
+
+                background:
+                    #FFFFFF;
+
+                border-radius: 9px;
+
+                cursor: pointer;
+            }
+
+
+            .page-header {
+
+                align-items:
+                    center;
+            }
+
+
+            .page-header > div:first-child {
+
+                flex: 1;
+            }
+
+
+            .header-actions {
+
+                justify-content:
+                    flex-end;
+            }
+
+
+            .filter-form {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .filter-form {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .header-actions .btn span {
+
+                display: none;
+            }
+
+
+            .statement-options {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+            }
+
+        }
+
+
+        /* =====================================================
+           PRINT / PDF
+        ===================================================== */
+
+        @page {
+
+            size: A4 landscape;
+
+            margin: 12mm;
+        }
+
+
+        .print-header {
+
+            display: none;
+        }
+
+
+        .print-summary,
+        .print-footer {
+
+            display: none;
+        }
+
+
+        .print-only {
+
+            display: none;
+        }
+
+
+        @media print {
+
+            html,
+            body {
+
+                background: #FFFFFF !important;
+
+                color: #000000 !important;
+
+                font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+                width: 100%;
+            }
+
+
+            body {
+
+                margin: 0;
+
+                padding: 0;
+            }
+
+
+            .sidebar,
+            .header-actions,
+            .toolbar,
+            .statement-options,
+            .pagination,
+            .mobile-menu,
+            .flash-container {
+
+                display: none !important;
+            }
+
+
+            .main {
+
+                margin: 0 !important;
+
+                padding: 0 !important;
+
+                min-height: auto;
+            }
+
+
+            .page-header {
+
+                display: none !important;
+            }
+
+
+            .summary-grid {
+
+                display: none !important;
+            }
+
+
+            .dashboard-card {
+
+                display: block !important;
+
+                width: 100% !important;
+
+                margin: 0 !important;
+
+                padding: 0 !important;
+
+                border: 0 !important;
+
+                border-radius: 0 !important;
+
+                box-shadow: none !important;
+
+                overflow: visible !important;
+            }
+
+
+            .card-header {
+
+                display: none !important;
+            }
+
+
+            .print-header {
+
+                display: block !important;
+
+                width: 100%;
+
+                margin-bottom: 12px;
+
+                border-bottom:
+                    2px solid #8A1538;
+
+                padding-bottom: 9px;
+            }
+
+
+            .print-company {
+
+                font-size: 17px;
+
+                font-weight: 800;
+
+                color: #8A1538;
+
+                margin-bottom: 2px;
+            }
+
+
+            .print-company-subtitle {
+
+                font-size: 10px;
+
+                color: #555555;
+
+                margin-bottom: 8px;
+            }
+
+
+            .print-title {
+
+                font-size: 15px;
+
+                font-weight: 800;
+
+                color: #111111;
+
+                margin-bottom: 4px;
+            }
+
+
+            .print-meta {
+
+                display: flex;
+
+                justify-content: space-between;
+
+                gap: 20px;
+
+                font-size: 9px;
+
+                color: #555555;
+
+                margin-top: 5px;
+            }
+
+
+            .print-filter-summary {
+
+                margin-top: 7px;
+
+                padding: 6px 8px;
+
+                border:
+                    1px solid #D9D9D9;
+
+                background:
+                    #F8F8F8;
+
+                font-size: 9px;
+
+                color:
+                    #333333;
+            }
+
+
+            .print-summary {
+
+                display: grid !important;
+
+                grid-template-columns:
+                    repeat(5, 1fr);
+
+                gap: 7px;
+
+                margin-bottom: 12px;
+
+                page-break-inside: avoid;
+            }
+
+
+            .print-summary-box {
+
+                border:
+                    1px solid #D9D9D9;
+
+                padding:
+                    7px 8px;
+
+                background:
+                    #FAFAFA;
+
+                min-height: 45px;
+            }
+
+
+            .print-summary-label {
+
+                font-size: 8px;
+
+                color:
+                    #666666;
+
+                text-transform:
+                    uppercase;
+
+                font-weight: 700;
+
+                margin-bottom: 3px;
+            }
+
+
+            .print-summary-value {
+
+                font-size: 11px;
+
+                font-weight: 800;
+
+                color:
+                    #111111;
+            }
+
+
+            .table-wrapper {
+
+                width: 100% !important;
+
+                overflow: visible !important;
+            }
+
+
+            table {
+
+                width: 100% !important;
+
+                min-width: 0 !important;
+
+                border-collapse:
+                    collapse !important;
+
+                table-layout:
+                    auto;
+            }
+
+
+            thead {
+
+                display:
+                    table-header-group;
+            }
+
+
+            tbody {
+
+                display:
+                    table-row-group;
+            }
+
+
+            tr {
+
+                page-break-inside:
+                    avoid;
+            }
+
+
+            th {
+
+                background:
+                    #EEEEEE !important;
+
+                color:
+                    #222222 !important;
+
+                border:
+                    1px solid #BDBDBD !important;
+
+                font-size:
+                    7.5px !important;
+
+                font-weight:
+                    800 !important;
+
+                padding:
+                    6px 5px !important;
+
+                white-space:
+                    nowrap !important;
+
+                text-transform:
+                    uppercase;
+            }
+
+
+            td {
+
+                border:
+                    1px solid #D5D5D5 !important;
+
+                color:
+                    #111111 !important;
+
+                font-size:
+                    7.5px !important;
+
+                padding:
+                    6px 5px !important;
+
+                vertical-align:
+                    middle !important;
+            }
+
+
+            tbody tr:hover {
+
+                background:
+                    transparent !important;
+            }
+
+
+            .transaction-no {
+
+                color:
+                    #8A1538 !important;
+
+                font-weight:
+                    800;
+            }
+
+
+            .muted {
+
+                color:
+                    #555555 !important;
+
+                font-size:
+                    7px !important;
+            }
+
+
+            .amount {
+
+                color:
+                    #111111 !important;
+
+                font-weight:
+                    800 !important;
+
+                white-space:
+                    nowrap;
+            }
+
+
+            .method-badge,
+            .status-badge {
+
+                border:
+                    0 !important;
+
+                border-radius:
+                    0 !important;
+
+                padding:
+                    0 !important;
+
+                background:
+                    transparent !important;
+
+                color:
+                    #111111 !important;
+
+                font-size:
+                    7.5px !important;
+
+                font-weight:
+                    700 !important;
+            }
+
+
+            .source-type {
+
+                border: 0 !important;
+
+                border-radius: 0 !important;
+
+                padding: 0 !important;
+
+                background:
+                    transparent !important;
+
+                color:
+                    #555555 !important;
+
+                font-size:
+                    7px !important;
+            }
+
+
+            .source-type i {
+
+                display: none !important;
+            }
+
+
+            .table-footer {
+
+                display:
+                    flex !important;
+
+                padding:
+                    8px 0 0 !important;
+
+                border-top:
+                    1px solid #999999;
+
+                margin-top:
+                    6px;
+
+                font-size:
+                    8px !important;
+
+                color:
+                    #333333 !important;
+
+                page-break-inside:
+                    avoid;
+            }
+
+
+            .statement-total {
+
+                color:
+                    #111111 !important;
+
+                font-size:
+                    9px !important;
+
+                font-weight:
+                    800;
+            }
+
+
+            .print-footer {
+
+                display:
+                    flex !important;
+
+                justify-content:
+                    space-between;
+
+                align-items:
+                    center;
+
+                border-top:
+                    1px solid #D0D0D0;
+
+                margin-top:
+                    12px;
+
+                padding-top:
+                    6px;
+
+                font-size:
+                    7.5px;
+
+                color:
+                    #666666;
+
+                page-break-inside:
+                    avoid;
+            }
+
+
+            .print-only {
+
+                display:
+                    block !important;
+            }
+
+
+            .screen-only {
+
+                display:
+                    none !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="brand">
+
+            <small>
+                Prestigious Trading & Construction
+            </small>
+
+            <strong>
+                Account Department
+            </strong>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('construction_account_dashboard') }}"
+            class="nav-link"
+        >
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="{{ url_for('construction_account_financial_summary') }}"
+            class="nav-link active"
+        >
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Financial Summary
+
+        </a>
+
+
+        <a
+            href="{{ url_for('construction_account_dashboard') }}"
+            class="nav-link"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Account Dashboard
+
+        </a>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="page-header">
+
+
+            <button
+                type="button"
+                class="mobile-menu"
+                id="mobileMenuButton"
+            >
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <div>
+
+                <span class="page-header-tag">
+
+                    Account / Finance
+
+                </span>
+
+
+                <h1>
+                    Financial Summary
+                </h1>
+
+
+                <p class="page-subtitle">
+
+                    Bank-statement-style record of completed
+                    financial transactions and payment totals.
+
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button
+                    type="button"
+                    class="btn print-button"
+                    onclick="printFinancialStatement()"
+                >
+
+                    <i class="fa-solid fa-file-pdf"></i>
+
+                    <span>
+                        Print / PDF
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="flash flash-{{ category }}"
+                        >
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             SCREEN SUMMARY
+        ================================================== -->
+
+        <div class="summary-grid">
+
+
+            <!-- GRAND TOTAL -->
+
+            <div class="summary-card">
+
+                <div>
+
+                    <p>
+                        GRAND TOTAL
+                    </p>
+
+                    <h3>
+
+                        QAR
+                        {{
+                            "{:,.2f}".format(
+                                summary.total_paid or 0
+                            )
+                        }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD -->
+
+            <div class="summary-card">
+
+                <div>
+
+                    <p>
+                        CARD
+                    </p>
+
+                    <h3>
+
+                        QAR
+                        {{
+                            "{:,.2f}".format(
+                                summary.card_total or 0
+                            )
+                        }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-credit-card"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHEQUE -->
+
+            <div class="summary-card">
+
+                <div>
+
+                    <p>
+                        CHEQUE
+                    </p>
+
+                    <h3>
+
+                        QAR
+                        {{
+                            "{:,.2f}".format(
+                                summary.cheque_total or 0
+                            )
+                        }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-money-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- PETTY CASH -->
+
+            <div class="summary-card">
+
+                <div>
+
+                    <p>
+                        PETTY CASH
+                    </p>
+
+                    <h3>
+
+                        QAR
+                        {{
+                            "{:,.2f}".format(
+                                summary.petty_cash_total or 0
+                            )
+                        }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-coins"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- TRANSACTIONS -->
+
+            <div class="summary-card">
+
+                <div>
+
+                    <p>
+                        TRANSACTIONS
+                    </p>
+
+                    <h3>
+
+                        {{
+                            summary.transaction_count or 0
+                        }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PRINT HEADER
+        ================================================== -->
+
+        <div class="print-header">
+
+            <div class="print-company">
+
+                PRESTIGIOUS TRADING & CONSTRUCTION W.L.L.
+
+            </div>
+
+
+            <div class="print-company-subtitle">
+
+                Account Department | Doha, Qatar
+
+            </div>
+
+
+            <div class="print-title">
+
+                FINANCIAL STATEMENT
+
+            </div>
+
+
+            <div class="print-meta">
+
+                <div>
+
+                    <strong>
+                        Report:
+                    </strong>
+
+                    Account Financial Transactions
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Generated:
+                    </strong>
+
+                    <span id="printGeneratedDate">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="print-filter-summary">
+
+                <strong>
+                    Selected Criteria:
+                </strong>
+
+                <span id="printCriteria">
+                    All Transactions
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PRINT SUMMARY
+        ================================================== -->
+
+        <div class="print-summary">
+
+
+            <div class="print-summary-box">
+
+                <div class="print-summary-label">
+                    Grand Total
+                </div>
+
+                <div class="print-summary-value">
+
+                    QAR
+                    {{
+                        "{:,.2f}".format(
+                            summary.total_paid or 0
+                        )
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <div class="print-summary-box">
+
+                <div class="print-summary-label">
+                    Card
+                </div>
+
+                <div class="print-summary-value">
+
+                    QAR
+                    {{
+                        "{:,.2f}".format(
+                            summary.card_total or 0
+                        )
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <div class="print-summary-box">
+
+                <div class="print-summary-label">
+                    Cheque
+                </div>
+
+                <div class="print-summary-value">
+
+                    QAR
+                    {{
+                        "{:,.2f}".format(
+                            summary.cheque_total or 0
+                        )
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <div class="print-summary-box">
+
+                <div class="print-summary-label">
+                    Petty Cash
+                </div>
+
+                <div class="print-summary-value">
+
+                    QAR
+                    {{
+                        "{:,.2f}".format(
+                            summary.petty_cash_total or 0
+                        )
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <div class="print-summary-box">
+
+                <div class="print-summary-label">
+                    Transactions
+                </div>
+
+                <div class="print-summary-value">
+
+                    {{
+                        summary.transaction_count or 0
+                    }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FINANCIAL TRANSACTIONS
+        ================================================== -->
+
+        <section class="dashboard-card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Financial Transactions
+                    </h2>
+
+                    <p>
+
+                        All recorded payments from the company's
+                        approved procurement and payment workflows.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FILTERS
+            ================================================== -->
+
+            <div class="toolbar">
+
+
+                <form
+                    method="GET"
+                    action="{{ url_for(
+                        'construction_account_financial_summary'
+                    ) }}"
+                    class="filter-form"
+                    id="filterForm"
+                >
+
+
+                    <!-- PAYMENT METHOD -->
+
+                    <div class="field">
+
+                        <label>
+                            Payment Method
+                        </label>
+
+                        <select name="payment_method">
+
+                            <option
+                                value="All"
+                                {% if payment_method == "All" %}
+                                    selected
+                                {% endif %}
+                            >
+                                All Methods
+                            </option>
+
+
+                            <option
+                                value="Petty Cash"
+                                {% if payment_method == "Petty Cash" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Petty Cash
+                            </option>
+
+
+                            <option
+                                value="Cheque"
+                                {% if payment_method == "Cheque" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Cheque
+                            </option>
+
+
+                            <option
+                                value="Card"
+                                {% if payment_method == "Card" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Card
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- FROM -->
+
+                    <div class="field">
+
+                        <label>
+                            From
+                        </label>
+
+                        <input
+                            type="date"
+                            name="start_date"
+                            value="{{ start_date }}"
+                        >
+
+                    </div>
+
+
+                    <!-- TO -->
+
+                    <div class="field">
+
+                        <label>
+                            To
+                        </label>
+
+                        <input
+                            type="date"
+                            name="end_date"
+                            value="{{ end_date }}"
+                        >
+
+                    </div>
+
+
+                    <!-- PROJECT LIVE SEARCH -->
+
+                    <div class="field">
+
+                        <label>
+                            Project
+                        </label>
+
+                        <div
+                            class="project-search-wrapper"
+                        >
+
+                            <input
+                                type="text"
+                                id="projectSearchInput"
+                                name="project"
+                                value="{{ project }}"
+                                placeholder="Search project..."
+                                autocomplete="off"
+                                aria-label="Search project"
+                            >
+
+                            <i
+                                class="fa-solid fa-magnifying-glass project-search-icon"
+                            ></i>
+
+
+                            <div
+                                id="projectSuggestions"
+                                class="project-suggestions"
+                                role="listbox"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SEARCH -->
+
+                    <div class="field">
+
+                        <label>
+                            Search
+                        </label>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ search }}"
+                            placeholder="Transaction, reference, supplier, person..."
+                        >
+
+                    </div>
+
+
+                    <!-- FILTER -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        <i class="fa-solid fa-filter"></i>
+
+                        Filter
+
+                    </button>
+
+
+                    <!-- RESET -->
+
+                    <a
+                        href="{{ url_for(
+                            'construction_account_financial_summary'
+                        ) }}"
+                        class="btn"
+                    >
+
+                        <i class="fa-solid fa-rotate-left"></i>
+
+                        Reset
+
+                    </a>
+
+                </form>
+
+            </div>
+
+
+            <!-- =================================================
+                 STATEMENT OPTIONS
+            ================================================== -->
+
+            <div class="statement-options">
+
+
+                <div class="statement-options-left">
+
+                    {% if total_transactions > 0 %}
+
+                        Showing
+
+                        <strong>
+                            {{ showing_from }}
+                        </strong>
+
+                        to
+
+                        <strong>
+                            {{ showing_to }}
+                        </strong>
+
+                        of
+
+                        <strong>
+                            {{ total_transactions }}
+                        </strong>
+
+                        transaction(s)
+
+                    {% else %}
+
+                        No transactions found.
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="statement-options-right">
+
+                    <label for="pageSize">
+                        Rows per page
+                    </label>
+
+
+                    <select
+                        id="pageSize"
+                        class="page-size-select"
+                        onchange="changePageSize(this.value)"
+                    >
+
+                        <option
+                            value="25"
+                            {% if page_size == 25 %}
+                                selected
+                            {% endif %}
+                        >
+                            25
+                        </option>
+
+
+                        <option
+                            value="50"
+                            {% if page_size == 50 %}
+                                selected
+                            {% endif %}
+                        >
+                            50
+                        </option>
+
+
+                        <option
+                            value="100"
+                            {% if page_size == 100 %}
+                                selected
+                            {% endif %}
+                        >
+                            100
+                        </option>
+
+
+                        <option
+                            value="250"
+                            {% if page_size == 250 %}
+                                selected
+                            {% endif %}
+                        >
+                            250
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            {% if transactions %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    #
+                                </th>
+
+                                <th>
+                                    Transaction / Procurement
+                                </th>
+
+                                <th>
+                                    Date / Time
+                                </th>
+
+                                <th>
+                                    Method
+                                </th>
+
+                                <th>
+                                    Project
+                                </th>
+
+                                <th>
+                                    Supplier / Recipient
+                                </th>
+
+                                <th>
+                                    Reference
+                                </th>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <th>
+                                    Transaction By
+                                </th>
+
+                                <th>
+                                    Recorded By
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for transaction in transactions %}
+
+
+                                {% set method_class =
+
+                                    "method-petty"
+
+                                    if transaction.payment_method
+                                        == "Petty Cash"
+
+                                    else
+
+                                    "method-cheque"
+
+                                    if transaction.payment_method
+                                        == "Cheque"
+
+                                    else
+
+                                    "method-card"
+
+                                    if transaction.payment_method
+                                        == "Card"
+
+                                    else
+
+                                    "method-bank"
+
+                                    if transaction.payment_method
+                                        == "Bank Transfer"
+
+                                    else
+
+                                    "method-other"
+
+                                %}
+
+
+                                {% set status_class =
+
+                                    "status-recorded"
+
+                                    if transaction.status
+                                        == "Recorded"
+
+                                    else
+
+                                    "status-reviewed"
+
+                                    if transaction.status
+                                        == "Reviewed"
+
+                                    else
+
+                                    "status-cancelled"
+
+                                %}
+
+
+                                <tr>
+
+
+                                    <!-- NUMBER -->
+
+                                    <td>
+
+                                        {{
+                                            showing_from
+                                            + loop.index0
+                                        }}
+
+                                    </td>
+
+
+                                    <!-- TRANSACTION + PROCUREMENT SOURCE -->
+
+                                    <td>
+
+                                        <div
+                                            class="transaction-no"
+                                        >
+
+                                            {{
+                                                transaction.transaction_number
+                                            }}
+
+                                        </div>
+
+
+                                        {% if transaction.source_type %}
+
+                                            <div class="source-type">
+
+                                                {% if
+                                                    "card"
+                                                    in (
+                                                        transaction.source_type
+                                                        | lower
+                                                    )
+                                                %}
+
+                                                    <i
+                                                        class="fa-solid fa-credit-card"
+                                                    ></i>
+
+                                                {% elif
+                                                    "lpo"
+                                                    in (
+                                                        transaction.source_type
+                                                        | lower
+                                                    )
+                                                    or
+                                                    "quotation"
+                                                    in (
+                                                        transaction.source_type
+                                                        | lower
+                                                    )
+                                                %}
+
+                                                    <i
+                                                        class="fa-solid fa-file-invoice"
+                                                    ></i>
+
+                                                {% else %}
+
+                                                    <i
+                                                        class="fa-solid fa-file-invoice-dollar"
+                                                    ></i>
+
+                                                {% endif %}
+
+
+                                                {{
+                                                    transaction.source_type
+                                                }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- DATE -->
+
+                                    <td>
+
+                                        {{
+                                            transaction.transaction_date.strftime(
+                                                "%d %b %Y"
+                                            )
+                                            if transaction.transaction_date
+                                            else "-"
+                                        }}
+
+
+                                        <div class="muted">
+
+                                            {{
+                                                transaction.transaction_date.strftime(
+                                                    "%H:%M"
+                                                )
+                                                if transaction.transaction_date
+                                                else ""
+                                            }}
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- PAYMENT METHOD -->
+
+                                    <td>
+
+                                        <span
+                                            class="
+                                                method-badge
+                                                {{ method_class }}
+                                            "
+                                        >
+
+                                            {{
+                                                transaction.payment_method
+                                            }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- PROJECT -->
+
+                                    <td>
+
+                                        {{
+                                            transaction.project_name
+                                            or "-"
+                                        }}
+
+                                    </td>
+
+
+                                    <!-- SUPPLIER -->
+
+                                    <td>
+
+                                        {{
+                                            transaction.supplier_or_recipient
+                                            or "-"
+                                        }}
+
+                                    </td>
+
+
+                                    <!-- REFERENCE -->
+
+                                    <td>
+
+                                        {{
+                                            transaction.payment_reference
+                                            or "-"
+                                        }}
+
+                                    </td>
+
+
+                                    <!-- AMOUNT -->
+
+                                    <td class="amount">
+
+                                        {{
+                                            transaction.currency
+                                            or "QAR"
+                                        }}
+
+                                        {{
+                                            "{:,.2f}".format(
+                                                transaction.amount
+                                                or 0
+                                            )
+                                        }}
+
+                                    </td>
+
+
+                                    <!-- TRANSACTION BY -->
+
+                                    <td>
+
+                                        <strong>
+
+                                            {{
+                                                transaction.transaction_by_name
+                                                or "-"
+                                            }}
+
+                                        </strong>
+
+
+                                        {% if transaction.transaction_by %}
+
+                                            <div class="muted">
+
+                                                ID:
+                                                {{
+                                                    transaction.transaction_by
+                                                }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- RECORDED BY -->
+
+                                    <td>
+
+                                        <strong>
+
+                                            {{
+                                                transaction.payment_recorded_by_name
+                                                or "-"
+                                            }}
+
+                                        </strong>
+
+
+                                        {% if transaction.payment_recorded_at %}
+
+                                            <div class="muted">
+
+                                                {{
+                                                    transaction.payment_recorded_at.strftime(
+                                                        "%d %b %Y %H:%M"
+                                                    )
+                                                }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        <span
+                                            class="
+                                                status-badge
+                                                {{ status_class }}
+                                            "
+                                        >
+
+                                            {{
+                                                transaction.status
+                                            }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     TABLE FOOTER
+                ================================================== -->
+
+                <div class="table-footer">
+
+                    <div>
+
+                        Showing
+
+                        <strong>
+                            {{ showing_from }}
+                        </strong>
+
+                        -
+
+                        <strong>
+                            {{ showing_to }}
+                        </strong>
+
+                        of
+
+                        <strong>
+                            {{ total_transactions }}
+                        </strong>
+
+                        transaction(s).
+
+                    </div>
+
+
+                    <div class="statement-total">
+
+                        Filtered Total:
+
+                        QAR
+
+                        {{
+                            "{:,.2f}".format(
+                                summary.total_paid or 0
+                            )
+                        }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PAGINATION
+                ================================================== -->
+
+                {% if total_transactions > 0 %}
+
+                    <div class="pagination">
+
+
+                        {% if page > 1 %}
+
+                            <a
+                                class="page-link"
+                                href="{{ url_for(
+                                    'construction_account_financial_summary',
+                                    payment_method=payment_method,
+                                    start_date=start_date,
+                                    end_date=end_date,
+                                    project=project,
+                                    search=search,
+                                    page=page - 1,
+                                    page_size=page_size
+                                ) }}"
+                                aria-label="Previous page"
+                            >
+
+                                <i class="fa-solid fa-chevron-left"></i>
+
+                            </a>
+
+                        {% else %}
+
+                            <span
+                                class="page-link disabled"
+                            >
+
+                                <i class="fa-solid fa-chevron-left"></i>
+
+                            </span>
+
+                        {% endif %}
+
+
+                        {% for page_item in pagination_pages %}
+
+                            {% if page_item == "..." %}
+
+                                <span
+                                    class="pagination-ellipsis"
+                                >
+
+                                    ...
+
+                                </span>
+
+                            {% else %}
+
+                                <a
+                                    class="
+                                        page-link
+                                        {% if page_item == page %}
+                                            active
+                                        {% endif %}
+                                    "
+                                    href="{{ url_for(
+                                        'construction_account_financial_summary',
+                                        payment_method=payment_method,
+                                        start_date=start_date,
+                                        end_date=end_date,
+                                        project=project,
+                                        search=search,
+                                        page=page_item,
+                                        page_size=page_size
+                                    ) }}"
+                                >
+
+                                    {{ page_item }}
+
+                                </a>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if page < total_pages %}
+
+                            <a
+                                class="page-link"
+                                href="{{ url_for(
+                                    'construction_account_financial_summary',
+                                    payment_method=payment_method,
+                                    start_date=start_date,
+                                    end_date=end_date,
+                                    project=project,
+                                    search=search,
+                                    page=page + 1,
+                                    page_size=page_size
+                                ) }}"
+                                aria-label="Next page"
+                            >
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </a>
+
+                        {% else %}
+
+                            <span
+                                class="page-link disabled"
+                            >
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    <h3>
+                        No Financial Transactions
+                    </h3>
+
+                    <p>
+
+                        No payment records match the selected
+                        filters.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+        </section>
+
+
+        <!-- =====================================================
+             PRINT FOOTER
+        ====================================================== -->
+
+        <div class="print-footer">
+
+            <div>
+
+                Prestigious Trading & Construction W.L.L.
+                — Account Department
+
+            </div>
+
+
+            <div>
+
+                Financial Statement
+
+            </div>
+
+
+            <div>
+
+                Generated:
+
+                <span id="printGeneratedDateFooter">
+                    -
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+
+        /* =================================================
+           LIVE PROJECT SEARCH
+        ================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const projectInput =
+                    document.getElementById(
+                        "projectSearchInput"
+                    );
+
+
+                const suggestionsBox =
+                    document.getElementById(
+                        "projectSuggestions"
+                    );
+
+
+                if (
+                    !projectInput ||
+                    !suggestionsBox
+                ) {
+
+                    return;
+
+                }
+
+
+                const projects = [
+
+                    {% for item in projects %}
+
+                        {{ item | tojson }},
+
+                    {% endfor %}
+
+                ];
+
+
+                let activeIndex = -1;
+
+
+                function normalize(value) {
+
+                    return (
+                        value || ""
+                    )
+                    .toString()
+                    .toLowerCase()
+                    .trim();
+
+                }
+
+
+                function escapeHtml(value) {
+
+                    return value
+                        .replace(
+                            /&/g,
+                            "&amp;"
+                        )
+                        .replace(
+                            /</g,
+                            "&lt;"
+                        )
+                        .replace(
+                            />/g,
+                            "&gt;"
+                        )
+                        .replace(
+                            /"/g,
+                            "&quot;"
+                        )
+                        .replace(
+                            /'/g,
+                            "&#039;"
+                        );
+
+                }
+
+
+                function highlightMatch(
+                    projectName,
+                    searchTerm
+                ) {
+
+                    const safeName =
+                        escapeHtml(
+                            projectName
+                        );
+
+
+                    if (!searchTerm) {
+
+                        return safeName;
+
+                    }
+
+
+                    const lowerProject =
+                        projectName.toLowerCase();
+
+
+                    const lowerSearch =
+                        searchTerm.toLowerCase();
+
+
+                    const index =
+                        lowerProject.indexOf(
+                            lowerSearch
+                        );
+
+
+                    if (index === -1) {
+
+                        return safeName;
+
+                    }
+
+
+                    const before =
+                        projectName.substring(
+                            0,
+                            index
+                        );
+
+
+                    const match =
+                        projectName.substring(
+                            index,
+                            index + searchTerm.length
+                        );
+
+
+                    const after =
+                        projectName.substring(
+                            index + searchTerm.length
+                        );
+
+
+                    return (
+                        escapeHtml(before)
+                        + "<strong>"
+                        + escapeHtml(match)
+                        + "</strong>"
+                        + escapeHtml(after)
+                    );
+
+                }
+
+
+                function closeSuggestions() {
+
+                    suggestionsBox.classList.remove(
+                        "show"
+                    );
+
+                    suggestionsBox.innerHTML = "";
+
+                    activeIndex = -1;
+
+                }
+
+
+                function setActiveSuggestion(index) {
+
+                    const buttons =
+                        suggestionsBox.querySelectorAll(
+                            ".project-suggestion"
+                        );
+
+
+                    buttons.forEach(
+                        function (
+                            button,
+                            buttonIndex
+                        ) {
+
+                            button.classList.toggle(
+                                "active",
+                                buttonIndex === index
+                            );
+
+                        }
+                    );
+
+
+                    activeIndex = index;
+
+
+                    if (
+                        index >= 0 &&
+                        buttons[index]
+                    ) {
+
+                        buttons[index].scrollIntoView({
+                            block: "nearest"
+                        });
+
+                    }
+
+                }
+
+
+                function showSuggestions() {
+
+                    const searchTerm =
+                        normalize(
+                            projectInput.value
+                        );
+
+
+                    activeIndex = -1;
+
+
+                    if (!searchTerm) {
+
+                        closeSuggestions();
+
+                        return;
+
+                    }
+
+
+                    const matches =
+                        projects
+                            .filter(
+                                function (project) {
+
+                                    return normalize(
+                                        project
+                                    ).includes(
+                                        searchTerm
+                                    );
+
+                                }
+                            )
+                            .slice(
+                                0,
+                                10
+                            );
+
+
+                    suggestionsBox.innerHTML = "";
+
+
+                    if (!matches.length) {
+
+                        const noResults =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        noResults.className =
+                            "project-no-results";
+
+
+                        noResults.textContent =
+                            "No matching project found";
+
+
+                        suggestionsBox.appendChild(
+                            noResults
+                        );
+
+
+                        suggestionsBox.classList.add(
+                            "show"
+                        );
+
+                        return;
+
+                    }
+
+
+                    matches.forEach(
+                        function (project) {
+
+                            const button =
+                                document.createElement(
+                                    "button"
+                                );
+
+
+                            button.type =
+                                "button";
+
+
+                            button.className =
+                                "project-suggestion";
+
+
+                            button.setAttribute(
+                                "role",
+                                "option"
+                            );
+
+
+                            button.innerHTML =
+                                highlightMatch(
+                                    project,
+                                    projectInput.value
+                                );
+
+
+                            button.addEventListener(
+                                "click",
+                                function () {
+
+                                    projectInput.value =
+                                        project;
+
+                                    closeSuggestions();
+
+                                }
+                            );
+
+
+                            suggestionsBox.appendChild(
+                                button
+                            );
+
+                        }
+                    );
+
+
+                    suggestionsBox.classList.add(
+                        "show"
+                    );
+
+                }
+
+
+                projectInput.addEventListener(
+                    "input",
+                    function () {
+
+                        showSuggestions();
+
+                    }
+                );
+
+
+                projectInput.addEventListener(
+                    "focus",
+                    function () {
+
+                        if (
+                            projectInput.value.trim()
+                        ) {
+
+                            showSuggestions();
+
+                        }
+
+                    }
+                );
+
+
+                projectInput.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        const buttons =
+                            suggestionsBox.querySelectorAll(
+                                ".project-suggestion"
+                            );
+
+
+                        if (
+                            event.key === "ArrowDown"
+                        ) {
+
+                            if (
+                                !suggestionsBox.classList.contains(
+                                    "show"
+                                )
+                            ) {
+
+                                showSuggestions();
+
+                                return;
+
+                            }
+
+
+                            event.preventDefault();
+
+
+                            if (
+                                buttons.length
+                            ) {
+
+                                activeIndex =
+                                    Math.min(
+                                        activeIndex + 1,
+                                        buttons.length - 1
+                                    );
+
+
+                                setActiveSuggestion(
+                                    activeIndex
+                                );
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        if (
+                            event.key === "ArrowUp"
+                        ) {
+
+                            if (
+                                !suggestionsBox.classList.contains(
+                                    "show"
+                                )
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            event.preventDefault();
+
+
+                            if (
+                                buttons.length
+                            ) {
+
+                                activeIndex =
+                                    Math.max(
+                                        activeIndex - 1,
+                                        0
+                                    );
+
+
+                                setActiveSuggestion(
+                                    activeIndex
+                                );
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        if (
+                            event.key === "Enter"
+                        ) {
+
+                            if (
+                                activeIndex >= 0 &&
+                                buttons[activeIndex]
+                            ) {
+
+                                event.preventDefault();
+
+                                buttons[
+                                    activeIndex
+                                ].click();
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            closeSuggestions();
+
+                        }
+
+                    }
+                );
+
+
+                document.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (
+                            !projectInput.contains(
+                                event.target
+                            )
+                            &&
+                            !suggestionsBox.contains(
+                                event.target
+                            )
+                        ) {
+
+                            closeSuggestions();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           PRINT FINANCIAL STATEMENT
+        ================================================= */
+
+        function printFinancialStatement() {
+
+            const now =
+                new Date();
+
+
+            const formattedDate =
+                now.toLocaleString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+
+            const dateElement =
+                document.getElementById(
+                    "printGeneratedDate"
+                );
+
+
+            const footerDateElement =
+                document.getElementById(
+                    "printGeneratedDateFooter"
+                );
+
+
+            if (dateElement) {
+
+                dateElement.textContent =
+                    formattedDate;
+
+            }
+
+
+            if (footerDateElement) {
+
+                footerDateElement.textContent =
+                    formattedDate;
+
+            }
+
+
+            const form =
+                document.getElementById(
+                    "filterForm"
+                );
+
+
+            let criteria = [];
+
+
+            if (form) {
+
+                const paymentMethod =
+                    form.querySelector(
+                        '[name="payment_method"]'
+                    );
+
+
+                const startDate =
+                    form.querySelector(
+                        '[name="start_date"]'
+                    );
+
+
+                const endDate =
+                    form.querySelector(
+                        '[name="end_date"]'
+                    );
+
+
+                const project =
+                    form.querySelector(
+                        '[name="project"]'
+                    );
+
+
+                const search =
+                    form.querySelector(
+                        '[name="search"]'
+                    );
+
+
+                if (
+                    paymentMethod &&
+                    paymentMethod.value &&
+                    paymentMethod.value !== "All"
+                ) {
+
+                    criteria.push(
+                        "Payment Method: "
+                        + paymentMethod.value
+                    );
+
+                }
+
+
+                if (
+                    startDate &&
+                    startDate.value
+                ) {
+
+                    criteria.push(
+                        "From: "
+                        + formatPrintDate(
+                            startDate.value
+                        )
+                    );
+
+                }
+
+
+                if (
+                    endDate &&
+                    endDate.value
+                ) {
+
+                    criteria.push(
+                        "To: "
+                        + formatPrintDate(
+                            endDate.value
+                        )
+                    );
+
+                }
+
+
+                if (
+                    project &&
+                    project.value
+                ) {
+
+                    criteria.push(
+                        "Project: "
+                        + project.value
+                    );
+
+                }
+
+
+                if (
+                    search &&
+                    search.value.trim()
+                ) {
+
+                    criteria.push(
+                        "Search: "
+                        + search.value.trim()
+                    );
+
+                }
+
+            }
+
+
+            if (criteria.length === 0) {
+
+                criteria.push(
+                    "All Transactions"
+                );
+
+            }
+
+
+            const criteriaElement =
+                document.getElementById(
+                    "printCriteria"
+                );
+
+
+            if (criteriaElement) {
+
+                criteriaElement.textContent =
+                    criteria.join(
+                        "  |  "
+                    );
+
+            }
+
+
+            setTimeout(
+                function () {
+
+                    window.print();
+
+                },
+                100
+            );
+
+        }
+
+
+        /* =================================================
+           FORMAT PRINT DATE
+        ================================================= */
+
+        function formatPrintDate(value) {
+
+            if (!value) {
+
+                return "";
+
+            }
+
+
+            const parts =
+                value.split("-");
+
+
+            if (parts.length !== 3) {
+
+                return value;
+
+            }
+
+
+            return (
+                parts[2]
+                + " "
+                + parts[1]
+                + " "
+                + parts[0]
+            );
+
+        }
+
+
+        /* =================================================
+           CHANGE PAGE SIZE
+        ================================================= */
+
+        function changePageSize(
+            selectedPageSize
+        ) {
+
+            const url =
+                new URL(
+                    window.location.href
+                );
+
+
+            url.searchParams.set(
+                "page_size",
+                selectedPageSize
+            );
+
+
+            url.searchParams.set(
+                "page",
+                "1"
+            );
+
+
+            window.location.href =
+                url.toString();
+
+        }
+
+
+        /* =================================================
+           MOBILE SIDEBAR
+        ================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const mobileMenuButton =
+                    document.getElementById(
+                        "mobileMenuButton"
+                    );
+
+
+                const sidebar =
+                    document.getElementById(
+                        "sidebar"
+                    );
+
+
+                if (
+                    mobileMenuButton &&
+                    sidebar
+                ) {
+
+                    mobileMenuButton.addEventListener(
+                        "click",
+                        function () {
+
+                            sidebar.classList.toggle(
+                                "open"
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

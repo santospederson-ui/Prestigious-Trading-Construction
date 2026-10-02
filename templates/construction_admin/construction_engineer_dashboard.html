@@ -1,0 +1,4516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Engineer Dashboard | Prestigious Trading & Construction
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        :root {
+
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #FDF2F4;
+            --qatar-maroon-hover: #F9E7EC;
+            --qatar-gold: #C5A059;
+
+            --navy-dark: #0F172A;
+            --navy-slate: #1E293B;
+
+            --blue-accent: #2563EB;
+
+            --bg-canvas: #F8FAFC;
+            --card-surface: #FFFFFF;
+
+            --border-subtle: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --border-light: #E2E8F0;
+
+            --text-primary: #0F172A;
+            --text-secondary: #334155;
+            --text-muted: #64748B;
+
+            --shadow-sm:
+                0 1px 3px rgba(15, 23, 42, 0.05);
+
+            --shadow-md:
+                0 4px 14px rgba(15, 23, 42, 0.06);
+
+            --shadow-lg:
+                0 10px 25px rgba(15, 23, 42, 0.08);
+
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+
+            --sidebar-width: 260px;
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            -webkit-font-smoothing: antialiased;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: var(--sidebar-width);
+            height: 100vh;
+
+            background: #FFFFFF;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            border-right:
+                1px solid var(--border-light);
+
+            box-shadow:
+                2px 0 20px rgba(15, 23, 42, 0.03);
+
+            overflow-y: auto;
+
+            transition:
+                .25s cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+
+        .sidebar-brand {
+
+            padding: 20px 18px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            border-bottom:
+                1px solid var(--border-light);
+
+            text-decoration: none;
+
+            background: #FFFFFF;
+        }
+
+
+        .sidebar-logo {
+
+            width: 44px;
+            height: 44px;
+
+            background: #FFFFFF;
+
+            border:
+                1px solid var(--border-light);
+
+            border-radius: 10px;
+
+            padding: 5px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            box-shadow:
+                0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+
+        .sidebar-logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        .sidebar-brand-text {
+            min-width: 0;
+        }
+
+
+        .sidebar-brand-title {
+
+            color: var(--navy-dark);
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            line-height: 1.25;
+        }
+
+
+        .sidebar-brand-subtitle {
+
+            color: var(--qatar-maroon);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-top: 2px;
+        }
+
+
+        .sidebar-user {
+
+            margin:
+                14px 14px 8px;
+
+            padding:
+                12px 14px;
+
+            background:
+                var(--qatar-maroon-light);
+
+            border:
+                1px solid #FAD1D8;
+
+            border-radius:
+                var(--radius-md);
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .sidebar-avatar {
+
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background: #FFFFFF;
+
+            border:
+                1.5px solid #F3AEB9;
+
+            color: var(--qatar-maroon);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+
+            flex-shrink: 0;
+        }
+
+
+        .sidebar-user-info {
+            min-width: 0;
+        }
+
+
+        .sidebar-user-name {
+
+            color: var(--navy-dark);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .sidebar-user-role {
+
+            margin-top: 1px;
+
+            color: var(--qatar-maroon);
+
+            font-size: 10.5px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar-nav {
+
+            padding: 6px 12px;
+
+            flex: 1;
+        }
+
+
+        .sidebar-section-title {
+
+            padding:
+                14px 12px 6px;
+
+            color: #94A3B8;
+
+            font-size: 10.5px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .08em;
+        }
+
+
+        .sidebar-link {
+
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding:
+                11px 14px;
+
+            margin-bottom: 5px;
+
+            border-radius:
+                var(--radius-md);
+
+            text-decoration: none;
+
+            color: var(--text-secondary);
+
+            font-size: 13.5px;
+
+            font-weight: 650;
+
+            border:
+                1px solid transparent;
+
+            transition:
+                all 0.22s ease;
+        }
+
+
+        .sidebar-link-left {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .sidebar-link i {
+
+            width: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            color: #64748B;
+        }
+
+
+        .sidebar-link:hover {
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            border-color:
+                #F8D5DB;
+
+            transform:
+                translateX(4px);
+
+            box-shadow:
+                0 2px 8px rgba(138, 21, 56, 0.06);
+        }
+
+
+        .sidebar-link:hover i {
+            color: var(--qatar-maroon);
+        }
+
+
+        .sidebar-link.active {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--qatar-maroon) 0%,
+                    var(--qatar-maroon-dark) 100%
+                );
+
+            color: #FFFFFF !important;
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 4px 14px rgba(138, 21, 56, 0.30);
+        }
+
+
+        .sidebar-link.active i {
+            color: #FFFFFF !important;
+        }
+
+
+        .sidebar-badge {
+
+            min-width: 22px;
+            height: 22px;
+
+            padding:
+                0 7px;
+
+            border-radius: 20px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #F1F5F9;
+
+            color: #475569;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            border:
+                1px solid var(--border-light);
+        }
+
+
+        .sidebar-link.active .sidebar-badge {
+
+            background:
+                rgba(255,255,255,.22);
+
+            color: #FFFFFF;
+
+            border-color:
+                transparent;
+        }
+
+
+        .sidebar-bottom {
+
+            padding:
+                14px 12px 18px;
+
+            border-top:
+                1px solid var(--border-light);
+        }
+
+
+        .logout-link {
+
+            color: #991B1B !important;
+
+            background: #FEF2F2;
+
+            border:
+                1px solid #FEE2E2;
+        }
+
+
+        .logout-link i {
+            color: #B91C1C !important;
+        }
+
+
+        .logout-link:hover {
+
+            background: #FEE2E2 !important;
+
+            color: #7F1D1D !important;
+
+            border-color:
+                #FECACA !important;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ====================================================== */
+
+        .main-wrapper {
+
+            margin-left:
+                var(--sidebar-width);
+
+            min-height: 100vh;
+        }
+
+
+        .topbar {
+
+            height: 72px;
+
+            background:
+                var(--card-surface);
+
+            border-bottom:
+                1px solid var(--border-subtle);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 32px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            box-shadow:
+                var(--shadow-sm);
+        }
+
+
+        .topbar-title {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .topbar-title-icon {
+
+            width: 40px;
+            height: 40px;
+
+            border-radius:
+                var(--radius-md);
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+
+            border:
+                1px solid #FAD1D8;
+        }
+
+
+        .topbar-title-text {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+        }
+
+
+        .topbar-title-subtext {
+
+            margin-top: 1px;
+
+            font-size: 11.5px;
+
+            color:
+                var(--text-muted);
+        }
+
+
+        .topbar-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .role-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                7px 14px;
+
+            border-radius: 30px;
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            border:
+                1px solid #FAD1D8;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .logout-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            color: #991B1B;
+
+            background: #FEF2F2;
+
+            border:
+                1px solid #FEE2E2;
+
+            padding:
+                7px 14px;
+
+            border-radius:
+                var(--radius-md);
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .logout-btn:hover {
+
+            background: #FEE2E2;
+
+            color: #7F1D1D;
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ====================================================== */
+
+        .container {
+
+            width:
+                min(
+                    1400px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                32px auto 60px;
+        }
+
+
+        .page-heading {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 26px;
+        }
+
+
+        .page-heading-tag {
+
+            display: inline-block;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            color:
+                var(--qatar-maroon);
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .page-heading h1 {
+
+            font-size: 26px;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+        }
+
+
+        .page-heading p {
+
+            margin-top: 6px;
+
+            color:
+                var(--text-secondary);
+
+            font-size: 14px;
+        }
+
+
+        .refresh-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            color:
+                var(--navy-slate);
+
+            background:
+                var(--card-surface);
+
+            border:
+                1px solid var(--border-subtle);
+
+            padding:
+                10px 16px;
+
+            border-radius:
+                var(--radius-md);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            box-shadow:
+                var(--shadow-sm);
+        }
+
+
+        .refresh-btn:hover {
+            background: #F1F5F9;
+        }
+
+
+        /* =====================================================
+           FLASH
+        ====================================================== */
+
+        .flash {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                14px 18px;
+
+            border-radius:
+                var(--radius-md);
+
+            margin-bottom: 24px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            box-shadow:
+                var(--shadow-sm);
+        }
+
+
+        .flash-success {
+
+            background: #F0FDF4;
+
+            color: #166534;
+
+            border:
+                1px solid #BBF7D0;
+        }
+
+
+        .flash-danger {
+
+            background: #FEF2F2;
+
+            color: #991B1B;
+
+            border:
+                1px solid #FECACA;
+        }
+
+
+        .flash-warning {
+
+            background: #FFFBEB;
+
+            color: #92400E;
+
+            border:
+                1px solid #FDE68A;
+        }
+
+
+        .alert {
+            transition:
+                opacity .5s ease,
+                transform .5s ease;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ====================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .stat-card {
+
+            background:
+                var(--card-surface);
+
+            border:
+                1px solid var(--border-subtle);
+
+            border-radius:
+                var(--radius-lg);
+
+            padding:
+                20px 22px;
+
+            box-shadow:
+                var(--shadow-sm);
+
+            position: relative;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition:
+                transform .18s ease,
+                box-shadow .18s ease,
+                border-color .18s ease;
+        }
+
+
+        .stat-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                var(--shadow-md);
+
+            border-color:
+                var(--border-hover);
+        }
+
+
+        .stat-card.active-stat {
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 2px rgba(
+                    138,
+                    21,
+                    56,
+                    .08
+                );
+        }
+
+
+        .stat-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                var(--border-subtle);
+        }
+
+
+        .stat-card.card-warning::before {
+            background: #F59E0B;
+        }
+
+
+        .stat-card.card-danger::before {
+            background: #EF4444;
+        }
+
+
+        .stat-card.card-blue::before {
+            background: #3B82F6;
+        }
+
+
+        .stat-card.card-green::before {
+            background: #22C55E;
+        }
+
+
+        .stat-card.card-navy::before {
+            background: #0F172A;
+        }
+
+
+        .stat-card.card-maroon::before {
+            background: var(--qatar-maroon);
+        }
+
+
+        .stat-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .stat-label {
+
+            color:
+                var(--text-muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .6px;
+
+            font-weight: 800;
+        }
+
+
+        .stat-icon {
+
+            width: 40px;
+            height: 40px;
+
+            border-radius:
+                var(--radius-md);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .card-warning .stat-icon {
+
+            background: #FEF3C7;
+
+            color: #B45309;
+        }
+
+
+        .card-danger .stat-icon {
+
+            background: #FEE2E2;
+
+            color: #B91C1C;
+        }
+
+
+        .card-blue .stat-icon {
+
+            background: #EFF6FF;
+
+            color: #2563EB;
+        }
+
+
+        .card-green .stat-icon {
+
+            background: #F0FDF4;
+
+            color: #166534;
+        }
+
+
+        .card-navy .stat-icon {
+
+            background: #F1F5F9;
+
+            color: #0F172A;
+        }
+
+
+        .card-maroon .stat-icon {
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+        }
+
+
+        .stat-value {
+
+            margin-top: 14px;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+        }
+
+
+        .stat-note {
+
+            margin-top: 8px;
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           CONTENT CARD
+        ====================================================== */
+
+        .content-card {
+
+            background:
+                var(--card-surface);
+
+            border:
+                1px solid var(--border-subtle);
+
+            border-radius:
+                var(--radius-xl);
+
+            box-shadow:
+                var(--shadow-sm);
+
+            overflow: hidden;
+        }
+
+
+        .content-header {
+
+            padding:
+                22px 26px 16px;
+
+            border-bottom:
+                1px solid var(--border-subtle);
+
+            background: #FFFFFF;
+        }
+
+
+        .content-header-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+        }
+
+
+        .content-title {
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+        }
+
+
+        .content-subtitle {
+
+            margin-top: 4px;
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ====================================================== */
+
+        .material-toolbar {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 14px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .material-toolbar-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .record-count {
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-right: 8px;
+
+            white-space: nowrap;
+        }
+
+
+        .filter-btn {
+
+            border:
+                1px solid var(--border-subtle);
+
+            background: #FFFFFF;
+
+            color:
+                var(--text-secondary);
+
+            padding:
+                7px 12px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                all .18s ease;
+
+            white-space: nowrap;
+        }
+
+
+        .filter-btn:hover {
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            border-color:
+                #F8D5DB;
+        }
+
+
+        .filter-btn.active {
+
+            background:
+                var(--qatar-maroon);
+
+            color: #FFFFFF;
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 2px 7px rgba(
+                    138,
+                    21,
+                    56,
+                    .18
+                );
+        }
+
+
+        .material-toolbar-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .entries-label {
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .page-size-select {
+
+            height: 38px;
+
+            min-width: 72px;
+
+            padding:
+                0 30px 0 11px;
+
+            border:
+                1px solid var(--border-subtle);
+
+            border-radius:
+                var(--radius-md);
+
+            background: #F8FAFC;
+
+            color:
+                var(--navy-slate);
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        .page-size-select:focus {
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    138,
+                    21,
+                    56,
+                    .10
+                );
+
+            background: #FFFFFF;
+        }
+
+
+        .search-box {
+
+            position: relative;
+
+            width: 290px;
+        }
+
+
+        .search-box i {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+        }
+
+
+        .search-box input {
+
+            width: 100%;
+
+            height: 40px;
+
+            background: #F8FAFC;
+
+            border:
+                1px solid var(--border-subtle);
+
+            border-radius:
+                var(--radius-md);
+
+            padding:
+                0 14px 0 38px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            color:
+                var(--text-primary);
+
+            outline: none;
+        }
+
+
+        .search-box input:focus {
+
+            background: #FFFFFF;
+
+            border-color:
+                var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    138,
+                    21,
+                    56,
+                    .10
+                );
+        }
+
+
+        /* =====================================================
+           TABLE
+        ====================================================== */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            -webkit-overflow-scrolling:
+                touch;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 1350px;
+
+            border-collapse:
+                separate;
+
+            border-spacing: 0;
+        }
+
+
+        thead th {
+
+            background: #F8FAFC;
+
+            color:
+                var(--text-muted);
+
+            font-size: 11px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing: .6px;
+
+            font-weight: 800;
+
+            text-align: left;
+
+            padding:
+                14px 20px;
+
+            border-bottom:
+                1px solid var(--border-subtle);
+
+            white-space: nowrap;
+        }
+
+
+        tbody td {
+
+            padding:
+                16px 20px;
+
+            border-bottom:
+                1px solid #F1F5F9;
+
+            font-size: 13px;
+
+            color:
+                var(--navy-slate);
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        tbody tr:hover td {
+            background: #F8FAFC;
+        }
+
+
+        .serial-number {
+
+            font-weight: 700;
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+
+            width: 50px;
+        }
+
+
+        .request-number {
+
+            display: inline-block;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+
+            background: #F1F5F9;
+
+            padding:
+                4px 8px;
+
+            border-radius: 6px;
+
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Monaco,
+                Consolas,
+                monospace;
+
+            font-size: 12px;
+
+            border:
+                1px solid var(--border-subtle);
+        }
+
+
+        .project-name {
+
+            font-weight: 700;
+
+            color:
+                var(--navy-dark);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            max-width: 230px;
+        }
+
+
+        .project-name i {
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+
+            flex-shrink: 0;
+        }
+
+
+        .project-name span {
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .requested-by {
+
+            color:
+                var(--text-secondary);
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .date-text {
+
+            color:
+                var(--text-muted);
+
+            white-space: nowrap;
+
+            font-size: 12px;
+
+            font-weight: 500;
+        }
+
+
+        .description-text {
+
+            max-width: 300px;
+
+            color:
+                var(--text-secondary);
+
+            line-height: 1.5;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ====================================================== */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding:
+                6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            letter-spacing: .2px;
+
+            border:
+                1px solid transparent;
+        }
+
+
+        .status-pending {
+
+            background: #FFFBEB;
+
+            color: #B45309;
+
+            border-color: #FDE68A;
+        }
+
+
+        .status-correction {
+
+            background: #FEF2F2;
+
+            color: #B91C1C;
+
+            border-color: #FECACA;
+        }
+
+
+        .status-engineer {
+
+            background: #EFF6FF;
+
+            color: #1D4ED8;
+
+            border-color: #BFDBFE;
+        }
+
+
+        .status-approved {
+
+            background: #F0FDF4;
+
+            color: #166534;
+
+            border-color: #BBF7D0;
+        }
+
+
+        .status-declined {
+
+            background: #FEF2F2;
+
+            color: #991B1B;
+
+            border-color: #FECACA;
+        }
+
+
+        .status-completed {
+
+            background: #F0FDF4;
+
+            color: #166534;
+
+            border-color: #BBF7D0;
+        }
+
+
+        /* =====================================================
+           DOCUMENT
+        ====================================================== */
+
+        .document-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            background: #EFF6FF;
+
+            color: #1D4ED8;
+
+            border:
+                1px solid #DBEAFE;
+
+            padding:
+                7px 12px;
+
+            border-radius:
+                var(--radius-md);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .document-btn:hover {
+
+            background: #DBEAFE;
+
+            color: #1E40AF;
+        }
+
+
+        .no-document {
+
+            color:
+                var(--text-muted);
+
+            font-size: 12px;
+
+            font-style: italic;
+        }
+
+
+        /* =====================================================
+           ACTION
+        ====================================================== */
+
+        .review-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            background:
+                var(--qatar-maroon);
+
+            color: #FFFFFF;
+
+            padding:
+                7px 14px;
+
+            border-radius:
+                var(--radius-md);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 2px 6px rgba(
+                    138,
+                    21,
+                    56,
+                    .20
+                );
+        }
+
+
+        .review-btn:hover {
+
+            background:
+                var(--qatar-maroon-dark);
+
+            color: #FFFFFF;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .view-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            background: #F8FAFC;
+
+            color:
+                var(--navy-slate);
+
+            border:
+                1px solid var(--border-subtle);
+
+            padding:
+                7px 14px;
+
+            border-radius:
+                var(--radius-md);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .view-btn:hover {
+
+            background:
+                var(--qatar-maroon-light);
+
+            color:
+                var(--qatar-maroon);
+
+            border-color:
+                #F8D5DB;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ====================================================== */
+
+        .empty-state {
+
+            padding:
+                70px 20px;
+
+            text-align: center;
+        }
+
+
+        .empty-icon {
+
+            width: 60px;
+            height: 60px;
+
+            margin:
+                0 auto 16px;
+
+            border-radius: 50%;
+
+            background: #F1F5F9;
+
+            color:
+                var(--text-muted);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+
+        .empty-state h3 {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            color:
+                var(--navy-dark);
+        }
+
+
+        .empty-state p {
+
+            margin-top: 6px;
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           PAGINATION
+        ====================================================== */
+
+        .pagination-area {
+
+            padding:
+                16px 26px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 16px;
+
+            border-top:
+                1px solid var(--border-subtle);
+
+            background: #FFFFFF;
+        }
+
+
+        .pagination-info {
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .pagination {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .page-btn {
+
+            min-width: 34px;
+
+            height: 34px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid var(--border-subtle);
+
+            background: #FFFFFF;
+
+            color:
+                var(--navy-slate);
+
+            border-radius:
+                var(--radius-md);
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition:
+                all .15s ease;
+        }
+
+
+        .page-btn:hover:not(:disabled) {
+
+            border-color:
+                var(--qatar-maroon);
+
+            color:
+                var(--qatar-maroon);
+
+            background:
+                var(--qatar-maroon-light);
+        }
+
+
+        .page-btn.active {
+
+            background:
+                var(--qatar-maroon);
+
+            color: #FFFFFF;
+
+            border-color:
+                var(--qatar-maroon);
+        }
+
+
+        .page-btn:disabled {
+
+            opacity: .4;
+
+            cursor: not-allowed;
+        }
+
+
+        .ellipsis {
+
+            padding:
+                0 6px;
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1250px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 1100px) {
+
+            .sidebar {
+                width: 230px;
+            }
+
+
+            .main-wrapper {
+                margin-left: 230px;
+            }
+
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .material-toolbar {
+                align-items: stretch;
+            }
+
+
+            .material-toolbar-left,
+            .material-toolbar-right {
+
+                width: 100%;
+            }
+
+
+            .material-toolbar-right {
+
+                justify-content:
+                    flex-end;
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            :root {
+                --sidebar-width: 0px;
+            }
+
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                overflow: visible;
+            }
+
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+
+            .topbar {
+
+                height: auto;
+
+                min-height: 64px;
+
+                padding:
+                    12px 18px;
+
+                gap: 12px;
+            }
+
+
+            .topbar-title-text {
+                font-size: 13px;
+            }
+
+
+            .topbar-title-subtext {
+                display: none;
+            }
+
+
+            .role-badge {
+                padding: 6px 9px;
+            }
+
+
+            .role-badge i {
+                display: none;
+            }
+
+
+            .logout-btn {
+
+                font-size: 0;
+
+                padding:
+                    6px 9px;
+            }
+
+
+            .logout-btn i {
+                font-size: 13px;
+            }
+
+
+            .container {
+
+                width:
+                    calc(100% - 24px);
+
+                margin:
+                    20px auto 40px;
+            }
+
+
+            .page-heading {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 14px;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+
+                gap: 12px;
+            }
+
+
+            .content-header {
+                padding: 18px;
+            }
+
+
+            .content-header-top {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .material-toolbar {
+
+                flex-direction: column;
+            }
+
+
+            .material-toolbar-left {
+
+                width: 100%;
+
+                overflow-x: auto;
+
+                flex-wrap: nowrap;
+
+                padding-bottom: 4px;
+            }
+
+
+            .material-toolbar-right {
+
+                width: 100%;
+
+                justify-content:
+                    space-between;
+            }
+
+
+            .record-count {
+                display: none;
+            }
+
+
+            .search-box {
+                width: 100%;
+            }
+
+
+            .pagination-area {
+
+                flex-direction: column;
+
+                align-items: center;
+
+                padding: 16px;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .sidebar-brand-title {
+                font-size: 13px;
+            }
+
+
+            .page-heading h1 {
+                font-size: 22px;
+            }
+
+
+            .page-heading p {
+                font-size: 12px;
+            }
+
+
+            .topbar-title-icon {
+
+                width: 34px;
+                height: 34px;
+            }
+
+
+            .topbar-title-text {
+                font-size: 12px;
+            }
+
+
+            .filter-btn {
+
+                padding:
+                    7px 10px;
+
+                font-size: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <a href="#" class="sidebar-brand">
+
+            <div class="sidebar-logo">
+
+                <img
+                    src="{{ url_for('static', filename='images/logo.png') }}"
+                    alt="Prestigious Logo"
+                >
+
+            </div>
+
+            <div class="sidebar-brand-text">
+
+                <div class="sidebar-brand-title">
+                    Prestigious
+                </div>
+
+                <div class="sidebar-brand-subtitle">
+                    Trading & Construction W.L.L.
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <div class="sidebar-user">
+
+            <div class="sidebar-avatar">
+                <i class="fa-solid fa-hard-hat"></i>
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <div class="sidebar-user-name">
+                    Engineer
+                </div>
+
+                <div class="sidebar-user-role">
+                    Engineering Department
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <div class="sidebar-section-title">
+                Main Menu
+            </div>
+
+
+            <a
+                href="{{ url_for('construction_engineer_dashboard') }}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-gauge-high"></i>
+
+                    Engineer Dashboard
+
+                </span>
+
+            </a>
+
+
+            <a
+                href="#materialRequests"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-file-signature"></i>
+
+                    Material Requests
+
+                </span>
+
+                {% if pending_engineer_review > 0 %}
+
+                    <span class="sidebar-badge">
+                        {{ pending_engineer_review }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <div class="sidebar-section-title">
+                Workflow
+            </div>
+
+
+            <a
+                href="#materialRequests"
+                class="sidebar-link sidebar-filter-link"
+                data-sidebar-filter="pending"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    Pending Review
+
+                </span>
+
+                {% if pending_engineer_review > 0 %}
+
+                    <span class="sidebar-badge">
+                        {{ pending_engineer_review }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <a
+                href="#materialRequests"
+                class="sidebar-link sidebar-filter-link"
+                data-sidebar-filter="correction"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Correction Required
+
+                </span>
+
+                {% if correction_required > 0 %}
+
+                    <span class="sidebar-badge">
+                        {{ correction_required }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <a
+                href="#materialRequests"
+                class="sidebar-link sidebar-filter-link"
+                data-sidebar-filter="engineer-approved"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                    Engineer Approved
+
+                </span>
+
+                {% if pending_manager_approval > 0 %}
+
+                    <span class="sidebar-badge">
+                        {{ pending_manager_approval }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <a
+                href="#materialRequests"
+                class="sidebar-link sidebar-filter-link"
+                data-sidebar-filter="manager-approved"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Manager Approved
+
+                </span>
+
+                {% if manager_approved > 0 %}
+
+                    <span class="sidebar-badge">
+                        {{ manager_approved }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{{ url_for('admin_logout') }}"
+                class="sidebar-link logout-link"
+            >
+
+                <span class="sidebar-link-left">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <div class="main-wrapper">
+
+
+        <header class="topbar">
+
+            <div class="topbar-title">
+
+                <div class="topbar-title-icon">
+
+                    <i class="fa-solid fa-hard-hat"></i>
+
+                </div>
+
+                <div>
+
+                    <div class="topbar-title-text">
+                        Engineer Dashboard
+                    </div>
+
+                    <div class="topbar-title-subtext">
+                        Complete Material Request Engineering History
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+
+                    <i class="fa-solid fa-hard-hat"></i>
+
+                    Engineer
+
+                </span>
+
+
+                <a
+                    href="{{ url_for('admin_logout') }}"
+                    class="logout-btn"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <main class="container">
+
+
+            <!-- =================================================
+                 PAGE HEADING
+            ================================================== -->
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span class="page-heading-tag">
+                        Engineering Workflow
+                    </span>
+
+                    <h1>
+                        Engineer Dashboard
+                    </h1>
+
+                    <p>
+                        Review, monitor and track the complete Material Request workflow.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('construction_engineer_dashboard') }}"
+                    class="refresh-btn"
+                >
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                    Refresh
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 FLASH
+            ================================================== -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="flash alert flash-{{ category }}">
+
+                            <i
+                                class="fa-solid
+                                {% if category == 'success' %}
+                                    fa-circle-check
+                                {% elif category == 'danger' %}
+                                    fa-circle-exclamation
+                                {% else %}
+                                    fa-triangle-exclamation
+                                {% endif %}"
+                            ></i>
+
+                            <span>
+                                {{ message }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <section class="stats">
+
+
+                <!-- ALL -->
+
+                <div
+                    class="stat-card card-navy active-stat"
+                    data-stat-filter="all"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            All Requests
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-layer-group"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ total_requests }}
+                    </div>
+
+                    <div class="stat-note">
+                        Complete Material Request history
+                    </div>
+
+                </div>
+
+
+                <!-- PENDING -->
+
+                <div
+                    class="stat-card card-warning"
+                    data-stat-filter="pending"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Pending
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ pending_engineer_review }}
+                    </div>
+
+                    <div class="stat-note">
+                        Awaiting Engineer review
+                    </div>
+
+                </div>
+
+
+                <!-- CORRECTION -->
+
+                <div
+                    class="stat-card card-danger"
+                    data-stat-filter="correction"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Correction Required
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ correction_required }}
+                    </div>
+
+                    <div class="stat-note">
+                        Returned for modifications
+                    </div>
+
+                </div>
+
+
+                <!-- ENGINEER APPROVED -->
+
+                <div
+                    class="stat-card card-blue"
+                    data-stat-filter="engineer-approved"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Engineer Approved
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-user-tie"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ pending_manager_approval }}
+                    </div>
+
+                    <div class="stat-note">
+                        Awaiting Manager approval
+                    </div>
+
+                </div>
+
+
+                <!-- MANAGER APPROVED -->
+
+                <div
+                    class="stat-card card-green"
+                    data-stat-filter="manager-approved"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Manager Approved
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ manager_approved }}
+                    </div>
+
+                    <div class="stat-note">
+                        Manager has approved
+                    </div>
+
+                </div>
+
+
+                <!-- DECLINED -->
+
+                <div
+                    class="stat-card card-danger"
+                    data-stat-filter="declined"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Declined
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-circle-xmark"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ declined_requests }}
+                    </div>
+
+                    <div class="stat-note">
+                        Requests declined
+                    </div>
+
+                </div>
+
+
+                <!-- COMPLETED -->
+
+                <div
+                    class="stat-card card-maroon"
+                    data-stat-filter="completed"
+                >
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Completed
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-flag-checkered"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        {{ completed_requests }}
+                    </div>
+
+                    <div class="stat-note">
+                        Currently marked completed
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 MATERIAL REQUESTS
+            ================================================== -->
+
+            <section
+                class="content-card"
+                id="materialRequests"
+            >
+
+
+                <div class="content-header">
+
+
+                    <div class="content-header-top">
+
+                        <div>
+
+                            <h2 class="content-title">
+                                Material Requests
+                            </h2>
+
+                            <div class="content-subtitle">
+                                Complete request history with the latest available stamped document.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TOOLBAR
+                    ================================================== -->
+
+                    <div class="material-toolbar">
+
+
+                        <div class="material-toolbar-left">
+
+                            <span
+                                class="record-count"
+                                id="materialRecordCount"
+                            >
+                                {{ material_requests|length }}
+                                records
+                            </span>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn active"
+                                data-filter="all"
+                            >
+                                All
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="declined"
+                            >
+                                Declined
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="correction"
+                            >
+                                Correction Required
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="pending"
+                            >
+                                Pending
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="completed"
+                            >
+                                Completed
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="engineer-approved"
+                            >
+                                Engineer Approved
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-btn"
+                                data-filter="manager-approved"
+                            >
+                                Manager Approved
+                            </button>
+
+                        </div>
+
+
+                        <!-- SEARCH + PAGE SIZE -->
+
+                        <div class="material-toolbar-right">
+
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="text"
+                                    id="materialSearch"
+                                    placeholder="Search by request #, project, person, or description..."
+                                    autocomplete="off"
+                                >
+
+                            </div>
+
+
+                            <span class="entries-label">
+                                Entries
+                            </span>
+
+
+                            <select
+                                id="materialPageSize"
+                                class="page-size-select"
+                                aria-label="Entries per page"
+                            >
+
+                                <option
+                                    value="7"
+                                    selected
+                                >
+                                    7
+                                </option>
+
+                                <option value="10">
+                                    10
+                                </option>
+
+                                <option value="20">
+                                    20
+                                </option>
+
+                                <option value="50">
+                                    50
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% if material_requests %}
+
+
+                    <div class="table-wrapper">
+
+                        <table id="requestsTable">
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        S/N
+                                    </th>
+
+                                    <th>
+                                        Request Number
+                                    </th>
+
+                                    <th>
+                                        Project
+                                    </th>
+
+                                    <th>
+                                        Requested By
+                                    </th>
+
+                                    <th>
+                                        Request Date
+                                    </th>
+
+                                    <th>
+                                        Description
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Stamped Document
+                                    </th>
+
+                                    <th style="text-align:right;">
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="requestsBody">
+
+
+                                {% for request in material_requests %}
+
+
+                                    <tr
+                                        class="material-row"
+                                        data-status="{{ (request.status or '')|lower }}"
+                                    >
+
+
+                                        <!-- S/N -->
+
+                                        <td class="serial-number">
+                                            {{ loop.index }}
+                                        </td>
+
+
+                                        <!-- REQUEST NUMBER -->
+
+                                        <td>
+
+                                            <div class="request-number">
+                                                {{ request.request_number }}
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- PROJECT -->
+
+                                        <td>
+
+                                            <div class="project-name">
+
+                                                <i class="fa-regular fa-building"></i>
+
+                                                <span>
+                                                    {{ request.project_name }}
+                                                </span>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- REQUESTED BY -->
+
+                                        <td>
+
+                                            <div class="requested-by">
+                                                {{ request.requested_by_name }}
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- DATE -->
+
+                                        <td>
+
+                                            <div class="date-text">
+
+                                                <i class="fa-regular fa-calendar"></i>
+
+                                                {{ request.request_date }}
+
+                                                {% if request.created_at %}
+
+                                                    <br>
+
+                                                    <span>
+                                                        {{ request.created_at.strftime('%H:%M:%S') }} AST
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- DESCRIPTION -->
+
+                                        <td>
+
+                                            <div class="description-text">
+
+                                                {{ request.description or "—" }}
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- STATUS -->
+
+                                        <td>
+
+
+                                            {% if request.status == "Pending Engineer Review" %}
+
+                                                <span class="status status-pending">
+
+                                                    <i class="fa-solid fa-clock"></i>
+
+                                                    Pending
+
+                                                </span>
+
+
+                                            {% elif request.status == "Engineer Correction Required" %}
+
+                                                <span class="status status-correction">
+
+                                                    <i class="fa-solid fa-rotate-left"></i>
+
+                                                    Correction Required
+
+                                                </span>
+
+
+                                            {% elif request.status == "Pending Manager Approval" %}
+
+                                                <span class="status status-engineer">
+
+                                                    <i class="fa-solid fa-user-tie"></i>
+
+                                                    Engineer Approved
+
+                                                </span>
+
+
+                                            {% elif request.status == "Approved" %}
+
+                                                <span class="status status-approved">
+
+                                                    <i class="fa-solid fa-circle-check"></i>
+
+                                                    Manager Approved
+
+                                                </span>
+
+
+                                            {% elif request.status == "Declined" %}
+
+                                                <span class="status status-declined">
+
+                                                    <i class="fa-solid fa-circle-xmark"></i>
+
+                                                    Declined
+
+                                                </span>
+
+
+                                            {% elif request.status == "Completed" %}
+
+                                                <span class="status status-completed">
+
+                                                    <i class="fa-solid fa-flag-checkered"></i>
+
+                                                    Completed
+
+                                                </span>
+
+
+                                            {% else %}
+
+                                                <span class="status">
+
+                                                    {{ request.status }}
+
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        </td>
+
+
+                                        <!-- STAMPED DOCUMENT -->
+
+                                        <td>
+
+
+                                            {% if request.signed_file_url %}
+
+                                                <a
+                                                    href="{{ request.signed_file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="document-btn"
+                                                >
+
+                                                    <i class="fa-solid fa-file-signature"></i>
+
+                                                    Open Stamped PDF
+
+                                                </a>
+
+                                            {% else %}
+
+                                                <span class="no-document">
+
+                                                    No stamped file
+
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        </td>
+
+
+                                        <!-- ACTION -->
+
+                                        <td style="text-align:right;">
+
+
+                                            {% if request.status in [
+                                                "Pending Engineer Review",
+                                                "Engineer Correction Required"
+                                            ] %}
+
+
+                                                <a
+                                                    href="{{ url_for(
+                                                        'construction_engineer_material_request_review',
+                                                        request_id=request.id
+                                                    ) }}"
+                                                    class="review-btn"
+                                                >
+
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+
+                                                    Review
+
+                                                </a>
+
+
+                                            {% elif request.status == "Pending Manager Approval" %}
+
+
+                                                {% if request.signed_file_url %}
+
+                                                    <a
+                                                        href="{{ request.signed_file_url }}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="view-btn"
+                                                    >
+
+                                                        <i class="fa-solid fa-eye"></i>
+
+                                                        View
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <span class="no-document">
+                                                        No document
+                                                    </span>
+
+                                                {% endif %}
+
+
+                                            {% elif request.status == "Approved" %}
+
+
+                                                {% if request.signed_file_url %}
+
+                                                    <a
+                                                        href="{{ request.signed_file_url }}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="view-btn"
+                                                    >
+
+                                                        <i class="fa-solid fa-eye"></i>
+
+                                                        View
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <span class="no-document">
+                                                        No document
+                                                    </span>
+
+                                                {% endif %}
+
+
+                                            {% elif request.status == "Declined" %}
+
+
+                                                {% if request.signed_file_url %}
+
+                                                    <a
+                                                        href="{{ request.signed_file_url }}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="view-btn"
+                                                    >
+
+                                                        <i class="fa-solid fa-eye"></i>
+
+                                                        View
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <span class="no-document">
+                                                        No document
+                                                    </span>
+
+                                                {% endif %}
+
+
+                                            {% elif request.status == "Completed" %}
+
+
+                                                {% if request.signed_file_url %}
+
+                                                    <a
+                                                        href="{{ request.signed_file_url }}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="view-btn"
+                                                    >
+
+                                                        <i class="fa-solid fa-eye"></i>
+
+                                                        View
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <span class="no-document">
+                                                        No document
+                                                    </span>
+
+                                                {% endif %}
+
+
+                                            {% else %}
+
+                                                <span class="no-document">
+                                                    Processed
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        </td>
+
+                                    </tr>
+
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PAGINATION
+                    ================================================== -->
+
+                    <div class="pagination-area">
+
+
+                        <div
+                            class="pagination-info"
+                            id="materialPaginationInfo"
+                        >
+                            Showing 0 to 0 of 0 entries
+                        </div>
+
+
+                        <div
+                            class="pagination"
+                            id="materialPaginationControls"
+                        ></div>
+
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+
+                            <i class="fa-solid fa-inbox"></i>
+
+                        </div>
+
+
+                        <h3>
+                            No Material Requests
+                        </h3>
+
+
+                        <p>
+                            There are currently no Material Requests in the system.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH / FILTER / PAGINATION
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                const materialBody =
+                    document.getElementById(
+                        "requestsBody"
+                    );
+
+
+                const materialSearch =
+                    document.getElementById(
+                        "materialSearch"
+                    );
+
+
+                const materialPageSize =
+                    document.getElementById(
+                        "materialPageSize"
+                    );
+
+
+                const materialPagination =
+                    document.getElementById(
+                        "materialPaginationControls"
+                    );
+
+
+                const materialPaginationInfo =
+                    document.getElementById(
+                        "materialPaginationInfo"
+                    );
+
+
+                const materialRecordCount =
+                    document.getElementById(
+                        "materialRecordCount"
+                    );
+
+
+                const filterButtons =
+                    document.querySelectorAll(
+                        ".filter-btn"
+                    );
+
+
+                const statCards =
+                    document.querySelectorAll(
+                        ".stat-card[data-stat-filter]"
+                    );
+
+
+                const sidebarFilterLinks =
+                    document.querySelectorAll(
+                        ".sidebar-filter-link"
+                    );
+
+
+                let materialCurrentPage = 1;
+
+
+                let materialCurrentFilter =
+                    "all";
+
+
+                let materialRowsPerPage = 7;
+
+
+                let filteredMaterialRows = [];
+
+
+                /* =================================================
+                   GET ALL ROWS
+                ================================================== */
+
+                function getMaterialRows() {
+
+                    if (!materialBody) {
+                        return [];
+                    }
+
+
+                    return Array.from(
+                        materialBody.querySelectorAll(
+                            ".material-row"
+                        )
+                    );
+
+                }
+
+
+                /* =================================================
+                   STATUS MATCHING
+                ================================================== */
+
+                function statusMatchesFilter(
+                    status,
+                    filter
+                ) {
+
+                    status =
+                        (status || "")
+                        .toLowerCase();
+
+
+                    if (filter === "all") {
+
+                        return true;
+
+                    }
+
+
+                    if (filter === "pending") {
+
+                        return (
+                            status ===
+                            "pending engineer review"
+                        );
+
+                    }
+
+
+                    if (
+                        filter ===
+                        "engineer-approved"
+                    ) {
+
+                        return (
+                            status ===
+                            "pending manager approval"
+                        );
+
+                    }
+
+
+                    if (
+                        filter ===
+                        "manager-approved"
+                    ) {
+
+                        return (
+                            status ===
+                            "approved"
+                        );
+
+                    }
+
+
+                    if (
+                        filter ===
+                        "declined"
+                    ) {
+
+                        return (
+                            status ===
+                            "declined"
+                        );
+
+                    }
+
+
+                    if (
+                        filter ===
+                        "correction"
+                    ) {
+
+                        return (
+                            status ===
+                            "engineer correction required"
+                        );
+
+                    }
+
+
+                    if (
+                        filter ===
+                        "completed"
+                    ) {
+
+                        return (
+                            status ===
+                            "completed"
+                        );
+
+                    }
+
+
+                    return true;
+
+                }
+
+
+                /* =================================================
+                   FILTER + SEARCH
+                ================================================== */
+
+                function filterMaterialRows() {
+
+
+                    const search =
+                        materialSearch
+                            ? materialSearch.value
+                                .trim()
+                                .toLowerCase()
+                            : "";
+
+
+                    const rows =
+                        getMaterialRows();
+
+
+                    filteredMaterialRows =
+                        rows.filter(
+                            function (row) {
+
+
+                                const status =
+                                    row.dataset.status ||
+                                    "";
+
+
+                                const rowText =
+                                    row.innerText
+                                        .toLowerCase();
+
+
+                                const matchesStatus =
+                                    statusMatchesFilter(
+                                        status,
+                                        materialCurrentFilter
+                                    );
+
+
+                                const matchesSearch =
+                                    !search ||
+                                    rowText.includes(
+                                        search
+                                    );
+
+
+                                return (
+                                    matchesStatus &&
+                                    matchesSearch
+                                );
+
+                            }
+                        );
+
+
+                    materialCurrentPage = 1;
+
+
+                    renderMaterialTable();
+
+                }
+
+
+                /* =================================================
+                   RENDER TABLE
+                ================================================== */
+
+                function renderMaterialTable() {
+
+
+                    const rows =
+                        getMaterialRows();
+
+
+                    rows.forEach(
+                        function (row) {
+
+                            row.style.display =
+                                "none";
+
+                        }
+                    );
+
+
+                    const total =
+                        filteredMaterialRows.length;
+
+
+                    const totalPages =
+                        Math.max(
+                            Math.ceil(
+                                total /
+                                materialRowsPerPage
+                            ),
+                            1
+                        );
+
+
+                    if (
+                        materialCurrentPage >
+                        totalPages
+                    ) {
+
+                        materialCurrentPage =
+                            totalPages;
+
+                    }
+
+
+                    const start =
+                        (
+                            materialCurrentPage - 1
+                        ) *
+                        materialRowsPerPage;
+
+
+                    const end =
+                        Math.min(
+                            start +
+                            materialRowsPerPage,
+                            total
+                        );
+
+
+                    filteredMaterialRows
+                        .slice(start, end)
+                        .forEach(
+                            function (
+                                row,
+                                index
+                            ) {
+
+
+                                row.style.display =
+                                    "";
+
+
+                                const serialCell =
+                                    row.querySelector(
+                                        ".serial-number"
+                                    );
+
+
+                                if (serialCell) {
+
+                                    serialCell.textContent =
+                                        start +
+                                        index +
+                                        1;
+
+                                }
+
+                            }
+                        );
+
+
+                    /* PAGINATION INFO */
+
+                    if (total === 0) {
+
+                        materialPaginationInfo.textContent =
+                            "Showing 0 to 0 of 0 entries";
+
+                    }
+
+                    else {
+
+                        materialPaginationInfo.textContent =
+                            "Showing " +
+                            (start + 1) +
+                            " to " +
+                            end +
+                            " of " +
+                            total +
+                            " entries";
+
+                    }
+
+
+                    /* RECORD COUNT */
+
+                    if (materialRecordCount) {
+
+                        materialRecordCount.textContent =
+                            total +
+                            " record" +
+                            (
+                                total === 1
+                                    ? ""
+                                    : "s"
+                            );
+
+                    }
+
+
+                    renderMaterialPagination(
+                        totalPages
+                    );
+
+                }
+
+
+                /* =================================================
+                   PAGINATION
+                ================================================== */
+
+                function renderMaterialPagination(
+                    totalPages
+                ) {
+
+
+                    if (!materialPagination) {
+                        return;
+                    }
+
+
+                    materialPagination.innerHTML =
+                        "";
+
+
+                    if (totalPages <= 1) {
+                        return;
+                    }
+
+
+                    /* PREVIOUS */
+
+                    const previousButton =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    previousButton.className =
+                        "page-btn";
+
+
+                    previousButton.innerHTML =
+                        '<i class="fa-solid fa-chevron-left"></i>';
+
+
+                    previousButton.disabled =
+                        materialCurrentPage === 1;
+
+
+                    previousButton.setAttribute(
+                        "aria-label",
+                        "Previous page"
+                    );
+
+
+                    previousButton.addEventListener(
+                        "click",
+                        function () {
+
+
+                            if (
+                                materialCurrentPage >
+                                1
+                            ) {
+
+                                materialCurrentPage--;
+
+                                renderMaterialTable();
+
+                            }
+
+                        }
+                    );
+
+
+                    materialPagination.appendChild(
+                        previousButton
+                    );
+
+
+                    /* PAGE NUMBERS */
+
+                    const pages =
+                        getMaterialPageNumbers(
+                            materialCurrentPage,
+                            totalPages
+                        );
+
+
+                    pages.forEach(
+                        function (page) {
+
+
+                            if (page === "...") {
+
+
+                                const span =
+                                    document.createElement(
+                                        "span"
+                                    );
+
+
+                                span.className =
+                                    "ellipsis";
+
+
+                                span.textContent =
+                                    "...";
+
+
+                                materialPagination
+                                    .appendChild(span);
+
+
+                                return;
+
+                            }
+
+
+                            const button =
+                                document.createElement(
+                                    "button"
+                                );
+
+
+                            button.className =
+                                "page-btn";
+
+
+                            if (
+                                page ===
+                                materialCurrentPage
+                            ) {
+
+                                button.classList.add(
+                                    "active"
+                                );
+
+                            }
+
+
+                            button.textContent =
+                                page;
+
+
+                            button.addEventListener(
+                                "click",
+                                function () {
+
+
+                                    materialCurrentPage =
+                                        page;
+
+
+                                    renderMaterialTable();
+
+                                }
+                            );
+
+
+                            materialPagination
+                                .appendChild(button);
+
+                        }
+                    );
+
+
+                    /* NEXT */
+
+                    const nextButton =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    nextButton.className =
+                        "page-btn";
+
+
+                    nextButton.innerHTML =
+                        '<i class="fa-solid fa-chevron-right"></i>';
+
+
+                    nextButton.disabled =
+                        materialCurrentPage ===
+                        totalPages;
+
+
+                    nextButton.setAttribute(
+                        "aria-label",
+                        "Next page"
+                    );
+
+
+                    nextButton.addEventListener(
+                        "click",
+                        function () {
+
+
+                            if (
+                                materialCurrentPage <
+                                totalPages
+                            ) {
+
+                                materialCurrentPage++;
+
+                                renderMaterialTable();
+
+                            }
+
+                        }
+                    );
+
+
+                    materialPagination.appendChild(
+                        nextButton
+                    );
+
+                }
+
+
+                /* =================================================
+                   PAGE NUMBER LOGIC
+                ================================================== */
+
+                function getMaterialPageNumbers(
+                    current,
+                    total
+                ) {
+
+
+                    if (total <= 7) {
+
+                        return Array.from(
+                            {
+                                length: total
+                            },
+                            function (_, index) {
+
+                                return index + 1;
+
+                            }
+                        );
+
+                    }
+
+
+                    const pages = [];
+
+
+                    pages.push(1);
+
+
+                    if (current > 4) {
+
+                        pages.push("...");
+
+                    }
+
+
+                    const start =
+                        Math.max(
+                            2,
+                            current - 1
+                        );
+
+
+                    const end =
+                        Math.min(
+                            total - 1,
+                            current + 1
+                        );
+
+
+                    for (
+                        let i = start;
+                        i <= end;
+                        i++
+                    ) {
+
+                        pages.push(i);
+
+                    }
+
+
+                    if (current < total - 3) {
+
+                        pages.push("...");
+
+                    }
+
+
+                    pages.push(total);
+
+
+                    return pages;
+
+                }
+
+
+                /* =================================================
+                   ACTIVATE FILTER
+                ================================================== */
+
+                function activateFilter(
+                    filter
+                ) {
+
+
+                    materialCurrentFilter =
+                        filter || "all";
+
+
+                    filterButtons.forEach(
+                        function (button) {
+
+                            button.classList.toggle(
+                                "active",
+                                (
+                                    button.dataset.filter ===
+                                    materialCurrentFilter
+                                )
+                            );
+
+                        }
+                    );
+
+
+                    statCards.forEach(
+                        function (card) {
+
+                            card.classList.toggle(
+                                "active-stat",
+                                (
+                                    card.dataset.statFilter ===
+                                    materialCurrentFilter
+                                )
+                            );
+
+                        }
+                    );
+
+
+                    filterMaterialRows();
+
+
+                    const section =
+                        document.getElementById(
+                            "materialRequests"
+                        );
+
+
+                    if (section) {
+
+                        section.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+                }
+
+
+                /* =================================================
+                   TOOLBAR FILTER BUTTONS
+                ================================================== */
+
+                filterButtons.forEach(
+                    function (button) {
+
+
+                        button.addEventListener(
+                            "click",
+                            function () {
+
+                                activateFilter(
+                                    button.dataset.filter ||
+                                    "all"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+                /* =================================================
+                   STAT CARD FILTERS
+                ================================================== */
+
+                statCards.forEach(
+                    function (card) {
+
+
+                        card.addEventListener(
+                            "click",
+                            function () {
+
+
+                                activateFilter(
+                                    card.dataset.statFilter ||
+                                    "all"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+                /* =================================================
+                   SIDEBAR FILTERS
+                ================================================== */
+
+                sidebarFilterLinks.forEach(
+                    function (link) {
+
+
+                        link.addEventListener(
+                            "click",
+                            function (event) {
+
+                                event.preventDefault();
+
+
+                                activateFilter(
+                                    link.dataset.sidebarFilter ||
+                                    "all"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+                /* =================================================
+                   SEARCH
+                ================================================== */
+
+                if (materialSearch) {
+
+                    materialSearch.addEventListener(
+                        "input",
+                        function () {
+
+                            filterMaterialRows();
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   PAGE SIZE
+                ================================================== */
+
+                if (materialPageSize) {
+
+                    materialPageSize.addEventListener(
+                        "change",
+                        function () {
+
+
+                            materialRowsPerPage =
+                                parseInt(
+                                    this.value,
+                                    10
+                                ) || 7;
+
+
+                            materialCurrentPage =
+                                1;
+
+
+                            renderMaterialTable();
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   INITIAL RENDER
+                ================================================== */
+
+                filteredMaterialRows =
+                    getMaterialRows();
+
+
+                renderMaterialTable();
+
+
+                /* =================================================
+                   FLASH AUTO DISMISS
+                ================================================== */
+
+                const flashMessages =
+                    document.querySelectorAll(
+                        ".alert"
+                    );
+
+
+                flashMessages.forEach(
+                    function (message) {
+
+
+                        setTimeout(
+                            function () {
+
+
+                                message.style.opacity =
+                                    "0";
+
+
+                                message.style.transform =
+                                    "translateY(-10px)";
+
+
+                                setTimeout(
+                                    function () {
+
+                                        message.remove();
+
+                                    },
+                                    500
+                                );
+
+
+                            },
+                            5000
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

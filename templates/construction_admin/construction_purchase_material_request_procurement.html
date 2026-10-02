@@ -1,0 +1,5489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Material Request Procurement</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            --maroon: #6f1728;
+            --maroon-dark: #4e0f1c;
+            --maroon-light: #8d2940;
+
+            --gold: #c9a227;
+            --gold-light: #e4c65d;
+
+            --green: #16794b;
+            --green-dark: #0f5d39;
+            --green-light: #e7f6ee;
+
+            --cream: #f8f6f1;
+            --paper: #ffffff;
+
+            --text: #252525;
+            --muted: #737373;
+            --border: #e5e1d9;
+
+            --danger: #b42318;
+            --danger-bg: #fff0ef;
+
+            --warning: #9a6700;
+            --warning-bg: #fff8e1;
+
+            --sidebar-width: 265px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+            font-size: 13px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: linear-gradient(
+                180deg,
+                var(--maroon-dark),
+                var(--maroon)
+            );
+            color: white;
+            z-index: 1050;
+            padding: 22px 15px;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 22px;
+            border-bottom: 1px solid rgba(255,255,255,.14);
+            margin-bottom: 20px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .brand-title {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: .2px;
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            opacity: .7;
+            margin-top: 3px;
+        }
+
+        .sidebar-user {
+            padding: 12px;
+            background: rgba(255,255,255,.08);
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .sidebar-user-name {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .sidebar-user-role {
+            font-size: 9px;
+            opacity: .72;
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .sidebar-section {
+            color: rgba(255,255,255,.48);
+            font-size: 8px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 10px 7px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: rgba(255,255,255,.83);
+            padding: 10px 11px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            transition: .2s;
+        }
+
+        .sidebar-link:hover {
+            color: white;
+            background: rgba(255,255,255,.11);
+        }
+
+        .sidebar-link i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 76px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .topbar-title {
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--maroon-dark);
+        }
+
+        .topbar-subtitle {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .content {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 25px 30px 40px;
+        }
+
+        .flash-container {
+            margin-bottom: 18px;
+        }
+
+        .flash-message {
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .card-panel {
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,.025);
+        }
+
+        .panel-header {
+            padding: 18px 21px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .panel-title {
+            margin: 0;
+            color: var(--maroon-dark);
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .panel-title i {
+            margin-right: 7px;
+        }
+
+        .panel-description {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .panel-body {
+            padding: 21px;
+        }
+
+        .approval-banner {
+            display: flex;
+            gap: 13px;
+            padding: 15px 17px;
+            background: var(--green-light);
+            border: 1px solid #c9ead8;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            color: var(--green-dark);
+        }
+
+        .approval-banner.warning {
+            background: var(--warning-bg);
+            border-color: #efdfa9;
+            color: var(--warning);
+        }
+
+        .approval-banner.danger {
+            background: var(--danger-bg);
+            border-color: #f1c4bf;
+            color: var(--danger);
+        }
+
+        .approval-banner i {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .approval-banner-title {
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .approval-banner-text {
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            overflow: hidden;
+        }
+
+        .summary-item {
+            padding: 13px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            min-height: 68px;
+        }
+
+        .summary-label,
+        .record-label {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-size: 8px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .summary-value,
+        .record-value {
+            font-size: 11px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .summary-description {
+            grid-column: span 4;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 8px;
+            border-radius: 30px;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: .3px;
+            white-space: nowrap;
+        }
+
+        .status-green {
+            background: var(--green-light);
+            color: var(--green-dark);
+        }
+
+        .status-gold {
+            background: #fff7d9;
+            color: #826400;
+        }
+
+        .status-gray {
+            background: #f0efed;
+            color: #666;
+        }
+
+        .status-red {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .workflow {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            overflow-x: auto;
+            padding: 5px 5px 8px;
+        }
+
+        .workflow-step {
+            position: relative;
+            flex: 1;
+            min-width: 125px;
+            text-align: center;
+        }
+
+        .workflow-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            background: #ddd;
+            top: 18px;
+            left: calc(50% + 19px);
+            right: calc(-50% + 19px);
+        }
+
+        .workflow-step.completed:not(:last-child)::after {
+            background: var(--green);
+        }
+
+        .workflow-dot {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            position: relative;
+            z-index: 2;
+            font-size: 14px;
+        }
+
+        .workflow-step.active .workflow-dot {
+            border-color: var(--gold);
+            color: #8a6c00;
+            background: #fff9df;
+            box-shadow: 0 0 0 4px rgba(201,162,39,.10);
+        }
+
+        .workflow-step.completed .workflow-dot {
+            border-color: var(--green);
+            color: white;
+            background: var(--green);
+        }
+
+        .workflow-label {
+            font-size: 9px;
+            font-weight: 900;
+            color: #777;
+            line-height: 1.3;
+        }
+
+        .workflow-step.active .workflow-label,
+        .workflow-step.completed .workflow-label {
+            color: var(--text);
+        }
+
+        .record-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            overflow: hidden;
+        }
+
+        .record-item {
+            padding: 13px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            min-height: 65px;
+        }
+
+        .form-section-title {
+            color: var(--maroon-dark);
+            font-size: 11px;
+            font-weight: 900;
+            margin: 22px 0 11px;
+        }
+
+        .form-section-title i {
+            margin-right: 5px;
+        }
+
+        .next-step {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 9px;
+            background: #f7f5ef;
+            border-left: 4px solid var(--gold);
+        }
+
+        .next-step-title {
+            color: var(--maroon-dark);
+            font-size: 11px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .next-step-text {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .package-header {
+            margin-top: 20px;
+            margin-bottom: 11px;
+        }
+
+        .package-title {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--maroon-dark);
+        }
+
+        .package-description {
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.5;
+            margin-top: 3px;
+        }
+
+        .package-checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 9px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .check-item.required-complete {
+            background: var(--green-light);
+            border-color: #c7e8d5;
+        }
+
+        .check-item.required-missing {
+            background: var(--danger-bg);
+            border-color: #efc7c2;
+        }
+
+        .check-icon {
+            width: 27px;
+            height: 27px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e9e7e2;
+            color: #777;
+        }
+
+        .required-complete .check-icon {
+            background: var(--green);
+            color: white;
+        }
+
+        .required-missing .check-icon {
+            background: var(--danger);
+            color: white;
+        }
+
+        .check-name {
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .check-status {
+            font-size: 8px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .upload-box {
+            margin-top: 20px;
+            padding: 17px;
+            border: 1px dashed #cfc8bb;
+            border-radius: 10px;
+            background: #fcfbf8;
+        }
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            color: #555;
+            font-size: 9px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 38px;
+            border: 1px solid #dcd8cf;
+            border-radius: 7px;
+            font-size: 11px;
+            padding: 8px 10px;
+        }
+
+        textarea.form-control {
+            min-height: 82px;
+            resize: vertical;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--maroon-light);
+            box-shadow: 0 0 0 3px rgba(111,23,40,.08);
+        }
+
+        .upload-submit-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .upload-help {
+            color: #777;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .btn-green,
+        .btn-gold,
+        .btn-submit-package,
+        .btn-complete-procurement {
+            border: 0;
+            border-radius: 7px;
+            min-height: 38px;
+            padding: 9px 14px;
+            font-size: 10px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .btn-green {
+            color: white;
+            background: var(--green);
+        }
+
+        .btn-green:hover {
+            background: var(--green-dark);
+            color: white;
+        }
+
+        .btn-gold {
+            color: #4c3c00;
+            background: var(--gold-light);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold);
+        }
+
+        .submit-package {
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 9px;
+            background: #f5f8f6;
+            border: 1px solid #d8e9df;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .submit-package-title {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--green-dark);
+        }
+
+        .submit-package-text {
+            font-size: 9px;
+            color: #777;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .btn-submit-package {
+            color: white;
+            background: var(--green);
+            white-space: nowrap;
+        }
+
+        .btn-submit-package:hover {
+            background: var(--green-dark);
+        }
+
+        .btn-submit-package.disabled,
+        .btn-submit-package:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .final-documents-box {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #d8e9df;
+            background: #f5faf7;
+        }
+
+        .final-documents-title {
+            color: var(--green-dark);
+            font-size: 13px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .final-documents-description {
+            color: #666;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .final-document-notice {
+            margin-top: 13px;
+            padding: 12px;
+            background: white;
+            border: 1px solid #dfe9e3;
+            border-radius: 8px;
+            color: #555;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .final-action-box {
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #e6d8a5;
+            background: #fffaf0;
+        }
+
+        .final-action-title {
+            color: var(--maroon-dark);
+            font-size: 13px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .final-action-description {
+            color: #666;
+            font-size: 9px;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .final-payment-box {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid #d8e9df;
+            border-radius: 10px;
+            background: #f8fbf9;
+        }
+
+        .final-payment-title {
+            color: var(--green-dark);
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .final-payment-description {
+            color: #777;
+            font-size: 9px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .payment-method-card {
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            margin-bottom: 12px;
+        }
+
+        .final-locked {
+            margin-top: 20px;
+            display: flex;
+            gap: 13px;
+            padding: 15px;
+            border-radius: 9px;
+            background: var(--green-light);
+            border: 1px solid #c7e8d5;
+        }
+
+        .final-locked-icon {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--green);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .final-locked-title {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--green-dark);
+        }
+
+        .final-locked-text {
+            color: #555;
+            font-size: 9px;
+            line-height: 1.5;
+            margin-top: 3px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        .document-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        .document-table th {
+            background: #f7f5ef;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-size: 8px;
+            font-weight: 900;
+            padding: 11px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .document-table td {
+            padding: 11px;
+            border-bottom: 1px solid var(--border);
+            font-size: 9px;
+            vertical-align: middle;
+        }
+
+        .document-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .document-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f1ec;
+            border-radius: 6px;
+            margin-right: 8px;
+            color: var(--maroon);
+        }
+
+        .document-name {
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .document-original {
+            font-size: 8px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .btn-view-document {
+            border: 1px solid #d8d4cb;
+            background: white;
+            color: var(--maroon);
+            border-radius: 6px;
+            padding: 6px 9px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .btn-view-document:hover {
+            background: var(--maroon);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 15px;
+            color: #aaa;
+        }
+
+        .empty-state i {
+            font-size: 30px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-title {
+            color: #666;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .empty-state-text {
+            font-size: 9px;
+            margin-top: 4px;
+        }
+
+        .procurement-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .procurement-option {
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 19px;
+            background: #fff;
+        }
+
+        .option-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .option-icon.card {
+            background: #edf4ff;
+            color: #245ea8;
+        }
+
+        .option-icon.quotation {
+            background: #fff7dc;
+            color: #806400;
+        }
+
+        .option-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--maroon-dark);
+        }
+
+        .option-description {
+            font-size: 9px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 5px 0 17px;
+        }
+
+        .timeline {
+            position: relative;
+            margin-left: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 20px 25px;
+            border-left: 1px solid #d9d5cc;
+        }
+
+        .timeline-item:last-child {
+            border-left-color: transparent;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -5px;
+            top: 2px;
+            width: 9px;
+            height: 9px;
+            background: var(--maroon);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #f5e9ec;
+        }
+
+        .timeline-action {
+            color: var(--maroon-dark);
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .timeline-description {
+            color: #555;
+            font-size: 9px;
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+
+        .timeline-meta {
+            color: #999;
+            font-size: 8px;
+            margin-top: 6px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #999;
+            font-size: 8px;
+            padding: 20px 0 5px;
+        }
+
+        .viewer-modal .modal-dialog {
+            max-width: 1000px;
+        }
+
+        .viewer-modal .modal-content {
+            height: 85vh;
+        }
+
+        .viewer-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .mobile-menu {
+            display: none;
+            border: 0;
+            background: transparent;
+            font-size: 22px;
+            color: var(--maroon);
+        }
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+        @media (max-width: 1100px) {
+            .summary-grid,
+            .record-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .summary-description {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .25s;
+            }
+
+            body.sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,.4);
+                z-index: 1040;
+            }
+
+            body.sidebar-open .sidebar-overlay {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .content {
+                padding: 18px 15px 30px;
+            }
+
+            .topbar-subtitle {
+                display: none;
+            }
+
+            .procurement-options,
+            .package-checklist {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid,
+            .record-grid,
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-description {
+                grid-column: span 1;
+            }
+
+            .summary-item,
+            .record-item {
+                border-right: 0;
+            }
+
+            .panel-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .upload-submit-row,
+            .submit-package {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .workflow-step {
+                min-width: 105px;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .topbar-actions,
+            .mobile-menu,
+            .footer,
+            .btn-view-document {
+                display: none !important;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 0;
+                max-width: none;
+            }
+
+            .card-panel {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <i class="bi bi-building"></i>
+        </div>
+
+        <div>
+            <div class="brand-title">
+                Prestigious Trading
+            </div>
+
+            <div class="brand-subtitle">
+                Construction Administration
+            </div>
+        </div>
+    </div>
+
+
+    <div class="sidebar-user">
+
+        <div class="sidebar-user-name">
+            {{ current_user_name or session.get("construction_admin_name", "Purchase Officer") }}
+        </div>
+
+        <div class="sidebar-user-role">
+            {{ current_user_role or session.get("construction_admin_role", "Purchase") }}
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-section">
+        Navigation
+    </div>
+
+
+    <a
+        href="{{ url_for('construction_purchase_dashboard') }}"
+        class="sidebar-link"
+    >
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </a>
+
+
+    <a
+        href="#materialRequestsSection"
+        class="sidebar-link"
+    >
+        <i class="bi bi-file-earmark-text"></i>
+        Material Requests
+    </a>
+
+
+    <a
+        href="{{ url_for('construction_purchase_audit_trail') }}"
+        class="sidebar-link"
+    >
+        <i class="bi bi-shield-check"></i>
+        Audit Trail
+    </a>
+
+
+    <a
+        href="#workflowSection"
+        class="sidebar-link"
+    >
+        <i class="bi bi-diagram-3"></i>
+        Workflow
+    </a>
+
+
+    <a
+        href="#procurementSection"
+        class="sidebar-link"
+    >
+        <i class="bi bi-cart-check"></i>
+        Procurement
+    </a>
+
+
+    <div class="sidebar-section">
+        Account
+    </div>
+
+
+    <a
+        href="{{ url_for('admin_logout') }}"
+        class="sidebar-link"
+    >
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+    </a>
+
+</aside>
+
+
+<main class="main">
+
+    <header class="topbar">
+
+        <div style="display:flex;align-items:center;gap:12px;">
+
+            <button
+                type="button"
+                class="mobile-menu"
+                id="mobileMenuMobile"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div>
+
+                <div class="topbar-title">
+                    Material Request Procurement
+                </div>
+
+                <div class="topbar-subtitle">
+                    Procurement record, approval workflow and completion documents
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <a
+                href="{{ url_for('construction_purchase_dashboard') }}"
+                class="btn btn-sm btn-outline-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back
+            </a>
+
+            <button
+                type="button"
+                class="btn btn-sm btn-outline-secondary"
+                onclick="window.print()"
+            >
+                <i class="bi bi-printer"></i>
+                Print
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <div class="content">
+
+<!-- =====================================================
+     FLASH MESSAGES
+====================================================== -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for category, message in messages %}
+
+                <div
+                    class="alert
+                    {% if category == 'danger' %}
+                        alert-danger
+                    {% elif category == 'warning' %}
+                        alert-warning
+                    {% elif category == 'success' %}
+                        alert-success
+                    {% else %}
+                        alert-info
+                    {% endif %}
+                    flash-message
+                    alert-dismissible
+                    fade
+                    show"
+                    role="alert"
+                >
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+<!-- =====================================================
+     MATERIAL REQUEST SUMMARY
+====================================================== -->
+
+<section
+    class="section"
+    id="materialRequestsSection"
+>
+
+    <div class="card-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2 class="panel-title">
+                    <i class="bi bi-file-earmark-check"></i>
+                    Material Request Summary
+                </h2>
+
+                <p class="panel-description">
+                    Approved Material Request and procurement information.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                {% if material_request.status == "Completed" %}
+
+                    <span class="status-badge status-green">
+                        Completed
+                    </span>
+
+                {% elif procurement and procurement.status == "Pending Final Procurement" %}
+
+                    <span class="status-badge status-gold">
+                        Pending Final Procurement
+                    </span>
+
+                {% elif procurement and procurement.status == "Final Procurement Correction Required" %}
+
+                    <span class="status-badge status-red">
+                        Final Procurement Correction Required
+                    </span>
+
+                {% elif procurement and procurement.status == "Pending Manager Review" %}
+
+                    <span class="status-badge status-gray">
+                        Pending Manager Review
+                    </span>
+
+                {% elif procurement and procurement.status == "Manager Correction Required" %}
+
+                    <span class="status-badge status-red">
+                        Manager Correction Required
+                    </span>
+
+                {% elif procurement and procurement.status == "Pending Account Review" %}
+
+                    <span class="status-badge status-gray">
+                        Pending Account Review
+                    </span>
+
+                {% elif procurement and procurement.status == "Account Correction Required" %}
+
+                    <span class="status-badge status-red">
+                        Account Correction Required
+                    </span>
+
+                {% elif procurement and procurement.status == "Procurement Correction Required" %}
+
+                    <span class="status-badge status-red">
+                        Procurement Correction Required
+                    </span>
+
+                {% elif procurement %}
+
+                    <span class="status-badge status-gray">
+                        {{ procurement.status }}
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge status-gold">
+                        Approved — Ready for Procurement
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+
+            {% if material_request.status == "Completed" %}
+
+                <div class="approval-banner">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    <div>
+
+                        <div class="approval-banner-title">
+                            Procurement Completed
+                        </div>
+
+                        <div class="approval-banner-text">
+                            This Material Request and its procurement
+                            record have been completed.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% elif procurement and procurement.status == "Pending Final Procurement" %}
+
+                <div class="approval-banner warning">
+
+                    <i class="bi bi-cart-check"></i>
+
+                    <div>
+
+                        <div class="approval-banner-title">
+                            Manager Review Completed — Final Procurement Required
+                        </div>
+
+                        <div class="approval-banner-text">
+                            The Manager has approved the procurement package.
+                            Purchase must now proceed to the market, obtain the
+                            materials, return with the final purchase evidence,
+                            and complete the final procurement stage below.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% elif procurement and procurement.status == "Final Procurement Correction Required" %}
+
+                <div class="approval-banner danger">
+
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    <div>
+
+                        <div class="approval-banner-title">
+                            Final Procurement Correction Required
+                        </div>
+
+                        <div class="approval-banner-text">
+
+                            The final procurement submission requires correction.
+                            Review the latest instructions and update the final
+                            procurement information and/or documents before
+                            resubmitting.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% elif procurement and procurement.status == "Pending Account Review" %}
+
+                <div class="approval-banner">
+
+                    <i class="bi bi-calculator"></i>
+
+                    <div>
+
+                        <div class="approval-banner-title">
+                            Procurement Package Submitted to Account
+                        </div>
+
+                        <div class="approval-banner-text">
+                            The procurement package has been submitted
+                            to Account and is awaiting Account review.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% elif procurement and procurement.status == "Pending Manager Review" %}
+
+                <div class="approval-banner">
+
+                    <i class="bi bi-person-check"></i>
+
+                    <div>
+
+                        <div class="approval-banner-title">
+                            Account Review Completed — Manager Review Pending
+                        </div>
+
+                        <div class="approval-banner-text">
+                            The procurement package is currently with
+                            the Manager for review.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Request Number
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.request_number or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Project
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.project_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Requested By
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.requested_by_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Request Date
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.request_date or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Engineer
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.engineer_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Engineer Reviewed
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.engineer_reviewed_at or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Manager
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.manager_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Manager Approved
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.manager_approved_at or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Request Status
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.status or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Procurement Method
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.procurement_method or "Not selected" }}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item summary-description">
+
+                    <div class="summary-label">
+                        Description
+                    </div>
+
+                    <div class="summary-value">
+                        {{ material_request.description or "No description provided." }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WORKFLOW
+====================================================== -->
+
+<section
+    class="section"
+    id="workflowSection"
+>
+
+    <div class="card-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2 class="panel-title">
+                    <i class="bi bi-diagram-3"></i>
+                    Procurement Workflow
+                </h2>
+
+                <p class="panel-description">
+                    Current position of this Material Request.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+            {% set current_status = procurement.status if procurement else "" %}
+
+
+            <div class="workflow">
+
+
+                <!-- MATERIAL REQUEST -->
+
+                <div class="
+                    workflow-step
+                    {% if material_request.status in ['Approved', 'Pending Procurement', 'Completed'] or procurement %}
+                        completed
+                    {% else %}
+                        active
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-file-earmark-check"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Material Request
+                    </div>
+
+                </div>
+
+
+                <!-- PROCUREMENT -->
+
+                <div class="
+                    workflow-step
+                    {% if procurement %}
+                        completed
+                    {% else %}
+                        active
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-cart"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Procurement
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT -->
+
+                <div class="
+                    workflow-step
+                    {% if current_status in [
+                        'Pending Manager Review',
+                        'Manager Correction Required',
+                        'Pending Final Procurement',
+                        'Final Procurement Correction Required',
+                        'Completed'
+                    ] %}
+                        completed
+                    {% elif current_status in [
+                        'Pending Account Review',
+                        'Account Correction Required'
+                    ] %}
+                        active
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-calculator"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Account
+                    </div>
+
+                </div>
+
+
+                <!-- MANAGER -->
+
+                <div class="
+                    workflow-step
+                    {% if current_status in [
+                        'Pending Final Procurement',
+                        'Final Procurement Correction Required',
+                        'Completed'
+                    ] %}
+                        completed
+                    {% elif current_status in [
+                        'Pending Manager Review',
+                        'Manager Correction Required'
+                    ] %}
+                        active
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Manager
+                    </div>
+
+                </div>
+
+
+                <!-- FINAL PROCUREMENT -->
+
+                <div class="
+                    workflow-step
+                    {% if current_status == 'Completed' %}
+                        completed
+                    {% elif current_status in [
+                        'Pending Final Procurement',
+                        'Final Procurement Correction Required'
+                    ] %}
+                        active
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Final Procurement
+                    </div>
+
+                </div>
+
+
+                <!-- COMPLETION -->
+
+                <div class="
+                    workflow-step
+                    {% if current_status == 'Completed' %}
+                        completed
+                    {% endif %}
+                ">
+
+                    <div class="workflow-dot">
+                        <i class="bi bi-check2-all"></i>
+                    </div>
+
+                    <div class="workflow-label">
+                        Completion
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROCUREMENT RECORD
+====================================================== -->
+
+{% if procurement %}
+
+<section
+    class="section"
+    id="procurementSection"
+>
+
+    <div class="card-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2 class="panel-title">
+                    <i class="bi bi-cart-check"></i>
+                    Procurement Record
+                </h2>
+
+                <p class="panel-description">
+                    Procurement details and current workflow status.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                {% if procurement.status == "Completed" %}
+
+                    <span class="status-badge status-green">
+                        Completed
+                    </span>
+
+                {% elif procurement.status == "Pending Final Procurement" %}
+
+                    <span class="status-badge status-gold">
+                        Pending Final Procurement
+                    </span>
+
+                {% elif procurement.status == "Final Procurement Correction Required" %}
+
+                    <span class="status-badge status-red">
+                        Final Procurement Correction Required
+                    </span>
+
+                {% elif procurement.status in [
+                    "Procurement Correction Required",
+                    "Account Correction Required",
+                    "Manager Correction Required"
+                ] %}
+
+                    <span class="status-badge status-red">
+                        {{ procurement.status }}
+                    </span>
+
+                {% elif procurement.status in [
+                    "Pending Account Review",
+                    "Pending Manager Review"
+                ] %}
+
+                    <span class="status-badge status-gray">
+                        {{ procurement.status }}
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge status-gray">
+                        {{ procurement.status or "In Progress" }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+
+            <div class="record-grid">
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Method
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.procurement_method or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Supplier
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.supplier_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Supplier Contact
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.supplier_contact or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Procurement Amount
+                    </div>
+
+                    <div class="record-value">
+
+                        {% if procurement.procurement_amount %}
+
+                            {{ procurement.procurement_amount }}
+                            {{ procurement.currency or "" }}
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Initiated By
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.initiated_by_name or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Initiated At
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.initiated_at or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Current Stage
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.workflow_stage or "—" }}
+                    </div>
+
+                </div>
+
+
+                <div class="record-item">
+
+                    <div class="record-label">
+                        Current Status
+                    </div>
+
+                    <div class="record-value">
+                        {{ procurement.status or "—" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD DETAILS -->
+
+            {% if procurement.procurement_method == "Card" %}
+
+                <div class="form-section-title">
+                    <i class="bi bi-credit-card"></i>
+                    Card Procurement Details
+                </div>
+
+                <div class="record-grid">
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Paid By
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.card_paid_by_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Payment Date / Time
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.card_paid_at or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Payment Reference
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.card_payment_reference or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Payment Date
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.payment_date or "—" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- QUOTATION DETAILS -->
+
+            {% if procurement.procurement_method == "Quotation" %}
+
+                <div class="form-section-title">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Quotation / LPO Details
+                </div>
+
+                <div class="record-grid">
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Quotation Number
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.quotation_number or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Quotation Date
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.quotation_date or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            LPO Number
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.lpo_number or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Submitted By
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.pre_purchase_submitted_by_name or "—" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ACCOUNT REVIEW INFORMATION -->
+
+            {% if procurement.account_reviewed_at
+                  or procurement.account_reviewer_name
+                  or procurement.account_comment %}
+
+                <div class="form-section-title">
+                    <i class="bi bi-calculator"></i>
+                    Account Review
+                </div>
+
+                <div class="record-grid">
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Account Reviewer
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.account_reviewer_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Reviewed At
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.account_reviewed_at or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="record-item"
+                        style="grid-column:span 2;"
+                    >
+
+                        <div class="record-label">
+                            Account Comment
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.account_comment or "—" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- MANAGER REVIEW INFORMATION -->
+
+            {% if procurement.manager_reviewed_at
+                  or procurement.manager_reviewer_name
+                  or procurement.manager_comment %}
+
+                <div class="form-section-title">
+                    <i class="bi bi-person-check"></i>
+                    Manager Review
+                </div>
+
+                <div class="record-grid">
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Manager Reviewer
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.manager_reviewer_name or material_request.manager_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Reviewed At
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.manager_reviewed_at or procurement.manager_signed_at or material_request.manager_approved_at or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="record-item"
+                        style="grid-column:span 2;"
+                    >
+
+                        <div class="record-label">
+                            Manager Comment
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.manager_comment or "—" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- FINAL PROCUREMENT INFORMATION -->
+
+            {% if procurement.final_purchase_started_at
+                  or procurement.final_payment_method
+                  or procurement.final_documents_submitted_at
+                  or procurement.final_card_paid_name
+                  or procurement.cheque_number
+                  or procurement.completed_at %}
+
+                <div class="form-section-title">
+                    <i class="bi bi-cart-check"></i>
+                    Final Procurement Information
+                </div>
+
+                <div class="record-grid">
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Final Procurement Started By
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.final_purchase_started_by_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Final Procurement Started At
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.final_purchase_started_at or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Final Payment Method
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.final_payment_method or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="record-item">
+
+                        <div class="record-label">
+                            Final Documents Submitted
+                        </div>
+
+                        <div class="record-value">
+                            {{ procurement.final_documents_submitted_at or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    {% if procurement.final_payment_method == "Card" %}
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Final Card Paid By
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.final_card_paid_by_name or "—" }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Final Card Payment Date
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.final_card_paid_at or "—" }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Final Card Reference
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.final_card_payment_reference or "—" }}
+                            </div>
+
+                        </div>
+
+                    {% elif procurement.final_payment_method == "Cheque" %}
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Cheque Number
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.cheque_number or "—" }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Cheque Date
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.cheque_date or "—" }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Cheque Bank
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.cheque_bank or "—" }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if procurement.completed_at %}
+
+                        <div class="record-item">
+
+                            <div class="record-label">
+                                Completed At
+                            </div>
+
+                            <div class="record-value">
+                                {{ procurement.completed_at }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- NEXT STEP -->
+
+            <div class="next-step">
+
+                <div class="next-step-title">
+                    <i class="bi bi-arrow-right-circle me-1"></i>
+                    Next Step
+                </div>
+
+
+                <div class="next-step-text">
+
+                    {% if procurement.status == "Pending Procurement Documents" %}
+
+                        Upload all required procurement documents,
+                        then submit the complete package to Account.
+
+                    {% elif procurement.status == "Procurement Correction Required" %}
+
+                        Review the correction instructions and update
+                        the procurement documents before resubmitting
+                        the package to Account.
+
+                    {% elif procurement.status == "Pending Account Review" %}
+
+                        The complete procurement package has been
+                        submitted to Account and is awaiting Account review.
+
+                    {% elif procurement.status == "Account Correction Required" %}
+
+                        Account has requested a correction. Review the
+                        Account comment, make the required correction,
+                        and resubmit the package.
+
+                    {% elif procurement.status == "Pending Manager Review" %}
+
+                        Account has completed its review. The procurement
+                        package is now awaiting Manager review.
+
+                    {% elif procurement.status == "Manager Correction Required" %}
+
+                        Manager has requested a correction. Review the
+                        Manager comment, correct the procurement package,
+                        and resubmit it through the required workflow.
+
+                    {% elif procurement.status == "Pending Final Procurement" %}
+
+                        <strong>
+                            Manager approval is complete.
+                        </strong>
+
+                        Start the final procurement stage, purchase the
+                        materials, upload the final receipt, invoice and
+                        payment evidence, enter the actual Card or Cheque
+                        payment information, and submit the final procurement.
+
+                    {% elif procurement.status == "Final Procurement Correction Required" %}
+
+                        <strong>
+                            Final procurement correction is required.
+                        </strong>
+
+                        Review the final procurement information and
+                        documents, make the required corrections, and
+                        resubmit the final procurement.
+
+                    {% elif procurement.status == "Completed" %}
+
+                        <strong>
+                            Procurement Completed.
+                        </strong>
+
+                        All required workflow stages, payment information
+                        and final procurement documents have been completed.
+
+                    {% else %}
+
+                        Continue the procurement workflow using the
+                        available actions below.
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DOCUMENT PACKAGE
+            ================================================== -->
+
+            <div class="form-section-title">
+
+                <i class="bi bi-folder2-open"></i>
+                Procurement Document Package
+
+            </div>
+
+
+            {% set ns = namespace(
+                card_payment_evidence=false,
+                quotation=false,
+                lpo=false,
+                final_receipt=false,
+                final_invoice=false,
+                final_payment_evidence=false,
+                final_delivery_note=false,
+                final_other=false
+            ) %}
+
+
+            {% for document in procurement_documents %}
+
+                {% if document.document_type == "Card Payment Evidence" %}
+                    {% set ns.card_payment_evidence = true %}
+                {% endif %}
+
+                {% if document.document_type == "Quotation" %}
+                    {% set ns.quotation = true %}
+                {% endif %}
+
+                {% if document.document_type == "LPO" %}
+                    {% set ns.lpo = true %}
+                {% endif %}
+
+
+                {% if document.document_type == "Receipt"
+                      and document.workflow_stage == "Final Procurement" %}
+                    {% set ns.final_receipt = true %}
+                {% endif %}
+
+                {% if document.document_type == "Invoice"
+                      and document.workflow_stage == "Final Procurement" %}
+                    {% set ns.final_invoice = true %}
+                {% endif %}
+
+                {% if document.document_type == "Payment Evidence"
+                      and document.workflow_stage == "Final Procurement" %}
+                    {% set ns.final_payment_evidence = true %}
+                {% endif %}
+
+                {% if document.document_type == "Delivery Note"
+                      and document.workflow_stage == "Final Procurement" %}
+                    {% set ns.final_delivery_note = true %}
+                {% endif %}
+
+                {% if document.document_type == "Other Supporting Document"
+                      and document.workflow_stage == "Final Procurement" %}
+                    {% set ns.final_other = true %}
+                {% endif %}
+
+            {% endfor %}
+
+
+            <!-- PRE-PURCHASE CHECKLIST -->
+
+            {% if procurement.status in [
+                "Pending Procurement Documents",
+                "Procurement Correction Required"
+            ] %}
+
+                <div class="package-header">
+
+                    <div class="package-title">
+                        Required Procurement Documents
+                    </div>
+
+                    <div class="package-description">
+                        Complete the mandatory documents before
+                        submitting the procurement package to Account.
+                    </div>
+
+                </div>
+
+
+                <div class="package-checklist">
+
+                    {% if procurement.procurement_method == "Card" %}
+
+                        <div class="
+                            check-item
+                            {% if ns.card_payment_evidence %}
+                                required-complete
+                            {% else %}
+                                required-missing
+                            {% endif %}
+                        ">
+
+                            <div class="check-icon">
+
+                                {% if ns.card_payment_evidence %}
+                                    <i class="bi bi-check-lg"></i>
+                                {% else %}
+                                    <i class="bi bi-exclamation-lg"></i>
+                                {% endif %}
+
+                            </div>
+
+                            <div>
+
+                                <div class="check-name">
+                                    Card Payment Evidence
+                                    <span style="color:#b42318;">*</span>
+                                </div>
+
+                                <div class="check-status">
+
+                                    {% if ns.card_payment_evidence %}
+                                        Required document uploaded
+                                    {% else %}
+                                        Required document missing
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <div class="check-icon">
+                                <i class="bi bi-plus-lg"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="check-name">
+                                    Additional Supporting Documents
+                                </div>
+
+                                <div class="check-status">
+                                    Optional — upload all relevant records
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="
+                            check-item
+                            {% if ns.quotation %}
+                                required-complete
+                            {% else %}
+                                required-missing
+                            {% endif %}
+                        ">
+
+                            <div class="check-icon">
+
+                                {% if ns.quotation %}
+                                    <i class="bi bi-check-lg"></i>
+                                {% else %}
+                                    <i class="bi bi-exclamation-lg"></i>
+                                {% endif %}
+
+                            </div>
+
+                            <div>
+
+                                <div class="check-name">
+                                    Quotation
+                                    <span style="color:#b42318;">*</span>
+                                </div>
+
+                                <div class="check-status">
+
+                                    {% if ns.quotation %}
+                                        Required document uploaded
+                                    {% else %}
+                                        Required document missing
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="
+                            check-item
+                            {% if ns.lpo %}
+                                required-complete
+                            {% else %}
+                                required-missing
+                            {% endif %}
+                        ">
+
+                            <div class="check-icon">
+
+                                {% if ns.lpo %}
+                                    <i class="bi bi-check-lg"></i>
+                                {% else %}
+                                    <i class="bi bi-exclamation-lg"></i>
+                                {% endif %}
+
+                            </div>
+
+                            <div>
+
+                                <div class="check-name">
+                                    LPO
+                                    <span style="color:#b42318;">*</span>
+                                </div>
+
+                                <div class="check-status">
+
+                                    {% if ns.lpo %}
+                                        Required document uploaded
+                                    {% else %}
+                                        Required document missing
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 FINAL PROCUREMENT STAGE
+            ================================================== -->
+
+            {% if procurement.status in [
+                "Pending Final Procurement",
+                "Final Procurement Correction Required"
+            ] %}
+
+                <div class="final-documents-box">
+
+                    <div class="final-documents-title">
+
+                        <i class="bi bi-cart-check me-1"></i>
+                        Final Procurement
+
+                    </div>
+
+
+                    <div class="final-documents-description">
+
+                        {% if procurement.status == "Pending Final Procurement" %}
+
+                            Manager review has been completed. Purchase must
+                            now proceed with the actual purchase, return with
+                            the final purchase records, and complete the final
+                            procurement stage.
+
+                        {% else %}
+
+                            The previous final procurement submission requires
+                            correction. Review the information below, correct
+                            the required items, and resubmit.
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="final-document-notice">
+
+                        <strong>Required final evidence:</strong>
+
+                        Receipt, Invoice and Payment Evidence.
+
+                        <br>
+
+                        <span style="color:#777;">
+                            Delivery Note and Other Supporting Document are
+                            optional where applicable.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FINAL DOCUMENT CHECKLIST -->
+
+                <div class="package-header">
+
+                    <div class="package-title">
+                        Final Procurement Document Checklist
+                    </div>
+
+                    <div class="package-description">
+                        Upload the actual purchase documents received after
+                        the materials have been purchased.
+                    </div>
+
+                </div>
+
+
+                <div class="package-checklist">
+
+                    <div class="
+                        check-item
+                        {% if ns.final_receipt %}
+                            required-complete
+                        {% else %}
+                            required-missing
+                        {% endif %}
+                    ">
+
+                        <div class="check-icon">
+
+                            {% if ns.final_receipt %}
+                                <i class="bi bi-check-lg"></i>
+                            {% else %}
+                                <i class="bi bi-exclamation-lg"></i>
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+
+                            <div class="check-name">
+                                Final Receipt
+                                <span style="color:#b42318;">*</span>
+                            </div>
+
+                            <div class="check-status">
+
+                                {% if ns.final_receipt %}
+                                    Required document uploaded
+                                {% else %}
+                                    Required document missing
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="
+                        check-item
+                        {% if ns.final_invoice %}
+                            required-complete
+                        {% else %}
+                            required-missing
+                        {% endif %}
+                    ">
+
+                        <div class="check-icon">
+
+                            {% if ns.final_invoice %}
+                                <i class="bi bi-check-lg"></i>
+                            {% else %}
+                                <i class="bi bi-exclamation-lg"></i>
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+
+                            <div class="check-name">
+                                Final Invoice
+                                <span style="color:#b42318;">*</span>
+                            </div>
+
+                            <div class="check-status">
+
+                                {% if ns.final_invoice %}
+                                    Required document uploaded
+                                {% else %}
+                                    Required document missing
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="
+                        check-item
+                        {% if ns.final_payment_evidence %}
+                            required-complete
+                        {% else %}
+                            required-missing
+                        {% endif %}
+                    ">
+
+                        <div class="check-icon">
+
+                            {% if ns.final_payment_evidence %}
+                                <i class="bi bi-check-lg"></i>
+                            {% else %}
+                                <i class="bi bi-exclamation-lg"></i>
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+
+                            <div class="check-name">
+                                Final Payment Evidence
+                                <span style="color:#b42318;">*</span>
+                            </div>
+
+                            <div class="check-status">
+
+                                {% if ns.final_payment_evidence %}
+                                    Required document uploaded
+                                {% else %}
+                                    Required document missing
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="check-item">
+
+                        <div class="check-icon">
+                            <i class="bi bi-plus-lg"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="check-name">
+                                Delivery Note / Other Supporting Document
+                            </div>
+
+                            <div class="check-status">
+                                Optional — upload where applicable
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- START FINAL PROCUREMENT -->
+
+                {% if not procurement.final_purchase_started_at %}
+
+                    <div class="final-action-box">
+
+                        <div class="final-action-title">
+
+                            <i class="bi bi-play-circle me-1"></i>
+                            Start Final Procurement
+
+                        </div>
+
+                        <div class="final-action-description">
+
+                            Before submitting the final procurement, Purchase
+                            must physically proceed with the approved purchase.
+                            Clicking this button records that the final
+                            procurement stage has started.
+
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_material_request_procurement',
+                                request_id=material_request.id
+                            ) }}"
+                            onsubmit="
+                                return confirm(
+                                    'Start the final procurement stage? Confirm that you are proceeding to purchase the approved materials.'
+                                );
+                            "
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="start_final_procurement"
+                            >
+
+
+                            <button
+                                type="submit"
+                                class="btn-green"
+                            >
+
+                                <i class="bi bi-play-circle"></i>
+                                Start Final Procurement
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- FINAL DOCUMENT UPLOAD -->
+
+                {% if procurement.final_purchase_started_at %}
+
+                    <div class="upload-box">
+
+                        <div
+                            style="
+                                margin-bottom:14px;
+                                color:#555;
+                                font-size:12px;
+                                font-weight:800;
+                            "
+                        >
+
+                            <i class="bi bi-cloud-arrow-up me-1"></i>
+                            Upload Final Purchase Document
+
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_procurement_documents_upload',
+                                procurement_id=procurement.id
+                            ) }}"
+                            enctype="multipart/form-data"
+                        >
+
+                            <div class="upload-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_document_type"
+                                    >
+                                        Document Type
+                                    </label>
+
+                                    <select
+                                        name="document_type"
+                                        id="final_document_type"
+                                        class="form-select"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Select document type
+                                        </option>
+
+                                        <option value="Receipt">
+                                            Receipt
+                                        </option>
+
+                                        <option value="Invoice">
+                                            Invoice
+                                        </option>
+
+                                        <option value="Payment Evidence">
+                                            Payment Evidence
+                                        </option>
+
+                                        <option value="Delivery Note">
+                                            Delivery Note
+                                        </option>
+
+                                        <option value="Other Supporting Document">
+                                            Other Supporting Document
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_document_title"
+                                    >
+                                        Document Title
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="document_title"
+                                        id="final_document_title"
+                                        class="form-control"
+                                        placeholder="Optional document title"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="final_document_file"
+                                >
+                                    Select File
+                                </label>
+
+                                <input
+                                    type="file"
+                                    name="document"
+                                    id="final_document_file"
+                                    class="form-control"
+                                    accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff,.doc,.docx,.xls,.xlsx,.csv"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="upload-submit-row">
+
+                                <div class="upload-help">
+
+                                    <i class="bi bi-info-circle me-1"></i>
+
+                                    Upload Receipt, Invoice and Payment
+                                    Evidence before submitting the final
+                                    procurement.
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn-green"
+                                >
+
+                                    <i class="bi bi-upload"></i>
+                                    Upload Final Document
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FINAL PAYMENT AND COMPLETION
+                    ================================================== -->
+
+                    {% set final_documents_ready =
+                        ns.final_receipt
+                        and ns.final_invoice
+                        and ns.final_payment_evidence
+                    %}
+
+
+                    <div class="final-payment-box">
+
+                        <div class="final-payment-title">
+
+                            <i class="bi bi-credit-card-2-front me-1"></i>
+                            Final Payment &amp; Completion
+
+                        </div>
+
+
+                        <div class="final-payment-description">
+
+                            Complete the actual payment information below.
+                            Select whether the final purchase was paid by
+                            company Card or Cheque. The procurement will only
+                            be completed after the required final documents
+                            and payment information have been submitted.
+
+                        </div>
+
+
+                        {% if not final_documents_ready %}
+
+                            <div class="approval-banner warning">
+
+                                <i class="bi bi-exclamation-circle"></i>
+
+                                <div>
+
+                                    <div class="approval-banner-title">
+                                        Final Documents Still Required
+                                    </div>
+
+                                    <div class="approval-banner-text">
+                                        Upload the Final Receipt, Final Invoice
+                                        and Final Payment Evidence before
+                                        submitting the final procurement.
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_material_request_procurement',
+                                request_id=material_request.id
+                            ) }}"
+                            id="finalProcurementForm"
+                            onsubmit="
+                                return confirm(
+                                    'Submit the final procurement and mark this procurement as completed?'
+                                );
+                            "
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="submit_final_documents"
+                            >
+
+
+                            <div class="form-section-title">
+                                <i class="bi bi-building"></i>
+                                Final Supplier / Purchase Details
+                            </div>
+
+
+                            <div class="upload-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_supplier_name"
+                                    >
+                                        Supplier Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="supplier_name"
+                                        id="final_supplier_name"
+                                        value="{{ procurement.supplier_name or '' }}"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_supplier_contact"
+                                    >
+                                        Supplier Contact
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="supplier_contact"
+                                        id="final_supplier_contact"
+                                        value="{{ procurement.supplier_contact or '' }}"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="upload-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_currency"
+                                    >
+                                        Currency
+                                    </label>
+
+                                    <select
+                                        class="form-select"
+                                        name="currency"
+                                        id="final_currency"
+                                        required
+                                    >
+
+                                        <option
+                                            value="QAR"
+                                            {% if procurement.currency == "QAR" %}selected{% endif %}
+                                        >
+                                            QAR
+                                        </option>
+
+                                        <option
+                                            value="USD"
+                                            {% if procurement.currency == "USD" %}selected{% endif %}
+                                        >
+                                            USD
+                                        </option>
+
+                                        <option
+                                            value="EUR"
+                                            {% if procurement.currency == "EUR" %}selected{% endif %}
+                                        >
+                                            EUR
+                                        </option>
+
+                                        <option
+                                            value="GBP"
+                                            {% if procurement.currency == "GBP" %}selected{% endif %}
+                                        >
+                                            GBP
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_procurement_amount"
+                                    >
+                                        Final Purchase Amount
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        min="0"
+                                        class="form-control"
+                                        name="procurement_amount"
+                                        id="final_procurement_amount"
+                                        value="{{ procurement.procurement_amount or '' }}"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-section-title">
+
+                                <i class="bi bi-wallet2"></i>
+                                Final Payment Method
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="final_payment_method"
+                                >
+                                    Payment Method
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    name="final_payment_method"
+                                    id="final_payment_method"
+                                    required
+                                    onchange="toggleFinalPaymentMethod()"
+                                >
+
+                                    <option value="">
+                                        Select payment method
+                                    </option>
+
+                                    <option
+                                        value="Card"
+                                        {% if procurement.final_payment_method == "Card" %}selected{% endif %}
+                                    >
+                                        Card
+                                    </option>
+
+                                    <option
+                                        value="Cheque"
+                                        {% if procurement.final_payment_method == "Cheque" %}selected{% endif %}
+                                    >
+                                        Cheque
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- CARD -->
+
+                            <div
+                                class="payment-method-card"
+                                id="finalCardFields"
+                                style="
+                                    display:none;
+                                "
+                            >
+
+                                <div class="form-section-title" style="margin-top:0;">
+
+                                    <i class="bi bi-credit-card"></i>
+                                    Final Card Payment Details
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="final_card_paid_by_name"
+                                    >
+                                        Person Who Paid With Company Card
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="final_card_paid_by_name"
+                                        id="final_card_paid_by_name"
+                                        value="{{ procurement.final_card_paid_by_name or '' }}"
+                                    >
+
+                                </div>
+
+
+                                <div class="upload-grid">
+
+                                    <div class="form-group">
+
+                                        <label
+                                            class="form-label"
+                                            for="final_card_paid_at"
+                                        >
+                                            Card Payment Date &amp; Time
+                                        </label>
+
+                                        <input
+                                            type="datetime-local"
+                                            class="form-control"
+                                            name="final_card_paid_at"
+                                            id="final_card_paid_at"
+                                            value="{{ procurement.final_card_paid_at or '' }}"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label
+                                            class="form-label"
+                                            for="final_card_payment_reference"
+                                        >
+                                            Payment Reference
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="final_card_payment_reference"
+                                            id="final_card_payment_reference"
+                                            value="{{ procurement.final_card_payment_reference or '' }}"
+                                            placeholder="Optional"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CHEQUE -->
+
+                            <div
+                                class="payment-method-card"
+                                id="finalChequeFields"
+                                style="
+                                    display:none;
+                                "
+                            >
+
+                                <div class="form-section-title" style="margin-top:0;">
+
+                                    <i class="bi bi-receipt"></i>
+                                    Final Cheque Details
+
+                                </div>
+
+
+                                <div class="upload-grid">
+
+                                    <div class="form-group">
+
+                                        <label
+                                            class="form-label"
+                                            for="cheque_number"
+                                        >
+                                            Cheque Number
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="cheque_number"
+                                            id="cheque_number"
+                                            value="{{ procurement.cheque_number or '' }}"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label
+                                            class="form-label"
+                                            for="cheque_date"
+                                        >
+                                            Cheque Date
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            name="cheque_date"
+                                            id="cheque_date"
+                                            value="{{ procurement.cheque_date or '' }}"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="cheque_bank"
+                                    >
+                                        Bank
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="cheque_bank"
+                                        id="cheque_bank"
+                                        value="{{ procurement.cheque_bank or '' }}"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="final_notes"
+                                >
+                                    Final Procurement Notes
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    name="notes"
+                                    id="final_notes"
+                                    placeholder="Optional final procurement notes"
+                                >{{ procurement.notes or "" }}</textarea>
+
+                            </div>
+
+
+                            <div class="submit-package">
+
+                                <div>
+
+                                    <div class="submit-package-title">
+
+                                        <i class="bi bi-check2-circle me-1"></i>
+                                        Submit Final Procurement
+
+                                    </div>
+
+                                    <div class="submit-package-text">
+
+                                        {% if final_documents_ready %}
+
+                                            Required final documents are uploaded.
+                                            Complete the payment information and
+                                            submit the final procurement.
+
+                                        {% else %}
+
+                                            The Final Receipt, Final Invoice and
+                                            Final Payment Evidence are still required.
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn-submit-package{% if not final_documents_ready %} disabled{% endif %}"
+                                    {% if not final_documents_ready %}
+                                        disabled
+                                    {% endif %}
+                                >
+
+                                    <i class="bi bi-check2-circle"></i>
+                                    Submit Final Procurement
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 DOCUMENT UPLOAD AREA — PRE-PURCHASE
+            ================================================== -->
+
+            {% if procurement.status not in [
+                "Pending Account Review",
+                "Pending Manager Review",
+                "Pending Final Procurement",
+                "Final Procurement Correction Required",
+                "Completed"
+            ] %}
+
+                <div class="upload-box">
+
+                    <div
+                        style="
+                            margin-bottom:14px;
+                            color:#555;
+                            font-size:12px;
+                            font-weight:800;
+                        "
+                    >
+
+                        <i class="bi bi-cloud-arrow-up me-1"></i>
+                        Add Document
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'construction_purchase_procurement_documents_upload',
+                            procurement_id=procurement.id
+                        ) }}"
+                        enctype="multipart/form-data"
+                    >
+
+                        <div class="upload-grid">
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="document_type"
+                                >
+                                    Document Type
+                                </label>
+
+                                <select
+                                    name="document_type"
+                                    id="document_type"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select document type
+                                    </option>
+
+
+                                    {% if procurement.procurement_method == "Card" %}
+
+                                        <option value="Card Payment Evidence">
+                                            Card Payment Evidence
+                                        </option>
+
+                                        <option value="Quotation">
+                                            Quotation
+                                        </option>
+
+                                        <option value="Invoice">
+                                            Invoice
+                                        </option>
+
+                                        <option value="Receipt">
+                                            Receipt
+                                        </option>
+
+                                        <option value="Delivery Note">
+                                            Delivery Note
+                                        </option>
+
+                                        <option value="Other Supporting Document">
+                                            Other Supporting Document
+                                        </option>
+
+                                    {% else %}
+
+                                        <option value="Quotation">
+                                            Quotation
+                                        </option>
+
+                                        <option value="LPO">
+                                            LPO
+                                        </option>
+
+                                        <option value="Other Supporting Document">
+                                            Other Supporting Document
+                                        </option>
+
+                                    {% endif %}
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="document_title"
+                                >
+                                    Document Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="document_title"
+                                    id="document_title"
+                                    class="form-control"
+                                    placeholder="Optional document title"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="document_file"
+                            >
+                                Select File
+                            </label>
+
+                            <input
+                                type="file"
+                                name="document"
+                                id="document_file"
+                                class="form-control"
+                                accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff,.doc,.docx,.xls,.xlsx,.csv"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="upload-submit-row">
+
+                            <div class="upload-help">
+
+                                <i class="bi bi-info-circle me-1"></i>
+
+                                Uploading stores the document in
+                                the procurement record. Account is
+                                notified only after the complete
+                                mandatory package is submitted.
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn-green"
+                            >
+
+                                <i class="bi bi-upload"></i>
+                                Upload Document
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- =================================================
+                     SUBMIT TO ACCOUNT
+                ================================================== -->
+
+                {% if procurement.status in [
+                    "Pending Procurement Documents",
+                    "Procurement Correction Required"
+                ] %}
+
+
+                    {% if procurement.procurement_method == "Card" %}
+
+                        {% set package_ready = ns.card_payment_evidence %}
+
+                    {% else %}
+
+                        {% set package_ready = ns.quotation and ns.lpo %}
+
+                    {% endif %}
+
+
+                    <div class="submit-package">
+
+                        <div>
+
+                            <div class="submit-package-title">
+
+                                <i class="bi bi-send-check me-1"></i>
+                                Submit Complete Package to Account
+
+                            </div>
+
+                            <div class="submit-package-text">
+
+                                {% if package_ready %}
+
+                                    All mandatory procurement documents
+                                    are uploaded. The package can now
+                                    be submitted to Account.
+
+                                {% else %}
+
+                                    Complete the mandatory document
+                                    requirements before submitting the
+                                    package to Account.
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_procurement_submit_to_account',
+                                procurement_id=procurement.id
+                            ) }}"
+                            onsubmit="
+                                return confirm(
+                                    'Submit the complete procurement package to Account?'
+                                );
+                            "
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn-submit-package{% if not package_ready %} disabled{% endif %}"
+                                {% if not package_ready %}
+                                    disabled
+                                {% endif %}
+                            >
+
+                                <i class="bi bi-send-check"></i>
+                                Submit Complete Package
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 COMPLETED LOCK
+            ================================================== -->
+
+            {% if procurement.status == "Completed" %}
+
+                <div class="final-locked">
+
+                    <div class="final-locked-icon">
+                        <i class="bi bi-lock-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="final-locked-title">
+                            Procurement Completed
+                        </div>
+
+                        <div class="final-locked-text">
+                            This procurement has been completed.
+                            Purchase can no longer add or modify
+                            procurement documents from this workflow
+                            page. All submitted records remain
+                            available below for reference.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 DOCUMENT HISTORY
+            ================================================== -->
+
+            <div class="form-section-title">
+
+                <i class="bi bi-clock-history"></i>
+                Document History
+
+            </div>
+
+
+            {% if procurement_documents %}
+
+                <div class="table-wrap">
+
+                    <table class="document-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Document</th>
+                                <th>Type</th>
+                                <th>Uploaded By</th>
+                                <th>Uploaded At</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for document in procurement_documents %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <div
+                                            style="
+                                                display:flex;
+                                                align-items:center;
+                                            "
+                                        >
+
+                                            <span class="document-icon">
+
+                                                <i
+                                                    class="
+                                                    {% if document.document_type in ['Quotation', 'LPO'] %}
+                                                        bi bi-file-earmark-text
+                                                    {% elif document.document_type in ['Receipt', 'Invoice'] %}
+                                                        bi bi-receipt
+                                                    {% elif document.document_type in ['Card Payment Evidence', 'Payment Evidence', 'Final Payment Evidence'] %}
+                                                        bi bi-credit-card
+                                                    {% elif document.document_type == 'Delivery Note' %}
+                                                        bi bi-truck
+                                                    {% else %}
+                                                        bi bi-file-earmark
+                                                    {% endif %}
+                                                    "
+                                                ></i>
+
+                                            </span>
+
+
+                                            <div>
+
+                                                <div class="document-name">
+
+                                                    {{ document.document_title or document.original_file_name or "Document" }}
+
+                                                </div>
+
+                                                <div class="document-original">
+
+                                                    {{ document.original_file_name or "Uploaded file" }}
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="status-badge status-gray">
+                                            {{ document.document_type }}
+                                        </span>
+
+
+                                        {% if document.workflow_stage %}
+
+                                            <div
+                                                style="
+                                                    margin-top:4px;
+                                                    color:#999;
+                                                    font-size:8px;
+                                                "
+                                            >
+                                                {{ document.workflow_stage }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ document.uploaded_by_name or "Unknown" }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ document.uploaded_at or "Not specified" }}
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if document.file_url %}
+
+                                            <button
+                                                type="button"
+                                                class="btn-view-document"
+                                                onclick="openDocumentViewer(
+                                                    '{{ document.file_url|e }}',
+                                                    '{{ (document.document_title or document.original_file_name or "Document")|e }}'
+                                                )"
+                                            >
+
+                                                <i class="bi bi-eye"></i>
+                                                View
+
+                                            </button>
+
+                                        {% else %}
+
+                                            <span
+                                                style="
+                                                    color:#aaa;
+                                                    font-size:10px;
+                                                "
+                                            >
+                                                No file
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <i class="bi bi-folder2-open"></i>
+
+                    <div class="empty-state-title">
+                        No Procurement Documents Uploaded
+                    </div>
+
+                    <div class="empty-state-text">
+                        Upload the required procurement documents
+                        using the form above.
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =====================================================
+     START PROCUREMENT
+====================================================== -->
+
+{% if not procurement %}
+
+    <section class="section">
+
+        <div class="card-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2 class="panel-title">
+                        <i class="bi bi-cart-plus"></i>
+                        Start Procurement
+                    </h2>
+
+                    <p class="panel-description">
+                        Select how this approved Material Request
+                        will be procured.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel-body">
+
+                <div class="procurement-options">
+
+
+                    <!-- CARD PROCUREMENT -->
+
+                    <div class="procurement-option">
+
+                        <div class="option-icon card">
+                            <i class="bi bi-credit-card-2-front"></i>
+                        </div>
+
+
+                        <div class="option-title">
+                            Card Payment
+                        </div>
+
+
+                        <div class="option-description">
+                            Use the company card to procure the material.
+                            Record the payment and upload the required
+                            procurement evidence.
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_material_request_procurement',
+                                request_id=material_request.id
+                            ) }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="start_card_procurement"
+                            >
+
+
+                            <div class="form-section-title">
+                                Supplier Details
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_supplier_name"
+                                >
+                                    Supplier Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="supplier_name"
+                                    id="card_supplier_name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_supplier_contact"
+                                >
+                                    Supplier Contact
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="supplier_contact"
+                                    id="card_supplier_contact"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="upload-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="card_currency"
+                                    >
+                                        Currency
+                                    </label>
+
+                                    <select
+                                        class="form-select"
+                                        name="currency"
+                                        id="card_currency"
+                                        required
+                                    >
+
+                                        <option value="QAR">
+                                            QAR
+                                        </option>
+
+                                        <option value="USD">
+                                            USD
+                                        </option>
+
+                                        <option value="EUR">
+                                            EUR
+                                        </option>
+
+                                        <option value="GBP">
+                                            GBP
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="card_amount"
+                                    >
+                                        Amount
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        min="0"
+                                        class="form-control"
+                                        name="procurement_amount"
+                                        id="card_amount"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-section-title">
+                                Card Payment Information
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_paid_by_name"
+                                >
+                                    Person Who Paid With Company Card
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="card_paid_by_name"
+                                    id="card_paid_by_name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_paid_at"
+                                >
+                                    Card Payment Date &amp; Time
+                                </label>
+
+                                <input
+                                    type="datetime-local"
+                                    class="form-control"
+                                    name="card_paid_at"
+                                    id="card_paid_at"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_payment_reference"
+                                >
+                                    Payment Reference
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="card_payment_reference"
+                                    id="card_payment_reference"
+                                    placeholder="Optional"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="card_notes"
+                                >
+                                    Notes
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    name="notes"
+                                    id="card_notes"
+                                    placeholder="Optional procurement notes"
+                                ></textarea>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn-green w-100"
+                            >
+
+                                <i class="bi bi-credit-card-2-front"></i>
+                                Start Card Procurement
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- QUOTATION / LPO -->
+
+                    <div class="procurement-option">
+
+                        <div class="option-icon quotation">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+
+
+                        <div class="option-title">
+                            Quotation / LPO
+                        </div>
+
+
+                        <div class="option-description">
+                            Obtain the supplier quotation, prepare
+                            the LPO manually, upload both documents,
+                            then submit the complete package for
+                            Account review.
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'construction_purchase_material_request_procurement',
+                                request_id=material_request.id
+                            ) }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="start_quotation_procurement"
+                            >
+
+
+                            <div class="form-section-title">
+                                Supplier Details
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="quotation_supplier_name"
+                                >
+                                    Supplier Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="supplier_name"
+                                    id="quotation_supplier_name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="quotation_supplier_contact"
+                                >
+                                    Supplier Contact
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="supplier_contact"
+                                    id="quotation_supplier_contact"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="upload-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="quotation_currency"
+                                    >
+                                        Currency
+                                    </label>
+
+                                    <select
+                                        class="form-select"
+                                        name="currency"
+                                        id="quotation_currency"
+                                        required
+                                    >
+
+                                        <option value="QAR">
+                                            QAR
+                                        </option>
+
+                                        <option value="USD">
+                                            USD
+                                        </option>
+
+                                        <option value="EUR">
+                                            EUR
+                                        </option>
+
+                                        <option value="GBP">
+                                            GBP
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="quotation_amount"
+                                    >
+                                        Amount
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        min="0"
+                                        class="form-control"
+                                        name="procurement_amount"
+                                        id="quotation_amount"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-section-title">
+                                Quotation / LPO Information
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="quotation_number"
+                                >
+                                    Quotation Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="quotation_number"
+                                    id="quotation_number"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="quotation_date"
+                                >
+                                    Quotation Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    name="quotation_date"
+                                    id="quotation_date"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="lpo_number"
+                                >
+                                    LPO Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="lpo_number"
+                                    id="lpo_number"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="quotation_notes"
+                                >
+                                    Notes
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    name="notes"
+                                    id="quotation_notes"
+                                    placeholder="Optional procurement notes"
+                                ></textarea>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn-gold w-100"
+                            >
+
+                                <i class="bi bi-file-earmark-text"></i>
+                                Start Quotation / LPO Procurement
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endif %}
+
+
+<!-- =====================================================
+     AUDIT TRAIL
+====================================================== -->
+
+{% if procurement %}
+
+    <section class="section">
+
+        <div class="card-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2 class="panel-title">
+                        <i class="bi bi-shield-check"></i>
+                        Procurement Audit Trail
+                    </h2>
+
+                    <p class="panel-description">
+                        Complete history of actions performed
+                        on this procurement record.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel-body">
+
+                {% if procurement_actions %}
+
+                    <div class="timeline">
+
+                        {% for action in procurement_actions %}
+
+                            <div class="timeline-item">
+
+                                <div class="timeline-dot"></div>
+
+
+                                <div class="timeline-action">
+                                    {{ action.action_type or "Procurement Action" }}
+                                </div>
+
+
+                                <div class="timeline-description">
+                                    {{ action.action_description or "No description provided." }}
+                                </div>
+
+
+                                <div class="timeline-meta">
+
+                                    <i class="bi bi-person me-1"></i>
+
+                                    {{ action.performed_by_name or "Unknown user" }}
+
+                                    &nbsp;&nbsp;•&nbsp;&nbsp;
+
+                                    <i class="bi bi-clock me-1"></i>
+
+                                    {{ action.performed_at or "Unknown time" }}
+
+
+                                    {% if action.from_status or action.to_status %}
+
+                                        &nbsp;&nbsp;•&nbsp;&nbsp;
+
+                                        Status:
+
+                                        {{ action.from_status or "—" }}
+
+                                        <i class="bi bi-arrow-right mx-1"></i>
+
+                                        {{ action.to_status or "—" }}
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if action.notes %}
+
+                                    <div
+                                        style="
+                                            margin-top:7px;
+                                            padding:8px 10px;
+                                            border-radius:7px;
+                                            background:#f8f6f1;
+                                            color:#777;
+                                            font-size:9px;
+                                        "
+                                    >
+
+                                        <strong>
+                                            Note:
+                                        </strong>
+
+                                        {{ action.notes }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <i class="bi bi-clock-history"></i>
+
+                        <div class="empty-state-title">
+                            No Audit Actions Yet
+                        </div>
+
+                        <div class="empty-state-text">
+                            Procurement actions will appear here
+                            as the workflow progresses.
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endif %}
+
+
+<div class="footer">
+
+    Prestigious Trading &amp; Construction W.L.L.
+    &nbsp;•&nbsp;
+    Construction Administration
+    &nbsp;•&nbsp;
+    Procurement Control System
+
+</div>
+
+</div>
+
+</main>
+
+
+<!-- =========================================================
+     DOCUMENT VIEWER
+========================================================== -->
+
+<div
+    class="modal fade viewer-modal"
+    id="documentViewerModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="documentViewerTitle"
+                >
+                    Document Viewer
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <div class="modal-body p-0">
+
+                <iframe
+                    id="documentViewerFrame"
+                    class="viewer-frame"
+                    src="about:blank"
+                    title="Document Viewer"
+                ></iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script>
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================== */
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const sidebarOverlay =
+        document.getElementById("sidebarOverlay");
+
+    const mobileMenuMobile =
+        document.getElementById("mobileMenuMobile");
+
+
+    function toggleSidebar() {
+
+        document.body.classList.toggle(
+            "sidebar-open"
+        );
+
+    }
+
+
+    if (mobileMenuMobile) {
+
+        mobileMenuMobile.addEventListener(
+            "click",
+            toggleSidebar
+        );
+
+    }
+
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.addEventListener(
+            "click",
+            function () {
+
+                document.body.classList.remove(
+                    "sidebar-open"
+                );
+
+            }
+        );
+
+    }
+
+
+    document.querySelectorAll(
+        ".sidebar-link[href^='#']"
+    ).forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            function () {
+
+                document.body.classList.remove(
+                    "sidebar-open"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       DOCUMENT VIEWER
+    ========================================================== */
+
+    function openDocumentViewer(
+        url,
+        title
+    ) {
+
+        const frame =
+            document.getElementById(
+                "documentViewerFrame"
+            );
+
+        const titleElement =
+            document.getElementById(
+                "documentViewerTitle"
+            );
+
+
+        if (!frame) {
+            return;
+        }
+
+
+        frame.src =
+            url || "about:blank";
+
+
+        if (titleElement) {
+
+            titleElement.textContent =
+                title || "Document Viewer";
+
+        }
+
+
+        const modalElement =
+            document.getElementById(
+                "documentViewerModal"
+            );
+
+
+        if (!modalElement) {
+            return;
+        }
+
+
+        const modal =
+            bootstrap.Modal.getOrCreateInstance(
+                modalElement
+            );
+
+
+        modal.show();
+
+    }
+
+
+    /* =========================================================
+       CLEAR DOCUMENT VIEWER
+    ========================================================== */
+
+    const viewerModal =
+        document.getElementById(
+            "documentViewerModal"
+        );
+
+
+    if (viewerModal) {
+
+        viewerModal.addEventListener(
+            "hidden.bs.modal",
+            function () {
+
+                const frame =
+                    document.getElementById(
+                        "documentViewerFrame"
+                    );
+
+                if (frame) {
+
+                    frame.src =
+                        "about:blank";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       FILE VALIDATION
+    ========================================================== */
+
+    document.querySelectorAll(
+        'input[type="file"]'
+    ).forEach(function (fileInput) {
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    this.files &&
+                    this.files.length
+                        ? this.files[0]
+                        : null;
+
+
+                if (!file) {
+                    return;
+                }
+
+
+                const maxSize =
+                    25 * 1024 * 1024;
+
+
+                if (file.size > maxSize) {
+
+                    alert(
+                        "The selected file is larger than 25 MB. Please choose a smaller file."
+                    );
+
+                    this.value = "";
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       FINAL PAYMENT METHOD
+    ========================================================== */
+
+    function toggleFinalPaymentMethod() {
+
+        const paymentMethod =
+            document.getElementById(
+                "final_payment_method"
+            );
+
+        const cardFields =
+            document.getElementById(
+                "finalCardFields"
+            );
+
+        const chequeFields =
+            document.getElementById(
+                "finalChequeFields"
+            );
+
+
+        if (!paymentMethod) {
+            return;
+        }
+
+
+        const value =
+            paymentMethod.value;
+
+
+        if (cardFields) {
+
+            cardFields.style.display =
+                value === "Card"
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        if (chequeFields) {
+
+            chequeFields.style.display =
+                value === "Cheque"
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        const cardPaidBy =
+            document.getElementById(
+                "final_card_paid_by_name"
+            );
+
+        const cardPaidAt =
+            document.getElementById(
+                "final_card_paid_at"
+            );
+
+        const chequeNumber =
+            document.getElementById(
+                "cheque_number"
+            );
+
+        const chequeDate =
+            document.getElementById(
+                "cheque_date"
+            );
+
+        const chequeBank =
+            document.getElementById(
+                "cheque_bank"
+            );
+
+
+        if (cardPaidBy) {
+
+            cardPaidBy.required =
+                value === "Card";
+
+        }
+
+
+        if (cardPaidAt) {
+
+            cardPaidAt.required =
+                value === "Card";
+
+        }
+
+
+        if (chequeNumber) {
+
+            chequeNumber.required =
+                value === "Cheque";
+
+        }
+
+
+        if (chequeDate) {
+
+            chequeDate.required =
+                value === "Cheque";
+
+        }
+
+
+        if (chequeBank) {
+
+            chequeBank.required =
+                value === "Cheque";
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            toggleFinalPaymentMethod();
+
+        }
+    );
+
+
+    /* =========================================================
+       PREVENT DOUBLE DOCUMENT SUBMISSION
+    ========================================================== */
+
+    document.querySelectorAll(
+        'form[action*="documents_upload"]'
+    ).forEach(function (form) {
+
+        form.addEventListener(
+            "submit",
+            function () {
+
+                const button =
+                    form.querySelector(
+                        'button[type="submit"]'
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                button.disabled = true;
+
+                button.innerHTML =
+                    '<i class="bi bi-hourglass-split"></i> Uploading...';
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       PREVENT DOUBLE PACKAGE SUBMISSION
+    ========================================================== */
+
+    document.querySelectorAll(
+        ".btn-submit-package"
+    ).forEach(function (button) {
+
+        const form =
+            button.closest("form");
+
+
+        if (!form) {
+            return;
+        }
+
+
+        form.addEventListener(
+            "submit",
+            function () {
+
+                if (button.disabled) {
+                    return;
+                }
+
+
+                button.disabled = true;
+
+                button.innerHTML =
+                    '<i class="bi bi-hourglass-split"></i> Submitting...';
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       AUTO DISMISS FLASH MESSAGES
+    ========================================================== */
+
+    setTimeout(
+        function () {
+
+            document.querySelectorAll(
+                ".flash-message"
+            ).forEach(function (element) {
+
+                try {
+
+                    const alert =
+                        bootstrap.Alert.getOrCreateInstance(
+                            element
+                        );
+
+                    alert.close();
+
+                } catch (error) {
+
+                    element.remove();
+
+                }
+
+            });
+
+        },
+        7000
+    );
+
+</script>
+
+
+</body>
+</html>

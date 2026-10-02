@@ -1,2067 +1,1690 @@
-{% extends "base.html" %}
-
-{% block title %}
-Manager Dashboard | Purchase Control
-{% endblock %}
-
-{% block content %}
-
-<style>
-/* =========================================================
-   CLEAN MODERN MANAGER DASHBOARD THEME
-========================================================= */
-:root {
-  --mgr-bg: #f8fafc;
-  --mgr-surface: #ffffff;
-  --mgr-border: #e2e8f0;
-  --mgr-border-hover: #cbd5e1;
-  --mgr-text-dark: #0f172a;
-  --mgr-text-body: #334155;
-  --mgr-text-muted: #64748b;
-
-  --mgr-maroon: #8A1538;
-  --mgr-maroon-dark: #670D28;
-
-  --mgr-emerald: #059669;
-  --mgr-emerald-soft: #ecfdf5;
-  --mgr-emerald-border: #a7f3d0;
-
-  --mgr-amber: #d97706;
-  --mgr-amber-soft: #fffbeb;
-  --mgr-amber-border: #fde68a;
-
-  --mgr-blue: #2563eb;
-  --mgr-blue-soft: #eff6ff;
-  --mgr-blue-border: #bfdbfe;
-
-  --mgr-rose: #dc2626;
-  --mgr-rose-soft: #fef2f2;
-  --mgr-rose-border: #fecaca;
-
-  --mgr-purple: #7c3aed;
-  --mgr-purple-soft: #f5f3ff;
-  --mgr-purple-border: #ddd6fe;
-
-  --mgr-radius: 16px;
-  --mgr-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-  --mgr-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
-}
-
-/* =========================================================
-   PAGE CONTAINER
-========================================================= */
-.manager-page {
-  background: var(--mgr-bg);
-  min-height: calc(100vh - 70px);
-  padding: 32px 36px 60px;
-  color: var(--mgr-text-dark);
-}
-
-/* =========================================================
-   EXECUTIVE HEADER
-========================================================= */
-.manager-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.manager-header-left h1 {
-  margin: 0;
-  font-size: 34px;
-  font-weight: 850;
-  color: var(--mgr-text-dark);
-  letter-spacing: -0.8px;
-  line-height: 1.15;
-}
-
-.manager-header-left p {
-  margin: 6px 0 0;
-  color: var(--mgr-text-muted);
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.manager-user-widget {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--mgr-surface);
-  border: 1px solid var(--mgr-border);
-  border-radius: 14px;
-  padding: 8px 14px 8px 10px;
-  box-shadow: var(--mgr-shadow-sm);
-}
-
-.manager-avatar-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--mgr-maroon) 0%, #500c20 100%);
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 18px;
-  box-shadow: 0 4px 12px rgba(138, 21, 56, 0.25);
-  flex-shrink: 0;
-}
-
-.manager-user-meta {
-  line-height: 1.25;
-}
-
-.manager-user-name {
-  font-size: 14.5px;
-  font-weight: 800;
-  color: var(--mgr-text-dark);
-}
-
-.manager-user-role {
-  font-size: 12px;
-  color: var(--mgr-text-muted);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-.manager-logout-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: var(--mgr-rose-soft);
-  color: var(--mgr-rose);
-  border: 1px solid var(--mgr-rose-border);
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 750;
-  transition: all 0.2s ease;
-}
-
-.manager-logout-btn:hover {
-  background: #fee2e2;
-  color: #991b1b;
-  transform: translateY(-1px);
-}
-
-/* =========================================================
-   SUMMARY / KPI METRIC CARDS
-========================================================= */
-.manager-summary {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 16px;
-  margin-bottom: 34px;
-}
-
-.summary-card {
-  background: var(--mgr-surface);
-  border: 1px solid var(--mgr-border);
-  border-radius: var(--mgr-radius);
-  padding: 20px;
-  box-shadow: var(--mgr-shadow-sm);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-}
-
-.summary-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--mgr-border-hover);
-  box-shadow: var(--mgr-shadow-md);
-}
-
-.summary-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.summary-label {
-  color: var(--mgr-text-muted);
-  font-size: 11.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  line-height: 1.35;
-}
-
-.summary-icon-box {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.summary-pending .summary-icon-box {
-  background: var(--mgr-amber-soft);
-  color: var(--mgr-amber);
-  border: 1px solid var(--mgr-amber-border);
-}
-
-.summary-review .summary-icon-box {
-  background: var(--mgr-blue-soft);
-  color: var(--mgr-blue);
-  border: 1px solid var(--mgr-blue-border);
-}
-
-.summary-approved .summary-icon-box {
-  background: var(--mgr-emerald-soft);
-  color: var(--mgr-emerald);
-  border: 1px solid var(--mgr-emerald-border);
-}
-
-.summary-declined .summary-icon-box {
-  background: var(--mgr-rose-soft);
-  color: var(--mgr-rose);
-  border: 1px solid var(--mgr-rose-border);
-}
-
-.summary-cash-pending .summary-icon-box {
-  background: var(--mgr-amber-soft);
-  color: var(--mgr-amber);
-  border: 1px solid var(--mgr-amber-border);
-}
-
-.summary-cash-released .summary-icon-box {
-  background: var(--mgr-purple-soft);
-  color: var(--mgr-purple);
-  border: 1px solid var(--mgr-purple-border);
-}
-
-.summary-number {
-  font-size: 32px;
-  font-weight: 850;
-  color: var(--mgr-text-dark);
-  margin-top: 14px;
-  line-height: 1;
-  letter-spacing: -0.6px;
-}
-
-.summary-amount {
-  margin-top: 8px;
-  color: var(--mgr-amber);
-  font-size: 11.5px;
-  font-weight: 800;
-  background: var(--mgr-amber-soft);
-  padding: 3px 8px;
-  border-radius: 6px;
-  display: inline-block;
-  align-self: flex-start;
-}
-
-/* =========================================================
-   SECTION PANELS & DEMARCATION HEADINGS
-========================================================= */
-.manager-section {
-  background: var(--mgr-surface);
-  border: 1px solid var(--mgr-border);
-  border-radius: var(--mgr-radius);
-  box-shadow: var(--mgr-shadow-sm);
-  margin-bottom: 34px;
-  overflow: hidden;
-  scroll-margin-top: 90px;
-}
-
-.manager-section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 20px 28px;
-  background: #ffffff;
-  border-bottom: 2px solid #edf2f7;
-}
-
-.manager-section-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.section-icon-pill {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #f1f5f9;
-  color: #1e293b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 19px;
-  flex-shrink: 0;
-}
-
-.manager-section-title h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 850;
-  color: var(--mgr-text-dark);
-  letter-spacing: -0.4px;
-}
-
-.manager-section-title span {
-  display: block;
-  color: var(--mgr-text-muted);
-  font-size: 13.5px;
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-.section-header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* =========================================================
-   INSTANT SEARCH INPUT
-========================================================= */
-.table-search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: #f8fafc;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 30px;
-  padding: 6px 14px;
-  transition: all 0.2s ease;
-  width: 320px;
-  max-width: 100%;
-}
-
-.table-search-box:focus-within {
-  border-color: var(--mgr-maroon);
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(138, 21, 56, 0.12);
-}
-
-.table-search-box i.search-icon {
-  color: var(--mgr-text-muted);
-  font-size: 14px;
-  margin-right: 8px;
-}
-
-.table-search-box input {
-  border: none;
-  background: transparent;
-  width: 100%;
-  font-size: 13px;
-  color: var(--mgr-text-dark);
-  outline: none;
-}
-
-.table-search-box input::placeholder {
-  color: #94a3b8;
-}
-
-.table-search-clear {
-  display: none;
-  background: #e2e8f0;
-  border: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: #475569;
-  cursor: pointer;
-  padding: 0;
-  margin-left: 6px;
-  flex-shrink: 0;
-}
-
-.table-search-clear:hover {
-  background: #cbd5e1;
-  color: #0f172a;
-}
-
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 14px;
-  border-radius: 30px;
-  background: #f1f5f9;
-  color: #334155;
-  font-size: 12.5px;
-  font-weight: 800;
-  border: 1px solid #e2e8f0;
-  white-space: nowrap;
-}
-
-/* =========================================================
-   TABLE ARCHITECTURE
-========================================================= */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.manager-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 1200px;
-  font-size: 13.5px;
-}
-
-.manager-table thead th {
-  background: #0f172a;
-  color: #f8fafc;
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 15px 18px;
-  text-align: left;
-  border-top: none;
-  border-bottom: 2px solid #334155;
-  white-space: nowrap;
-}
-
-.manager-table tbody td {
-  padding: 16px 18px;
-  border-top: 1px solid #e2e8f0 !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  color: var(--mgr-text-body);
-  vertical-align: middle;
-  background-color: #ffffff;
-  transition: background-color 0.15s ease;
-}
-
-.manager-table tbody tr:hover td {
-  background-color: #f8fafc;
-}
-
-.manager-table tbody tr.search-hidden,
-.manager-table tbody tr.page-hidden {
-  display: none !important;
-}
-
-.row-sn-cell {
-  font-weight: 800;
-  color: var(--mgr-text-muted);
-  font-size: 12.5px;
-  width: 50px;
-  text-align: center;
-}
-
-.primary-text {
-  font-weight: 800;
-  color: var(--mgr-text-dark);
-  font-size: 14px;
-  letter-spacing: -0.2px;
-}
-
-.secondary-text {
-  color: var(--mgr-text-muted);
-  font-size: 12px;
-  margin-top: 3px;
-}
-
-.amount {
-  font-weight: 850;
-  color: var(--mgr-text-dark);
-  white-space: nowrap;
-  font-size: 14px;
-}
-
-/* =========================================================
-   PAGINATION CONTROLS
-========================================================= */
-.pagination-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  background: #ffffff;
-  border-top: 1px solid #e2e8f0;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.pagination-info {
-  font-size: 13px;
-  color: var(--mgr-text-muted);
-  font-weight: 600;
-}
-
-.pagination-info strong {
-  color: var(--mgr-text-dark);
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pagination-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid var(--mgr-border);
-  background: #ffffff;
-  color: var(--mgr-text-dark);
-  font-size: 12.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-}
-
-.pagination-btn.active {
-  background: var(--mgr-maroon);
-  color: #ffffff;
-  border-color: var(--mgr-maroon);
-  box-shadow: 0 2px 8px rgba(138, 21, 56, 0.25);
-}
-
-.pagination-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  background: #f8fafc;
-}
-
-.page-size-select-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
-  color: var(--mgr-text-muted);
-  font-weight: 600;
-}
-
-.page-size-select {
-  border: 1px solid var(--mgr-border);
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 12.5px;
-  color: var(--mgr-text-dark);
-  background-color: #ffffff;
-  outline: none;
-  font-weight: 700;
-}
-
-/* =========================================================
-   STATUS BADGES
-========================================================= */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 11.5px;
-  font-weight: 750;
-  white-space: nowrap;
-}
-
-.status-pending {
-  background: var(--mgr-amber-soft);
-  color: var(--mgr-amber);
-  border: 1px solid var(--mgr-amber-border);
-}
-
-.status-review {
-  background: var(--mgr-blue-soft);
-  color: var(--mgr-blue);
-  border: 1px solid var(--mgr-blue-border);
-}
-
-.status-approved {
-  background: var(--mgr-emerald-soft);
-  color: var(--mgr-emerald);
-  border: 1px solid var(--mgr-emerald-border);
-}
-
-.status-declined {
-  background: var(--mgr-rose-soft);
-  color: var(--mgr-rose);
-  border: 1px solid var(--mgr-rose-border);
-}
-
-.status-other {
-  background: #f1f5f9;
-  color: #475569;
-  border: 1px solid #e2e8f0;
-}
-
-.cash-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 11.5px;
-  font-weight: 750;
-  white-space: nowrap;
-}
-
-.cash-awaiting {
-  background: var(--mgr-amber-soft);
-  color: var(--mgr-amber);
-  border: 1px solid var(--mgr-amber-border);
-}
-
-.cash-released {
-  background: var(--mgr-emerald-soft);
-  color: var(--mgr-emerald);
-  border: 1px solid var(--mgr-emerald-border);
-}
-
-.cash-release-info {
-  margin-top: 5px;
-  color: var(--mgr-text-muted);
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.cash-release-info strong {
-  color: #334155;
-}
-
-/* =========================================================
-   DOCUMENT STACK AREA
-========================================================= */
-.document-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 210px;
-}
-
-.document-label {
-  display: block;
-  color: var(--mgr-text-muted);
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-
-.original-document {
-  padding-top: 8px;
-  border-top: 1px dashed #e2e8f0;
-}
-
-.finalized-document {
-  padding: 10px 12px;
-  border: 1px solid var(--mgr-border);
-  border-radius: 10px;
-  background: #f8fafc;
-}
-
-.finalized-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 7px;
-  font-size: 10.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-
-.finalized-badge-approved {
-  color: var(--mgr-emerald);
-}
-
-.finalized-badge-declined {
-  color: var(--mgr-rose);
-}
-
-.finalized-badge-review {
-  color: var(--mgr-amber);
-}
-
-.finalized-date {
-  margin-top: 6px;
-  color: #64748b;
-  font-size: 10.5px;
-  font-weight: 600;
-}
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-.manager-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.manager-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: none;
-  text-decoration: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  font-size: 12.5px;
-  font-weight: 750;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-view {
-  background: #f1f5f9;
-  color: #334155;
-  border: 1px solid var(--mgr-border);
-}
-
-.btn-view:hover {
-  background: #e2e8f0;
-  color: var(--mgr-text-dark);
-}
-
-.btn-review {
-  background: var(--mgr-maroon);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(138, 21, 56, 0.25);
-}
-
-.btn-review:hover {
-  background: var(--mgr-maroon-dark);
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.btn-approved {
-  background: var(--mgr-emerald-soft);
-  color: var(--mgr-emerald);
-  border: 1px solid var(--mgr-emerald-border);
-  cursor: default;
-}
-
-.btn-declined {
-  background: var(--mgr-rose-soft);
-  color: var(--mgr-rose);
-  border: 1px solid var(--mgr-rose-border);
-  cursor: default;
-}
-
-.btn-final-approved {
-  background: var(--mgr-emerald);
-  color: #ffffff;
-  border: none;
-}
-
-.btn-final-approved:hover {
-  background: #047857;
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.btn-final-declined {
-  background: var(--mgr-rose);
-  color: #ffffff;
-  border: none;
-}
-
-.btn-final-declined:hover {
-  background: #b91c1c;
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.decision-info {
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--mgr-text-muted);
-  font-weight: 600;
-}
-
-.comment-preview {
-  max-width: 240px;
-  color: var(--mgr-text-body);
-  font-size: 12.5px;
-  line-height: 1.5;
-}
-
-/* =========================================================
-   EMPTY STATE
-========================================================= */
-.empty-state {
-  padding: 56px 20px;
-  text-align: center;
-  color: var(--mgr-text-muted);
-}
-
-.empty-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 14px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f1f5f9;
-  color: #94a3b8;
-  font-size: 24px;
-}
-
-.empty-state h3 {
-  margin: 0 0 4px;
-  color: var(--mgr-text-dark);
-  font-size: 16px;
-  font-weight: 800;
-}
-
-.empty-state p {
-  margin: 0;
-  font-size: 13.5px;
-}
-
-.no-match-row td {
-  text-align: center;
-  padding: 40px 20px !important;
-  color: var(--mgr-text-muted);
-  font-size: 14px;
-  background-color: #fafbfc !important;
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media (max-width: 1400px) {
-  .manager-summary {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 992px) {
-  .manager-summary {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .manager-page {
-    padding: 22px 18px;
-  }
-
-  .manager-header-left h1 {
-    font-size: 28px;
-  }
-
-  .manager-section-title h2 {
-    font-size: 20px;
-  }
-
-  .table-search-box {
-    width: 100%;
-  }
-}
-
-@media (max-width: 640px) {
-  .manager-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .manager-user-widget {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .manager-summary {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .pagination-footer {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-</style>
-
-<div class="manager-page">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manager Dashboard | Prestigious Trading & Construction W.L.L.</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+        :root {
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #FDF2F4;
+            --qatar-maroon-hover: #F9E7EC;
+            --qatar-gold: #C5A059;
+
+            --navy-dark: #0F172A;
+            --navy-slate: #1E293B;
+
+            --bg-canvas: #F8FAFC;
+            --card-surface: #FFFFFF;
+
+            --border-light: #E2E8F0;
+            --border-subtle: #CBD5E1;
+
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.08);
+
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: #FFFFFF;
+            color: var(--text-primary);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-light);
+            box-shadow: 2px 0 20px rgba(15, 23, 42, 0.03);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar-header {
+            padding: 22px 20px;
+            border-bottom: 1px solid var(--border-light);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #FFFFFF;
+        }
+
+        .sidebar-header .logo-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(
+                135deg,
+                var(--qatar-maroon) 0%,
+                var(--qatar-maroon-dark) 100%
+            );
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(138, 21, 56, 0.25);
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-header:hover .logo-icon {
+            transform: scale(1.04);
+        }
+
+        .sidebar-header-text {
+            min-width: 0;
+        }
+
+        .sidebar-header h2 {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+        }
+
+        .sidebar-header span {
+            display: block;
+            font-size: 11px;
+            color: var(--qatar-maroon);
+            font-weight: 700;
+            margin-top: 2px;
+            letter-spacing: 0.2px;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 14px 12px;
+            overflow-y: auto;
+        }
+
+        .menu-section-title {
+            font-size: 10.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: #94A3B8;
+            padding: 12px 14px 6px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 11px 14px;
+            margin-bottom: 5px;
+            border-radius: var(--radius-md);
+            font-size: 13.5px;
+            font-weight: 650;
+            border: 1px solid transparent;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar-menu a i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748B;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+            border-color: #F8D5DB;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(138, 21, 56, 0.06);
+        }
+
+        .sidebar-menu a:hover i {
+            color: var(--qatar-maroon);
+            transform: scale(1.1);
+        }
+
+        .sidebar-menu a.active {
+            background: linear-gradient(
+                135deg,
+                var(--qatar-maroon) 0%,
+                var(--qatar-maroon-dark) 100%
+            );
+            color: #FFFFFF !important;
+            border-color: var(--qatar-maroon);
+            box-shadow: 0 4px 14px rgba(138, 21, 56, 0.30);
+            transform: none;
+        }
+
+        .sidebar-menu a.active i {
+            color: #FFFFFF !important;
+            transform: none;
+        }
+
+        .sidebar-footer {
+            padding: 14px 12px 18px;
+            border-top: 1px solid var(--border-light);
+            background: #FFFFFF;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #991B1B !important;
+            background: #FEF2F2;
+            border: 1px solid #FEE2E2;
+            transition: all 0.22s ease;
+        }
+
+        .logout-link i {
+            color: #B91C1C !important;
+            width: 18px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .logout-link:hover {
+            background: #FEE2E2 !important;
+            color: #7F1D1D !important;
+            border-color: #FECACA !important;
+            transform: translateX(4px);
+        }
+
+        .logout-link:hover i {
+            transform: scale(1.1);
+        }
+
+        /* =====================================================
+           MOBILE HEADER
+        ===================================================== */
+
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--navy-dark);
+            z-index: 1100;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mobile-header button {
+            background: none;
+            border: none;
+            color: var(--qatar-maroon);
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 14px;
+        }
+
+        .mobile-header span {
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 999;
+        }
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 32px 36px 60px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .page-header-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--qatar-maroon);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+
+        .page-header h1 {
+            color: var(--navy-dark);
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            padding: 20px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            border-top: 3px solid var(--qatar-maroon);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-subtle);
+        }
+
+        .summary-icon {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border-radius: var(--radius-md);
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 1px solid #FAD1D8;
+        }
+
+        .summary-content {
+            min-width: 0;
+        }
+
+        .summary-content h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            line-height: 1;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .summary-content p {
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* =====================================================
+           DASHBOARD CARD
+        ===================================================== */
+
+        .dashboard-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .card-header {
+            padding: 22px 26px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #FFFFFF;
+        }
+
+        .card-header h2 {
+            color: var(--navy-dark);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+        }
+
+        .card-header p {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        /* =====================================================
+           SECTION TITLE ICON
+        ===================================================== */
+
+        .section-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--qatar-maroon-light);
+            border: 1px solid #FAD1D8;
+            color: var(--qatar-maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .toolbar {
+            padding: 16px 24px;
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .toolbar-top {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 260px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 0 14px 0 38px;
+            outline: none;
+            font-size: 13px;
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            background: #FFFFFF;
+            border-color: var(--qatar-maroon);
+            box-shadow: 0 0 0 3px rgba(138, 21, 56, 0.08);
+        }
+
+        .page-size {
+            height: 40px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 0 12px;
+            background: var(--bg-canvas);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .page-size:focus {
+            border-color: var(--qatar-maroon);
+        }
+
+        /* =====================================================
+           STATUS FILTERS
+        ===================================================== */
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            border: 1px solid var(--border-light);
+            background: #FFFFFF;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            padding: 7px 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: #D9AAB8;
+            color: var(--qatar-maroon);
+            background: var(--qatar-maroon-light);
+        }
+
+        .filter-btn.active {
+            background: var(--qatar-maroon);
+            color: #FFFFFF;
+            border-color: var(--qatar-maroon);
+            box-shadow: 0 2px 8px rgba(138, 21, 56, 0.25);
+        }
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1180px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        thead {
+            background: #F8FAFC;
+        }
+
+        th {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-light);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 18px;
+            border-bottom: 1px solid #F1F5F9;
+            font-size: 13px;
+            color: var(--navy-slate);
+            vertical-align: middle;
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover td {
+            background: #F8FAFC;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .serial-number {
+            width: 50px;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .request-number {
+            color: var(--navy-dark);
+            font-weight: 800;
+            white-space: nowrap;
+            background: #F1F5F9;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+
+        .project-name {
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+
+        .description-cell {
+            max-width: 280px;
+            min-width: 200px;
+            white-space: normal;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            font-size: 12.5px;
+        }
+
+        .date-cell {
+            white-space: nowrap;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* =====================================================
+           STATUS BADGES
+        ===================================================== */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 20px;
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+
+        .status-engineer {
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid #BFDBFE;
+        }
+
+        .status-approved {
+            background: #DCFCE7;
+            color: #166534;
+            border: 1px solid #BBF7D0;
+        }
+
+        .status-declined {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FECACA;
+        }
+
+        .status-completed {
+            background: #DCFCE7;
+            color: #166534;
+            border: 1px solid #BBF7D0;
+        }
+
+        .status-pending-engineer {
+            background: #FEF3C7;
+            color: #B45309;
+            border: 1px solid #FDE68A;
+        }
+
+        .status-correction {
+            background: #FFF7ED;
+            color: #C2410C;
+            border: 1px solid #FED7AA;
+        }
+
+        .status-manager-review {
+            background: #FDF2F4;
+            color: var(--qatar-maroon);
+            border: 1px solid #F3C4CF;
+        }
+
+        /* =====================================================
+           DOCUMENT BUTTONS
+        ===================================================== */
+
+        .document-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .document-section-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 3px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            color: var(--text-muted);
+        }
+
+        .document-section-label.final {
+            color: #166534;
+        }
+
+        .view-document {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+            border: 1px solid #FAD1D8;
+            text-decoration: none;
+            font-size: 11.5px;
+            font-weight: 750;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .view-document:hover {
+            background: var(--qatar-maroon);
+            color: #FFFFFF;
+            border-color: var(--qatar-maroon);
+            box-shadow: 0 2px 8px rgba(138, 21, 56, 0.25);
+        }
+
+        .view-document.secondary {
+            background: #F8FAFC;
+            color: var(--navy-slate);
+            border-color: var(--border-light);
+        }
+
+        .view-document.secondary:hover {
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+            border-color: #FAD1D8;
+        }
+
+        .view-document.final-document {
+            background: #F0FDF4;
+            color: #166534;
+            border-color: #BBF7D0;
+        }
+
+        .view-document.final-document:hover {
+            background: #166534;
+            color: #FFFFFF;
+            border-color: #166534;
+            box-shadow: 0 2px 8px rgba(22, 101, 52, 0.22);
+        }
+
+        .no-document {
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-style: italic;
+        }
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-width: 115px;
+            padding: 7px 13px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 750;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .review-btn {
+            background: var(--qatar-maroon);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(138, 21, 56, 0.20);
+        }
+
+        .review-btn:hover {
+            background: var(--qatar-maroon-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(138, 21, 56, 0.30);
+            color: #FFFFFF;
+        }
+
+        .view-btn {
+            background: #F1F5F9;
+            color: var(--navy-slate);
+            border: 1px solid var(--border-light);
+        }
+
+        .view-btn:hover {
+            background: var(--qatar-maroon-light);
+            color: var(--qatar-maroon);
+            border-color: #FAD1D8;
+        }
+
+        .completed-btn {
+            background: #DCFCE7;
+            color: #166534;
+            border: 1px solid #BBF7D0;
+            cursor: default;
+        }
+
+        /* =====================================================
+           PROCUREMENT HIGHLIGHT
+        ===================================================== */
+
+        .procurement-pending {
+            background: #FFFBEB;
+        }
+
+        .procurement-pending td {
+            border-bottom-color: #FDE68A;
+        }
+
+        .procurement-completed {
+            background: #F7FEF9;
+        }
+
+        .procurement-completed td {
+            border-bottom-color: #DCFCE7;
+        }
+
+        .procurement-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 9px;
+            border-radius: 7px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-light);
+            color: var(--navy-slate);
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .procurement-method i {
+            color: var(--qatar-maroon);
+        }
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 42px;
+            margin-bottom: 14px;
+            color: #CBD5E1;
+            display: block;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        .no-results-row td {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-results-row i {
+            font-size: 32px;
+            color: #CBD5E1;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* =====================================================
+           PAGINATION
+        ===================================================== */
+
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-light);
+            background: #FFFFFF;
+        }
+
+        .pagination-info {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            min-width: 34px;
+            height: 34px;
+            border: 1px solid var(--border-light);
+            background: #FFFFFF;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: #D9AAB8;
+            color: var(--qatar-maroon);
+            background: var(--qatar-maroon-light);
+        }
+
+        .page-btn.active {
+            background: var(--qatar-maroon);
+            border-color: var(--qatar-maroon);
+            color: #FFFFFF;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-ellipsis {
+            padding: 0 4px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           FLASH ALERTS
+        ===================================================== */
+
+        .flash-container {
+            margin-bottom: 22px;
+        }
+
+        .flash-message {
+            padding: 13px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .flash-success {
+            background: #DCFCE7;
+            color: #166534;
+            border: 1px solid #BBF7D0;
+        }
+
+        .flash-danger {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FECACA;
+        }
+
+        .flash-warning {
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FDE68A;
+        }
+
+        .flash-info {
+            background: #EFF6FF;
+            color: #1E40AF;
+            border: 1px solid #BFDBFE;
+        }
+
+        .flash-close {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: inherit;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .flash-close:hover {
+            opacity: 1;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 80px 18px 35px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card-header {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 18px;
+            }
+
+            .toolbar {
+                padding: 16px;
+            }
+
+            .toolbar-top {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .page-size {
+                width: 100%;
+            }
+
+            .filter-buttons {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 4px;
+            }
+
+            .filter-btn {
+                flex-shrink: 0;
+            }
+
+            .table-footer {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .pagination {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+        }
+
+        @media print {
+
+            .sidebar,
+            .mobile-header,
+            .toolbar,
+            .table-footer,
+            .action-btn,
+            .view-document {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+            }
+
+            body {
+                background: #FFFFFF;
+            }
+
+            .dashboard-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            table {
+                min-width: 0;
+                width: 100%;
+            }
+
+            th,
+            td {
+                font-size: 9px;
+                padding: 7px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
 
     <!-- =====================================================
-         PAGE HEADER
-         ===================================================== -->
-    <div class="manager-header">
-        <div class="manager-header-left">
-            <h1>Manager Dashboard</h1>
-            <p>Purchase approval, quotation review, and procurement cash release control center.</p>
+         MOBILE HEADER
+    ===================================================== -->
+
+    <div class="mobile-header">
+
+        <button
+            type="button"
+            id="mobileMenuButton"
+            aria-label="Open menu"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <span>Manager Dashboard</span>
+
+    </div>
+
+
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+    ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-building"></i>
+            </div>
+
+            <div class="sidebar-header-text">
+
+                <h2>
+                    Prestigious Trading
+                </h2>
+
+                <span>
+                    & Construction W.L.L.
+                </span>
+
+            </div>
+
         </div>
 
-        <div class="manager-user-widget">
-            <div class="d-flex align-items-center gap-2">
-                <div class="manager-avatar-badge">
-                    {{ manager_user.fullname[:1]|upper if manager_user.fullname else "M" }}
-                </div>
 
-                <div class="manager-user-meta">
-                    <div class="manager-user-name">
-                        {{ manager_user.fullname }}
-                    </div>
+        <nav class="sidebar-menu">
 
-                    <div class="manager-user-role">
-                        {{ manager_user.role|title }}
-                        {% if manager_user.username %}
-                            · {{ manager_user.username }}
-                        {% endif %}
-                    </div>
-                </div>
+            <div class="menu-section-title">
+                Navigation
             </div>
 
             <a
-                href="{{ url_for('admin_logout') }}"
-                class="manager-logout-btn"
-                title="Logout"
+                href="{{ url_for('construction_manager_dashboard') }}"
+                class="active"
             >
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
+
+                <i class="fa-solid fa-gauge-high"></i>
+
+                <span>
+                    Manager Dashboard
+                </span>
+
             </a>
-        </div>
-    </div>
 
+        </nav>
 
-    <!-- =====================================================
-         SUMMARY / KPI METRICS
-         ===================================================== -->
-    <div class="manager-summary">
 
-        <!-- PENDING MATERIAL REQUESTS -->
-        <div class="summary-card summary-pending">
+        <div class="sidebar-footer">
 
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Pending Material Requests
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-box-open"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ pending_material_requests or 0 }}
-            </div>
-
-        </div>
-
-
-        <!-- QUOTATIONS UNDER REVIEW -->
-        <div class="summary-card summary-review">
-
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Quotations Under Review
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ quotations_under_review or 0 }}
-            </div>
-
-        </div>
-
-
-        <!-- APPROVED QUOTATIONS -->
-        <div class="summary-card summary-approved">
-
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Approved Quotations
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ approved_quotations or 0 }}
-            </div>
-
-        </div>
-
-
-        <!-- DECLINED QUOTATIONS -->
-        <div class="summary-card summary-declined">
-
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Declined Quotations
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-times-circle"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ declined_quotations or 0 }}
-            </div>
-
-        </div>
-
-
-        <!-- CASH AWAITING RELEASE
-             QUOTATIONS
-        -->
-        <div class="summary-card summary-cash-pending">
-
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Cash Awaiting Release
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-money-bill-wave"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ cash_pending_count or 0 }}
-            </div>
-
-            {% if cash_pending_amount %}
-
-                <div class="summary-amount">
-                    QAR {{ "{:,.2f}".format(cash_pending_amount) }}
-                </div>
-
-            {% endif %}
-
-        </div>
-
-
-        <!-- CASH RELEASED
-             QUOTATIONS
-        -->
-        <div class="summary-card summary-cash-released">
-
-            <div class="summary-top">
-
-                <div class="summary-label">
-                    Cash Released
-                </div>
-
-                <div class="summary-icon-box">
-                    <i class="fas fa-check-double"></i>
-                </div>
-
-            </div>
-
-            <div class="summary-number">
-                {{ cash_released_count or 0 }}
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         MATERIAL REQUESTS SECTION
-         ===================================================== -->
-    <div
-        class="manager-section"
-        id="materialRequestsSection"
-    >
-
-        <div class="manager-section-header">
-
-            <div class="manager-section-title">
-
-                <div class="section-icon-pill">
-                    <i class="fas fa-boxes-stacked"></i>
-                </div>
-
-                <div>
-
-                    <h2>
-                        Material Requests
-                    </h2>
-
-                    <span>
-                        Purchase requests received by the department
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- INSTANT LIVE SEARCH BAR -->
-            <div class="section-header-right">
-
-                <div class="table-search-box">
-
-                    <i class="fas fa-search search-icon"></i>
-
-                    <input
-                        type="text"
-                        id="materialRequestsSearchInput"
-                        placeholder="Search request, project, requester, amount, status..."
-                        autocomplete="off"
-                    >
-
-                    <button
-                        type="button"
-                        class="table-search-clear"
-                        id="clearMaterialSearch"
-                        title="Clear search"
-                    >
-                        ✕
-                    </button>
-
-                </div>
-
-
-                <div
-                    class="section-badge"
-                    id="materialRequestsBadge"
-                >
-                    {{ material_requests|length }} requests
-                </div>
-
-            </div>
-
-        </div>
-
-
-        {% if material_requests %}
-
-            <div class="table-wrapper">
-
-                <table
-                    class="manager-table"
-                    id="materialRequestsTable"
-                >
-
-                    <thead>
-
-                        <tr>
-
-                            <th style="width: 50px; text-align: center;">
-                                #
-                            </th>
-
-                            <th>
-                                Request
-                            </th>
-
-                            <th>
-                                Project
-                            </th>
-
-                            <th>
-                                Requested By
-                            </th>
-
-                            <th>
-                                Request Date
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Cash Status
-                            </th>
-
-                            <th>
-                                Documents
-                            </th>
-
-                            <th class="text-end">
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="materialRequestsTableBody">
-
-                    {% for request in material_requests %}
-
-                        <tr class="searchable-material-row">
-
-                            <!-- S/N -->
-                            <td class="row-sn-cell material-sn-cell">
-                                {{ loop.index }}
-                            </td>
-
-
-                            <!-- REQUEST -->
-                            <td>
-
-                                <div class="primary-text">
-                                    {{ request.request_number }}
-                                </div>
-
-                                <div class="secondary-text">
-
-                                    Uploaded
-
-                                    {% if request.created_at %}
-                                        {{ request.created_at.strftime('%d %b %Y %H:%M') }}
-                                    {% endif %}
-
-                                </div>
-
-                            </td>
-
-
-                            <!-- PROJECT -->
-                            <td>
-
-                                <div class="primary-text">
-                                    {{ request.project_name }}
-                                </div>
-
-                                {% if request.description %}
-
-                                    <div class="secondary-text">
-
-                                        {{ request.description[:80] }}
-
-                                        {% if request.description|length > 80 %}
-                                            ...
-                                        {% endif %}
-
-                                    </div>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- REQUESTED BY -->
-                            <td>
-                                {{ request.requested_by or "Not specified" }}
-                            </td>
-
-
-                            <!-- DATE -->
-                            <td>
-                                {{ request.request_date }}
-                            </td>
-
-
-                            <!-- =================================================
-                                 MATERIAL REQUEST AMOUNT
-                                 ================================================= -->
-                            <td>
-
-                                {% if request.material_request_amount is not none %}
-
-                                    <span class="amount">
-
-                                        {{ request.material_request_currency or "QAR" }}
-
-                                        {{ "{:,.2f}".format(request.material_request_amount) }}
-
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="secondary-text">
-                                        Not released
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- STATUS -->
-                            <td>
-
-                                {% if request.status == "Pending Quotation" %}
-
-                                    <span class="status-badge status-pending">
-                                        Pending Quotation
-                                    </span>
-
-                                {% elif request.status == "Quotation Uploaded" %}
-
-                                    <span class="status-badge status-review">
-                                        Quotation Uploaded
-                                    </span>
-
-                                {% elif request.status == "Approved" %}
-
-                                    <span class="status-badge status-approved">
-                                        Approved
-                                    </span>
-
-                                    {% if request.decision_date %}
-
-                                        <div class="decision-info">
-                                            {{ request.decision_date.strftime('%d %b %Y %H:%M') }}
-                                        </div>
-
-                                    {% endif %}
-
-                                {% elif request.status in ["Declined", "Rejected"] %}
-
-                                    <span class="status-badge status-declined">
-                                        {{ request.status }}
-                                    </span>
-
-                                    {% if request.decision_date %}
-
-                                        <div class="decision-info">
-                                            {{ request.decision_date.strftime('%d %b %Y %H:%M') }}
-                                        </div>
-
-                                    {% endif %}
-
-                                {% else %}
-
-                                    <span class="status-badge status-other">
-                                        {{ request.status or "Under Review" }}
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- =================================================
-                                 MATERIAL REQUEST CASH STATUS
-                                 ================================================= -->
-                            <td>
-
-                                {% if request.status == "Approved" %}
-
-                                    {% if request.material_cash_released %}
-
-                                        <span class="cash-status cash-released">
-
-                                            <i class="fas fa-check-double"></i>
-
-                                            Cash Released
-
-                                        </span>
-
-
-                                        {% if request.material_cash_released_at %}
-
-                                            <div class="cash-release-info">
-
-                                                <strong>
-                                                    Released:
-                                                </strong>
-
-                                                {{ request.material_cash_released_at.strftime('%d %b %Y %H:%M') }}
-
-                                            </div>
-
-                                        {% endif %}
-
-
-                                        {% if request.material_cash_released_by_name %}
-
-                                            <div class="cash-release-info">
-
-                                                <strong>
-                                                    By:
-                                                </strong>
-
-                                                {{ request.material_cash_released_by_name }}
-
-                                            </div>
-
-                                        {% endif %}
-
-
-                                        {% if request.material_cash_release_notes %}
-
-                                            <div class="cash-release-info">
-
-                                                <strong>
-                                                    Note:
-                                                </strong>
-
-                                                {{ request.material_cash_release_notes }}
-
-                                            </div>
-
-                                        {% endif %}
-
-                                    {% else %}
-
-                                        <span class="cash-status cash-awaiting">
-
-                                            <i class="fas fa-clock"></i>
-
-                                            Awaiting Release
-
-                                        </span>
-
-                                        <div class="cash-release-info">
-
-                                            Account has not released the approved cash yet.
-
-                                        </div>
-
-                                    {% endif %}
-
-                                {% elif request.status in ["Declined", "Rejected"] %}
-
-                                    <span class="status-badge status-declined">
-
-                                        <i class="fas fa-ban"></i>
-
-                                        Not Applicable
-
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="secondary-text">
-                                        Not applicable
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- =================================================
-                                 DOCUMENTS
-                                 ================================================= -->
-                            <td>
-
-                                <div class="document-stack">
-
-                                    {% if request.finalized_file_url %}
-
-                                        <div class="finalized-document">
-
-                                            {% if request.status == "Approved" %}
-
-                                                <div class="finalized-badge finalized-badge-approved">
-
-                                                    <i class="fas fa-stamp"></i>
-
-                                                    Manager Approved — Stamped
-
-                                                </div>
-
-
-                                                <a
-                                                    href="{{ request.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-final-approved"
-                                                >
-
-                                                    <i class="fas fa-circle-check"></i>
-
-                                                    View Approved
-
-                                                </a>
-
-
-                                            {% elif request.status in ["Declined", "Rejected"] %}
-
-                                                <div class="finalized-badge finalized-badge-declined">
-
-                                                    <i class="fas fa-stamp"></i>
-
-                                                    Manager Declined — Stamped
-
-                                                </div>
-
-
-                                                <a
-                                                    href="{{ request.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-final-declined"
-                                                >
-
-                                                    <i class="fas fa-circle-xmark"></i>
-
-                                                    View Declined
-
-                                                </a>
-
-
-                                            {% else %}
-
-                                                <div class="finalized-badge finalized-badge-review">
-
-                                                    <i class="fas fa-file-signature"></i>
-
-                                                    Finalized Document
-
-                                                </div>
-
-
-                                                <a
-                                                    href="{{ request.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-view"
-                                                >
-
-                                                    <i class="fas fa-file-pdf"></i>
-
-                                                    View Finalized
-
-                                                </a>
-
-                                            {% endif %}
-
-
-                                            {% if request.finalized_at %}
-
-                                                <div class="finalized-date">
-
-                                                    Finalized:
-
-                                                    {{ request.finalized_at.strftime('%d %b %Y %H:%M') }}
-
-                                                </div>
-
-                                            {% endif %}
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    {% if request.file_url %}
-
-                                        <div class="original-document">
-
-                                            <span class="document-label">
-                                                Original Material Request
-                                            </span>
-
-                                            <a
-                                                href="{{ request.file_url }}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="manager-btn btn-view"
-                                            >
-
-                                                <i class="fas fa-file-alt"></i>
-
-                                                View Original
-
-                                            </a>
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    {% if not request.file_url and not request.finalized_file_url %}
-
-                                        <span class="secondary-text">
-                                            No documents available.
-                                        </span>
-
-                                    {% endif %}
-
-                                </div>
-
-                            </td>
-
-
-                            <!-- =================================================
-                                 ACTION
-                                 ================================================= -->
-                            <td class="text-end">
-
-                                <div class="manager-actions justify-content-end">
-
-                                    {% if request.status not in ["Approved", "Declined", "Rejected"] %}
-
-                                        <a
-                                            href="{{ url_for('construction_manager_material_request_review', request_id=request.id) }}"
-                                            class="manager-btn btn-review"
-                                        >
-
-                                            <i class="fas fa-search"></i>
-
-                                            Review
-
-                                        </a>
-
-                                    {% elif request.status == "Approved" %}
-
-                                        <span class="manager-btn btn-approved">
-
-                                            <i class="fas fa-check"></i>
-
-                                            Approved
-
-                                        </span>
-
-                                    {% elif request.status in ["Declined", "Rejected"] %}
-
-                                        <span class="manager-btn btn-declined">
-
-                                            <i class="fas fa-times"></i>
-
-                                            Declined
-
-                                        </span>
-
-                                    {% endif %}
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            <!-- =================================================
-                 MATERIAL REQUESTS PAGINATION FOOTER
-                 ================================================= -->
-            <div
-                class="pagination-footer"
-                id="materialPaginationFooter"
+            <a
+                href="{{ url_for('admin_logout') }}"
+                class="logout-link"
             >
 
-                <div
-                    class="pagination-info"
-                    id="materialPaginationInfo"
-                >
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                    Showing
-                    <strong>1</strong>
-                    to
-                    <strong>10</strong>
-                    of
-                    <strong>{{ material_requests|length }}</strong>
-                    entries
+                <span>
+                    Logout
+                </span>
 
-                </div>
+            </a>
+
+        </div>
+
+    </aside>
 
 
-                <div class="d-flex align-items-center gap-3">
+    <!-- =====================================================
+         MAIN CONTENT
+    ===================================================== -->
 
-                    <div class="page-size-select-wrapper">
+    <main class="main-content">
 
-                        <span>
-                            Rows per page:
-                        </span>
+        <!-- =================================================
+             PAGE HEADER
+        ================================================= -->
 
-                        <select
-                            class="page-size-select"
-                            id="materialPageSizeSelect"
-                        >
+        <div class="page-header">
 
-                            <option value="5">
-                                5
-                            </option>
+            <div>
 
-                            <option value="10" selected>
-                                10
-                            </option>
+                <span class="page-header-tag">
+                    Executive Authorization
+                </span>
 
-                            <option value="25">
-                                25
-                            </option>
-
-                            <option value="all">
-                                All
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div
-                        class="pagination-controls"
-                        id="materialPaginationControls"
-                    ></div>
-
-                </div>
-
-            </div>
-
-
-        {% else %}
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    <i class="fas fa-box-open"></i>
-                </div>
-
-                <h3>
-                    No material requests
-                </h3>
+                <h1>
+                    Manager Dashboard
+                </h1>
 
                 <p>
-                    There are currently no material requests recorded in the system.
+                    Complete material request history, procurement review and approval control
                 </p>
 
             </div>
 
-        {% endif %}
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================= -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash-message flash-{{ category }}">
+
+                            <span>
+                                {{ message }}
+                            </span>
+
+                            <button
+                                type="button"
+                                class="flash-close"
+                                onclick="this.parentElement.remove()"
+                                aria-label="Close"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+     SUMMARY METRIC CARDS
+================================================= -->
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+
+        <div class="summary-content">
+
+            <h3>
+                {{ total_requests }}
+            </h3>
+
+            <p>
+                Total Requests
+            </p>
+
+        </div>
+
+        <div class="summary-icon">
+            <i class="fa-solid fa-layer-group"></i>
+        </div>
 
     </div>
 
 
-    <!-- =====================================================
-         SUPPLIER QUOTATIONS SECTION
-         ===================================================== -->
-    <div
-        class="manager-section"
-        id="supplierQuotationsSection"
-    >
+    <div class="summary-card">
 
-        <div class="manager-section-header">
+        <div class="summary-content">
 
-            <div class="manager-section-title">
+            <h3>
+                {{ engineer_approved_requests }}
+            </h3>
 
-                <div class="section-icon-pill">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                </div>
+            <p>
+                Engineer Approved
+            </p>
 
-                <div>
+        </div>
 
-                    <h2>
-                        Supplier Quotations
-                    </h2>
+        <div class="summary-icon">
+            <i class="fa-solid fa-user-check"></i>
+        </div>
 
-                    <span>
-                        Review, approve and monitor procurement cash release
-                    </span>
+    </div>
 
-                </div>
 
+    <div class="summary-card">
+
+        <div class="summary-content">
+
+            <h3>
+                {{ manager_approved_requests }}
+            </h3>
+
+            <p>
+                Manager Approved
+            </p>
+
+        </div>
+
+        <div class="summary-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-content">
+
+            <h3>
+                {{ declined_requests }}
+            </h3>
+
+            <p>
+                Declined Requests
+            </p>
+
+        </div>
+
+        <div class="summary-icon">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     MATERIAL REQUEST HISTORY
+================================================= -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <div class="section-title-wrap">
+
+            <div class="section-title-icon">
+                <i class="fa-solid fa-file-circle-check"></i>
             </div>
 
+            <div>
 
-            <!-- INSTANT LIVE SEARCH BAR -->
-            <div class="section-header-right">
+                <h2>
+                    Material Request History
+                </h2>
 
-                <div class="table-search-box">
-
-                    <i class="fas fa-search search-icon"></i>
-
-                    <input
-                        type="text"
-                        id="supplierQuotationsSearchInput"
-                        placeholder="Search quotation, supplier, amount, status..."
-                        autocomplete="off"
-                    >
-
-                    <button
-                        type="button"
-                        class="table-search-clear"
-                        id="clearQuotationSearch"
-                        title="Clear search"
-                    >
-                        ✕
-                    </button>
-
-                </div>
-
-
-                <div
-                    class="section-badge"
-                    id="supplierQuotationsBadge"
-                >
-                    {{ quotations|length }} quotations
-                </div>
+                <p>
+                    Complete material request workflow and authorized actions
+                </p>
 
             </div>
 
         </div>
 
+    </div>
 
-        {% if quotations %}
 
-            <div class="table-wrapper">
+    <!-- TOOLBAR -->
 
-                <table
-                    class="manager-table"
-                    id="supplierQuotationsTable"
+    <div class="toolbar">
+
+        <div class="toolbar-top">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search request number, project, requester or description..."
+                    autocomplete="off"
                 >
 
-                    <thead>
-
-                        <tr>
-
-                            <th style="width: 50px; text-align: center;">
-                                #
-                            </th>
-
-                            <th>
-                                Quotation
-                            </th>
-
-                            <th>
-                                Supplier
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Uploaded By
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Manager Comment
-                            </th>
-
-                            <th>
-                                Cash Status
-                            </th>
-
-                            <th>
-                                Documents
-                            </th>
-
-                            <th class="text-end">
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
+            </div>
 
 
-                    <tbody id="supplierQuotationsTableBody">
+            <select
+                id="pageSize"
+                class="page-size"
+            >
 
-                    {% for quotation in quotations %}
+                <option value="7" selected>
+                    7 per page
+                </option>
 
-                        <tr class="searchable-quotation-row">
+                <option value="10">
+                    10 per page
+                </option>
 
-                            <!-- S/N -->
-                            <td class="row-sn-cell quotation-sn-cell">
-                                {{ loop.index }}
+                <option value="20">
+                    20 per page
+                </option>
+
+                <option value="50">
+                    50 per page
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-buttons">
+
+            <button
+                type="button"
+                class="filter-btn active"
+                data-status-key="all"
+            >
+                All
+            </button>
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status-key="engineer-approved"
+            >
+                Engineer Approved
+            </button>
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status-key="manager-approved"
+            >
+                Manager Approved
+            </button>
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status-key="declined"
+            >
+                Declined
+            </button>
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status-key="completed"
+            >
+                Completed
+            </button>
+
+        </div>
+
+    </div>
+
+
+    {% if material_requests %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th class="serial-number">
+                            S/N
+                        </th>
+
+                        <th>
+                            Request No.
+                        </th>
+
+                        <th>
+                            Project
+                        </th>
+
+                        <th>
+                            Requested By
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Document
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="requestTableBody">
+
+                    {% for request in material_requests %}
+
+                        <tr
+                            class="request-row"
+                            data-status="{{ request.status or '' }}"
+                            data-search="
+                                {{ request.request_number or '' }}
+                                {{ request.project_name or '' }}
+                                {{ request.requested_by or '' }}
+                                {{ request.requested_by_name or '' }}
+                                {{ request.description or '' }}
+                                {{ request.status or '' }}
+                            "
+                        >
+
+                            <td class="serial-number">
+                                1
                             </td>
 
 
-                            <!-- QUOTATION -->
                             <td>
 
-                                <div class="primary-text">
-                                    {{ quotation.quotation_number }}
-                                </div>
-
-                                <div class="secondary-text">
-
-                                    Created
-
-                                    {% if quotation.created_at %}
-                                        {{ quotation.created_at.strftime('%d %b %Y %H:%M') }}
-                                    {% endif %}
-
-                                </div>
-
-                            </td>
-
-
-                            <!-- SUPPLIER -->
-                            <td>
-
-                                <div class="primary-text">
-                                    {{ quotation.supplier_name }}
-                                </div>
-
-                                {% if quotation.file_name %}
-
-                                    <div class="secondary-text">
-                                        {{ quotation.file_name }}
-                                    </div>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- DATE -->
-                            <td>
-                                {{ quotation.quotation_date }}
-                            </td>
-
-
-                            <!-- AMOUNT -->
-                            <td>
-
-                                <span class="amount">
-
-                                    {% if quotation.quotation_amount is not none %}
-
-                                        {{ quotation.currency or "QAR" }}
-
-                                        {{ "{:,.2f}".format(quotation.quotation_amount) }}
-
-                                    {% else %}
-
-                                        Not specified
-
-                                    {% endif %}
-
+                                <span class="request-number">
+                                    {{ request.request_number or '—' }}
                                 </span>
 
                             </td>
 
 
-                            <!-- UPLOADED BY -->
-                            <td>
-                                {{ quotation.uploaded_by_name or "Unknown" }}
-                            </td>
-
-
-                            <!-- STATUS -->
                             <td>
 
-                                {% if quotation.status == "Under Review" %}
-
-                                    <span class="status-badge status-review">
-
-                                        <i class="fas fa-clock"></i>
-
-                                        Under Review
-
-                                    </span>
-
-                                {% elif quotation.status == "Approved" %}
-
-                                    <span class="status-badge status-approved">
-
-                                        <i class="fas fa-check"></i>
-
-                                        Approved
-
-                                    </span>
-
-                                    {% if quotation.decision_date %}
-
-                                        <div class="decision-info">
-
-                                            {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
-
-                                        </div>
-
-                                    {% endif %}
-
-                                {% elif quotation.status == "Declined" %}
-
-                                    <span class="status-badge status-declined">
-
-                                        <i class="fas fa-times"></i>
-
-                                        Declined
-
-                                    </span>
-
-                                    {% if quotation.decision_date %}
-
-                                        <div class="decision-info">
-
-                                            {{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
-
-                                        </div>
-
-                                    {% endif %}
-
-                                {% else %}
-
-                                    <span class="status-badge status-other">
-
-                                        {{ quotation.status or "Under Review" }}
-
-                                    </span>
-
-                                {% endif %}
+                                <span class="project-name">
+                                    {{ request.project_name or '—' }}
+                                </span>
 
                             </td>
 
 
-                            <!-- MANAGER COMMENT -->
                             <td>
+                                {{ request.requested_by_name or request.requested_by or '—' }}
+                            </td>
 
-                                {% if quotation.manager_comment %}
 
-                                    <div class="comment-preview">
-                                        {{ quotation.manager_comment }}
-                                    </div>
+                            <td class="date-cell">
 
-                                {% elif quotation.status in ["Approved", "Declined"] %}
+                                {% if request.request_date %}
 
-                                    <div class="secondary-text">
-                                        No comment provided.
-                                    </div>
+                                    {{ request.request_date }}<br>
+
+                                    {% if request.created_at %}
+                                        {{ request.created_at.strftime('%H:%M:%S') }} AST
+                                    {% endif %}
+
+                                {% elif request.created_at %}
+
+                                    {{ request.created_at.strftime('%d %b %Y') }}<br>
+                                    {{ request.created_at.strftime('%H:%M:%S') }} AST
 
                                 {% else %}
 
@@ -2072,81 +1695,60 @@ Manager Dashboard | Purchase Control
                             </td>
 
 
-                            <!-- CASH STATUS -->
+                            <td class="description-cell">
+                                {{ request.description or '—' }}
+                            </td>
+
+
                             <td>
 
-                                {% if quotation.status == "Approved" %}
+                                {% if request.status == 'Pending Manager Approval' %}
 
-                                    {% if quotation.cash_released %}
+                                    <span class="status-badge status-engineer">
+                                        <i class="fa-solid fa-user-check"></i>
+                                        Engineer Approved
+                                    </span>
 
-                                        <span class="cash-status cash-released">
+                                {% elif request.status == 'Approved' %}
 
-                                            <i class="fas fa-check-double"></i>
+                                    <span class="status-badge status-approved">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        Manager Approved
+                                    </span>
 
-                                            Cash Released
-
-                                        </span>
-
-                                        {% if quotation.cash_released_at %}
-
-                                            <div class="cash-release-info">
-
-                                                <strong>
-                                                    Released:
-                                                </strong>
-
-                                                {{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
-
-                                            </div>
-
-                                        {% endif %}
-
-                                        {% if quotation.cash_released_by_name %}
-
-                                            <div class="cash-release-info">
-
-                                                <strong>
-                                                    By:
-                                                </strong>
-
-                                                {{ quotation.cash_released_by_name }}
-
-                                            </div>
-
-                                        {% endif %}
-
-                                    {% else %}
-
-                                        <span class="cash-status cash-awaiting">
-
-                                            <i class="fas fa-clock"></i>
-
-                                            Awaiting Release
-
-                                        </span>
-
-                                        <div class="cash-release-info">
-
-                                            Account has not released the approved cash yet.
-
-                                        </div>
-
-                                    {% endif %}
-
-                                {% elif quotation.status == "Declined" %}
+                                {% elif request.status == 'Declined' %}
 
                                     <span class="status-badge status-declined">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                        Declined
+                                    </span>
 
-                                        <i class="fas fa-ban"></i>
+                                {% elif request.status == 'Completed' %}
 
-                                        Not Applicable
+                                    <span class="status-badge status-completed">
+                                        <i class="fa-solid fa-check-double"></i>
+                                        Completed
+                                    </span>
 
+                                {% elif request.status == 'Pending Engineer Review' %}
+
+                                    <span class="status-badge status-pending-engineer">
+                                        <i class="fa-solid fa-clock"></i>
+                                        Pending Engineering
+                                    </span>
+
+                                {% elif request.status == 'Engineer Correction Required' %}
+
+                                    <span class="status-badge status-correction">
+                                        <i class="fa-solid fa-rotate"></i>
+                                        Engineering Correction Required
                                     </span>
 
                                 {% else %}
 
-                                    <span class="secondary-text">
-                                        Not applicable
+                                    <span class="status-badge status-pending-engineer">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                        {{ request.status or 'Unknown' }}
                                     </span>
 
                                 {% endif %}
@@ -2154,184 +1756,60 @@ Manager Dashboard | Purchase Control
                             </td>
 
 
-                            <!-- DOCUMENTS -->
                             <td>
 
-                                <div class="document-stack">
+                                {% if request.signed_file_url %}
 
-                                    {% if quotation.finalized_file_url %}
+                                    <a
+                                        href="{{ request.signed_file_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="view-document"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Open Stamped Document
+                                    </a>
 
-                                        <div class="finalized-document">
+                                {% else %}
 
-                                            {% if quotation.status == "Approved" %}
+                                    <span class="no-document">
+                                        No stamped document
+                                    </span>
 
-                                                <div class="finalized-badge finalized-badge-approved">
-
-                                                    <i class="fas fa-stamp"></i>
-
-                                                    Manager Approved — Stamped
-
-                                                </div>
-
-                                                <a
-                                                    href="{{ quotation.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-final-approved"
-                                                >
-
-                                                    <i class="fas fa-circle-check"></i>
-
-                                                    View Approved
-
-                                                </a>
-
-                                            {% elif quotation.status == "Declined" %}
-
-                                                <div class="finalized-badge finalized-badge-declined">
-
-                                                    <i class="fas fa-stamp"></i>
-
-                                                    Manager Declined — Stamped
-
-                                                </div>
-
-                                                <a
-                                                    href="{{ quotation.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-final-declined"
-                                                >
-
-                                                    <i class="fas fa-circle-xmark"></i>
-
-                                                    View Declined
-
-                                                </a>
-
-                                            {% else %}
-
-                                                <div class="finalized-badge finalized-badge-review">
-
-                                                    <i class="fas fa-file-signature"></i>
-
-                                                    Finalized Document
-
-                                                </div>
-
-                                                <a
-                                                    href="{{ quotation.finalized_file_url }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="manager-btn btn-view"
-                                                >
-
-                                                    <i class="fas fa-file-pdf"></i>
-
-                                                    View Finalized
-
-                                                </a>
-
-                                            {% endif %}
-
-
-                                            {% if quotation.finalized_at %}
-
-                                                <div class="finalized-date">
-
-                                                    Finalized:
-
-                                                    {{ quotation.finalized_at.strftime('%d %b %Y %H:%M') }}
-
-                                                </div>
-
-                                            {% endif %}
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    {% if quotation.file_url %}
-
-                                        <div class="original-document">
-
-                                            <span class="document-label">
-                                                Original Supplier Quotation
-                                            </span>
-
-                                            <a
-                                                href="{{ quotation.file_url }}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="manager-btn btn-view"
-                                            >
-
-                                                <i class="fas fa-file-invoice-dollar"></i>
-
-                                                View Original
-
-                                            </a>
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    {% if not quotation.file_url and not quotation.finalized_file_url %}
-
-                                        <span class="secondary-text">
-                                            No documents available.
-                                        </span>
-
-                                    {% endif %}
-
-                                </div>
+                                {% endif %}
 
                             </td>
 
 
-                            <!-- ACTION -->
-                            <td class="text-end">
+                            <td>
 
-                                <div class="manager-actions justify-content-end">
+                                {% if request.status == 'Pending Manager Approval' %}
 
-                                    {% if quotation.status == "Under Review" %}
+                                    <a
+                                        href="{{ url_for(
+                                            'construction_manager_material_request_review',
+                                            request_id=request.id
+                                        ) }}"
+                                        class="action-btn review-btn"
+                                    >
+                                        <i class="fa-solid fa-clipboard-check"></i>
+                                        Review Request
+                                    </a>
 
-                                        <a
-                                            href="{{ url_for('construction_manager_quotation_review', quotation_id=quotation.id) }}"
-                                            class="manager-btn btn-review"
-                                        >
+                                {% else %}
 
-                                            <i class="fas fa-search"></i>
+                                    <a
+                                        href="{{ url_for(
+                                            'construction_manager_material_request_review',
+                                            request_id=request.id
+                                        ) }}"
+                                        class="action-btn view-btn"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                        View Request
+                                    </a>
 
-                                            Review
-
-                                        </a>
-
-                                    {% elif quotation.status == "Approved" %}
-
-                                        <span class="manager-btn btn-approved">
-
-                                            <i class="fas fa-check"></i>
-
-                                            Approved
-
-                                        </span>
-
-                                    {% elif quotation.status == "Declined" %}
-
-                                        <span class="manager-btn btn-declined">
-
-                                            <i class="fas fa-times"></i>
-
-                                            Declined
-
-                                        </span>
-
-                                    {% endif %}
-
-                                </div>
+                                {% endif %}
 
                             </td>
 
@@ -2339,530 +1817,1340 @@ Manager Dashboard | Purchase Control
 
                     {% endfor %}
 
-                    </tbody>
+                </tbody>
 
-                </table>
+            </table>
 
-            </div>
+        </div>
 
 
-            <!-- =================================================
-                 SUPPLIER QUOTATIONS PAGINATION FOOTER
-                 ================================================= -->
+        <div class="table-footer">
+
             <div
-                class="pagination-footer"
-                id="quotationPaginationFooter"
+                class="pagination-info"
+                id="paginationInfo"
             >
-
-                <div
-                    class="pagination-info"
-                    id="quotationPaginationInfo"
-                >
-
-                    Showing
-                    <strong>1</strong>
-                    to
-                    <strong>10</strong>
-                    of
-                    <strong>{{ quotations|length }}</strong>
-                    entries
-
-                </div>
-
-
-                <div class="d-flex align-items-center gap-3">
-
-                    <div class="page-size-select-wrapper">
-
-                        <span>
-                            Rows per page:
-                        </span>
-
-                        <select
-                            class="page-size-select"
-                            id="quotationPageSizeSelect"
-                        >
-
-                            <option value="5">
-                                5
-                            </option>
-
-                            <option value="10" selected>
-                                10
-                            </option>
-
-                            <option value="25">
-                                25
-                            </option>
-
-                            <option value="all">
-                                All
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div
-                        class="pagination-controls"
-                        id="quotationPaginationControls"
-                    ></div>
-
-                </div>
-
+                Showing 0 to 0 of 0 entries
             </div>
 
+            <div
+                class="pagination"
+                id="pagination"
+            ></div>
 
-        {% else %}
+        </div>
 
-            <div class="empty-state">
+    {% else %}
 
-                <div class="empty-icon">
-                    <i class="fas fa-file-invoice"></i>
-                </div>
+        <div class="empty-state">
 
-                <h3>
-                    No supplier quotations
-                </h3>
+            <i class="fa-solid fa-folder-open"></i>
+
+            <h3>
+                No Material Requests Found
+            </h3>
+
+            <p>
+                There are currently no material requests in the system.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =================================================
+     PROCUREMENT MANAGEMENT
+================================================= -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <div class="section-title-wrap">
+
+            <div class="section-title-icon">
+                <i class="fa-solid fa-file-signature"></i>
+            </div>
+
+            <div>
+
+                <h2>
+                    Procurement Management
+                </h2>
 
                 <p>
-                    Supplier quotations uploaded by the Purchase Department will appear here.
+                    Account-approved procurement packages awaiting Management authorization and completed final packages
                 </p>
 
             </div>
 
-        {% endif %}
+        </div>
 
     </div>
 
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
+    <!-- PROCUREMENT SUMMARY -->
+
     <div
         style="
-            text-align: center;
-            color: #94a3b8;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 12px 0 20px;
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:14px;
+            padding:18px 24px;
+            border-bottom:1px solid var(--border-light);
+            background:#FCFDFE;
         "
     >
-        Prestigious Trading & Constructions · Procurement Management System
+
+        <div
+            style="
+                background:#FFFFFF;
+                border:1px solid var(--border-light);
+                border-radius:12px;
+                padding:15px 17px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:11px;
+                    font-weight:800;
+                    color:var(--text-muted);
+                    text-transform:uppercase;
+                    letter-spacing:.4px;
+                    margin-bottom:6px;
+                "
+            >
+                Total Procurement
+            </div>
+
+            <div
+                style="
+                    font-size:25px;
+                    font-weight:800;
+                    color:var(--navy-dark);
+                "
+            >
+                {{ total_procurements|default(0) }}
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                background:#FFFBEB;
+                border:1px solid #FDE68A;
+                border-radius:12px;
+                padding:15px 17px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:11px;
+                    font-weight:800;
+                    color:#92400E;
+                    text-transform:uppercase;
+                    letter-spacing:.4px;
+                    margin-bottom:6px;
+                "
+            >
+                Pending Manager Review
+            </div>
+
+            <div
+                style="
+                    font-size:25px;
+                    font-weight:800;
+                    color:#92400E;
+                "
+            >
+                {{ pending_manager_procurements|default(0) }}
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                background:#F0FDF4;
+                border:1px solid #BBF7D0;
+                border-radius:12px;
+                padding:15px 17px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:11px;
+                    font-weight:800;
+                    color:#166534;
+                    text-transform:uppercase;
+                    letter-spacing:.4px;
+                    margin-bottom:6px;
+                "
+            >
+                Completed Procurement
+            </div>
+
+            <div
+                style="
+                    font-size:25px;
+                    font-weight:800;
+                    color:#166534;
+                "
+            >
+                {{ completed_procurements|default(0) }}
+            </div>
+
+        </div>
+
     </div>
 
-</div>
+
+    {% if manager_procurements %}
+
+        <!-- PROCUREMENT TOOLBAR -->
+
+        <div class="toolbar">
+
+            <div class="toolbar-top">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="procurementSearchInput"
+                        placeholder="Search request number, project, requester or procurement method..."
+                        autocomplete="off"
+                    >
+
+                </div>
 
 
-<!-- =========================================================
-     INSTANT SEARCH & DYNAMIC PAGINATION ENGINE
-========================================================= -->
+                <select
+                    id="procurementPageSize"
+                    class="page-size"
+                >
+
+                    <option value="7" selected>
+                        7 per page
+                    </option>
+
+                    <option value="10">
+                        10 per page
+                    </option>
+
+                    <option value="20">
+                        20 per page
+                    </option>
+
+                    <option value="50">
+                        50 per page
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-buttons">
+
+                <button
+                    type="button"
+                    class="filter-btn procurement-filter-btn active"
+                    data-procurement-status="all"
+                    data-procurement-method="all"
+                >
+                    All
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn procurement-filter-btn"
+                    data-procurement-status="all"
+                    data-procurement-method="quotation"
+                >
+                    Quotation / LPO
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn procurement-filter-btn"
+                    data-procurement-status="all"
+                    data-procurement-method="card"
+                >
+                    Card
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn procurement-filter-btn"
+                    data-procurement-status="pending manager review"
+                    data-procurement-method="all"
+                >
+                    Pending Manager Review
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn procurement-filter-btn"
+                    data-procurement-status="completed"
+                    data-procurement-method="all"
+                >
+                    Completed
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROCUREMENT TABLE
+        ================================================= -->
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th class="serial-number">
+                            S/N
+                        </th>
+
+                        <th>
+                            Request No.
+                        </th>
+
+                        <th>
+                            Project
+                        </th>
+
+                        <th>
+                            Requested By
+                        </th>
+
+                        <th>
+                            Method
+                        </th>
+
+                        <th>
+                            Documents
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="procurementTableBody">
+
+                    {% for procurement in manager_procurements %}
+
+                        {% set procurement_status =
+                            (procurement.status or '')|trim|lower
+                        %}
+
+                        {% set procurement_method =
+                            (procurement.procurement_method or '')|trim|lower
+                        %}
+
+                        <tr
+                            class="
+                                procurement-row
+                                {% if procurement_status == 'pending manager review' %}
+                                    procurement-pending
+                                {% elif procurement_status == 'completed' %}
+                                    procurement-completed
+                                {% endif %}
+                            "
+                            data-status="{{ procurement.status or '' }}"
+                            data-method="{{ procurement_method }}"
+                            data-search="
+                                {{ procurement.request_number or '' }}
+                                {{ procurement.project_name or '' }}
+                                {{ procurement.requested_by_name or '' }}
+                                {{ procurement.requested_by or '' }}
+                                {{ procurement.procurement_method or '' }}
+                                {{ procurement.status or '' }}
+                            "
+                        >
+
+                            <td class="serial-number">
+                                1
+                            </td>
+
+
+                            <td>
+
+                                <span class="request-number">
+                                    {{ procurement.request_number or '—' }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="project-name">
+                                    {{ procurement.project_name or '—' }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                {{ procurement.requested_by_name or procurement.requested_by or '—' }}
+                            </td>
+
+
+                            <td>
+
+                                {% if procurement_method == 'quotation' %}
+
+                                    <span class="procurement-method">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        Quotation
+                                    </span>
+
+                                {% elif procurement_method == 'card' %}
+
+                                    <span class="procurement-method">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="procurement-method">
+                                        <i class="fa-solid fa-file-circle-question"></i>
+                                        {{ procurement.procurement_method or '—' }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 DOCUMENTS
+
+                                 QUOTATION:
+                                 Pending  -> Account Quotation + Account LPO
+                                 Completed -> Manager-signed Quotation + LPO
+
+                                 CARD:
+                                 Pending  -> Account Card Payment Evidence
+                                 Completed -> Manager-signed Card Payment Evidence
+                            ================================================= -->
+
+                            <td>
+
+                                <div class="document-group">
+
+                                    {% if procurement_method == 'quotation' %}
+
+                                        {% if procurement_status == 'completed' %}
+
+                                            <!-- MANAGER-SIGNED QUOTATION DOCUMENTS -->
+
+                                            <div class="document-section-label final">
+
+                                                <i class="fa-solid fa-circle-check"></i>
+
+                                                Final Manager-Signed Documents
+
+                                            </div>
+
+
+                                            {% if procurement.manager_quotation_document
+                                                  and procurement.manager_quotation_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.manager_quotation_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document final-document"
+                                                >
+
+                                                    <i class="fa-solid fa-file-circle-check"></i>
+
+                                                    Manager-Signed Quotation
+
+                                                </a>
+
+                                            {% endif %}
+
+
+                                            {% if procurement.manager_lpo_document
+                                                  and procurement.manager_lpo_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.manager_lpo_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document final-document"
+                                                >
+
+                                                    <i class="fa-solid fa-file-signature"></i>
+
+                                                    Manager-Signed LPO
+
+                                                </a>
+
+                                            {% endif %}
+
+
+                                            {% if not (
+                                                (
+                                                    procurement.manager_quotation_document
+                                                    and
+                                                    procurement.manager_quotation_document.file_url
+                                                )
+                                                or
+                                                (
+                                                    procurement.manager_lpo_document
+                                                    and
+                                                    procurement.manager_lpo_document.file_url
+                                                )
+                                            ) %}
+
+                                                <span class="no-document">
+                                                    Final Manager-signed quotation/LPO documents not found.
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        {% else %}
+
+                                            <!-- ACCOUNT-STAMPED QUOTATION DOCUMENTS -->
+
+                                            <div class="document-section-label">
+
+                                                <i class="fa-solid fa-file-circle-check"></i>
+
+                                                Account-Stamped Documents
+
+                                            </div>
+
+
+                                            {% if procurement.quotation_document
+                                                  and procurement.quotation_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.quotation_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document"
+                                                >
+
+                                                    <i class="fa-solid fa-file-pdf"></i>
+
+                                                    Account Quotation
+
+                                                </a>
+
+                                            {% endif %}
+
+
+                                            {% if procurement.lpo_document
+                                                  and procurement.lpo_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.lpo_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document secondary"
+                                                >
+
+                                                    <i class="fa-solid fa-file-signature"></i>
+
+                                                    Account LPO
+
+                                                </a>
+
+                                            {% endif %}
+
+
+                                            {% if not (
+                                                (
+                                                    procurement.quotation_document
+                                                    and
+                                                    procurement.quotation_document.file_url
+                                                )
+                                                or
+                                                (
+                                                    procurement.lpo_document
+                                                    and
+                                                    procurement.lpo_document.file_url
+                                                )
+                                            ) %}
+
+                                                <span class="no-document">
+                                                    No Account-stamped quotation/LPO documents
+                                                </span>
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+
+                                    {% elif procurement_method == 'card' %}
+
+                                        {% if procurement_status == 'completed' %}
+
+                                            <!-- MANAGER-SIGNED CARD PAYMENT DOCUMENT -->
+
+                                            <div class="document-section-label final">
+
+                                                <i class="fa-solid fa-circle-check"></i>
+
+                                                Final Manager-Signed Document
+
+                                            </div>
+
+
+                                            {% if procurement.manager_card_payment_document
+                                                  and procurement.manager_card_payment_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.manager_card_payment_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document final-document"
+                                                >
+
+                                                    <i class="fa-solid fa-credit-card"></i>
+
+                                                    Manager-Signed Card Payment Evidence
+
+                                                </a>
+
+                                            {% else %}
+
+                                                <span class="no-document">
+                                                    Manager-signed card payment evidence not found.
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        {% else %}
+
+                                            <!-- ACCOUNT-STAMPED CARD PAYMENT DOCUMENT -->
+
+                                            <div class="document-section-label">
+
+                                                <i class="fa-solid fa-file-circle-check"></i>
+
+                                                Account-Stamped Document
+
+                                            </div>
+
+
+                                            {% if procurement.card_payment_document
+                                                  and procurement.card_payment_document.file_url %}
+
+                                                <a
+                                                    href="{{ procurement.card_payment_document.file_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="view-document"
+                                                >
+
+                                                    <i class="fa-solid fa-credit-card"></i>
+
+                                                    Account Card Payment Evidence
+
+                                                </a>
+
+                                            {% else %}
+
+                                                <span class="no-document">
+                                                    No Account-stamped card payment evidence
+                                                </span>
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+
+                                    {% else %}
+
+                                        <span class="no-document">
+                                            Unsupported procurement method
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 PROCUREMENT STATUS
+                            ================================================= -->
+
+                            <td>
+
+                                {% if procurement_status == 'pending manager review' %}
+
+                                    <span class="status-badge status-manager-review">
+
+                                        <i class="fa-solid fa-user-tie"></i>
+
+                                        Pending Manager Review
+
+                                    </span>
+
+
+                                {% elif procurement_status == 'completed' %}
+
+                                    <span class="status-badge status-completed">
+
+                                        <i class="fa-solid fa-check-double"></i>
+
+                                        Completed
+
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="status-badge status-pending-engineer">
+
+                                        <i class="fa-solid fa-circle-info"></i>
+
+                                        {{ procurement.status or 'Unknown' }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 PROCUREMENT ACTION
+                            ================================================= -->
+
+                            <td>
+
+                                {% if procurement_status == 'pending manager review' %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'construction_manager_procurement_review',
+                                            procurement_id=procurement.id
+                                        ) }}"
+                                        class="action-btn review-btn"
+                                    >
+
+                                        <i class="fa-solid fa-file-signature"></i>
+
+                                        Review & Sign
+
+                                    </a>
+
+
+                                {% elif procurement_status == 'completed' %}
+
+                                    <span
+                                        class="action-btn completed-btn"
+                                        title="Manager signing completed. This procurement is at its final stage."
+                                    >
+
+                                        <i class="fa-solid fa-check-double"></i>
+
+                                        Completed
+
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="action-btn view-btn">
+
+                                        <i class="fa-solid fa-clock"></i>
+
+                                        {{ procurement.status or 'View' }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- PROCUREMENT FOOTER -->
+
+        <div class="table-footer">
+
+            <div
+                class="pagination-info"
+                id="procurementPaginationInfo"
+            >
+                Showing 0 to 0 of 0 entries
+            </div>
+
+            <div
+                class="pagination"
+                id="procurementPagination"
+            ></div>
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-file-circle-check"></i>
+
+            <h3>
+                No Procurement Packages Found
+            </h3>
+
+            <p>
+                There are currently no procurement packages awaiting or completed at Manager level.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
 
-    /* High-Performance Table Manager with Search + Pagination + Auto-Scroll */
+    document.addEventListener("DOMContentLoaded", function () {
 
-    function initializeTableManager(config) {
+        /* =================================================
+           MOBILE SIDEBAR
+        ================================================= */
 
-        const input =
-            document.getElementById(config.inputId);
+        const sidebar =
+            document.getElementById("sidebar");
 
-        const clearBtn =
-            document.getElementById(config.clearBtnId);
+        const overlay =
+            document.getElementById("sidebarOverlay");
 
-        const tbody =
-            document.getElementById(config.tbodyId);
-
-        const badge =
-            document.getElementById(config.badgeId);
-
-        const paginationInfo =
-            document.getElementById(config.paginationInfoId);
-
-        const paginationControls =
-            document.getElementById(config.paginationControlsId);
-
-        const pageSizeSelect =
-            document.getElementById(config.pageSizeSelectId);
-
-        const sectionElement =
-            document.getElementById(config.sectionId);
+        const menuButton =
+            document.getElementById("mobileMenuButton");
 
 
-        if (!tbody) return;
+        function openSidebar() {
 
-
-        const allRows =
-            Array.from(
-                tbody.querySelectorAll(
-                    "." + config.rowClass
-                )
-            );
-
-
-        let filteredRows = [...allRows];
-
-        let currentPage = 1;
-
-        let pageSize =
-            parseInt(
-                pageSizeSelect
-                    ? pageSizeSelect.value
-                    : 10
-            ) || 10;
-
-
-        function updateDisplay(shouldScroll = false) {
-
-            /* Remove existing no-match placeholder */
-
-            const existingNoMatch =
-                tbody.querySelector(".no-match-row");
-
-            if (existingNoMatch) {
-                existingNoMatch.remove();
+            if (sidebar) {
+                sidebar.classList.add("open");
             }
 
-
-            const totalFiltered =
-                filteredRows.length;
-
-
-            const isAll =
-                (
-                    pageSizeSelect &&
-                    pageSizeSelect.value === "all"
-                );
-
-
-            const effectivePageSize =
-                isAll
-                    ? (totalFiltered || 1)
-                    : pageSize;
-
-
-            const totalPages =
-                Math.ceil(
-                    totalFiltered /
-                    effectivePageSize
-                ) || 1;
-
-
-            if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
-
-            if (currentPage < 1) {
-                currentPage = 1;
-            }
-
-
-            const startIndex =
-                (currentPage - 1) *
-                effectivePageSize;
-
-
-            const endIndex =
-                isAll
-                    ? totalFiltered
-                    : Math.min(
-                        startIndex +
-                        effectivePageSize,
-                        totalFiltered
-                    );
-
-
-            /* Hide all rows first */
-
-            allRows.forEach(row => {
-
-                row.classList.add(
-                    "page-hidden"
-                );
-
-            });
-
-
-            /* Show current page subset */
-
-            filteredRows
-                .slice(startIndex, endIndex)
-                .forEach((row, idx) => {
-
-                    row.classList.remove(
-                        "page-hidden"
-                    );
-
-
-                    const snCell =
-                        row.querySelector(
-                            "." +
-                            config.snCellClass
-                        );
-
-
-                    if (snCell) {
-
-                        const realIndex =
-                            startIndex +
-                            idx +
-                            1;
-
-
-                        snCell.textContent =
-                            realIndex < 10
-                                ? "0" + realIndex
-                                : realIndex;
-
-                    }
-
-                });
-
-
-            /* Update Badge Count */
-
-            if (badge) {
-
-                const query =
-                    input
-                        ? input.value.trim()
-                        : "";
-
-
-                if (query === "") {
-
-                    badge.textContent =
-                        `${allRows.length} ${
-                            allRows.length === 1
-                                ? config.labelSingular
-                                : config.labelPlural
-                        }`;
-
-                } else {
-
-                    badge.textContent =
-                        `${totalFiltered} of ${allRows.length} found`;
-
-                }
-
-            }
-
-
-            /* Update Pagination Info */
-
-            if (paginationInfo) {
-
-                if (totalFiltered === 0) {
-
-                    paginationInfo.innerHTML =
-                        `Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> entries`;
-
-                } else {
-
-                    paginationInfo.innerHTML =
-                        `Showing <strong>${startIndex + 1}</strong> to <strong>${endIndex}</strong> of <strong>${totalFiltered}</strong> entries`;
-
-                }
-
-            }
-
-
-            /* Render Pagination Buttons */
-
-            renderPaginationControls(
-                totalPages
-            );
-
-
-            /* Smoothly scroll back to section */
-
-            if (
-                shouldScroll &&
-                sectionElement
-            ) {
-
-                sectionElement.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-
-
-            /* Show clean no-match row */
-
-            if (
-                totalFiltered === 0 &&
-                input &&
-                input.value.trim() !== ""
-            ) {
-
-                const noMatchRow =
-                    document.createElement("tr");
-
-
-                noMatchRow.className =
-                    "no-match-row";
-
-
-                const colCount =
-                    allRows[0]
-                        ? allRows[0].cells.length
-                        : 10;
-
-
-                noMatchRow.innerHTML = `
-                    <td colspan="${colCount}">
-                        <div class="py-4 text-center">
-                            <i class="fas fa-search text-muted mb-2 fs-5"></i>
-                            <div>
-                                No matching records found for
-                                "<strong>${escapeHtml(input.value)}</strong>"
-                            </div>
-                        </div>
-                    </td>
-                `;
-
-
-                tbody.appendChild(
-                    noMatchRow
-                );
-
+            if (overlay) {
+                overlay.classList.add("open");
             }
 
         }
 
 
-        function renderPaginationControls(
-            totalPages
+        function closeSidebar() {
+
+            if (sidebar) {
+                sidebar.classList.remove("open");
+            }
+
+            if (overlay) {
+                overlay.classList.remove("open");
+            }
+
+        }
+
+
+        if (menuButton) {
+
+            menuButton.addEventListener(
+                "click",
+                openSidebar
+            );
+
+        }
+
+
+        if (overlay) {
+
+            overlay.addEventListener(
+                "click",
+                closeSidebar
+            );
+
+        }
+
+
+        /* =================================================
+           GENERIC PAGINATION FUNCTION
+        ================================================= */
+
+        function createPageButton(
+            label,
+            page,
+            disabled,
+            active,
+            renderFunction
         ) {
 
-            if (!paginationControls) {
-                return;
-            }
-
-
-            paginationControls.innerHTML = "";
-
-
-            if (
-                totalPages <= 1 &&
-                (
-                    pageSizeSelect &&
-                    pageSizeSelect.value === "all"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            /* Previous Button */
-
-            const prevBtn =
+            const button =
                 document.createElement("button");
 
+            button.type = "button";
 
-            prevBtn.type = "button";
+            button.className = "page-btn";
 
-            prevBtn.className =
-                "pagination-btn";
+            if (active) {
+                button.classList.add("active");
+            }
 
+            button.textContent = label;
 
-            prevBtn.innerHTML =
-                `<i class="fas fa-chevron-left me-1"></i> Prev`;
-
-
-            prevBtn.disabled =
-                currentPage === 1;
+            button.disabled = disabled;
 
 
-            prevBtn.addEventListener(
-                "click",
-                () => {
+            if (!disabled) {
 
-                    if (currentPage > 1) {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                        currentPage--;
-
-                        updateDisplay(true);
+                        renderFunction(page);
 
                     }
-
-                }
-            );
-
-
-            paginationControls.appendChild(
-                prevBtn
-            );
-
-
-            /* Numbered Page Buttons */
-
-            let startPage =
-                Math.max(
-                    1,
-                    currentPage - 2
                 );
-
-
-            let endPage =
-                Math.min(
-                    totalPages,
-                    startPage + 4
-                );
-
-
-            if (
-                endPage - startPage < 4
-            ) {
-
-                startPage =
-                    Math.max(
-                        1,
-                        endPage - 4
-                    );
 
             }
+
+            return button;
+
+        }
+
+
+        function getPaginationPages(
+            totalPages,
+            currentPage
+        ) {
+
+            const pages = [];
+
+
+            if (totalPages <= 7) {
+
+                for (
+                    let i = 1;
+                    i <= totalPages;
+                    i++
+                ) {
+
+                    pages.push(i);
+
+                }
+
+                return pages;
+
+            }
+
+
+            pages.push(1);
+
+
+            if (currentPage > 4) {
+                pages.push("...");
+            }
+
+
+            const start =
+                Math.max(
+                    2,
+                    currentPage - 1
+                );
+
+
+            const end =
+                Math.min(
+                    totalPages - 1,
+                    currentPage + 1
+                );
 
 
             for (
-                let i = startPage;
-                i <= endPage;
+                let i = start;
+                i <= end;
                 i++
             ) {
 
-                const pageBtn =
-                    document.createElement("button");
+                pages.push(i);
+
+            }
 
 
-                pageBtn.type = "button";
+            if (
+                currentPage <
+                totalPages - 3
+            ) {
 
-                pageBtn.className =
-                    `pagination-btn ${
-                        i === currentPage
-                            ? "active"
+                pages.push("...");
+
+            }
+
+
+            pages.push(totalPages);
+
+            return pages;
+
+        }
+
+
+        /* =================================================
+           MATERIAL REQUEST TABLE
+           UNCHANGED
+        ================================================= */
+
+        const tableBody =
+            document.getElementById(
+                "requestTableBody"
+            );
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+        const pageSizeSelect =
+            document.getElementById(
+                "pageSize"
+            );
+
+        const paginationInfo =
+            document.getElementById(
+                "paginationInfo"
+            );
+
+        const pagination =
+            document.getElementById(
+                "pagination"
+            );
+
+
+        if (tableBody) {
+
+            const allRows =
+                Array.from(
+                    tableBody.querySelectorAll(
+                        ".request-row"
+                    )
+                );
+
+
+            const filterButtons =
+                Array.from(
+                    document.querySelectorAll(
+                        ".filter-btn:not(.procurement-filter-btn)"
+                    )
+                );
+
+
+            let currentFilter = "all";
+
+            let currentPage = 1;
+
+
+            let pageSize =
+                parseInt(
+                    pageSizeSelect
+                        ? pageSizeSelect.value
+                        : "7",
+                    10
+                );
+
+
+            const statusMap = {
+
+                "engineer-approved":
+                    "Pending Manager Approval",
+
+                "manager-approved":
+                    "Approved",
+
+                "declined":
+                    "Declined",
+
+                "completed":
+                    "Completed"
+
+            };
+
+
+            function normalizeText(value) {
+
+                return (value || "")
+                    .toString()
+                    .toLowerCase()
+                    .trim();
+
+            }
+
+
+            function getFilteredRows() {
+
+                const searchTerm =
+                    normalizeText(
+                        searchInput
+                            ? searchInput.value
                             : ""
-                    }`;
+                    );
 
 
-                pageBtn.textContent = i;
+                return allRows.filter(
+                    function (row) {
+
+                        const rowStatus =
+                            (
+                                row.dataset.status ||
+                                ""
+                            ).trim();
 
 
-                pageBtn.addEventListener(
-                    "click",
-                    () => {
+                        const rowSearch =
+                            normalizeText(
+                                row.dataset.search
+                            );
+
+
+                        let matchesStatus = true;
+
 
                         if (
-                            currentPage !== i
+                            currentFilter !==
+                            "all"
                         ) {
 
-                            currentPage = i;
+                            const expectedStatus =
+                                statusMap[
+                                    currentFilter
+                                ];
 
-                            updateDisplay(true);
+
+                            matchesStatus =
+                                rowStatus ===
+                                expectedStatus;
+
+                        }
+
+
+                        const matchesSearch =
+                            !searchTerm ||
+                            rowSearch.includes(
+                                searchTerm
+                            );
+
+
+                        return (
+                            matchesStatus &&
+                            matchesSearch
+                        );
+
+                    }
+                );
+
+            }
+
+
+            function showNoResultsRow() {
+
+                let noResults =
+                    tableBody.querySelector(
+                        ".no-results-row"
+                    );
+
+
+                if (!noResults) {
+
+                    noResults =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    noResults.className =
+                        "no-results-row";
+
+
+                    noResults.innerHTML = `
+                        <td colspan="9">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            No material requests match your search or selected filter.
+                        </td>
+                    `;
+
+
+                    tableBody.appendChild(
+                        noResults
+                    );
+
+                }
+
+            }
+
+
+            function removeNoResultsRow() {
+
+                const noResults =
+                    tableBody.querySelector(
+                        ".no-results-row"
+                    );
+
+
+                if (noResults) {
+                    noResults.remove();
+                }
+
+            }
+
+
+            function renderPagination(
+                totalItems
+            ) {
+
+                if (!pagination) {
+                    return;
+                }
+
+
+                pagination.innerHTML = "";
+
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            totalItems /
+                            pageSize
+                        )
+                    );
+
+
+                if (
+                    currentPage >
+                    totalPages
+                ) {
+
+                    currentPage =
+                        totalPages;
+
+                }
+
+
+                pagination.appendChild(
+                    createPageButton(
+                        "‹",
+                        currentPage - 1,
+                        currentPage === 1,
+                        false,
+                        function (page) {
+
+                            currentPage =
+                                page;
+
+                            renderTable();
+
+                        }
+                    )
+                );
+
+
+                const pages =
+                    getPaginationPages(
+                        totalPages,
+                        currentPage
+                    );
+
+
+                pages.forEach(
+                    function (page) {
+
+                        if (page === "...") {
+
+                            const span =
+                                document.createElement(
+                                    "span"
+                                );
+
+
+                            span.className =
+                                "page-ellipsis";
+
+
+                            span.textContent =
+                                "…";
+
+
+                            pagination.appendChild(
+                                span
+                            );
+
+                        } else {
+
+                            pagination.appendChild(
+                                createPageButton(
+                                    page,
+                                    page,
+                                    false,
+                                    page ===
+                                        currentPage,
+                                    function (
+                                        selectedPage
+                                    ) {
+
+                                        currentPage =
+                                            selectedPage;
+
+                                        renderTable();
+
+                                    }
+                                )
+                            );
 
                         }
 
@@ -2870,309 +3158,869 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                paginationControls.appendChild(
-                    pageBtn
+                pagination.appendChild(
+                    createPageButton(
+                        "›",
+                        currentPage + 1,
+                        currentPage === totalPages,
+                        false,
+                        function (page) {
+
+                            currentPage =
+                                page;
+
+                            renderTable();
+
+                        }
+                    )
                 );
 
             }
 
 
-            /* Next Button */
+            function renderTable() {
 
-            const nextBtn =
-                document.createElement("button");
-
-
-            nextBtn.type = "button";
-
-            nextBtn.className =
-                "pagination-btn";
+                const filteredRows =
+                    getFilteredRows();
 
 
-            nextBtn.innerHTML =
-                `Next <i class="fas fa-chevron-right ms-1"></i>`;
+                const totalItems =
+                    filteredRows.length;
 
 
-            nextBtn.disabled =
-                currentPage === totalPages;
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            totalItems /
+                            pageSize
+                        )
+                    );
 
 
-            nextBtn.addEventListener(
-                "click",
-                () => {
+                if (
+                    currentPage >
+                    totalPages
+                ) {
+
+                    currentPage =
+                        totalPages;
+
+                }
+
+
+                allRows.forEach(
+                    function (row) {
+
+                        row.style.display =
+                            "none";
+
+                    }
+                );
+
+
+                removeNoResultsRow();
+
+
+                if (totalItems === 0) {
+
+                    showNoResultsRow();
+
+
+                    if (paginationInfo) {
+
+                        paginationInfo.textContent =
+                            "Showing 0 to 0 of 0 entries";
+
+                    }
+
+
+                    renderPagination(0);
+
+                    return;
+
+                }
+
+
+                const startIndex =
+                    (
+                        currentPage - 1
+                    ) *
+                    pageSize;
+
+
+                const endIndex =
+                    Math.min(
+                        startIndex +
+                            pageSize,
+                        totalItems
+                    );
+
+
+                const visibleRows =
+                    filteredRows.slice(
+                        startIndex,
+                        endIndex
+                    );
+
+
+                visibleRows.forEach(
+                    function (row, index) {
+
+                        row.style.display =
+                            "";
+
+
+                        const serialCell =
+                            row.querySelector(
+                                ".serial-number"
+                            );
+
+
+                        if (serialCell) {
+
+                            serialCell.textContent =
+                                startIndex +
+                                index +
+                                1;
+
+                        }
+
+                    }
+                );
+
+
+                if (paginationInfo) {
+
+                    paginationInfo.textContent =
+                        `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} entries`;
+
+                }
+
+
+                renderPagination(
+                    totalItems
+                );
+
+            }
+
+
+            filterButtons.forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            filterButtons.forEach(
+                                function (btn) {
+
+                                    btn.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            currentFilter =
+                                button.dataset.statusKey ||
+                                "all";
+
+
+                            currentPage = 1;
+
+
+                            renderTable();
+
+                        }
+                    );
+
+                }
+            );
+
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        currentPage = 1;
+
+                        renderTable();
+
+                    }
+                );
+
+            }
+
+
+            if (pageSizeSelect) {
+
+                pageSizeSelect.addEventListener(
+                    "change",
+                    function () {
+
+                        pageSize =
+                            parseInt(
+                                this.value,
+                                10
+                            );
+
+
+                        currentPage = 1;
+
+                        renderTable();
+
+                    }
+                );
+
+            }
+
+
+            renderTable();
+
+        }
+
+
+        /* =================================================
+           PROCUREMENT TABLE
+           UPDATED ONLY FOR METHOD + STATUS FILTERING
+        ================================================= */
+
+        const procurementTableBody =
+            document.getElementById(
+                "procurementTableBody"
+            );
+
+
+        const procurementSearchInput =
+            document.getElementById(
+                "procurementSearchInput"
+            );
+
+
+        const procurementPageSizeSelect =
+            document.getElementById(
+                "procurementPageSize"
+            );
+
+
+        const procurementPaginationInfo =
+            document.getElementById(
+                "procurementPaginationInfo"
+            );
+
+
+        const procurementPagination =
+            document.getElementById(
+                "procurementPagination"
+            );
+
+
+        if (procurementTableBody) {
+
+            const procurementRows =
+                Array.from(
+                    procurementTableBody.querySelectorAll(
+                        ".procurement-row"
+                    )
+                );
+
+
+            const procurementFilterButtons =
+                Array.from(
+                    document.querySelectorAll(
+                        ".procurement-filter-btn"
+                    )
+                );
+
+
+            let procurementStatusFilter =
+                "all";
+
+
+            let procurementMethodFilter =
+                "all";
+
+
+            let procurementCurrentPage =
+                1;
+
+
+            let procurementPageSize =
+                parseInt(
+                    procurementPageSizeSelect
+                        ? procurementPageSizeSelect.value
+                        : "7",
+                    10
+                );
+
+
+            function getFilteredProcurements() {
+
+                const searchTerm =
+                    (
+                        procurementSearchInput
+                            ? procurementSearchInput.value
+                            : ""
+                    )
+                    .toString()
+                    .toLowerCase()
+                    .trim();
+
+
+                return procurementRows.filter(
+                    function (row) {
+
+                        const rowStatus =
+                            (
+                                row.dataset.status ||
+                                ""
+                            )
+                            .toString()
+                            .toLowerCase()
+                            .trim();
+
+
+                        const rowMethod =
+                            (
+                                row.dataset.method ||
+                                ""
+                            )
+                            .toString()
+                            .toLowerCase()
+                            .trim();
+
+
+                        const rowSearch =
+                            (
+                                row.dataset.search ||
+                                ""
+                            )
+                            .toString()
+                            .toLowerCase()
+                            .trim();
+
+
+                        let matchesStatus =
+                            true;
+
+
+                        if (
+                            procurementStatusFilter !==
+                            "all"
+                        ) {
+
+                            matchesStatus =
+                                rowStatus ===
+                                procurementStatusFilter;
+
+                        }
+
+
+                        let matchesMethod =
+                            true;
+
+
+                        if (
+                            procurementMethodFilter !==
+                            "all"
+                        ) {
+
+                            matchesMethod =
+                                rowMethod ===
+                                procurementMethodFilter;
+
+                        }
+
+
+                        const matchesSearch =
+                            !searchTerm ||
+                            rowSearch.includes(
+                                searchTerm
+                            );
+
+
+                        return (
+                            matchesStatus &&
+                            matchesMethod &&
+                            matchesSearch
+                        );
+
+                    }
+                );
+
+            }
+
+
+            function showProcurementNoResults() {
+
+                let noResults =
+                    procurementTableBody.querySelector(
+                        ".no-results-row"
+                    );
+
+
+                if (!noResults) {
+
+                    noResults =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    noResults.className =
+                        "no-results-row";
+
+
+                    noResults.innerHTML = `
+                        <td colspan="8">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            No procurement packages match your search or selected filter.
+                        </td>
+                    `;
+
+
+                    procurementTableBody.appendChild(
+                        noResults
+                    );
+
+                }
+
+            }
+
+
+            function removeProcurementNoResults() {
+
+                const noResults =
+                    procurementTableBody.querySelector(
+                        ".no-results-row"
+                    );
+
+
+                if (noResults) {
+                    noResults.remove();
+                }
+
+            }
+
+
+            function renderProcurementPagination(
+                totalItems
+            ) {
+
+                if (!procurementPagination) {
+                    return;
+                }
+
+
+                procurementPagination.innerHTML =
+                    "";
+
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            totalItems /
+                            procurementPageSize
+                        )
+                    );
+
+
+                if (
+                    procurementCurrentPage >
+                    totalPages
+                ) {
+
+                    procurementCurrentPage =
+                        totalPages;
+
+                }
+
+
+                procurementPagination.appendChild(
+                    createPageButton(
+                        "‹",
+                        procurementCurrentPage - 1,
+                        procurementCurrentPage === 1,
+                        false,
+                        function (page) {
+
+                            procurementCurrentPage =
+                                page;
+
+                            renderProcurementTable();
+
+                        }
+                    )
+                );
+
+
+                const pages =
+                    getPaginationPages(
+                        totalPages,
+                        procurementCurrentPage
+                    );
+
+
+                pages.forEach(
+                    function (page) {
+
+                        if (page === "...") {
+
+                            const span =
+                                document.createElement(
+                                    "span"
+                                );
+
+
+                            span.className =
+                                "page-ellipsis";
+
+
+                            span.textContent =
+                                "…";
+
+
+                            procurementPagination.appendChild(
+                                span
+                            );
+
+                        } else {
+
+                            procurementPagination.appendChild(
+                                createPageButton(
+                                    page,
+                                    page,
+                                    false,
+                                    page ===
+                                        procurementCurrentPage,
+                                    function (
+                                        selectedPage
+                                    ) {
+
+                                        procurementCurrentPage =
+                                            selectedPage;
+
+                                        renderProcurementTable();
+
+                                    }
+                                )
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                procurementPagination.appendChild(
+                    createPageButton(
+                        "›",
+                        procurementCurrentPage + 1,
+                        procurementCurrentPage === totalPages,
+                        false,
+                        function (page) {
+
+                            procurementCurrentPage =
+                                page;
+
+                            renderProcurementTable();
+
+                        }
+                    )
+                );
+
+            }
+
+
+            function renderProcurementTable() {
+
+                const filteredRows =
+                    getFilteredProcurements();
+
+
+                const totalItems =
+                    filteredRows.length;
+
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            totalItems /
+                            procurementPageSize
+                        )
+                    );
+
+
+                if (
+                    procurementCurrentPage >
+                    totalPages
+                ) {
+
+                    procurementCurrentPage =
+                        totalPages;
+
+                }
+
+
+                procurementRows.forEach(
+                    function (row) {
+
+                        row.style.display =
+                            "none";
+
+                    }
+                );
+
+
+                removeProcurementNoResults();
+
+
+                if (totalItems === 0) {
+
+                    showProcurementNoResults();
+
 
                     if (
-                        currentPage < totalPages
+                        procurementPaginationInfo
                     ) {
 
-                        currentPage++;
-
-                        updateDisplay(true);
+                        procurementPaginationInfo.textContent =
+                            "Showing 0 to 0 of 0 entries";
 
                     }
 
+
+                    renderProcurementPagination(
+                        0
+                    );
+
+                    return;
+
                 }
-            );
 
 
-            paginationControls.appendChild(
-                nextBtn
-            );
-
-        }
-
-
-        function filterRows() {
-
-            const query =
-                input
-                    ? input.value.trim().toLowerCase()
-                    : "";
+                const startIndex =
+                    (
+                        procurementCurrentPage -
+                        1
+                    ) *
+                    procurementPageSize;
 
 
-            if (clearBtn) {
+                const endIndex =
+                    Math.min(
+                        startIndex +
+                            procurementPageSize,
+                        totalItems
+                    );
 
-                clearBtn.style.display =
-                    query.length > 0
-                        ? "inline-flex"
-                        : "none";
+
+                const visibleRows =
+                    filteredRows.slice(
+                        startIndex,
+                        endIndex
+                    );
+
+
+                visibleRows.forEach(
+                    function (row, index) {
+
+                        row.style.display =
+                            "";
+
+
+                        const serialCell =
+                            row.querySelector(
+                                ".serial-number"
+                            );
+
+
+                        if (serialCell) {
+
+                            serialCell.textContent =
+                                startIndex +
+                                index +
+                                1;
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    procurementPaginationInfo
+                ) {
+
+                    procurementPaginationInfo.textContent =
+                        `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} entries`;
+
+                }
+
+
+                renderProcurementPagination(
+                    totalItems
+                );
 
             }
 
 
-            filteredRows =
-                allRows.filter(row => {
+            procurementFilterButtons.forEach(
+                function (button) {
 
-                    const text =
-                        row.innerText.toLowerCase();
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            procurementFilterButtons.forEach(
+                                function (btn) {
+
+                                    btn.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
 
 
-                    const matches =
-                        (
-                            query === "" ||
-                            text.includes(query)
-                        );
+                            button.classList.add(
+                                "active"
+                            );
 
 
-                    if (matches) {
+                            procurementStatusFilter =
+                                (
+                                    button.dataset.procurementStatus ||
+                                    "all"
+                                )
+                                .toString()
+                                .toLowerCase()
+                                .trim();
 
-                        row.classList.remove(
-                            "search-hidden"
-                        );
 
-                    } else {
+                            procurementMethodFilter =
+                                (
+                                    button.dataset.procurementMethod ||
+                                    "all"
+                                )
+                                .toString()
+                                .toLowerCase()
+                                .trim();
 
-                        row.classList.add(
-                            "search-hidden"
-                        );
+
+                            procurementCurrentPage =
+                                1;
+
+
+                            renderProcurementTable();
+
+                        }
+                    );
+
+                }
+            );
+
+
+            if (procurementSearchInput) {
+
+                procurementSearchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        procurementCurrentPage =
+                            1;
+
+                        renderProcurementTable();
 
                     }
-
-
-                    return matches;
-
-                });
-
-
-            currentPage = 1;
-
-            updateDisplay(false);
-
-        }
-
-
-        function escapeHtml(str) {
-
-            return str
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
                 );
 
-        }
+            }
 
 
-        /* =====================================================
-           EVENT LISTENERS
-        ===================================================== */
+            if (procurementPageSizeSelect) {
 
-        if (input) {
+                procurementPageSizeSelect.addEventListener(
+                    "change",
+                    function () {
 
-            input.addEventListener(
-                "input",
-                filterRows
-            );
+                        procurementPageSize =
+                            parseInt(
+                                this.value,
+                                10
+                            );
 
 
-            input.addEventListener(
-                "keydown",
-                function (e) {
+                        procurementCurrentPage =
+                            1;
 
-                    if (e.key === "Escape") {
 
-                        input.value = "";
-
-                        filterRows();
-
-                        input.blur();
+                        renderProcurementTable();
 
                     }
+                );
 
-                }
-            );
-
-        }
+            }
 
 
-        if (clearBtn) {
-
-            clearBtn.addEventListener(
-                "click",
-                function () {
-
-                    input.value = "";
-
-                    filterRows();
-
-                    input.focus();
-
-                }
-            );
+            renderProcurementTable();
 
         }
 
 
-        if (pageSizeSelect) {
+        /* =================================================
+           AUTO-HIDE FLASH MESSAGES
+        ================================================= */
 
-            pageSizeSelect.addEventListener(
-                "change",
-                function () {
+        setTimeout(
+            function () {
 
-                    pageSize =
-                        this.value === "all"
-                            ? allRows.length
-                            : parseInt(this.value);
+                document
+                    .querySelectorAll(
+                        ".flash-message"
+                    )
+                    .forEach(
+                        function (message) {
 
-
-                    currentPage = 1;
-
-                    updateDisplay(true);
-
-                }
-            );
-
-        }
+                            message.style.transition =
+                                "opacity 0.4s ease";
 
 
-        /* Initial Render */
-
-        updateDisplay(false);
-
-    }
+                            message.style.opacity =
+                                "0";
 
 
-    /* =========================================================
-       1. MATERIAL REQUESTS
-    ========================================================= */
+                            setTimeout(
+                                function () {
 
-    initializeTableManager({
+                                    message.remove();
 
-        inputId:
-            "materialRequestsSearchInput",
+                                },
+                                400
+                            );
 
-        clearBtnId:
-            "clearMaterialSearch",
+                        }
+                    );
 
-        rowClass:
-            "searchable-material-row",
-
-        tbodyId:
-            "materialRequestsTableBody",
-
-        badgeId:
-            "materialRequestsBadge",
-
-        paginationInfoId:
-            "materialPaginationInfo",
-
-        paginationControlsId:
-            "materialPaginationControls",
-
-        pageSizeSelectId:
-            "materialPageSizeSelect",
-
-        sectionId:
-            "materialRequestsSection",
-
-        snCellClass:
-            "material-sn-cell",
-
-        labelSingular:
-            "request",
-
-        labelPlural:
-            "requests"
+            },
+            5000
+        );
 
     });
 
-
-    /* =========================================================
-       2. SUPPLIER QUOTATIONS
-    ========================================================= */
-
-    initializeTableManager({
-
-        inputId:
-            "supplierQuotationsSearchInput",
-
-        clearBtnId:
-            "clearQuotationSearch",
-
-        rowClass:
-            "searchable-quotation-row",
-
-        tbodyId:
-            "supplierQuotationsTableBody",
-
-        badgeId:
-            "supplierQuotationsBadge",
-
-        paginationInfoId:
-            "quotationPaginationInfo",
-
-        paginationControlsId:
-            "quotationPaginationControls",
-
-        pageSizeSelectId:
-            "quotationPageSizeSelect",
-
-        sectionId:
-            "supplierQuotationsSection",
-
-        snCellClass:
-            "quotation-sn-cell",
-
-        labelSingular:
-            "quotation",
-
-        labelPlural:
-            "quotations"
-
-    });
-
-});
 </script>
 
-{% endblock %}
+</body>
+
+</html>

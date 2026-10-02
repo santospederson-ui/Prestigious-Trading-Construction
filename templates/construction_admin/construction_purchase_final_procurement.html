@@ -1,0 +1,2996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Final Procurement | Prestigious Construction</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --maroon: #7b1e2b;
+            --maroon-dark: #5e1520;
+            --gold: #c9a227;
+            --gold-light: #f4e7b2;
+            --green: #198754;
+            --orange: #d97706;
+            --red: #b42318;
+            --cream: #faf8f3;
+            --white: #ffffff;
+            --dark: #202124;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+        }
+
+        /* ==================================================
+           SIDEBAR
+        ================================================== */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 270px;
+            background: var(--maroon);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+
+        .sidebar-brand h4 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .sidebar-brand small {
+            display: block;
+            margin-top: 5px;
+            opacity: .75;
+        }
+
+        .sidebar-nav {
+            padding: 20px 14px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,.82);
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,.12);
+            color: white;
+        }
+
+        .sidebar-nav i {
+            font-size: 18px;
+        }
+
+        /* ==================================================
+           MAIN
+        ================================================== */
+
+        .main {
+            margin-left: 270px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .topbar-title {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .topbar-user {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .content {
+            padding: 30px;
+            max-width: 1500px;
+        }
+
+        /* ==================================================
+           PAGE HEADER
+        ================================================== */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--maroon-dark);
+        }
+
+        .page-header p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--maroon);
+            border: 1px solid var(--maroon);
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 13px;
+            background: white;
+        }
+
+        .btn-back:hover {
+            background: var(--maroon);
+            color: white;
+        }
+
+        /* ==================================================
+           STATUS BANNER
+        ================================================== */
+
+        .status-banner {
+            background: linear-gradient(
+                135deg,
+                #fff8e1,
+                #fffdf5
+            );
+            border: 1px solid #e7d58a;
+            border-left: 5px solid var(--gold);
+            border-radius: 13px;
+            padding: 20px 22px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .status-banner-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            color: #856404;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .status-banner h5 {
+            margin: 0 0 5px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .status-banner p {
+            margin: 0;
+            color: #665c35;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .correction-banner {
+            background: #fff4f2;
+            border-color: #f2b8b5;
+            border-left-color: var(--red);
+        }
+
+        .correction-banner .status-banner-icon {
+            background: #fde1de;
+            color: var(--red);
+        }
+
+        .completed-banner {
+            background: #f1fbf5;
+            border-color: #b9dec7;
+            border-left-color: var(--green);
+        }
+
+        .completed-banner .status-banner-icon {
+            background: #dff3e7;
+            color: var(--green);
+        }
+
+        /* ==================================================
+           CARDS
+        ================================================== */
+
+        .section-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .section-card-header {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .section-card-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .section-card-header small {
+            color: var(--muted);
+        }
+
+        .section-card-body {
+            padding: 24px;
+        }
+
+        /* ==================================================
+           DETAIL GRID
+        ================================================== */
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .detail-item {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .detail-label {
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .detail-value.highlight {
+            color: var(--maroon);
+            font-size: 16px;
+        }
+
+        /* ==================================================
+           APPROVAL STRIP
+        ================================================== */
+
+        .approval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .approval-box {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .approval-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #e9f7ef;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .approval-title {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .approval-name {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        /* ==================================================
+           FORM
+        ================================================== */
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #4b5563;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 46px;
+            border: 1px solid #d9dde3;
+            border-radius: 9px;
+            font-size: 13px;
+            padding: 10px 12px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--maroon);
+            box-shadow: 0 0 0 3px rgba(123,30,43,.08);
+        }
+
+        .form-control[readonly] {
+            background: #f8f8f8;
+        }
+
+        .form-help {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .form-section-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--maroon-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0 18px;
+        }
+
+        .form-section-title i {
+            color: var(--gold);
+        }
+
+        /* ==================================================
+           PAYMENT METHOD
+        ================================================== */
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .payment-option label {
+            display: block;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .payment-option label:hover {
+            border-color: var(--gold);
+        }
+
+        .payment-option input:checked + label {
+            border-color: var(--maroon);
+            background: #fff9fa;
+        }
+
+        .payment-option-icon {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 7px;
+        }
+
+        .payment-option-title {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .payment-option-description {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* ==================================================
+           PAYMENT BOXES
+        ================================================== */
+
+        .payment-details {
+            display: none;
+            border: 1px solid var(--border);
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 22px;
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        /* ==================================================
+           DOCUMENTS
+        ================================================== */
+
+        .document-required {
+            border: 1px solid #eadca8;
+            background: #fffdf4;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .document-required-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #6d5b16;
+            margin-bottom: 5px;
+        }
+
+        .document-required-text {
+            font-size: 12px;
+            color: #776d42;
+            line-height: 1.6;
+        }
+
+        .document-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .document-box {
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 16px;
+            background: white;
+        }
+
+        .document-box-icon {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 8px;
+        }
+
+        .document-box-title {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .document-box-status {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .document-uploaded {
+            border-color: #a9d8bc;
+            background: #f5fcf7;
+        }
+
+        .document-uploaded .document-box-icon {
+            color: var(--green);
+        }
+
+        .document-current {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: #e9f7ef;
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .document-view-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            color: var(--maroon);
+            font-size: 11px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .document-view-link:hover {
+            color: var(--maroon-dark);
+            text-decoration: underline;
+        }
+
+        .document-upload-label {
+            margin-top: 15px;
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: #4b5563;
+        }
+
+        .document-file-input {
+            margin-top: 6px;
+            font-size: 11px;
+        }
+
+        .document-file-input::file-selector-button {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* ==================================================
+           BUTTONS
+        ================================================== */
+
+        .btn-primary-custom {
+            background: var(--maroon);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--maroon-dark);
+            color: white;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #2f280f;
+            border: none;
+            border-radius: 9px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .btn-gold:hover {
+            background: #b89418;
+            color: #2f280f;
+        }
+
+        .action-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid var(--border);
+            padding-top: 22px;
+            margin-top: 25px;
+        }
+
+        /* ==================================================
+           DOCUMENT HISTORY
+        ================================================== */
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .document-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .document-table th {
+            background: #fafafa;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .document-table td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 12px;
+        }
+
+        .document-table a {
+            color: var(--maroon);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .document-type-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #f4f4f5;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* ==================================================
+           AUDIT
+        ================================================== */
+
+        .audit-item {
+            position: relative;
+            padding: 0 0 20px 28px;
+            border-left: 2px solid #eadfdf;
+            margin-left: 7px;
+        }
+
+        .audit-item:last-child {
+            border-left-color: transparent;
+        }
+
+        .audit-dot {
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--maroon);
+            border: 2px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--maroon);
+        }
+
+        .audit-title {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .audit-description {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .audit-meta {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        /* ==================================================
+           START PANEL
+        ================================================== */
+
+        .start-panel {
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .start-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .start-panel h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .start-panel p {
+            max-width: 650px;
+            margin: 0 auto 20px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* ==================================================
+           COMPLETED PANEL
+        ================================================== */
+
+        .completed-panel {
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .completed-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #dff3e7;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .completed-panel h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .completed-panel p {
+            max-width: 650px;
+            margin: 0 auto 20px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* ==================================================
+           RESPONSIVE
+        ================================================== */
+
+        @media (max-width: 1100px) {
+
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .document-list {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .detail-grid,
+            .approval-grid,
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .action-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-footer .btn,
+            .action-footer .btn-back {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ======================================================
+     SIDEBAR
+====================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <h4>
+            Prestigious
+        </h4>
+
+        <small>
+            Trading & Construction
+        </small>
+
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <a
+            href="{{ url_for('construction_purchase_dashboard') }}"
+        >
+            <i class="bi bi-grid"></i>
+            Purchase Dashboard
+        </a>
+
+        <a
+            href="{{ url_for('construction_purchase_dashboard') }}"
+            class="active"
+        >
+            <i class="bi bi-cart-check"></i>
+            Final Procurement
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="topbar-title">
+            Final Procurement
+        </div>
+
+        <div class="topbar-user">
+
+            <i class="bi bi-person-circle"></i>
+
+            {{ current_user_name }}
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <!-- ==================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Final Procurement
+                </h1>
+
+                <p>
+                    Complete the actual purchase and record the final payment.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('construction_purchase_dashboard') }}"
+                class="btn-back"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Purchase Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        <div class="flash-container">
+
+            {% with messages = get_flashed_messages(
+                with_categories=true
+            ) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert alert-{{ category }} alert-dismissible fade show"
+                            role="alert"
+                        >
+
+                            {{ message }}
+
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                            ></button>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+        </div>
+
+
+        <!-- ==================================================
+             STATUS
+        ================================================== -->
+
+        {% if procurement.status == "Completed" %}
+
+        <div class="status-banner completed-banner">
+
+            <div class="status-banner-icon">
+
+                <i class="bi bi-check-circle"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Final Procurement Completed
+                </h5>
+
+                <p>
+                    This procurement has been completed and the
+                    Material Request has been marked as completed.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% elif procurement.status == "Final Procurement Correction Required" %}
+
+        <div class="status-banner correction-banner">
+
+            <div class="status-banner-icon">
+
+                <i class="bi bi-exclamation-triangle"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Final Procurement Correction Required
+                </h5>
+
+                <p>
+                    This procurement was returned for correction.
+                    Review the information below, make the required
+                    changes, and resubmit the Final Procurement.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="status-banner">
+
+            <div class="status-banner-icon">
+
+                <i class="bi bi-cart-check"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Final Procurement Required
+                </h5>
+
+                <p>
+                    Manager approval has been completed.
+                    Complete the actual purchase, record the final
+                    payment details, and submit the final procurement.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ==================================================
+             ORIGINAL PROCUREMENT DETAILS
+        ================================================== -->
+
+        <section class="section-card">
+
+            <div class="section-card-header">
+
+                <div>
+
+                    <h3>
+                        Original Procurement Details
+                    </h3>
+
+                    <small>
+                        These details come directly from the approved procurement record.
+                    </small>
+
+                </div>
+
+                {% if procurement.status == "Completed" %}
+
+                    <span class="badge text-bg-success">
+                        Completed
+                    </span>
+
+                {% elif procurement.status == "Final Procurement Correction Required" %}
+
+                    <span class="badge text-bg-danger">
+                        Correction Required
+                    </span>
+
+                {% else %}
+
+                    <span class="badge text-bg-warning">
+                        {{ procurement.status }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="section-card-body">
+
+                <div class="detail-grid">
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Material Request
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.request_number or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Project
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.project_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Procurement Method
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.procurement_method or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Supplier
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.supplier_name or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Supplier Contact
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.supplier_contact or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Supplier Email
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.supplier_email or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Quotation Number
+                        </div>
+
+                        <div class="detail-value highlight">
+                            {{ procurement.quotation_number or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Quotation Date
+                        </div>
+
+                        <div class="detail-value">
+                            {{ procurement.quotation_date or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            LPO Number
+                        </div>
+
+                        <div class="detail-value highlight">
+                            {{ procurement.lpo_number or "—" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Approved Amount
+                        </div>
+
+                        <div class="detail-value highlight">
+
+                            {{ procurement.procurement_amount or "—" }}
+
+                            {{ procurement.currency or "" }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Final Procurement Started
+                        </div>
+
+                        <div class="detail-value">
+
+                            {% if procurement.final_purchase_started_at %}
+
+                                {{ procurement.final_purchase_started_at }}
+
+                            {% else %}
+
+                                Not Started
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Procurement ID
+                        </div>
+
+                        <div class="detail-value">
+                            #{{ procurement.id }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             APPROVAL HISTORY
+        ================================================== -->
+
+        <section class="section-card">
+
+            <div class="section-card-header">
+
+                <h3>
+                    Approval Status
+                </h3>
+
+            </div>
+
+            <div class="section-card-body">
+
+                <div class="approval-grid">
+
+                    <div class="approval-box">
+
+                        <div class="approval-icon">
+
+                            <i class="bi bi-check-lg"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="approval-title">
+                                Account Review
+                            </div>
+
+                            <div class="approval-name">
+
+                                {% if procurement.account_reviewer_name %}
+
+                                    {{ procurement.account_reviewer_name }}
+
+                                {% else %}
+
+                                    Approved
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if procurement.account_reviewed_at %}
+
+                            <small class="text-muted">
+
+                                {{ procurement.account_reviewed_at }}
+
+                            </small>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="approval-box">
+
+                        <div class="approval-icon">
+
+                            <i class="bi bi-check-lg"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="approval-title">
+                                Manager Review
+                            </div>
+
+                            <div class="approval-name">
+
+                                {% if procurement.manager_reviewer_name %}
+
+                                    {{ procurement.manager_reviewer_name }}
+
+                                {% else %}
+
+                                    Approved
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if procurement.manager_reviewed_at %}
+
+                            <small class="text-muted">
+
+                                {{ procurement.manager_reviewed_at }}
+
+                            </small>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ORIGINAL QUOTATION / LPO
+        ================================================== -->
+
+        <section class="section-card">
+
+            <div class="section-card-header">
+
+                <div>
+
+                    <h3>
+                        Approved Procurement Documents
+                    </h3>
+
+                    <small>
+                        Original quotation and LPO used for the approved purchase.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="section-card-body">
+
+                <div class="document-list">
+
+                    <!-- QUOTATION -->
+
+                    <div
+                        class="document-box
+                        {% if latest_documents and latest_documents.quotation %}
+                            document-uploaded
+                        {% endif %}"
+                    >
+
+                        <div class="document-box-icon">
+
+                            <i class="bi bi-file-earmark-text"></i>
+
+                        </div>
+
+                        <div class="document-box-title">
+                            Quotation
+                        </div>
+
+                        {% if latest_documents and latest_documents.quotation %}
+
+                            <div class="document-box-status">
+
+                                {{
+                                    latest_documents.quotation.original_file_name
+                                    or latest_documents.quotation.document_title
+                                    or "Quotation"
+                                }}
+
+                            </div>
+
+                            <div class="document-current">
+
+                                <i class="bi bi-check-circle"></i>
+                                Uploaded
+
+                            </div>
+
+                            {% if latest_documents.quotation.file_url %}
+
+                            <br>
+
+                            <a
+                                href="{{ latest_documents.quotation.file_url }}"
+                                target="_blank"
+                                class="document-view-link"
+                            >
+                                <i class="bi bi-eye"></i>
+                                View Quotation
+                            </a>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="document-box-status">
+                                No quotation document found.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- LPO -->
+
+                    <div
+                        class="document-box
+                        {% if latest_documents and latest_documents.lpo %}
+                            document-uploaded
+                        {% endif %}"
+                    >
+
+                        <div class="document-box-icon">
+
+                            <i class="bi bi-file-earmark-check"></i>
+
+                        </div>
+
+                        <div class="document-box-title">
+                            LPO
+                        </div>
+
+                        {% if latest_documents and latest_documents.lpo %}
+
+                            <div class="document-box-status">
+
+                                {{
+                                    latest_documents.lpo.original_file_name
+                                    or latest_documents.lpo.document_title
+                                    or "LPO"
+                                }}
+
+                            </div>
+
+                            <div class="document-current">
+
+                                <i class="bi bi-check-circle"></i>
+                                Uploaded
+
+                            </div>
+
+                            {% if latest_documents.lpo.file_url %}
+
+                            <br>
+
+                            <a
+                                href="{{ latest_documents.lpo.file_url }}"
+                                target="_blank"
+                                class="document-view-link"
+                            >
+                                <i class="bi bi-eye"></i>
+                                View LPO
+                            </a>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="document-box-status">
+                                No LPO document found.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             START FINAL PROCUREMENT
+        ================================================== -->
+
+        {% if
+            procurement.status != "Completed"
+            and not procurement.final_purchase_started_at
+        %}
+
+        <section class="section-card">
+
+            <div class="section-card-body">
+
+                <div class="start-panel">
+
+                    <div class="start-icon">
+
+                        <i class="bi bi-cart-check"></i>
+
+                    </div>
+
+                    <h3>
+                        Start Final Procurement
+                    </h3>
+
+                    <p>
+                        The quotation and LPO have already passed
+                        Account and Manager review. Click below when
+                        you are ready to proceed with the actual
+                        purchase from the supplier.
+                    </p>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'construction_purchase_final_procurement',
+                            procurement_id=procurement.id
+                        ) }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="start_final_procurement"
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary-custom"
+                        >
+                            <i class="bi bi-play-circle me-1"></i>
+                            Start Final Procurement
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% elif procurement.status != "Completed" %}
+
+
+        <!-- ==================================================
+             FINAL PROCUREMENT FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{ url_for(
+                'construction_purchase_final_procurement',
+                procurement_id=procurement.id
+            ) }}"
+            id="finalProcurementForm"
+        >
+
+            <input
+                type="hidden"
+                name="action"
+                value="submit_final_procurement"
+            >
+
+
+            <!-- ==============================================
+                 FINAL PURCHASE DETAILS
+            =============================================== -->
+
+            <section class="section-card">
+
+                <div class="section-card-header">
+
+                    <div>
+
+                        <h3>
+                            Final Purchase Details
+                        </h3>
+
+                        <small>
+                            Enter the actual payment and purchase details.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="section-card-body">
+
+                    <div class="form-section-title">
+
+                        <i class="bi bi-shop"></i>
+
+                        Supplier & Purchase
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Supplier Name
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="{{ procurement.supplier_name or '' }}"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Supplier Contact
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="{{ procurement.supplier_contact or '' }}"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Final Purchase Amount *
+                            </label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                name="procurement_amount"
+                                class="form-control"
+                                value="{{ procurement.procurement_amount or '' }}"
+                                required
+                            >
+
+                            <div class="form-help">
+                                Enter the actual amount paid to the supplier.
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+
+                            <label class="form-label">
+                                Currency *
+                            </label>
+
+                            {% set selected_currency =
+                                procurement.currency or "QAR"
+                            %}
+
+                            <select
+                                name="currency"
+                                class="form-select"
+                                required
+                            >
+
+                                <option
+                                    value="QAR"
+                                    {% if selected_currency == "QAR" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    QAR
+                                </option>
+
+                                <option
+                                    value="USD"
+                                    {% if selected_currency == "USD" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    USD
+                                </option>
+
+                                <option
+                                    value="EUR"
+                                    {% if selected_currency == "EUR" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    EUR
+                                </option>
+
+                                <option
+                                    value="GBP"
+                                    {% if selected_currency == "GBP" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    GBP
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+
+                            <label class="form-label">
+                                Payment Date *
+                            </label>
+
+                            <input
+                                type="date"
+                                name="payment_date"
+                                class="form-control"
+                                value="{% if procurement.payment_date %}{{ procurement.payment_date.strftime('%Y-%m-%d') }}{% endif %}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================================
+                 PAYMENT METHOD
+            =============================================== -->
+
+            <section class="section-card">
+
+                <div class="section-card-header">
+
+                    <div>
+
+                        <h3>
+                            Final Payment
+                        </h3>
+
+                        <small>
+                            Select how the actual purchase was paid.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="section-card-body">
+
+                    <div class="payment-options">
+
+                        <div class="payment-option">
+
+                            <input
+                                type="radio"
+                                id="paymentCard"
+                                name="final_payment_method"
+                                value="Card"
+                                {% if procurement.final_payment_method == "Card" %}
+                                checked
+                                {% endif %}
+                                required
+                            >
+
+                            <label for="paymentCard">
+
+                                <div class="payment-option-icon">
+                                    <i class="bi bi-credit-card"></i>
+                                </div>
+
+                                <div class="payment-option-title">
+                                    Card
+                                </div>
+
+                                <div class="payment-option-description">
+                                    Payment made using the company card.
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="payment-option">
+
+                            <input
+                                type="radio"
+                                id="paymentCheque"
+                                name="final_payment_method"
+                                value="Cheque"
+                                {% if procurement.final_payment_method == "Cheque" %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <label for="paymentCheque">
+
+                                <div class="payment-option-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div class="payment-option-title">
+                                    Cheque
+                                </div>
+
+                                <div class="payment-option-description">
+                                    Payment made using a company cheque.
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CARD DETAILS -->
+
+                    <div
+                        id="cardDetails"
+                        class="payment-details"
+                    >
+
+                        <div class="form-section-title">
+
+                            <i class="bi bi-credit-card"></i>
+
+                            Card Payment Details
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Paid By
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    value="{{ current_user_name }}"
+                                    readonly
+                                >
+
+                                <div class="form-help">
+                                    The logged-in Purchase Officer is automatically recorded.
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Card Payment Date & Time *
+                                </label>
+
+                                <input
+                                    type="datetime-local"
+                                    name="final_card_paid_at"
+                                    class="form-control"
+                                    value="{% if procurement.final_card_paid_at %}{{ procurement.final_card_paid_at.strftime('%Y-%m-%dT%H:%M') }}{% endif %}"
+                                    id="finalCardPaidAt"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Payment Reference *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="final_card_payment_reference"
+                                    class="form-control"
+                                    value="{{ procurement.final_card_payment_reference or '' }}"
+                                    id="finalCardPaymentReference"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CHEQUE DETAILS -->
+
+                    <div
+                        id="chequeDetails"
+                        class="payment-details"
+                    >
+
+                        <div class="form-section-title">
+
+                            <i class="bi bi-receipt"></i>
+
+                            Cheque Details
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Cheque Number *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="cheque_number"
+                                    class="form-control"
+                                    value="{{ procurement.cheque_number or '' }}"
+                                    id="chequeNumber"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Cheque Date *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="cheque_date"
+                                    class="form-control"
+                                    value="{% if procurement.cheque_date %}{{ procurement.cheque_date.strftime('%Y-%m-%d') }}{% endif %}"
+                                    id="chequeDate"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Bank *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="cheque_bank"
+                                    class="form-control"
+                                    value="{{ procurement.cheque_bank or '' }}"
+                                    id="chequeBank"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================================
+                 FINAL DOCUMENTS
+            =============================================== -->
+
+            <section class="section-card">
+
+                <div class="section-card-header">
+
+                    <div>
+
+                        <h3>
+                            Final Procurement Documents
+                        </h3>
+
+                        <small>
+                            Upload the documents proving the actual purchase.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="section-card-body">
+
+                    <div class="document-required">
+
+                        <div class="document-required-title">
+
+                            <i class="bi bi-info-circle me-1"></i>
+
+                            Required Final Evidence
+
+                        </div>
+
+                        <div class="document-required-text">
+
+                            Final Invoice, Final Receipt and Final Payment
+                            Evidence are required before this procurement
+                            can be completed. If a document was already
+                            uploaded, you may leave its upload field empty.
+                            On correction, uploading a new file creates a
+                            new history record while preserving the previous
+                            document.
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-list">
+
+
+                        <!-- ==========================================
+                             FINAL RECEIPT
+                        =========================================== -->
+
+                        <div
+                            class="document-box
+                            {% if latest_documents and latest_documents.receipt %}
+                                document-uploaded
+                            {% endif %}"
+                        >
+
+                            <div class="document-box-icon">
+
+                                <i class="bi bi-receipt"></i>
+
+                            </div>
+
+                            <div class="document-box-title">
+                                Final Receipt
+                            </div>
+
+                            {% if latest_documents and latest_documents.receipt %}
+
+                                <div class="document-box-status">
+
+                                    {{
+                                        latest_documents.receipt.original_file_name
+                                        or latest_documents.receipt.document_title
+                                        or "Receipt"
+                                    }}
+
+                                </div>
+
+                                <div class="document-current">
+
+                                    <i class="bi bi-check-circle"></i>
+                                    Already Uploaded
+
+                                </div>
+
+                                {% if latest_documents.receipt.file_url %}
+
+                                <br>
+
+                                <a
+                                    href="{{ latest_documents.receipt.file_url }}"
+                                    target="_blank"
+                                    class="document-view-link"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                    View Current Receipt
+                                </a>
+
+                                {% endif %}
+
+                                <label class="document-upload-label">
+                                    Upload Replacement Receipt
+                                </label>
+
+                            {% else %}
+
+                                <div class="document-box-status">
+                                    No final receipt uploaded yet.
+                                </div>
+
+                                <label class="document-upload-label">
+                                    Upload Final Receipt *
+                                </label>
+
+                            {% endif %}
+
+                            <input
+                                type="file"
+                                name="final_receipt_document"
+                                class="form-control document-file-input"
+                                accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff,.doc,.docx,.xls,.xlsx,.csv"
+                            >
+
+                            <div class="form-help">
+                                PDF, image, Word, Excel or CSV.
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             FINAL INVOICE
+                        =========================================== -->
+
+                        <div
+                            class="document-box
+                            {% if latest_documents and latest_documents.invoice %}
+                                document-uploaded
+                            {% endif %}"
+                        >
+
+                            <div class="document-box-icon">
+
+                                <i class="bi bi-file-earmark-text"></i>
+
+                            </div>
+
+                            <div class="document-box-title">
+                                Final Invoice
+                            </div>
+
+                            {% if latest_documents and latest_documents.invoice %}
+
+                                <div class="document-box-status">
+
+                                    {{
+                                        latest_documents.invoice.original_file_name
+                                        or latest_documents.invoice.document_title
+                                        or "Invoice"
+                                    }}
+
+                                </div>
+
+                                <div class="document-current">
+
+                                    <i class="bi bi-check-circle"></i>
+                                    Already Uploaded
+
+                                </div>
+
+                                {% if latest_documents.invoice.file_url %}
+
+                                <br>
+
+                                <a
+                                    href="{{ latest_documents.invoice.file_url }}"
+                                    target="_blank"
+                                    class="document-view-link"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                    View Current Invoice
+                                </a>
+
+                                {% endif %}
+
+                                <label class="document-upload-label">
+                                    Upload Replacement Invoice
+                                </label>
+
+                            {% else %}
+
+                                <div class="document-box-status">
+                                    No final invoice uploaded yet.
+                                </div>
+
+                                <label class="document-upload-label">
+                                    Upload Final Invoice *
+                                </label>
+
+                            {% endif %}
+
+                            <input
+                                type="file"
+                                name="final_invoice_document"
+                                class="form-control document-file-input"
+                                accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff,.doc,.docx,.xls,.xlsx,.csv"
+                            >
+
+                            <div class="form-help">
+                                PDF, image, Word, Excel or CSV.
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             PAYMENT EVIDENCE
+                        =========================================== -->
+
+                        <div
+                            class="document-box
+                            {% if latest_documents and latest_documents.payment_evidence %}
+                                document-uploaded
+                            {% endif %}"
+                        >
+
+                            <div class="document-box-icon">
+
+                                <i class="bi bi-file-earmark-check"></i>
+
+                            </div>
+
+                            <div class="document-box-title">
+                                Payment Evidence
+                            </div>
+
+                            {% if latest_documents and latest_documents.payment_evidence %}
+
+                                <div class="document-box-status">
+
+                                    {{
+                                        latest_documents.payment_evidence.original_file_name
+                                        or latest_documents.payment_evidence.document_title
+                                        or "Payment Evidence"
+                                    }}
+
+                                </div>
+
+                                <div class="document-current">
+
+                                    <i class="bi bi-check-circle"></i>
+                                    Already Uploaded
+
+                                </div>
+
+                                {% if latest_documents.payment_evidence.file_url %}
+
+                                <br>
+
+                                <a
+                                    href="{{ latest_documents.payment_evidence.file_url }}"
+                                    target="_blank"
+                                    class="document-view-link"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                    View Current Evidence
+                                </a>
+
+                                {% endif %}
+
+                                <label class="document-upload-label">
+                                    Upload Replacement Evidence
+                                </label>
+
+                            {% else %}
+
+                                <div class="document-box-status">
+                                    No payment evidence uploaded yet.
+                                </div>
+
+                                <label class="document-upload-label">
+                                    Upload Payment Evidence *
+                                </label>
+
+                            {% endif %}
+
+                            <input
+                                type="file"
+                                name="final_payment_evidence_document"
+                                class="form-control document-file-input"
+                                accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff,.doc,.docx,.xls,.xlsx,.csv"
+                            >
+
+                            <div class="form-help">
+                                PDF, image, Word, Excel or CSV.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================================
+                 NOTES
+            =============================================== -->
+
+            <section class="section-card">
+
+                <div class="section-card-header">
+
+                    <h3>
+                        Final Procurement Notes
+                    </h3>
+
+                </div>
+
+                <div class="section-card-body">
+
+                    <label class="form-label">
+                        Notes
+                    </label>
+
+                    <textarea
+                        name="notes"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Enter any important information about the actual purchase..."
+                    >{{ procurement.notes or '' }}</textarea>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================================
+                 SUBMIT
+            =============================================== -->
+
+            <div class="section-card">
+
+                <div class="section-card-body">
+
+                    <div class="action-footer">
+
+                        <a
+                            href="{{ url_for(
+                                'construction_purchase_dashboard'
+                            ) }}"
+                            class="btn-back"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            Return to Dashboard
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary-custom"
+                            id="submitFinalProcurement"
+                        >
+                            <i class="bi bi-check-circle me-1"></i>
+                            Submit Final Procurement
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        {% endif %}
+
+
+        <!-- ==================================================
+             COMPLETED INFORMATION
+        ================================================== -->
+
+        {% if procurement.status == "Completed" %}
+
+        <section class="section-card">
+
+            <div class="section-card-body">
+
+                <div class="completed-panel">
+
+                    <div class="completed-icon">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                    <h3>
+                        Procurement Completed
+                    </h3>
+
+                    <p>
+
+                        This procurement has already been completed.
+
+                        {% if procurement.completed_by_name %}
+
+                            Completed by
+                            <strong>
+                                {{ procurement.completed_by_name }}
+                            </strong>.
+
+                        {% endif %}
+
+                        {% if procurement.completed_at %}
+
+                            Completion time:
+                            <strong>
+                                {{ procurement.completed_at }}
+                            </strong>.
+
+                        {% endif %}
+
+                    </p>
+
+                    <a
+                        href="{{ url_for('construction_purchase_dashboard') }}"
+                        class="btn btn-primary-custom"
+                    >
+                        <i class="bi bi-grid me-1"></i>
+                        Return to Purchase Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- ==================================================
+             DOCUMENT HISTORY
+        ================================================== -->
+
+        <section class="section-card">
+
+            <div class="section-card-header">
+
+                <div>
+
+                    <h3>
+                        Procurement Document History
+                    </h3>
+
+                    <small>
+                        All documents uploaded for this procurement.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="section-card-body">
+
+                {% if procurement_documents %}
+
+                <div class="table-responsive">
+
+                    <table class="document-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Document
+                                </th>
+
+                                <th>
+                                    Type
+                                </th>
+
+                                <th>
+                                    Stage
+                                </th>
+
+                                <th>
+                                    Uploaded By
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    View
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for document in procurement_documents %}
+
+                            <tr>
+
+                                <td>
+
+                                    <i class="bi bi-file-earmark-text me-1"></i>
+
+                                    {{ document.document_title
+                                       or document.original_file_name
+                                       or "Document" }}
+
+                                </td>
+
+                                <td>
+
+                                    <span class="document-type-badge">
+
+                                        {{ document.document_type or "—" }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{ document.workflow_stage or "—" }}
+                                </td>
+
+                                <td>
+                                    {{ document.uploaded_by_name or "—" }}
+                                </td>
+
+                                <td>
+                                    {{ document.uploaded_at or "—" }}
+                                </td>
+
+                                <td>
+
+                                    {% if document.file_url %}
+
+                                    <a
+                                        href="{{ document.file_url }}"
+                                        target="_blank"
+                                    >
+                                        <i class="bi bi-eye"></i>
+                                        View
+                                    </a>
+
+                                    {% else %}
+
+                                    —
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="text-center text-muted py-4">
+
+                    <i
+                        class="bi bi-file-earmark-x"
+                        style="font-size:30px;"
+                    ></i>
+
+                    <div class="mt-2">
+                        No procurement documents have been uploaded.
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             AUDIT TRAIL
+        ================================================== -->
+
+        <section class="section-card">
+
+            <div class="section-card-header">
+
+                <h3>
+                    Audit Trail
+                </h3>
+
+            </div>
+
+            <div class="section-card-body">
+
+                {% if procurement_actions %}
+
+                    {% for action in procurement_actions %}
+
+                    <div class="audit-item">
+
+                        <div class="audit-dot"></div>
+
+                        <div class="audit-title">
+
+                            {{ action.action_type
+                               or "Procurement Action" }}
+
+                        </div>
+
+                        <div class="audit-description">
+
+                            {{ action.action_description
+                               or "" }}
+
+                        </div>
+
+                        <div class="audit-meta">
+
+                            {{ action.performed_by_name
+                               or "Unknown" }}
+
+                            ·
+
+                            {{ action.performed_at
+                               or "" }}
+
+                            {% if action.from_status
+                                  or action.to_status %}
+
+                            ·
+
+                            {{ action.from_status or "—" }}
+
+                            →
+
+                            {{ action.to_status or "—" }}
+
+                            {% endif %}
+
+                        </div>
+
+                        {% if action.notes %}
+
+                        <div class="audit-meta">
+
+                            {{ action.notes }}
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="text-muted">
+                        No audit history available.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ======================================================
+     BOOTSTRAP
+====================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /* ==============================================
+           PAYMENT ELEMENTS
+        ============================================== */
+
+        const cardRadio =
+            document.getElementById("paymentCard");
+
+        const chequeRadio =
+            document.getElementById("paymentCheque");
+
+        const cardDetails =
+            document.getElementById("cardDetails");
+
+        const chequeDetails =
+            document.getElementById("chequeDetails");
+
+        const cardPaidAt =
+            document.getElementById("finalCardPaidAt");
+
+        const cardReference =
+            document.getElementById("finalCardPaymentReference");
+
+        const chequeNumber =
+            document.getElementById("chequeNumber");
+
+        const chequeDate =
+            document.getElementById("chequeDate");
+
+        const chequeBank =
+            document.getElementById("chequeBank");
+
+
+        /* ==============================================
+           PAYMENT FIELD CONTROL
+        ============================================== */
+
+        function updatePaymentFields() {
+
+            if (
+                cardRadio &&
+                cardRadio.checked
+            ) {
+
+                if (cardDetails) {
+                    cardDetails.classList.add("active");
+                }
+
+                if (chequeDetails) {
+                    chequeDetails.classList.remove("active");
+                }
+
+                if (cardPaidAt) {
+                    cardPaidAt.required = true;
+                }
+
+                if (cardReference) {
+                    cardReference.required = true;
+                }
+
+                if (chequeNumber) {
+                    chequeNumber.required = false;
+                }
+
+                if (chequeDate) {
+                    chequeDate.required = false;
+                }
+
+                if (chequeBank) {
+                    chequeBank.required = false;
+                }
+
+            }
+
+            else if (
+                chequeRadio &&
+                chequeRadio.checked
+            ) {
+
+                if (chequeDetails) {
+                    chequeDetails.classList.add("active");
+                }
+
+                if (cardDetails) {
+                    cardDetails.classList.remove("active");
+                }
+
+                if (cardPaidAt) {
+                    cardPaidAt.required = false;
+                }
+
+                if (cardReference) {
+                    cardReference.required = false;
+                }
+
+                if (chequeNumber) {
+                    chequeNumber.required = true;
+                }
+
+                if (chequeDate) {
+                    chequeDate.required = true;
+                }
+
+                if (chequeBank) {
+                    chequeBank.required = true;
+                }
+
+            }
+
+            else {
+
+                if (cardDetails) {
+                    cardDetails.classList.remove("active");
+                }
+
+                if (chequeDetails) {
+                    chequeDetails.classList.remove("active");
+                }
+
+            }
+
+        }
+
+
+        /* ==============================================
+           PAYMENT RADIO EVENTS
+        ============================================== */
+
+        if (cardRadio) {
+
+            cardRadio.addEventListener(
+                "change",
+                updatePaymentFields
+            );
+
+        }
+
+
+        if (chequeRadio) {
+
+            chequeRadio.addEventListener(
+                "change",
+                updatePaymentFields
+            );
+
+        }
+
+
+        updatePaymentFields();
+
+
+        /* ==============================================
+           PREVENT DOUBLE SUBMISSION
+        ============================================== */
+
+        const finalForm =
+            document.getElementById(
+                "finalProcurementForm"
+            );
+
+        const submitButton =
+            document.getElementById(
+                "submitFinalProcurement"
+            );
+
+
+        if (
+            finalForm &&
+            submitButton
+        ) {
+
+            finalForm.addEventListener(
+                "submit",
+                function () {
+
+                    submitButton.disabled = true;
+
+                    submitButton.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-2"></span>' +
+                        'Submitting...';
+
+                }
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

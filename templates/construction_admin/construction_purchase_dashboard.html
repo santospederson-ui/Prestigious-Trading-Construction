@@ -1,4484 +1,4881 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}
-Purchase Dashboard | Prestigious Trading & Constructions
-{% endblock %}
+<head>
 
-{% block content %}
+    <meta charset="UTF-8">
 
-<style>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-/* =========================================================
-   PURCHASE DASHBOARD
-   EXECUTIVE PROCUREMENT THEME
-========================================================= */
+    <title>Purchase Dashboard | Prestigious Construction</title>
 
-:root {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-  --pch-bg: #f8fafc;
-  --pch-surface: #ffffff;
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
 
-  --pch-border: #e2e8f0;
-  --pch-border-hover: #cbd5e1;
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
 
-  --pch-text-dark: #0f172a;
-  --pch-text-body: #334155;
-  --pch-text-muted: #64748b;
 
-  --pch-forest: #1e4b38;
-  --pch-forest-dark: #143829;
+    <style>
 
-  --pch-emerald: #059669;
-  --pch-emerald-soft: #ecfdf5;
-  --pch-emerald-border: #a7f3d0;
+        :root {
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #F9E9EE;
+            --qatar-gold: #C5A059;
+            --qatar-gold-light: #E4D2A6;
 
-  --pch-amber: #d97706;
-  --pch-amber-soft: #fffbeb;
-  --pch-amber-border: #fde68a;
+            --sidebar-width: 260px;
 
-  --pch-blue: #2563eb;
-  --pch-blue-soft: #eff6ff;
-  --pch-blue-border: #bfdbfe;
+            --bg: #f5f6f8;
+            --white: #ffffff;
 
-  --pch-rose: #dc2626;
-  --pch-rose-soft: #fef2f2;
-  --pch-rose-border: #fecaca;
+            --text: #242424;
+            --text-secondary: #555;
+            --text-muted: #7b8188;
 
-  --pch-purple: #7c3aed;
-  --pch-purple-soft: #f5f3ff;
-  --pch-purple-border: #ddd6fe;
+            --border: #e5e7eb;
 
-  --pch-cyan: #0891b2;
-  --pch-cyan-soft: #ecfeff;
-  --pch-cyan-border: #a5f3fc;
+            --success: #198754;
+            --success-light: #e7f7ed;
 
-  --pch-radius: 14px;
+            --warning: #f59e0b;
+            --warning-light: #fff3d8;
 
-  --pch-shadow-sm:
-      0 2px 8px rgba(15, 23, 42, 0.04);
+            --danger: #dc3545;
+            --danger-light: #fde5e7;
 
-  --pch-shadow-md:
-      0 8px 24px rgba(15, 23, 42, 0.08);
+            --info: #0d6efd;
+            --info-light: #e7f0ff;
 
-}
+            --radius-md: 8px;
+            --radius-lg: 15px;
+        }
 
 
-/* =========================================================
-   PAGE
-========================================================= */
+        * {
+            box-sizing: border-box;
+        }
 
-.purchase-page {
 
-  background: var(--pch-bg);
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
 
-  min-height:
-      calc(100vh - 70px);
 
-  padding:
-      28px 32px 50px;
+        a {
+            text-decoration: none;
+        }
 
-  color:
-      var(--pch-text-dark);
 
-}
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
 
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
 
-/* =========================================================
-   HEADER
-========================================================= */
+            width: var(--sidebar-width);
+            height: 100vh;
 
-.purchase-header {
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--qatar-maroon-dark),
+                    var(--qatar-maroon)
+                );
 
-  display:
-      flex;
+            color: #fff;
 
-  justify-content:
-      space-between;
+            z-index: 1000;
 
-  align-items:
-      center;
+            overflow-y: auto;
+        }
 
-  flex-wrap:
-      wrap;
 
-  gap:
-      18px;
+        .sidebar-brand {
+            padding: 24px 22px;
 
-  margin-bottom:
-      28px;
+            border-bottom:
+                1px solid rgba(255,255,255,.12);
+        }
 
-}
 
+        .brand-title {
+            margin: 0;
 
-.purchase-header-left h1 {
+            font-size: 18px;
+            font-weight: 800;
+        }
 
-  margin:
-      0;
 
-  font-size:
-      32px;
+        .brand-subtitle {
+            margin-top: 4px;
 
-  font-weight:
-      850;
+            font-size: 11px;
 
-  color:
-      var(--pch-text-dark);
+            opacity: .75;
+        }
 
-  letter-spacing:
-      -0.8px;
 
-  line-height:
-      1.15;
+        .sidebar-user {
+            padding: 18px 22px;
 
-}
+            border-bottom:
+                1px solid rgba(255,255,255,.12);
+        }
 
 
-.purchase-header-left p {
+        .sidebar-user-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
 
-  margin:
-      6px 0 0;
 
-  color:
-      var(--pch-text-muted);
+        .sidebar-user-role {
+            display: inline-block;
 
-  font-size:
-      14px;
+            margin-top: 5px;
 
-  font-weight:
-      500;
+            padding: 4px 9px;
 
-}
+            border-radius: 20px;
 
+            background:
+                rgba(197,160,89,.18);
 
-.purchase-actions {
+            color:
+                var(--qatar-gold-light);
 
-  display:
-      flex;
+            font-size: 10px;
 
-  align-items:
-      center;
+            font-weight: 700;
 
-  gap:
-      9px;
+            text-transform: uppercase;
+        }
 
-  flex-wrap:
-      wrap;
 
-}
+        .sidebar-nav {
+            padding: 16px 12px;
+        }
 
 
-.purchase-btn {
+        .nav-label {
+            padding: 10px 12px 7px;
 
-  display:
-      inline-flex;
+            font-size: 10px;
 
-  align-items:
-      center;
+            font-weight: 800;
 
-  justify-content:
-      center;
+            letter-spacing: 1px;
 
-  gap:
-      7px;
+            text-transform: uppercase;
 
-  padding:
-      9px 16px;
+            opacity: .5;
+        }
 
-  border-radius:
-      9px;
 
-  font-size:
-      12.5px;
+        .sidebar-link {
+            display: flex;
 
-  font-weight:
-      750;
+            align-items: center;
 
-  text-decoration:
-      none !important;
+            gap: 11px;
 
-  transition:
-      all 0.2s ease;
+            color: rgba(255,255,255,.82);
 
-  border:
-      none;
+            padding: 11px 13px;
 
-}
+            border-radius: 9px;
 
+            margin-bottom: 4px;
 
-.btn-request {
+            font-size: 13px;
 
-  background:
-      var(--pch-forest);
+            font-weight: 600;
 
-  color:
-      #ffffff !important;
+            transition: .2s;
+        }
 
-  box-shadow:
-      0 4px 12px rgba(30, 75, 56, 0.2);
 
-}
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background:
+                rgba(255,255,255,.11);
 
+            color: #fff;
+        }
 
-.btn-request:hover {
 
-  background:
-      var(--pch-forest-dark);
+        .sidebar-link.active {
+            box-shadow:
+                inset 3px 0 0 var(--qatar-gold);
+        }
 
-  color:
-      #ffffff !important;
 
-  transform:
-      translateY(-1px);
+        .sidebar-link i {
+            font-size: 16px;
+        }
 
-}
 
+        .sidebar-badge {
+            margin-left: auto;
 
-.btn-quotation {
+            background: var(--qatar-gold);
 
-  background:
-      #0f172a;
+            color: #3f3100;
 
-  color:
-      #ffffff !important;
+            font-size: 10px;
 
-  box-shadow:
-      0 4px 12px rgba(15, 23, 42, 0.2);
+            font-weight: 800;
 
-}
+            padding: 3px 7px;
 
+            border-radius: 20px;
+        }
 
-.btn-quotation:hover {
 
-  background:
-      #1e293b;
+        /* =====================================================
+           MAIN
+        ===================================================== */
 
-  color:
-      #ffffff !important;
+        .main {
+            margin-left: var(--sidebar-width);
 
-  transform:
-      translateY(-1px);
+            min-height: 100vh;
+        }
 
-}
 
+        .topbar {
+            min-height: 76px;
 
-.btn-logout {
+            background: var(--white);
 
-  background:
-      var(--pch-rose-soft);
+            border-bottom:
+                1px solid var(--border);
 
-  color:
-      var(--pch-rose) !important;
+            display: flex;
 
-  border:
-      1px solid var(--pch-rose-border);
+            align-items: center;
 
-}
+            justify-content: space-between;
 
+            gap: 20px;
 
-.btn-logout:hover {
+            padding: 15px 28px;
 
-  background:
-      #fee2e2;
+            position: sticky;
 
-  color:
-      #991b1b !important;
+            top: 0;
 
-  transform:
-      translateY(-1px);
+            z-index: 900;
+        }
 
-}
 
+        .page-title {
+            margin: 0;
 
-/* =========================================================
-   STATISTICS INTRO
-========================================================= */
+            color: var(--qatar-maroon);
 
-.statistics-heading {
+            font-size: 20px;
 
-  margin-bottom:
-      18px;
+            font-weight: 800;
+        }
 
-}
 
+        .page-subtitle {
+            margin-top: 3px;
 
-.statistics-heading h2 {
+            color: var(--text-muted);
 
-  margin:
-      0;
+            font-size: 11px;
+        }
 
-  font-size:
-      19px;
 
-  font-weight:
-      850;
+        .content {
+            padding: 28px;
+        }
 
-  color:
-      var(--pch-text-dark);
 
-}
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
 
+        .stat-card {
+            height: 100%;
 
-.statistics-heading p {
+            padding: 20px;
 
-  margin:
-      4px 0 0;
+            background: var(--white);
 
-  font-size:
-      12.5px;
+            border:
+                1px solid var(--border);
 
-  color:
-      var(--pch-text-muted);
+            border-radius: var(--radius-lg);
 
-  font-weight:
-      500;
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.025);
+        }
 
-}
 
+        .stat-icon {
+            width: 42px;
+            height: 42px;
 
-/* =========================================================
-   STATISTICS GROUP
-========================================================= */
+            display: flex;
 
-.statistics-group {
+            align-items: center;
+            justify-content: center;
 
-  margin-bottom:
-      28px;
+            border-radius: 11px;
 
-}
+            background:
+                rgba(138,21,56,.09);
 
+            color:
+                var(--qatar-maroon);
 
-.statistics-group-title {
+            font-size: 19px;
+        }
 
-  display:
-      flex;
 
-  align-items:
-      center;
+        .stat-label {
+            margin-top: 15px;
 
-  gap:
-      8px;
+            color: var(--text-muted);
 
-  margin-bottom:
-      11px;
+            font-size: 11px;
 
-}
+            font-weight: 600;
+        }
 
 
-.statistics-group-title i {
+        .stat-value {
+            margin-top: 3px;
 
-  width:
-      28px;
+            color: var(--qatar-maroon);
 
-  height:
-      28px;
+            font-size: 24px;
 
-  border-radius:
-      8px;
+            font-weight: 800;
+        }
 
-  display:
-      flex;
 
-  align-items:
-      center;
+        /* =====================================================
+           SECTION
+        ===================================================== */
 
-  justify-content:
-      center;
+        .section-card {
+            margin-top: 24px;
 
-  background:
-      #f1f5f9;
+            background: var(--white);
 
-  color:
-      #334155;
+            border:
+                1px solid var(--border);
 
-  font-size:
-      12px;
+            border-radius: var(--radius-lg);
 
-}
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.025);
 
+            overflow: hidden;
+        }
 
-.statistics-group-title h3 {
 
-  margin:
-      0;
+        .section-header {
+            padding: 20px 22px;
 
-  font-size:
-      13px;
+            border-bottom:
+                1px solid var(--border);
 
-  font-weight:
-      850;
+            display: flex;
 
-  color:
-      var(--pch-text-dark);
+            align-items: center;
 
-  text-transform:
-      uppercase;
+            justify-content: space-between;
 
-  letter-spacing:
-      0.45px;
+            gap: 15px;
 
-}
+            flex-wrap: wrap;
+        }
 
 
-/* =========================================================
-   COMPACT KPI GRID
-========================================================= */
+        .section-title {
+            margin: 0;
 
-.purchase-summary {
+            color: var(--qatar-maroon);
 
-  display:
-      grid;
+            font-size: 15px;
 
-  grid-template-columns:
-      repeat(4, minmax(0, 1fr));
+            font-weight: 800;
+        }
 
-  gap:
-      12px;
 
-  width:
-      100%;
+        .section-description {
+            margin-top: 4px;
 
-}
+            color: var(--text-muted);
 
+            font-size: 11px;
+        }
 
-/* =========================================================
-   COMPACT SUMMARY CARD
-========================================================= */
 
-.summary-card {
+        /* =====================================================
+           WORKFLOW
+        ===================================================== */
 
-  background:
-      var(--pch-surface);
+        .workflow {
+            padding: 22px;
+        }
 
-  border:
-      1px solid var(--pch-border);
 
-  border-radius:
-      12px;
+        .workflow-track {
+            display: flex;
 
-  padding:
-      14px 16px;
+            align-items: flex-start;
 
-  box-shadow:
-      var(--pch-shadow-sm);
+            justify-content: space-between;
 
-  transition:
-      all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 10px;
 
-  display:
-      flex;
+            overflow-x: auto;
 
-  flex-direction:
-      column;
+            padding-bottom: 8px;
+        }
 
-  justify-content:
-      space-between;
 
-  min-height:
-      96px;
+        .workflow-step {
+            min-width: 125px;
 
-  height:
-      96px;
+            text-align: center;
 
-  min-width:
-      0;
+            position: relative;
+        }
 
-}
 
+        .workflow-step:not(:last-child)::after {
+            content: "";
 
-.summary-card:hover {
+            position: absolute;
 
-  transform:
-      translateY(-2px);
+            top: 21px;
 
-  border-color:
-      var(--pch-border-hover);
+            left: calc(50% + 24px);
 
-  box-shadow:
-      var(--pch-shadow-md);
+            width: calc(100% - 48px);
 
-}
+            height: 2px;
 
+            background: #ddd;
+        }
 
-.summary-top {
 
-  display:
-      flex;
+        .workflow-icon {
+            width: 44px;
+            height: 44px;
 
-  justify-content:
-      space-between;
+            display: inline-flex;
 
-  align-items:
-      center;
+            align-items: center;
+            justify-content: center;
 
-  gap:
-      8px;
+            position: relative;
 
-}
+            z-index: 2;
 
+            border-radius: 50%;
 
-.summary-label {
+            background: #f0f1f3;
 
-  color:
-      var(--pch-text-muted);
+            color: #666;
 
-  font-size:
-      10px;
+            font-size: 17px;
+        }
 
-  font-weight:
-      800;
 
-  text-transform:
-      uppercase;
+        .workflow-step.active .workflow-icon {
+            background: var(--qatar-maroon);
+            color: #fff;
+        }
 
-  letter-spacing:
-      0.4px;
 
-  line-height:
-      1.3;
+        .workflow-step.final .workflow-icon {
+            background: var(--success);
+            color: #fff;
+        }
 
-  overflow:
-      hidden;
 
-}
+        .workflow-name {
+            margin-top: 9px;
 
+            font-size: 10px;
 
-.summary-icon-box {
+            font-weight: 800;
+        }
 
-  width:
-      32px;
 
-  height:
-      32px;
+        .workflow-desc {
+            margin-top: 3px;
 
-  min-width:
-      32px;
+            color: var(--text-muted);
 
-  border-radius:
-      9px;
+            font-size: 9px;
+        }
 
-  display:
-      flex;
 
-  align-items:
-      center;
+        .legend {
+            display: flex;
 
-  justify-content:
-      center;
+            gap: 16px;
 
-  font-size:
-      14px;
+            flex-wrap: wrap;
 
-  flex-shrink:
-      0;
+            margin-top: 20px;
 
-}
+            padding-top: 16px;
 
+            border-top:
+                1px solid var(--border);
+        }
 
-.summary-number {
 
-  font-size:
-      23px;
+        .legend-item {
+            display: flex;
 
-  font-weight:
-      850;
+            align-items: center;
 
-  color:
-      var(--pch-text-dark);
+            gap: 6px;
 
-  margin-top:
-      8px;
+            color: #666;
 
-  line-height:
-      1;
+            font-size: 10px;
+        }
 
-  letter-spacing:
-      -0.4px;
 
-}
+        .legend-dot {
+            width: 9px;
+            height: 9px;
 
+            border-radius: 50%;
+        }
 
-.summary-money {
 
-  font-size:
-      21px;
+        /* =====================================================
+           ACCOUNT-STYLE SEARCH AREA
+        ===================================================== */
 
-  font-weight:
-      850;
+        .search-area {
+            padding: 18px 20px;
 
-  color:
-      var(--pch-text-dark);
+            background: #fafafa;
 
-  margin-top:
-      8px;
+            border-bottom:
+                1px solid var(--border);
+        }
 
-  line-height:
-      1.05;
 
-  letter-spacing:
-      -0.4px;
+        .search-row {
+            display: flex;
 
-}
+            align-items: center;
 
+            gap: 10px;
 
-/* =========================================================
-   STANDARD KPI COLORS
-========================================================= */
+            flex-wrap: wrap;
+        }
 
-.summary-primary .summary-icon-box {
 
-  background:
-      var(--pch-emerald-soft);
+        .search-box {
+            position: relative;
 
-  color:
-      var(--pch-emerald);
+            flex: 1;
 
-  border:
-      1px solid var(--pch-emerald-border);
+            min-width: 240px;
+        }
 
-}
 
+        .search-box i {
+            position: absolute;
 
-.summary-warning .summary-icon-box {
+            left: 12px;
 
-  background:
-      var(--pch-amber-soft);
+            top: 10px;
 
-  color:
-      var(--pch-amber);
+            color: #9aa0a6;
 
-  border:
-      1px solid var(--pch-amber-border);
+            font-size: 13px;
 
-}
+            z-index: 2;
+        }
 
 
-.summary-blue .summary-icon-box {
+        .search-box input {
+            width: 100%;
 
-  background:
-      var(--pch-blue-soft);
+            min-height: 36px;
 
-  color:
-      var(--pch-blue);
+            padding-left: 34px;
 
-  border:
-      1px solid var(--pch-blue-border);
+            border:
+                1px solid var(--border);
 
-}
+            border-radius: 8px;
 
+            background: #fff;
 
-.summary-danger .summary-icon-box {
+            font-size: 11px;
 
-  background:
-      var(--pch-rose-soft);
+            outline: none;
+        }
 
-  color:
-      var(--pch-rose);
 
-  border:
-      1px solid var(--pch-rose-border);
+        .search-box input:focus {
+            border-color:
+                var(--qatar-maroon);
 
-}
+            box-shadow:
+                0 0 0 .15rem
+                rgba(138,21,56,.08);
+        }
 
 
-.summary-dark .summary-icon-box {
+        /* =====================================================
+           QUICK FILTER BUTTONS
+        ===================================================== */
 
-  background:
-      #f1f5f9;
+        .quick-filters {
+            display: flex;
 
-  color:
-      #0f172a;
+            align-items: center;
 
-  border:
-      1px solid #cbd5e1;
+            gap: 6px;
 
-}
+            flex-wrap: wrap;
+        }
 
 
-/* =========================================================
-   SECTION PANELS
-========================================================= */
+        .quick-filter {
+            display: inline-flex;
 
-.purchase-section {
+            align-items: center;
 
-  background:
-      var(--pch-surface);
+            justify-content: center;
 
-  border:
-      1px solid var(--pch-border);
+            gap: 5px;
 
-  border-radius:
-      var(--pch-radius);
+            min-height: 34px;
 
-  box-shadow:
-      var(--pch-shadow-sm);
+            padding: 7px 12px;
 
-  margin-bottom:
-      28px;
+            border:
+                1px solid var(--border);
 
-  overflow:
-      hidden;
+            border-radius: 7px;
 
-  scroll-margin-top:
-      90px;
+            background: #fff;
 
-}
+            color: #60656b;
 
+            font-size: 10px;
 
-.purchase-section-header {
+            font-weight: 750;
 
-  display:
-      flex;
+            white-space: nowrap;
 
-  justify-content:
-      space-between;
+            cursor: pointer;
 
-  align-items:
-      center;
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease,
+                transform .2s ease;
+        }
 
-  flex-wrap:
-      wrap;
 
-  gap:
-      14px;
+        .quick-filter:hover {
+            border-color:
+                var(--qatar-maroon);
 
-  padding:
-      17px 22px;
+            color:
+                var(--qatar-maroon);
 
-  background:
-      #ffffff;
+            transform:
+                translateY(-1px);
+        }
 
-  border-bottom:
-      2px solid #edf2f7;
 
-}
+        .quick-filter.active {
+            background:
+                var(--qatar-maroon);
 
+            border-color:
+                var(--qatar-maroon);
 
-.purchase-section-title {
+            color: #fff;
 
-  display:
-      flex;
+            box-shadow:
+                0 2px 5px
+                rgba(138,21,56,.18);
+        }
 
-  align-items:
-      center;
 
-  gap:
-      10px;
+        .quick-filter .filter-count {
+            min-width: 18px;
 
-}
+            padding: 2px 5px;
 
+            border-radius: 20px;
 
-.section-icon-pill {
+            background: #eef0f2;
 
-  width:
-      38px;
+            color: #666;
 
-  height:
-      38px;
+            font-size: 8px;
 
-  border-radius:
-      10px;
+            font-weight: 800;
 
-  background:
-      #f1f5f9;
+            text-align: center;
+        }
 
-  color:
-      #1e293b;
 
-  display:
-      flex;
+        .quick-filter.active .filter-count {
+            background:
+                rgba(255,255,255,.18);
 
-  align-items:
-      center;
+            color: #fff;
+        }
 
-  justify-content:
-      center;
 
-  font-size:
-      16px;
+        .search-bottom {
+            display: flex;
 
-  flex-shrink:
-      0;
+            align-items: center;
 
-}
+            justify-content: space-between;
 
+            gap: 10px;
 
-.purchase-section-title h2 {
+            flex-wrap: wrap;
 
-  margin:
-      0;
+            margin-top: 10px;
+        }
 
-  font-size:
-      19px;
 
-  font-weight:
-      850;
+        .search-result {
+            color: var(--text-muted);
 
-  color:
-      var(--pch-text-dark);
+            font-size: 10px;
+        }
 
-  letter-spacing:
-      -0.3px;
 
-}
+        .clear-search {
+            border: 0;
 
+            background: transparent;
 
-.purchase-section-title span {
+            color: var(--qatar-maroon);
 
-  display:
-      block;
+            font-size: 10px;
 
-  color:
-      var(--pch-text-muted);
+            font-weight: 750;
 
-  font-size:
-      12px;
+            cursor: pointer;
+        }
 
-  font-weight:
-      500;
 
-  margin-top:
-      2px;
+        .clear-search:hover {
+            text-decoration: underline;
+        }
 
-}
 
+        /* =====================================================
+           TABLE
+        ===================================================== */
 
-.section-header-right {
+        .table-responsive {
+            width: 100%;
 
-  display:
-      flex;
+            overflow-x: auto;
+        }
 
-  align-items:
-      center;
 
-  gap:
-      9px;
+        .table {
+            margin-bottom: 0 !important;
+        }
 
-  flex-wrap:
-      wrap;
 
-}
+        .table thead th {
+            padding: 13px 14px;
 
+            background: #fafafa;
 
-/* =========================================================
-   SEARCH
-========================================================= */
+            color: #555;
 
-.table-search-box {
+            border-bottom:
+                1px solid var(--border);
 
-  position:
-      relative;
+            font-size: 10px;
 
-  display:
-      flex;
+            font-weight: 800;
 
-  align-items:
-      center;
+            letter-spacing: .35px;
 
-  background:
-      #f8fafc;
+            text-transform: uppercase;
 
-  border:
-      1.5px solid #cbd5e1;
+            white-space: nowrap;
+        }
 
-  border-radius:
-      30px;
 
-  padding:
-      5px 12px;
+        .table tbody td {
+            padding: 14px;
 
-  transition:
-      all 0.2s ease;
+            vertical-align: middle;
 
-  width:
-      290px;
+            border-bottom:
+                1px solid #f0f1f3;
 
-  max-width:
-      100%;
+            font-size: 11px;
+        }
 
-}
 
+        .table tbody tr:hover {
+            background: #fffdf8;
+        }
 
-.table-search-box:focus-within {
 
-  border-color:
-      var(--pch-forest);
+        .request-number,
+        .procurement-number {
+            color: var(--qatar-maroon);
 
-  background:
-      #ffffff;
+            font-weight: 800;
 
-  box-shadow:
-      0 0 0 3px rgba(30, 75, 56, 0.12);
+            white-space: nowrap;
+        }
 
-}
 
+        .muted-text {
+            color: var(--text-muted);
 
-.table-search-box i.search-icon {
+            font-size: 10px;
+        }
 
-  color:
-      var(--pch-text-muted);
 
-  font-size:
-      13px;
+        /* =====================================================
+           STATUS
+        ===================================================== */
 
-  margin-right:
-      7px;
+        .badge-status {
+            display: inline-flex;
 
-}
+            align-items: center;
 
+            padding: 5px 9px;
 
-.table-search-box input {
+            border-radius: 20px;
 
-  border:
-      none;
+            font-size: 9px;
 
-  background:
-      transparent;
+            font-weight: 800;
 
-  width:
-      100%;
+            white-space: nowrap;
+        }
 
-  font-size:
-      12.5px;
 
-  color:
-      var(--pch-text-dark);
+        .status-pending {
+            background: #fff4d6;
+            color: #8a5a00;
+        }
 
-  outline:
-      none;
 
-}
+        .status-approved {
+            background: #dff7e8;
+            color: #137333;
+        }
 
 
-.table-search-box input::placeholder {
+        .status-correction {
+            background: var(--warning-light);
+            color: #a04c00;
+        }
 
-  color:
-      #94a3b8;
 
-}
+        .status-completed {
+            background: #dff7e8;
+            color: #137333;
+        }
 
 
-.table-search-clear {
+        .status-declined {
+            background: var(--danger-light);
+            color: #a71919;
+        }
 
-  display:
-      none;
 
-  background:
-      #e2e8f0;
+        .status-review {
+            background: var(--info-light);
+            color: #1759a6;
+        }
 
-  border:
-      none;
 
-  width:
-      18px;
+        .status-default {
+            background: #eef0f2;
+            color: #555;
+        }
 
-  height:
-      18px;
 
-  border-radius:
-      50%;
+        /* =====================================================
+           DOCUMENTS
+        ===================================================== */
 
-  align-items:
-      center;
+        .document-list {
+            display: flex;
 
-  justify-content:
-      center;
+            flex-direction: column;
 
-  font-size:
-      10px;
+            gap: 6px;
 
-  color:
-      #475569;
+            min-width: 180px;
+        }
 
-  cursor:
-      pointer;
 
-  padding:
-      0;
+        .document-item {
+            display: flex;
 
-  margin-left:
-      6px;
+            align-items: center;
 
-  flex-shrink:
-      0;
+            gap: 7px;
 
-}
+            color: var(--text-secondary);
 
+            font-size: 10px;
 
-.table-search-clear:hover {
+            line-height: 1.35;
+        }
 
-  background:
-      #cbd5e1;
 
-  color:
-      #0f172a;
+        .document-item i {
+            width: 14px;
 
-}
+            flex-shrink: 0;
 
+            color: var(--qatar-maroon);
+        }
 
-.section-badge {
 
-  display:
-      inline-flex;
+        .document-item a {
+            max-width: 240px;
 
-  align-items:
-      center;
+            overflow: hidden;
 
-  justify-content:
-      center;
+            text-overflow: ellipsis;
 
-  padding:
-      5px 12px;
+            white-space: nowrap;
 
-  border-radius:
-      30px;
+            color: var(--qatar-maroon);
 
-  background:
-      #f1f5f9;
+            font-size: 10px;
 
-  color:
-      #334155;
+            font-weight: 750;
+        }
 
-  font-size:
-      11.5px;
 
-  font-weight:
-      800;
+        .document-item a:hover {
+            text-decoration: underline;
+        }
 
-  border:
-      1px solid #e2e8f0;
 
-  white-space:
-      nowrap;
+        .document-count {
+            display: inline-flex;
 
-}
+            align-items: center;
 
+            gap: 5px;
 
-/* =========================================================
-   TABLE
-========================================================= */
+            margin-top: 5px;
 
-.table-wrapper {
+            color: var(--text-muted);
 
-  width:
-      100%;
+            font-size: 9px;
 
-  overflow-x:
-      auto;
+            font-weight: 700;
+        }
 
-}
 
+        .document-empty {
+            color: var(--text-muted);
 
-.purchase-table {
+            font-size: 10px;
+        }
 
-  width:
-      100%;
 
-  border-collapse:
-      collapse;
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
 
-  min-width:
-      1200px;
+        .btn-action {
+            display: inline-flex;
 
-  font-size:
-      13px;
+            align-items: center;
 
-}
+            justify-content: center;
 
+            gap: 5px;
 
-.purchase-table thead th {
+            padding: 7px 10px;
 
-  background:
-      #0f172a;
+            border: 0;
 
-  color:
-      #f8fafc;
+            border-radius: 7px;
 
-  font-size:
-      11px;
+            font-size: 10px;
 
-  font-weight:
-      800;
+            font-weight: 800;
 
-  text-transform:
-      uppercase;
+            white-space: nowrap;
 
-  letter-spacing:
-      0.7px;
+            transition: .2s;
+        }
 
-  padding:
-      13px 16px;
 
-  text-align:
-      left;
+        .btn-action:hover {
+            transform: translateY(-1px);
+        }
 
-  border-top:
-      none;
 
-  border-bottom:
-      2px solid #334155;
+        .action-primary {
+            background:
+                var(--qatar-maroon);
 
-  white-space:
-      nowrap;
+            color: #fff;
+        }
 
-}
 
+        .action-primary:hover {
+            background:
+                var(--qatar-maroon-dark);
 
-.purchase-table tbody td {
+            color: #fff;
+        }
 
-  padding:
-      14px 16px;
 
-  border-top:
-      1px solid #e2e8f0 !important;
+        .action-final {
+            background:
+                var(--success);
 
-  border-bottom:
-      1px solid #e2e8f0 !important;
+            color: #fff;
+        }
 
-  color:
-      var(--pch-text-body);
 
-  vertical-align:
-      middle;
+        .action-final:hover {
+            background: #146c43;
 
-  background-color:
-      #ffffff;
+            color: #fff;
+        }
 
-  transition:
-      background-color 0.15s ease;
 
-}
+        .action-correction {
+            background:
+                var(--warning);
 
+            color: #3d2b00;
+        }
 
-.purchase-table tbody tr:hover td {
 
-  background-color:
-      #f8fafc;
+        .action-correction:hover {
+            background: #d99000;
 
-}
+            color: #3d2b00;
+        }
 
 
-.purchase-table tbody tr.search-hidden,
-.purchase-table tbody tr.page-hidden {
+        .action-disabled {
+            background: #e9ecef;
 
-  display:
-      none !important;
+            color: #8a8f94;
 
-}
+            cursor: not-allowed;
+        }
 
 
-.row-sn-cell {
+        .final-highlight {
+            display: inline-flex;
 
-  font-weight:
-      800;
+            align-items: center;
 
-  color:
-      var(--pch-text-muted);
+            gap: 5px;
 
-  font-size:
-      11.5px;
+            margin-bottom: 5px;
 
-  width:
-      45px;
+            padding: 4px 7px;
 
-  text-align:
-      center;
+            border-radius: 5px;
 
-}
+            background:
+                var(--success-light);
 
+            color:
+                #137333;
 
-.primary-text {
+            font-size: 9px;
 
-  font-weight:
-      800;
+            font-weight: 800;
+        }
 
-  color:
-      var(--pch-text-dark);
 
-  font-size:
-      13.5px;
+        /* =====================================================
+           PAGINATION
+        ===================================================== */
 
-  letter-spacing:
-      -0.2px;
+        .pagination-wrap {
+            padding: 14px 20px;
 
-}
+            border-top:
+                1px solid var(--border);
 
+            display: flex;
 
-.secondary-text {
+            align-items: center;
 
-  color:
-      var(--pch-text-muted);
+            justify-content: space-between;
 
-  font-size:
-      11px;
+            gap: 12px;
 
-  margin-top:
-      3px;
+            flex-wrap: wrap;
+        }
 
-}
 
+        .pagination-info {
+            color: var(--text-muted);
 
-.amount {
+            font-size: 10px;
+        }
 
-  font-weight:
-      850;
 
-  color:
-      var(--pch-text-dark);
+        .pagination-buttons {
+            display: flex;
 
-  white-space:
-      nowrap;
+            align-items: center;
 
-  font-size:
-      13.5px;
+            gap: 4px;
 
-}
+            flex-wrap: wrap;
+        }
 
 
-/* =========================================================
-   PAGINATION
-========================================================= */
+        .page-btn {
+            min-width: 30px;
 
-.pagination-footer {
+            height: 30px;
 
-  display:
-      flex;
+            padding: 0 8px;
 
-  justify-content:
-      space-between;
+            border:
+                1px solid var(--border);
 
-  align-items:
-      center;
+            border-radius: 6px;
 
-  padding:
-      14px 20px;
+            background: #fff;
 
-  background:
-      #ffffff;
+            color: #555;
 
-  border-top:
-      1px solid #e2e8f0;
+            font-size: 10px;
 
-  flex-wrap:
-      wrap;
+            font-weight: 700;
+        }
 
-  gap:
-      12px;
 
-}
+        .page-btn:hover:not(:disabled) {
+            border-color:
+                var(--qatar-maroon);
 
+            color:
+                var(--qatar-maroon);
+        }
 
-.pagination-info {
 
-  font-size:
-      12px;
+        .page-btn.active {
+            background:
+                var(--qatar-maroon);
 
-  color:
-      var(--pch-text-muted);
+            border-color:
+                var(--qatar-maroon);
 
-  font-weight:
-      600;
+            color: #fff;
+        }
 
-}
 
+        .page-btn:disabled {
+            opacity: .45;
 
-.pagination-info strong {
+            cursor: not-allowed;
+        }
 
-  color:
-      var(--pch-text-dark);
 
-}
+        .page-size {
+            width: 72px;
 
+            min-height: 30px;
 
-.pagination-controls {
+            border:
+                1px solid var(--border);
 
-  display:
-      flex;
+            border-radius: 6px;
 
-  align-items:
-      center;
+            font-size: 10px;
+        }
 
-  gap:
-      5px;
 
-}
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
 
+        .empty-state {
+            padding: 35px 20px;
 
-.pagination-btn {
+            text-align: center;
 
-  display:
-      inline-flex;
+            color: var(--text-muted);
+        }
 
-  align-items:
-      center;
 
-  justify-content:
-      center;
+        .empty-state i {
+            font-size: 32px;
 
-  min-width:
-      34px;
+            opacity: .4;
+        }
 
-  height:
-      34px;
 
-  padding:
-      0 10px;
+        .empty-state div {
+            margin-top: 8px;
 
-  border-radius:
-      8px;
+            font-size: 11px;
+        }
 
-  border:
-      1px solid var(--pch-border);
 
-  background:
-      #ffffff;
+        /* =====================================================
+           NEW BUTTON
+        ===================================================== */
 
-  color:
-      var(--pch-text-dark);
+        .btn-new {
+            padding: 9px 14px;
 
-  font-size:
-      11.5px;
+            border: 0;
 
-  font-weight:
-      700;
+            border-radius: 8px;
 
-  cursor:
-      pointer;
+            background:
+                var(--qatar-maroon);
 
-  transition:
-      all 0.2s ease;
+            color: #fff;
 
-  user-select:
-      none;
+            font-size: 11px;
 
-}
+            font-weight: 800;
+        }
 
 
-.pagination-btn:hover:not(:disabled) {
+        .btn-new:hover {
+            background:
+                var(--qatar-maroon-dark);
 
-  background:
-      #f1f5f9;
+            color: #fff;
+        }
 
-  border-color:
-      #cbd5e1;
 
-}
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
+        @media (max-width: 992px) {
 
-.pagination-btn.active {
+            .sidebar {
+                width: 220px;
+            }
 
-  background:
-      var(--pch-forest);
+            .main {
+                margin-left: 220px;
+            }
 
-  color:
-      #ffffff;
+            .content {
+                padding: 18px;
+            }
 
-  border-color:
-      var(--pch-forest);
+        }
 
-  box-shadow:
-      0 2px 8px rgba(30, 75, 56, 0.25);
 
-}
+        @media (max-width: 768px) {
 
+            .sidebar {
+                position: relative;
 
-.pagination-btn:disabled {
+                width: 100%;
 
-  opacity:
-      0.4;
+                height: auto;
+            }
 
-  cursor:
-      not-allowed;
 
-  background:
-      #f8fafc;
+            .main {
+                margin-left: 0;
+            }
 
-}
 
+            .topbar {
+                position: relative;
 
-.page-size-select-wrapper {
+                flex-direction: column;
 
-  display:
-      flex;
+                align-items: flex-start;
+            }
 
-  align-items:
-      center;
 
-  gap:
-      7px;
+            .content {
+                padding: 14px;
+            }
 
-  font-size:
-      12px;
 
-  color:
-      var(--pch-text-muted);
+            .search-row {
+                flex-direction: column;
 
-  font-weight:
-      600;
+                align-items: stretch;
+            }
 
-}
 
+            .search-box {
+                width: 100%;
+            }
 
-.page-size-select {
 
-  border:
-      1px solid var(--pch-border);
+            .quick-filters {
+                width: 100%;
 
-  border-radius:
-      6px;
+                overflow-x: auto;
 
-  padding:
-      5px 9px;
+                flex-wrap: nowrap;
 
-  font-size:
-      12px;
+                padding-bottom: 4px;
+            }
 
-  color:
-      var(--pch-text-dark);
 
-  background-color:
-      #ffffff;
+            .quick-filter {
+                flex-shrink: 0;
+            }
 
-  outline:
-      none;
 
-  font-weight:
-      700;
+            .workflow-track {
+                justify-content: flex-start;
+            }
 
-}
+        }
 
 
-/* =========================================================
-   STATUS
-========================================================= */
+        @media print {
 
-.status {
+            .sidebar,
+            .topbar,
+            .search-area,
+            .pagination-wrap,
+            .btn-action {
+                display: none !important;
+            }
 
-  display:
-      inline-flex;
 
-  align-items:
-      center;
+            .main {
+                margin-left: 0;
+            }
 
-  gap:
-      5px;
 
-  padding:
-      4px 10px;
+            .section-card {
+                box-shadow: none;
 
-  border-radius:
-      20px;
+                border: 1px solid #ddd;
+            }
 
-  font-size:
-      10.5px;
+        }
 
-  font-weight:
-      750;
+    </style>
 
-  white-space:
-      nowrap;
+</head>
 
-}
 
-
-.status-pending {
-
-  background:
-      var(--pch-amber-soft);
-
-  color:
-      var(--pch-amber);
-
-  border:
-      1px solid var(--pch-amber-border);
-
-}
-
-
-.status-uploaded {
-
-  background:
-      var(--pch-blue-soft);
-
-  color:
-      var(--pch-blue);
-
-  border:
-      1px solid var(--pch-blue-border);
-
-}
-
-
-.status-review {
-
-  background:
-      var(--pch-amber-soft);
-
-  color:
-      var(--pch-amber);
-
-  border:
-      1px solid var(--pch-amber-border);
-
-}
-
-
-.status-approved {
-
-  background:
-      var(--pch-emerald-soft);
-
-  color:
-      var(--pch-emerald);
-
-  border:
-      1px solid var(--pch-emerald-border);
-
-}
-
-
-.status-declined {
-
-  background:
-      var(--pch-rose-soft);
-
-  color:
-      var(--pch-rose);
-
-  border:
-      1px solid var(--pch-rose-border);
-
-}
-
-
-.cash-details {
-
-  margin-top:
-      4px;
-
-  color:
-      var(--pch-text-muted);
-
-  font-size:
-      10px;
-
-  line-height:
-      1.4;
-
-}
-
-
-/* =========================================================
-   DOCUMENT STACK
-========================================================= */
-
-.document-stack {
-
-  display:
-      flex;
-
-  flex-direction:
-      column;
-
-  gap:
-      7px;
-
-  min-width:
-      190px;
-
-}
-
-
-.document-label {
-
-  display:
-      block;
-
-  color:
-      var(--pch-text-muted);
-
-  font-size:
-      9.5px;
-
-  font-weight:
-      800;
-
-  text-transform:
-      uppercase;
-
-  letter-spacing:
-      0.45px;
-
-  margin-bottom:
-      3px;
-
-}
-
-
-.original-document {
-
-  padding-top:
-      7px;
-
-  border-top:
-      1px dashed #e2e8f0;
-
-}
-
-
-.finalized-document {
-
-  padding:
-      9px 10px;
-
-  border:
-      1px solid var(--pch-border);
-
-  border-radius:
-      9px;
-
-  background:
-      #f8fafc;
-
-}
-
-
-.finalized-badge {
-
-  display:
-      flex;
-
-  align-items:
-      center;
-
-  gap:
-      5px;
-
-  margin-bottom:
-      6px;
-
-  font-size:
-      9.5px;
-
-  font-weight:
-      800;
-
-  text-transform:
-      uppercase;
-
-  letter-spacing:
-      0.35px;
-
-}
-
-
-.finalized-badge-approved {
-
-  color:
-      var(--pch-emerald);
-
-}
-
-
-.finalized-badge-declined {
-
-  color:
-      var(--pch-rose);
-
-}
-
-
-.finalized-badge-review {
-
-  color:
-      var(--pch-amber);
-
-}
-
-
-.finalized-date {
-
-  margin-top:
-      5px;
-
-  color:
-      #64748b;
-
-  font-size:
-      10px;
-
-  font-weight:
-      600;
-
-}
-
-
-.view-button {
-
-  display:
-      inline-flex;
-
-  align-items:
-      center;
-
-  justify-content:
-      center;
-
-  gap:
-      5px;
-
-  border-radius:
-      7px;
-
-  padding:
-      7px 11px;
-
-  font-size:
-      11px;
-
-  font-weight:
-      750;
-
-  text-decoration:
-      none !important;
-
-  transition:
-      all 0.2s ease;
-
-  white-space:
-      nowrap;
-
-}
-
-
-.finalized-approved {
-
-  background:
-      var(--pch-emerald);
-
-  color:
-      #ffffff !important;
-
-}
-
-
-.finalized-approved:hover {
-
-  background:
-      #047857;
-
-  transform:
-      translateY(-1px);
-
-}
-
-
-.finalized-declined {
-
-  background:
-      var(--pch-rose);
-
-  color:
-      #ffffff !important;
-
-}
-
-
-.finalized-declined:hover {
-
-  background:
-      #b91c1c;
-
-  transform:
-      translateY(-1px);
-
-}
-
-
-.quotation-view {
-
-  background:
-      #0f172a;
-
-  color:
-      #ffffff !important;
-
-}
-
-
-.quotation-view:hover {
-
-  background:
-      #1e293b;
-
-  transform:
-      translateY(-1px);
-
-}
-
-
-.manager-comment {
-
-  max-width:
-      220px;
-
-  color:
-      var(--pch-text-body);
-
-  font-size:
-      11px;
-
-  line-height:
-      1.5;
-
-}
-
-
-.manager-comment strong {
-
-  color:
-      var(--pch-text-dark);
-
-}
-
-
-/* =========================================================
-   EMPTY STATE
-========================================================= */
-
-.empty-state {
-
-  padding:
-      48px 20px;
-
-  text-align:
-      center;
-
-  color:
-      var(--pch-text-muted);
-
-  font-size:
-      13px;
-
-  font-weight:
-      600;
-
-}
-
-
-.empty-state i {
-
-  display:
-      block;
-
-  margin:
-      0 auto 12px;
-
-  color:
-      #94a3b8;
-
-  font-size:
-      30px;
-
-}
-
-
-.no-match-row td {
-
-  text-align:
-      center;
-
-  padding:
-      36px 20px !important;
-
-  color:
-      var(--pch-text-muted);
-
-  font-size:
-      13px;
-
-  background-color:
-      #fafbfc !important;
-
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.purchase-footer {
-
-  text-align:
-      center;
-
-  color:
-      #94a3b8;
-
-  font-size:
-      12px;
-
-  font-weight:
-      600;
-
-  padding:
-      10px 0 18px;
-
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1200px) {
-
-  .purchase-summary {
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-  }
-
-}
-
-
-@media (max-width: 992px) {
-
-  .purchase-page {
-
-    padding:
-        22px 18px;
-
-  }
-
-  .purchase-header-left h1 {
-
-    font-size:
-        28px;
-
-  }
-
-  .purchase-summary {
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap:
-        12px;
-
-  }
-
-  .table-search-box {
-
-    width:
-        100%;
-
-  }
-
-
-}
-
-
-@media (max-width: 640px) {
-
-  .purchase-page {
-
-    padding:
-        18px 12px 40px;
-
-  }
-
-  .purchase-header {
-
-    flex-direction:
-        column;
-
-    align-items:
-        flex-start;
-
-    gap:
-        14px;
-
-  }
-
-  .purchase-actions {
-
-    width:
-        100%;
-
-    flex-direction:
-        column;
-
-  }
-
-  .purchase-btn {
-
-    width:
-        100%;
-
-    justify-content:
-        center;
-
-  }
-
-  .purchase-summary {
-
-    grid-template-columns:
-        1fr;
-
-    gap:
-        10px;
-
-  }
-
-  .summary-card {
-
-    height:
-        92px;
-
-    min-height:
-        92px;
-
-  }
-
-  .purchase-section-header {
-
-    padding:
-        15px;
-
-  }
-
-  .section-header-right {
-
-    width:
-        100%;
-
-  }
-
-  .table-search-box {
-
-    width:
-        100%;
-
-  }
-
-  .pagination-footer {
-
-    flex-direction:
-        column;
-
-    align-items:
-        stretch;
-
-  }
-
-}
-
-
-/* =========================================================
-   EXTRA SMALL DEVICES
-========================================================= */
-
-@media (max-width: 400px) {
-
-  .purchase-page {
-
-    padding:
-        15px 9px 35px;
-
-  }
-
-  .purchase-header-left h1 {
-
-    font-size:
-        25px;
-
-  }
-
-  .summary-card {
-
-    padding:
-        13px 14px;
-
-  }
-
-  .summary-number {
-
-    font-size:
-        22px;
-
-  }
-
-}
-
-</style>
-
-
-<div class="purchase-page">
-
-<div class="purchase-container">
-
-
-<!-- ======================================================
-     HEADER
-====================================================== -->
-
-<div class="purchase-header">
-
-<div class="purchase-header-left">
-
-<h1>
-Purchase Dashboard
-</h1>
-
-<p>
-Complete procurement overview — material requests, supplier quotations, approvals and cash control.
-</p>
-
-</div>
-
-
-<div class="purchase-actions">
-
-<a
-href="{{ url_for('construction_purchase_material_request') }}"
-class="purchase-btn btn-request"
->
-
-<i class="fas fa-file-circle-plus"></i>
-
-<span>
-Upload Material Request
-</span>
-
-</a>
-
-
-<a
-href="{{ url_for('construction_purchase_add_quotation') }}"
-class="purchase-btn btn-quotation"
->
-
-<i class="fas fa-file-invoice-dollar"></i>
-
-<span>
-Upload Supplier Quotation
-</span>
-
-</a>
-
-
-<a
-href="{{ url_for('admin_logout') }}"
-class="purchase-btn btn-logout"
->
-
-<i class="fas fa-sign-out-alt"></i>
-
-<span>
-Logout
-</span>
-
-</a>
-
-</div>
-
-</div>
-
-
-<!-- ======================================================
-     STATISTICS INTRO
-====================================================== -->
-
-<div class="statistics-heading">
-
-<h2>
-Purchase Statistics
-</h2>
-
-<p>
-Full procurement activity and financial release overview.
-</p>
-
-</div>
-
-
-<!-- ======================================================
-     MATERIAL REQUEST STATISTICS
-====================================================== -->
-
-<div class="statistics-group">
-
-
-<div class="statistics-group-title">
-
-<i class="fas fa-boxes-stacked"></i>
-
-<h3>
-Material Requests
-</h3>
-
-</div>
-
-
-<div class="purchase-summary">
-
-
-<div class="summary-card summary-primary">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Total Material Requests
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-file-lines"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ total_material_requests|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-warning">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Pending Requests
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-hourglass-half"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ pending_material_requests|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-primary">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Approved Requests
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-circle-check"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ approved_material_requests|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-danger">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Declined Requests
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-circle-xmark"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ declined_material_requests|default(0) }}
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ======================================================
-     SUPPLIER QUOTATION STATISTICS
-====================================================== -->
-
-<div class="statistics-group">
-
-
-<div class="statistics-group-title">
-
-<i class="fas fa-file-invoice-dollar"></i>
-
-<h3>
-Supplier Quotations
-</h3>
-
-</div>
-
-
-<div class="purchase-summary">
-
-
-<div class="summary-card summary-blue">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Total Quotations
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-file-invoice"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ total_quotations|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-warning">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Pending Quotations
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-clock"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ pending_quotations|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-primary">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Approved Quotations
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-circle-check"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ approved_quotations|default(0) }}
-</div>
-
-</div>
-
-
-<div class="summary-card summary-danger">
-
-<div class="summary-top">
-
-<div class="summary-label">
-Declined Quotations
-</div>
-
-<div class="summary-icon-box">
-<i class="fas fa-circle-xmark"></i>
-</div>
-
-</div>
-
-<div class="summary-number">
-{{ declined_quotations|default(0) }}
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ======================================================
-     MATERIAL REQUEST TABLE
-====================================================== -->
-
-<div
-class="purchase-section"
-id="purchaseRequestsSection"
->
-
-
-<div class="purchase-section-header">
-
-
-<div class="purchase-section-title">
-
-<div class="section-icon-pill">
-
-<i class="fas fa-boxes-stacked"></i>
-
-</div>
-
-
-<div>
-
-<h2>
-Recent Material Requests
-</h2>
-
-<span>
-Original material requests together with manager stamped documents
-</span>
-
-</div>
-
-</div>
-
-
-<div class="section-header-right">
-
-
-<div class="table-search-box">
-
-<i class="fas fa-search search-icon"></i>
-
-<input
-type="text"
-id="purchaseRequestsSearchInput"
-placeholder="Search request, project, requester, status..."
-autocomplete="off"
->
-
-<button
-type="button"
-class="table-search-clear"
-id="clearPurchaseReqSearch"
-title="Clear search"
->
-✕
-</button>
-
-</div>
-
-
-<div
-class="section-badge"
-id="purchaseRequestsBadge"
->
-
-{{ recent_requests|length if recent_requests else 0 }}
-requests
-
-</div>
-
-</div>
-
-</div>
-
-
-{% if recent_requests %}
-
-<div class="table-wrapper">
-
-<table
-class="purchase-table"
-id="purchaseRequestsTable"
->
-
-<thead>
-
-<tr>
-
-<th style="width:50px;text-align:center;">
-#
-</th>
-
-<th>
-Request Number
-</th>
-
-<th>
-Project
-</th>
-
-<th>
-Requested By
-</th>
-
-<th>
-Request Date
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Amount Released
-</th>
-
-<th>
-Cash Released
-</th>
-
-<th>
-Documents
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="purchaseRequestsTableBody">
-
-
-{% for item in recent_requests %}
-
-<tr class="searchable-purchase-req-row">
-
-
-<td class="row-sn-cell purchase-req-sn-cell">
-{{ loop.index }}
-</td>
-
-
-<td>
-
-<span class="primary-text">
-{{ item.request_number }}
-</span>
-
-</td>
-
-
-<td>
-{{ item.project_name or "—" }}
-</td>
-
-
-<td>
-{{ item.requested_by or "—" }}
-</td>
-
-
-<td>
-{{ item.request_date or "—" }}
-</td>
-
-
-<td>
-
-
-{% if item.status == "Approved" %}
-
-<span class="status status-approved">
-
-<i class="fas fa-circle-check"></i>
-
-Approved
-
-</span>
-
-
-{% elif item.status in ["Declined","Rejected"] %}
-
-<span class="status status-declined">
-
-<i class="fas fa-circle-xmark"></i>
-
-{{ item.status }}
-
-</span>
-
-
-{% elif item.status == "Pending Quotation" %}
-
-<span class="status status-pending">
-
-<i class="fas fa-hourglass-half"></i>
-
-Pending Quotation
-
-</span>
-
-
-{% else %}
-
-<span class="status status-review">
-
-{{ item.status or "Under Review" }}
-
-</span>
-
-{% endif %}
-
-</td>
-
-
-<!-- =====================================================
-     AMOUNT RELEASED
-===================================================== -->
-
-<td>
-
-{% set released_amount = item.get('amount_released', 0) %}
-
-<span class="amount">
-
-QAR
-{{ "%.2f"|format(released_amount or 0) }}
-
-</span>
-
-</td>
-
-
-<!-- =====================================================
-     CASH RELEASE STATUS
-===================================================== -->
-
-<td>
-
-{% if item.status == "Approved" %}
-
-    {% if item.get('cash_released', False) %}
-
-        <span class="status status-approved">
-
-            <i class="fas fa-money-bill-transfer"></i>
-
-            Cash Released
-
-        </span>
-
-
-        {% if item.get('cash_released_at') %}
-
-            <div class="cash-details">
-
-                {{ item.get('cash_released_at').strftime('%d %b %Y %H:%M') }}
-
-            </div>
-
-        {% endif %}
-
-
-        {% if item.get('cash_released_by_name') %}
-
-            <div class="cash-details">
-
-                By:
-                {{ item.get('cash_released_by_name') }}
-
-            </div>
-
-        {% endif %}
-
-    {% else %}
-
-        <span class="status status-pending">
-
-            <i class="fas fa-clock"></i>
-
-            Cash Pending Release
-
-        </span>
-
-    {% endif %}
-
-{% else %}
-
-    <span class="secondary-text">
-        —
-    </span>
-
-{% endif %}
-
-</td>
-
-
-<td>
-
-
-<div class="document-stack">
-
-
-{% if item.finalized_file_url %}
-
-<div class="finalized-document">
-
-
-{% if item.status == "Approved" %}
-
-<div class="finalized-badge finalized-badge-approved">
-
-<i class="fas fa-stamp"></i>
-
-Manager Approved — Stamped
-
-</div>
-
-
-<a
-href="{{ item.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button finalized-approved"
->
-
-<i class="fas fa-circle-check"></i>
-
-View Approved Document
-
-</a>
-
-
-{% elif item.status in ["Declined","Rejected"] %}
-
-<div class="finalized-badge finalized-badge-declined">
-
-<i class="fas fa-stamp"></i>
-
-Manager Declined — Stamped
-
-</div>
-
-
-<a
-href="{{ item.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button finalized-declined"
->
-
-<i class="fas fa-circle-xmark"></i>
-
-View Declined Document
-
-</a>
-
-
-{% else %}
-
-<div class="finalized-badge finalized-badge-review">
-
-<i class="fas fa-file-signature"></i>
-
-Finalized Document
-
-</div>
-
-
-<a
-href="{{ item.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button quotation-view"
->
-
-<i class="fas fa-file-pdf"></i>
-
-View Finalized Document
-
-</a>
-
-{% endif %}
-
-
-{% if item.finalized_at %}
-
-<div class="finalized-date">
-
-Finalized:
-{{ item.finalized_at.strftime('%d %b %Y %H:%M') }}
-
-</div>
-
-{% endif %}
-
-</div>
-
-{% endif %}
-
-
-{% if item.file_url %}
-
-<div class="original-document">
-
-<span class="document-label">
-Original Material Request
-</span>
-
-
-<a
-href="{{ item.file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button quotation-view"
->
-
-<i class="fas fa-file-lines"></i>
-
-View Original
-
-</a>
-
-</div>
-
-{% endif %}
-
-
-{% if not item.file_url and not item.finalized_file_url %}
-
-<span class="secondary-text">
-No documents available.
-</span>
-
-{% endif %}
-
-
-</div>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
-
-
-<div
-class="pagination-footer"
-id="purchaseReqPaginationFooter"
->
-
-
-<div
-class="pagination-info"
-id="purchaseReqPaginationInfo"
->
-
-Showing
-<strong>1</strong>
-to
-<strong>10</strong>
-of
-<strong>{{ recent_requests|length }}</strong>
-entries
-
-</div>
-
-
-<div class="d-flex align-items-center gap-3">
-
-
-<div class="page-size-select-wrapper">
-
-<span>
-Rows per page:
-</span>
-
-
-<select
-class="page-size-select"
-id="purchaseReqPageSizeSelect"
->
-
-<option value="5">
-5
-</option>
-
-<option value="10" selected>
-10
-</option>
-
-<option value="25">
-25
-</option>
-
-<option value="all">
-All
-</option>
-
-</select>
-
-</div>
-
-
-<div
-class="pagination-controls"
-id="purchaseReqPaginationControls"
-></div>
-
-</div>
-
-</div>
-
-
-{% else %}
-
-<div class="empty-state">
-
-<i class="fas fa-folder-open"></i>
-
-No material requests have been uploaded yet.
-
-</div>
-
-{% endif %}
-
-</div>
-
-
-<!-- ======================================================
-     SUPPLIER QUOTATION TABLE
-====================================================== -->
-
-<div
-class="purchase-section"
-id="purchaseQuotationsSection"
->
-
-
-<div class="purchase-section-header">
-
-
-<div class="purchase-section-title">
-
-<div class="section-icon-pill">
-
-<i class="fas fa-file-invoice-dollar"></i>
-
-</div>
-
-
-<div>
-
-<h2>
-Recent Supplier Quotations
-</h2>
-
-<span>
-Original supplier quotations together with manager stamped decisions
-</span>
-
-</div>
-
-</div>
-
-
-<div class="section-header-right">
-
-
-<div class="table-search-box">
-
-<i class="fas fa-search search-icon"></i>
-
-<input
-type="text"
-id="purchaseQuotationsSearchInput"
-placeholder="Search quotation, supplier, amount, status..."
-autocomplete="off"
->
-
-<button
-type="button"
-class="table-search-clear"
-id="clearPurchaseQuotSearch"
-title="Clear search"
->
-✕
-</button>
-
-</div>
-
-
-<div
-class="section-badge"
-id="purchaseQuotationsBadge"
->
-
-{{ recent_quotations|length if recent_quotations else 0 }}
-quotations
-
-</div>
-
-</div>
-
-</div>
-
-
-{% if recent_quotations %}
-
-<div class="table-wrapper">
-
-<table
-class="purchase-table"
-id="purchaseQuotationsTable"
->
-
-<thead>
-
-<tr>
-
-<th style="width:50px;text-align:center;">
-#
-</th>
-
-<th>
-Quotation Number
-</th>
-
-<th>
-Supplier
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Cash Released
-</th>
-
-<th>
-Manager Comment
-</th>
-
-<th>
-Documents
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="purchaseQuotationsTableBody">
-
-
-{% for quotation in recent_quotations %}
-
-<tr class="searchable-purchase-quot-row">
-
-
-<td class="row-sn-cell purchase-quot-sn-cell">
-{{ loop.index }}
-</td>
-
-
-<td>
-
-<span class="primary-text">
-{{ quotation.quotation_number }}
-</span>
-
-</td>
-
-
-<td>
-
-<span class="primary-text">
-{{ quotation.supplier_name or "—" }}
-</span>
-
-</td>
-
-
-<td>
-{{ quotation.quotation_date or "—" }}
-</td>
-
-
-<td>
-
-<span class="amount">
-
-{% if quotation.quotation_amount is not none %}
-
-{{ quotation.currency or "QAR" }}
-{{ "%.2f"|format(quotation.quotation_amount) }}
-
-{% else %}
-
-—
-
-{% endif %}
-
-</span>
-
-</td>
-
-
-<td>
-
-
-{% if quotation.status == "Approved" %}
-
-<span class="status status-approved">
-
-<i class="fas fa-circle-check"></i>
-
-Approved
-
-</span>
-
-
-{% if quotation.decision_date %}
-
-<div class="secondary-text">
-
-{{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
-
-</div>
-
-{% endif %}
-
-
-{% elif quotation.status in ["Declined","Rejected"] %}
-
-<span class="status status-declined">
-
-<i class="fas fa-circle-xmark"></i>
-
-{{ quotation.status }}
-
-</span>
-
-
-{% if quotation.decision_date %}
-
-<div class="secondary-text">
-
-{{ quotation.decision_date.strftime('%d %b %Y %H:%M') }}
-
-</div>
-
-{% endif %}
-
-
-{% elif quotation.status == "Quotation Uploaded" %}
-
-<span class="status status-uploaded">
-
-<i class="fas fa-file-arrow-up"></i>
-
-Quotation Uploaded
-
-</span>
-
-
-{% else %}
-
-<span class="status status-review">
-
-<i class="fas fa-clock"></i>
-
-{{ quotation.status or "Under Review" }}
-
-</span>
-
-{% endif %}
-
-</td>
-
-
-<td>
-
-
-{% if quotation.status == "Approved" %}
-
-
-{% if quotation.cash_released %}
-
-<span class="status status-approved">
-
-<i class="fas fa-money-bill-transfer"></i>
-
-Cash Released
-
-</span>
-
-
-{% if quotation.cash_released_at %}
-
-<div class="cash-details">
-
-{{ quotation.cash_released_at.strftime('%d %b %Y %H:%M') }}
-
-</div>
-
-{% endif %}
-
-
-{% if quotation.cash_released_by_name %}
-
-<div class="cash-details">
-
-By:
-{{ quotation.cash_released_by_name }}
-
-</div>
-
-{% endif %}
-
-
-{% else %}
-
-<span class="status status-pending">
-
-<i class="fas fa-clock"></i>
-
-Cash Pending Release
-
-</span>
-
-{% endif %}
-
-
-{% else %}
-
-<span class="secondary-text">
-—
-</span>
-
-{% endif %}
-
-</td>
-
-
-<td>
-
-
-{% if quotation.manager_comment %}
-
-<div class="manager-comment">
-
-<strong>
-Manager:
-</strong>
-
-{{ quotation.manager_comment }}
-
-</div>
-
-
-{% elif quotation.status in ["Approved","Declined","Rejected"] %}
-
-<div class="secondary-text">
-
-No comment provided.
-
-</div>
-
-
-{% else %}
-
-—
-
-{% endif %}
-
-</td>
-
-
-<td>
-
-
-<div class="document-stack">
-
-
-{% if quotation.finalized_file_url %}
-
-<div class="finalized-document">
-
-
-{% if quotation.status == "Approved" %}
-
-<div class="finalized-badge finalized-badge-approved">
-
-<i class="fas fa-stamp"></i>
-
-Manager Approved — Stamped
-
-</div>
-
-
-<a
-href="{{ quotation.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button finalized-approved"
->
-
-<i class="fas fa-file-circle-check"></i>
-
-View Approved Document
-
-</a>
-
-
-{% elif quotation.status in ["Declined","Rejected"] %}
-
-<div class="finalized-badge finalized-badge-declined">
-
-<i class="fas fa-stamp"></i>
-
-Manager Declined — Stamped
-
-</div>
-
-
-<a
-href="{{ quotation.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button finalized-declined"
->
-
-<i class="fas fa-file-circle-xmark"></i>
-
-View Declined Document
-
-</a>
-
-
-{% else %}
-
-<div class="finalized-badge finalized-badge-review">
-
-<i class="fas fa-file-signature"></i>
-
-Finalized Document
-
-</div>
-
-
-<a
-href="{{ quotation.finalized_file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button quotation-view"
->
-
-<i class="fas fa-file-pdf"></i>
-
-View Finalized Document
-
-</a>
-
-{% endif %}
-
-
-{% if quotation.finalized_at %}
-
-<div class="finalized-date">
-
-Finalized:
-{{ quotation.finalized_at.strftime('%d %b %Y %H:%M') }}
-
-</div>
-
-{% endif %}
-
-</div>
-
-{% endif %}
-
-
-{% if quotation.file_url %}
-
-<div class="original-document">
-
-<span class="document-label">
-
-Original Supplier Quotation
-
-</span>
-
-
-<a
-href="{{ quotation.file_url }}"
-target="_blank"
-rel="noopener noreferrer"
-class="view-button quotation-view"
->
-
-<i class="fas fa-file-invoice-dollar"></i>
-
-View Original
-
-</a>
-
-</div>
-
-{% endif %}
-
-
-{% if not quotation.file_url and not quotation.finalized_file_url %}
-
-<span class="secondary-text">
-
-No documents available.
-
-</span>
-
-{% endif %}
-
-
-</div>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
-
-
-<div
-class="pagination-footer"
-id="purchaseQuotPaginationFooter"
->
-
-
-<div
-class="pagination-info"
-id="purchaseQuotPaginationInfo"
->
-
-Showing
-<strong>1</strong>
-to
-<strong>10</strong>
-of
-<strong>{{ recent_quotations|length }}</strong>
-entries
-
-</div>
-
-
-<div class="d-flex align-items-center gap-3">
-
-
-<div class="page-size-select-wrapper">
-
-<span>
-Rows per page:
-</span>
-
-
-<select
-class="page-size-select"
-id="purchaseQuotPageSizeSelect"
->
-
-<option value="5">
-5
-</option>
-
-<option value="10" selected>
-10
-</option>
-
-<option value="25">
-25
-</option>
-
-<option value="all">
-All
-</option>
-
-</select>
-
-</div>
-
-
-<div
-class="pagination-controls"
-id="purchaseQuotPaginationControls"
-></div>
-
-</div>
-
-</div>
-
-
-{% else %}
-
-<div class="empty-state">
-
-<i class="fas fa-file-invoice"></i>
-
-No supplier quotations have been uploaded yet.
-
-</div>
-
-{% endif %}
-
-</div>
-
-
-<!-- ======================================================
-     FOOTER
-====================================================== -->
-
-<div class="purchase-footer">
-
-© 2026
-
-<strong>
-Prestigious Trading & Constructions
-</strong>
-
-— Purchase Department
-
-</div>
-
-
-</div>
-
-</div>
+<body>
 
 
 <!-- =========================================================
-     SEARCH + PAGINATION ENGINE
+     SIDEBAR
 ========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-brand">
+
+        <div class="brand-title">
+            Prestigious
+        </div>
+
+        <div class="brand-subtitle">
+            Trading & Construction W.L.L.
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+        <div class="sidebar-user-name">
+            {{ purchase_user.fullname or session.get("construction_admin_name", "Purchase Officer") }}
+        </div>
+
+        <div class="sidebar-user-role">
+            {{ purchase_user.role or session.get("construction_admin_role", "purchase") }}
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <div class="nav-label">
+            Purchase
+        </div>
+
+
+        <a href="{{ url_for('construction_purchase_dashboard') }}"
+           class="sidebar-link active">
+
+            <i class="bi bi-speedometer2"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="#materialRequestsSection"
+           class="sidebar-link">
+
+            <i class="bi bi-file-earmark-text"></i>
+
+            <span>Material Requests</span>
+
+            <span class="sidebar-badge">
+                {{ total_material_requests }}
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('construction_purchase_audit_trail') }}"
+           class="sidebar-link">
+
+            <i class="bi bi-clock-history"></i>
+
+            <span>Audit Trail</span>
+
+            {% if total_logs is defined %}
+
+                <span class="sidebar-badge">
+                    {{ total_logs }}
+                </span>
+
+            {% endif %}
+
+        </a>
+
+
+        <div class="nav-label mt-3">
+            Workflow
+        </div>
+
+
+        <a href="#workflowSection"
+           class="sidebar-link">
+
+            <i class="bi bi-diagram-3"></i>
+
+            <span>Procurement Workflow</span>
+
+        </a>
+
+
+        <a href="#procurementSection"
+           class="sidebar-link">
+
+            <i class="bi bi-cart-check"></i>
+
+            <span>Procurement Records</span>
+
+            <span class="sidebar-badge">
+                {{ total_procurement }}
+            </span>
+
+        </a>
+
+
+        <div class="nav-label mt-3">
+            Account
+        </div>
+
+
+        <a href="{{ url_for('admin_logout') }}"
+           class="sidebar-link">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+
+    </nav>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <div>
+
+            <h1 class="page-title">
+                Purchase Dashboard
+            </h1>
+
+            <div class="page-subtitle">
+                Manage material requests, procurement and final purchasing
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <a href="{{ url_for('construction_purchase_material_request') }}"
+               class="btn btn-new">
+
+                <i class="bi bi-plus-lg me-1"></i>
+
+                New Material Request
+
+            </a>
+
+        </div>
+
+
+    </header>
+
+
+    <div class="content">
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================== -->
+
+        <div class="row g-3">
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-file-earmark-text"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Material Requests
+                    </div>
+
+                    <div class="stat-value">
+                        {{ total_material_requests }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-cart-check"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Procurement Records
+                    </div>
+
+                    <div class="stat-value">
+                        {{ total_procurement }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-credit-card"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Final Procurement
+                    </div>
+
+                    <div class="stat-value">
+                        {{ pending_final_procurement }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Completed Procurement
+                    </div>
+
+                    <div class="stat-value">
+                        {{ completed_procurement }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             WORKFLOW
+        ================================================== -->
+
+        <section id="workflowSection"
+                 class="section-card">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2 class="section-title">
+                        Procurement Workflow
+                    </h2>
+
+                    <div class="section-description">
+                        Follow the purchasing process from material request to completion.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow">
+
+
+                <div class="workflow-track">
+
+
+                    <div class="workflow-step active">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Material Request
+                        </div>
+
+                        <div class="workflow-desc">
+                            Purchase creates request
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Engineer Review
+                        </div>
+
+                        <div class="workflow-desc">
+                            Technical review
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Manager Approval
+                        </div>
+
+                        <div class="workflow-desc">
+                            Management approval
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-cart"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Procurement
+                        </div>
+
+                        <div class="workflow-desc">
+                            Supplier & quotation
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step final">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-credit-card"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Final Procurement
+                        </div>
+
+                        <div class="workflow-desc">
+                            Payment & final documents
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-folder-check"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Final Documents
+                        </div>
+
+                        <div class="workflow-desc">
+                            Invoice & receipt
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-icon">
+                            <i class="bi bi-check2-circle"></i>
+                        </div>
+
+                        <div class="workflow-name">
+                            Completion
+                        </div>
+
+                        <div class="workflow-desc">
+                            Procurement completed
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="legend">
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot"
+                              style="background:#8A1538;"></span>
+
+                        Card route
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot"
+                              style="background:#0d6efd;"></span>
+
+                        Quotation / LPO route
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot"
+                              style="background:#198754;"></span>
+
+                        Final Procurement
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        Final purchasing is managed from this dashboard.
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MATERIAL REQUESTS
+        ================================================== -->
+
+        <section id="materialRequestsSection"
+                 class="section-card">
+
+
+            <div class="section-header">
+
+
+                <div>
+
+                    <h2 class="section-title">
+                        Material Requests
+                    </h2>
+
+                    <div class="section-description">
+                        Search and manage material requests.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACCOUNT-STYLE SEARCH
+            ================================================== -->
+
+            <div class="search-area">
+
+
+                <div class="search-row">
+
+
+                    <div class="search-box">
+
+                        <i class="bi bi-search"></i>
+
+                        <input type="text"
+                               id="materialSearch"
+                               placeholder="Search material requests...">
+
+                    </div>
+
+
+                    <div class="quick-filters"
+                         id="materialFilters">
+
+
+                        <button type="button"
+                                class="quick-filter active"
+                                data-filter="all">
+
+                            All Documents
+
+                            <span class="filter-count"
+                                  id="materialCountAll">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="pending">
+
+                            Pending
+
+                            <span class="filter-count"
+                                  id="materialCountPending">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="approved">
+
+                            Approved
+
+                            <span class="filter-count"
+                                  id="materialCountApproved">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="completed">
+
+                            Completed
+
+                            <span class="filter-count"
+                                  id="materialCountCompleted">
+                                0
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="search-bottom">
+
+
+                    <div id="materialSearchResult"
+                         class="search-result">
+
+                        Showing all material requests
+
+                    </div>
+
+
+                    <button type="button"
+                            id="clearMaterialSearch"
+                            class="clear-search">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Clear search
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="table-responsive">
+
+
+                <table class="table"
+                       id="materialRequestsTable">
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>S/N</th>
+
+                        <th>Request Number</th>
+
+                        <th>Project</th>
+
+                        <th>Requested By</th>
+
+                        <th>Date & Time</th>
+
+                        <th>Status</th>
+
+                        <th>Documents</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for request in recent_requests %}
+
+
+                        {% set request_status =
+                            (request.status or '')|trim %}
+
+
+                        {% set request_status_lower =
+                            request_status|lower %}
+
+
+                        {% set procurement_status =
+                            (request.procurement_status or '')|trim %}
+
+
+                        {% set procurement_status_lower =
+                            procurement_status|lower %}
+
+
+                        <tr class="material-row"
+
+                            data-search="{{ (
+                                (request.request_number or '') ~ ' ' ~
+                                (request.project_name or '') ~ ' ' ~
+                                (request.requested_by_name or '') ~ ' ' ~
+                                (request.requested_by or '') ~ ' ' ~
+                                (request.id or '') ~ ' ' ~
+                                (request.description or '') ~ ' ' ~
+                                (request.status or '') ~ ' ' ~
+                                (request.procurement_method or '') ~ ' ' ~
+                                (request.procurement_id or '') ~ ' ' ~
+                                (request.procurement_status or '') ~ ' ' ~
+                                (request.procurement_workflow_stage or '') ~ ' ' ~
+                                (request.engineer_name or '') ~ ' ' ~
+                                (request.engineer_comment or '') ~ ' ' ~
+                                (request.manager_name or '') ~ ' ' ~
+                                (request.manager_comment or '') ~ ' ' ~
+                                (request.original_file_name or '') ~ ' ' ~
+                                (request.signed_file_name or '')
+                            )|lower }}"
+
+                            data-status="{{ request_status_lower }}"
+
+                            data-procurement-status="{{ procurement_status_lower }}"
+
+                            data-method="{{ (request.procurement_method or '')|lower }}">
+
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+
+                            <td>
+
+                                <div class="request-number">
+
+                                    {{
+                                        request.request_number
+                                        or ('MR-' ~ request.id)
+                                    }}
+
+                                </div>
+
+                                <div class="muted-text">
+                                    ID: {{ request.id }}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                {{ request.project_name or '—' }}
+                            </td>
+
+
+                            <td>
+
+                                {{ request.requested_by_name or '—' }}
+
+                                {% if request.requested_by %}
+
+                                    <div class="muted-text">
+                                        ID: {{ request.requested_by }}
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if request.created_at %}
+
+                                    <div>
+                                        {{ request.created_at.strftime('%d %b %Y') }}
+                                    </div>
+
+                                    <div class="muted-text">
+                                        {{ request.created_at.strftime('%I:%M %p') }}
+                                    </div>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+
+                                {% if 'correction' in request_status_lower %}
+
+                                    <span class="badge-status status-correction">
+                                        {{ request_status }}
+                                    </span>
+
+
+                                {% elif request_status_lower == 'completed' %}
+
+                                    <span class="badge-status status-completed">
+                                        Completed
+                                    </span>
+
+
+                                {% elif request_status_lower == 'declined' %}
+
+                                    <span class="badge-status status-declined">
+                                        Declined
+                                    </span>
+
+
+                                {% elif 'approved' in request_status_lower %}
+
+                                    <span class="badge-status status-approved">
+                                        {{ request_status }}
+                                    </span>
+
+
+                                {% elif 'review' in request_status_lower %}
+
+                                    <span class="badge-status status-review">
+                                        {{ request_status }}
+                                    </span>
+
+
+                                {% elif 'pending' in request_status_lower %}
+
+                                    <span class="badge-status status-pending">
+                                        {{ request_status }}
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="badge-status status-default">
+                                        {{ request_status or 'Unknown' }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if request.procurement_id %}
+
+                                    <div class="muted-text mt-1">
+                                        Procurement #{{ request.procurement_id }}
+                                    </div>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <td style="min-width:210px;">
+
+
+                                {% if request.original_file_url %}
+
+                                    <div class="document-item">
+
+                                        <i class="bi bi-file-earmark-text"></i>
+
+                                        <a href="{{ request.original_file_url }}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+
+                                            Original Request
+
+                                        </a>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if request.signed_file_url %}
+
+                                    <div class="document-item">
+
+                                        <i class="bi bi-file-earmark-check"></i>
+
+                                        <a href="{{ request.signed_file_url }}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+
+                                            Signed Request
+
+                                        </a>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if not request.original_file_url
+                                      and not request.signed_file_url %}
+
+                                    <span class="document-empty">
+                                        No documents
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <td>
+
+
+                                {% if request.procurement_id
+                                      and procurement_status_lower == 'pending final procurement' %}
+
+
+                                    <div class="final-highlight">
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                        Ready
+
+                                    </div>
+
+
+                                    <br>
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_final_procurement',
+                                        procurement_id=request.procurement_id
+                                    ) }}"
+                                       class="btn-action action-final">
+
+                                        <i class="bi bi-credit-card"></i>
+
+                                        Final Procurement
+
+                                    </a>
+
+
+                                {% elif request.procurement_id
+                                        and procurement_status_lower == 'final procurement correction required' %}
+
+
+                                    <div class="final-highlight"
+                                         style="background:#fff3d8;color:#a04c00;">
+
+                                        <i class="bi bi-exclamation-triangle"></i>
+
+                                        Correction Required
+
+                                    </div>
+
+
+                                    <br>
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_final_procurement',
+                                        procurement_id=request.procurement_id
+                                    ) }}"
+                                       class="btn-action action-correction">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                        Correct Final Procurement
+
+                                    </a>
+
+
+                                {% elif request.procurement_id
+                                        and procurement_status_lower == 'completed' %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                        Completed
+
+                                    </button>
+
+
+                                {% elif request_status_lower == 'engineer correction required' %}
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_material_request',
+                                        request_id=request.id
+                                    ) }}"
+                                       class="btn-action action-correction">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                        Correct Request
+
+                                    </a>
+
+
+                                {% elif request_status_lower == 'approved'
+                                      and request.procurement_id %}
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_material_request_procurement',
+                                        request_id=request.id
+                                    ) }}"
+                                       class="btn-action action-primary">
+
+                                        <i class="bi bi-cart"></i>
+
+                                        Procurement
+
+                                    </a>
+
+
+                                {% elif request_status_lower == 'approved' %}
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_material_request_procurement',
+                                        request_id=request.id
+                                    ) }}"
+                                       class="btn-action action-primary">
+
+                                        <i class="bi bi-cart"></i>
+
+                                        Start Procurement
+
+                                    </a>
+
+
+                                {% elif request_status_lower == 'completed' %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                        Completed
+
+                                    </button>
+
+
+                                {% elif 'engineer' in request_status_lower
+                                      and 'review' in request_status_lower %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-hourglass-split"></i>
+
+                                        Engineer Review
+
+                                    </button>
+
+
+                                {% elif 'manager' in request_status_lower
+                                      and 'review' in request_status_lower %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-hourglass-split"></i>
+
+                                        Manager Review
+
+                                    </button>
+
+
+                                {% elif request_status_lower == 'manager correction required' %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-hourglass-split"></i>
+
+                                        Manager Correction
+
+                                    </button>
+
+
+                                {% elif request_status_lower == 'declined' %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-x-circle"></i>
+
+                                        Declined
+
+                                    </button>
+
+
+                                {% else %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-hourglass"></i>
+
+                                        {{ request_status or 'Pending' }}
+
+                                    </button>
+
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% else %}
+
+
+                        <tr>
+
+                            <td colspan="8">
+
+                                <div class="empty-state">
+
+                                    <i class="bi bi-file-earmark-x"></i>
+
+                                    <div>
+                                        No material requests found.
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="pagination-wrap">
+
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div id="materialPaginationInfo"
+                         class="pagination-info">
+
+                        Showing 0 to 0 of 0
+
+                    </div>
+
+
+                    <select id="materialPageSize"
+                            class="form-select page-size">
+
+                        <option value="10">
+                            10
+                        </option>
+
+                        <option value="25">
+                            25
+                        </option>
+
+                        <option value="50">
+                            50
+                        </option>
+
+                        <option value="100">
+                            100
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="materialPaginationButtons"
+                     class="pagination-buttons">
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             PROCUREMENT RECORDS
+        ================================================== -->
+
+        <section id="procurementSection"
+                 class="section-card">
+
+
+            <div class="section-header">
+
+
+                <div>
+
+                    <h2 class="section-title">
+                        Procurement Records
+                    </h2>
+
+                    <div class="section-description">
+                        Track procurement records, quotations, LPOs, final invoice, final receipt and payment evidence.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACCOUNT-STYLE SEARCH
+            ================================================== -->
+
+            <div class="search-area">
+
+
+                <div class="search-row">
+
+
+                    <div class="search-box">
+
+                        <i class="bi bi-search"></i>
+
+                        <input type="text"
+                               id="procurementSearch"
+                               placeholder="Search procurement records...">
+
+                    </div>
+
+
+                    <div class="quick-filters"
+                         id="procurementFilters">
+
+
+                        <button type="button"
+                                class="quick-filter active"
+                                data-filter="all">
+
+                            All Documents
+
+                            <span class="filter-count"
+                                  id="procurementCountAll">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="card">
+
+                            Card
+
+                            <span class="filter-count"
+                                  id="procurementCountCard">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="quotation">
+
+                            Quotation
+
+                            <span class="filter-count"
+                                  id="procurementCountQuotation">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="pending">
+
+                            Pending
+
+                            <span class="filter-count"
+                                  id="procurementCountPending">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="approved">
+
+                            Approved
+
+                            <span class="filter-count"
+                                  id="procurementCountApproved">
+                                0
+                            </span>
+
+                        </button>
+
+
+                        <button type="button"
+                                class="quick-filter"
+                                data-filter="completed">
+
+                            Completed
+
+                            <span class="filter-count"
+                                  id="procurementCountCompleted">
+                                0
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="search-bottom">
+
+
+                    <div id="procurementSearchResult"
+                         class="search-result">
+
+                        Showing all procurement records
+
+                    </div>
+
+
+                    <button type="button"
+                            id="clearProcurementSearch"
+                            class="clear-search">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Clear search
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="table-responsive">
+
+
+                <table class="table"
+                       id="procurementTable">
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>S/N</th>
+
+                        <th>MR Number</th>
+
+                        <th>Project</th>
+
+                        <th>Method</th>
+
+                        <th>Workflow Stage</th>
+
+                        <th>Supplier</th>
+
+                        <th>Amount</th>
+
+                        <th>Initiated By</th>
+
+                        <th>Last Activity</th>
+
+                        <th>Status</th>
+
+                        <th>Documents</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for procurement in recent_procurement %}
+
+
+                        {% set procurement_status =
+                            (procurement.status or '')|trim %}
+
+
+                        {% set procurement_status_lower =
+                            procurement_status|lower %}
+
+
+                        <tr class="procurement-row"
+
+                            data-search="{{ (
+                                (procurement.request_number or '') ~ ' ' ~
+                                (procurement.project_name or '') ~ ' ' ~
+                                (procurement.supplier_name or '') ~ ' ' ~
+                                (procurement.supplier_contact or '') ~ ' ' ~
+                                (procurement.procurement_method or '') ~ ' ' ~
+                                (procurement.workflow_stage or '') ~ ' ' ~
+                                (procurement.status or '') ~ ' ' ~
+                                (procurement.id or '') ~ ' ' ~
+                                (procurement.material_request_id or '') ~ ' ' ~
+                                (procurement.initiated_by_name or '') ~ ' ' ~
+                                (procurement.pre_purchase_submitted_by_name or '') ~ ' ' ~
+                                (procurement.account_reviewer_name or '') ~ ' ' ~
+                                (procurement.manager_reviewer_name or '') ~ ' ' ~
+                                (procurement.final_purchase_started_by_name or '') ~ ' ' ~
+                                (procurement.final_payment_method or '') ~ ' ' ~
+                                (procurement.card_payment_reference or '') ~ ' ' ~
+                                (procurement.final_card_payment_reference or '') ~ ' ' ~
+                                (procurement.quotation_number or '') ~ ' ' ~
+                                (procurement.lpo_number or '') ~ ' ' ~
+                                (procurement.cheque_number or '') ~ ' ' ~
+                                (procurement.cheque_bank or '') ~ ' ' ~
+                                (procurement.account_cheque_number or '') ~ ' ' ~
+                                (procurement.account_cheque_bank or '') ~ ' ' ~
+                                (procurement.notes or '') ~ ' ' ~
+                                (procurement.procurement_amount or '')
+                            )|lower }}"
+
+                            data-status="{{ procurement_status_lower }}"
+
+                            data-method="{{ (procurement.procurement_method or '')|lower }}"
+
+                            data-workflow="{{ (procurement.workflow_stage or '')|lower }}">
+
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+
+                            <td>
+
+                                <div class="procurement-number">
+
+                                    {{
+                                        procurement.request_number
+                                        or ('MR-' ~ procurement.material_request_id)
+                                    }}
+
+                                </div>
+
+                                <div class="muted-text">
+                                    Procurement #{{ procurement.id }}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                {{ procurement.project_name or '—' }}
+                            </td>
+
+
+                            <td>
+
+                                {% if procurement.procurement_method %}
+
+                                    <span class="badge-status status-review">
+                                        {{ procurement.procurement_method }}
+                                    </span>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+                                {{ procurement.workflow_stage or '—' }}
+                            </td>
+
+
+                            <td>
+
+                                {{ procurement.supplier_name or '—' }}
+
+                                {% if procurement.supplier_contact %}
+
+                                    <div class="muted-text">
+                                        {{ procurement.supplier_contact }}
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if procurement.procurement_amount is not none %}
+
+                                    <strong>
+
+                                        {{ procurement.currency or 'QAR' }}
+
+                                        {{
+                                            "{:,.2f}".format(
+                                                procurement.procurement_amount|float
+                                            )
+                                        }}
+
+                                    </strong>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {{
+                                    procurement.initiated_by_name
+                                    or procurement.pre_purchase_submitted_by_name
+                                    or '—'
+                                }}
+
+                            </td>
+
+
+                            <td>
+
+
+                                {% set last_activity = (
+                                    procurement.updated_at
+                                    or procurement.final_purchase_started_at
+                                    or procurement.pre_purchase_submitted_at
+                                    or procurement.created_at
+                                ) %}
+
+
+                                {% if last_activity %}
+
+                                    <div>
+                                        {{ last_activity.strftime('%d %b %Y') }}
+                                    </div>
+
+                                    <div class="muted-text">
+                                        {{ last_activity.strftime('%I:%M %p') }}
+                                    </div>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <td>
+
+
+                                {% if procurement_status_lower == 'completed' %}
+
+                                    <span class="badge-status status-completed">
+                                        Completed
+                                    </span>
+
+
+                                {% elif 'correction' in procurement_status_lower %}
+
+                                    <span class="badge-status status-correction">
+                                        {{ procurement_status }}
+                                    </span>
+
+
+                                {% elif procurement_status_lower == 'pending final procurement' %}
+
+                                    <span class="badge-status status-approved">
+                                        Pending Final Procurement
+                                    </span>
+
+
+                                {% elif 'pending' in procurement_status_lower %}
+
+                                    <span class="badge-status status-pending">
+                                        {{ procurement_status }}
+                                    </span>
+
+
+                                {% elif 'approved' in procurement_status_lower %}
+
+                                    <span class="badge-status status-approved">
+                                        {{ procurement_status }}
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="badge-status status-default">
+                                        {{ procurement_status or 'Unknown' }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 DOCUMENTS
+                            ================================================== -->
+
+                            <td style="min-width:230px;">
+
+
+                                {% if procurement.documents %}
+
+
+                                    <div class="document-list">
+
+
+                                        {% for document in procurement.documents %}
+
+
+                                            {% if document.file_url %}
+
+
+                                                {% set document_type =
+                                                    (document.document_type or '')|lower %}
+
+
+                                                {% set document_title =
+                                                    (document.document_title or '')|lower %}
+
+
+                                                <div class="document-item">
+
+
+                                                    {% if 'invoice' in document_type
+                                                          or 'invoice' in document_title %}
+
+
+                                                        <i class="bi bi-receipt"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            Final Invoice
+
+                                                        </a>
+
+
+                                                    {% elif 'receipt' in document_type
+                                                          or 'receipt' in document_title
+                                                          or 'receive' in document_type
+                                                          or 'receive' in document_title %}
+
+
+                                                        <i class="bi bi-receipt-cutoff"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            Final Receipt
+
+                                                        </a>
+
+
+                                                    {% elif 'payment' in document_type
+                                                          or 'payment' in document_title
+                                                          or 'evidence' in document_type
+                                                          or 'evidence' in document_title %}
+
+
+                                                        <i class="bi bi-credit-card"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            Final Payment Evidence
+
+                                                        </a>
+
+
+                                                    {% elif 'quotation' in document_type
+                                                          or 'quotation' in document_title %}
+
+
+                                                        <i class="bi bi-file-earmark-text"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            Quotation
+
+                                                        </a>
+
+
+                                                    {% elif 'lpo' in document_type
+                                                          or 'lpo' in document_title %}
+
+
+                                                        <i class="bi bi-file-earmark-check"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            LPO
+
+                                                        </a>
+
+
+                                                    {% else %}
+
+
+                                                        <i class="bi bi-file-earmark"></i>
+
+
+                                                        <a href="{{ document.file_url }}"
+                                                           target="_blank"
+                                                           rel="noopener noreferrer">
+
+                                                            {{
+                                                                document.document_title
+                                                                or document.document_type
+                                                                or document.original_file_name
+                                                                or 'Open document'
+                                                            }}
+
+                                                        </a>
+
+
+                                                    {% endif %}
+
+
+                                                </div>
+
+
+                                            {% endif %}
+
+
+                                        {% endfor %}
+
+
+                                        <div class="document-count">
+
+                                            <i class="bi bi-files"></i>
+
+                                            {{ procurement.documents|length }}
+
+                                            document(s)
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                {% else %}
+
+
+                                    <span class="document-empty">
+
+                                        <i class="bi bi-folder2"></i>
+
+                                        No documents uploaded
+
+                                    </span>
+
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <!-- =================================================
+                                 ACTION
+                                 DO NOT CHANGE FINAL PROCUREMENT ROUTING
+                            ================================================== -->
+
+                            <td>
+
+
+                                {% if procurement_status_lower == 'completed' %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                        Completed
+
+                                    </button>
+
+
+                                {% elif procurement_status_lower == 'pending final procurement' %}
+
+
+                                    <div class="final-highlight">
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                        Ready
+
+                                    </div>
+
+
+                                    <br>
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_final_procurement',
+                                        procurement_id=procurement.id
+                                    ) }}"
+                                       class="btn-action action-final">
+
+                                        <i class="bi bi-credit-card"></i>
+
+                                        Final Procurement
+
+                                    </a>
+
+
+                                {% elif procurement_status_lower == 'final procurement correction required' %}
+
+
+                                    <div class="final-highlight"
+                                         style="background:#fff3d8;color:#a04c00;">
+
+                                        <i class="bi bi-exclamation-triangle"></i>
+
+                                        Correction Required
+
+                                    </div>
+
+
+                                    <br>
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_final_procurement',
+                                        procurement_id=procurement.id
+                                    ) }}"
+                                       class="btn-action action-correction">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                        Correct Final Procurement
+
+                                    </a>
+
+
+                                {% elif procurement.material_request_id %}
+
+
+                                    <a href="{{ url_for(
+                                        'construction_purchase_material_request_procurement',
+                                        request_id=procurement.material_request_id
+                                    ) }}"
+                                       class="btn-action action-primary">
+
+                                        <i class="bi bi-cart"></i>
+
+                                        Procurement
+
+                                    </a>
+
+
+                                {% else %}
+
+
+                                    <button type="button"
+                                            class="btn-action action-disabled"
+                                            disabled>
+
+                                        <i class="bi bi-hourglass"></i>
+
+                                        No Action
+
+                                    </button>
+
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% else %}
+
+
+                        <tr>
+
+                            <td colspan="12">
+
+                                <div class="empty-state">
+
+                                    <i class="bi bi-cart-x"></i>
+
+                                    <div>
+                                        No procurement records found.
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="pagination-wrap">
+
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div id="procurementPaginationInfo"
+                         class="pagination-info">
+
+                        Showing 0 to 0 of 0
+
+                    </div>
+
+
+                    <select id="procurementPageSize"
+                            class="form-select page-size">
+
+                        <option value="10">
+                            10
+                        </option>
+
+                        <option value="25">
+                            25
+                        </option>
+
+                        <option value="50">
+                            50
+                        </option>
+
+                        <option value="100">
+                            100
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="procurementPaginationButtons"
+                     class="pagination-buttons">
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+</main>
+
 
 <script>
 
 document.addEventListener(
-"DOMContentLoaded",
-function () {
+    "DOMContentLoaded",
+    function () {
 
 
-function initializeTableManager(config) {
+        /* =====================================================
+           PAGINATION BUTTON
+        ===================================================== */
+
+        function createPageButton(
+            label,
+            disabled,
+            active,
+            callback
+        ) {
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "page-btn" +
+                (active ? " active" : "");
+
+            button.innerHTML = label;
+
+            button.disabled =
+                disabled;
+
+            if (!disabled && callback) {
+
+                button.addEventListener(
+                    "click",
+                    callback
+                );
+
+            }
+
+            return button;
+
+        }
 
 
-const input =
-document.getElementById(
-config.inputId
+        /* =====================================================
+           PAGINATION PAGES
+        ===================================================== */
+
+        function getPaginationPages(
+            currentPage,
+            totalPages
+        ) {
+
+            if (totalPages <= 7) {
+
+                return Array.from(
+                    {length: totalPages},
+                    function (_, index) {
+                        return index + 1;
+                    }
+                );
+
+            }
+
+
+            const pages = [];
+
+            pages.push(1);
+
+
+            if (currentPage > 4) {
+
+                pages.push("...");
+
+            }
+
+
+            const start =
+                Math.max(
+                    2,
+                    currentPage - 1
+                );
+
+
+            const end =
+                Math.min(
+                    totalPages - 1,
+                    currentPage + 1
+                );
+
+
+            for (
+                let page = start;
+                page <= end;
+                page++
+            ) {
+
+                pages.push(page);
+
+            }
+
+
+            if (currentPage < totalPages - 3) {
+
+                pages.push("...");
+
+            }
+
+
+            pages.push(totalPages);
+
+
+            return pages;
+
+        }
+
+
+        /* =====================================================
+           MATERIAL REQUEST FILTER
+        ===================================================== */
+
+        function setupMaterialRequests() {
+
+
+            const rows =
+                Array.from(
+                    document.querySelectorAll(
+                        ".material-row"
+                    )
+                );
+
+
+            const search =
+                document.getElementById(
+                    "materialSearch"
+                );
+
+
+            const filterButtons =
+                document.querySelectorAll(
+                    "#materialFilters .quick-filter"
+                );
+
+
+            const result =
+                document.getElementById(
+                    "materialSearchResult"
+                );
+
+
+            const paginationInfo =
+                document.getElementById(
+                    "materialPaginationInfo"
+                );
+
+
+            const pagination =
+                document.getElementById(
+                    "materialPaginationButtons"
+                );
+
+
+            const pageSize =
+                document.getElementById(
+                    "materialPageSize"
+                );
+
+
+            const clearButton =
+                document.getElementById(
+                    "clearMaterialSearch"
+                );
+
+
+            let currentFilter =
+                "all";
+
+
+            let currentPage =
+                1;
+
+
+            function getPageSize() {
+
+                return (
+                    parseInt(
+                        pageSize.value,
+                        10
+                    ) || 10
+                );
+
+            }
+
+
+            function matchesFilter(row) {
+
+
+                const status =
+                    (
+                        row.dataset.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                const procurementStatus =
+                    (
+                        row.dataset.procurementStatus ||
+                        ""
+                    ).toLowerCase();
+
+
+                if (currentFilter === "all") {
+
+                    return true;
+
+                }
+
+
+                if (currentFilter === "pending") {
+
+                    return (
+                        status.includes("pending") ||
+                        status.includes("review") ||
+                        status.includes("correction") ||
+                        procurementStatus.includes("pending") ||
+                        procurementStatus.includes("correction")
+                    );
+
+                }
+
+
+                if (currentFilter === "approved") {
+
+                    return (
+                        status.includes("approved") ||
+                        procurementStatus.includes("approved") ||
+                        procurementStatus.includes("pending final procurement")
+                    );
+
+                }
+
+
+                if (currentFilter === "completed") {
+
+                    return (
+                        status === "completed" ||
+                        procurementStatus === "completed"
+                    );
+
+                }
+
+
+                return true;
+
+            }
+
+
+            function getFilteredRows() {
+
+
+                const searchValue =
+                    (
+                        search.value || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                return rows.filter(
+                    function (row) {
+
+
+                        const searchable =
+                            (
+                                row.dataset.search ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const searchMatches =
+                            !searchValue ||
+                            searchable.includes(
+                                searchValue
+                            );
+
+
+                        return (
+                            searchMatches &&
+                            matchesFilter(row)
+                        );
+
+                    }
+                );
+
+            }
+
+
+            function updateCounts() {
+
+
+                const all =
+                    rows.length;
+
+
+                const pending =
+                    rows.filter(
+                        function (row) {
+
+                            const status =
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase();
+
+                            const procurementStatus =
+                                (
+                                    row.dataset.procurementStatus ||
+                                    ""
+                                ).toLowerCase();
+
+                            return (
+                                status.includes("pending") ||
+                                status.includes("review") ||
+                                status.includes("correction") ||
+                                procurementStatus.includes("pending") ||
+                                procurementStatus.includes("correction")
+                            );
+
+                        }
+                    ).length;
+
+
+                const approved =
+                    rows.filter(
+                        function (row) {
+
+                            const status =
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase();
+
+                            const procurementStatus =
+                                (
+                                    row.dataset.procurementStatus ||
+                                    ""
+                                ).toLowerCase();
+
+                            return (
+                                status.includes("approved") ||
+                                procurementStatus.includes("approved") ||
+                                procurementStatus.includes(
+                                    "pending final procurement"
+                                )
+                            );
+
+                        }
+                    ).length;
+
+
+                const completed =
+                    rows.filter(
+                        function (row) {
+
+                            return (
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase() ===
+                                "completed"
+                                ||
+                                (
+                                    row.dataset.procurementStatus ||
+                                    ""
+                                ).toLowerCase() ===
+                                "completed"
+                            );
+
+                        }
+                    ).length;
+
+
+                document.getElementById(
+                    "materialCountAll"
+                ).textContent = all;
+
+
+                document.getElementById(
+                    "materialCountPending"
+                ).textContent = pending;
+
+
+                document.getElementById(
+                    "materialCountApproved"
+                ).textContent = approved;
+
+
+                document.getElementById(
+                    "materialCountCompleted"
+                ).textContent = completed;
+
+            }
+
+
+            function render() {
+
+
+                const filtered =
+                    getFilteredRows();
+
+
+                const size =
+                    getPageSize();
+
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            filtered.length / size
+                        )
+                    );
+
+
+                if (currentPage > totalPages) {
+
+                    currentPage =
+                        totalPages;
+
+                }
+
+
+                rows.forEach(
+                    function (row) {
+
+                        row.style.display =
+                            "none";
+
+                    }
+                );
+
+
+                const start =
+                    (currentPage - 1) * size;
+
+
+                const end =
+                    start + size;
+
+
+                filtered
+                    .slice(start, end)
+                    .forEach(
+                        function (row) {
+
+                            row.style.display =
+                                "";
+
+                        }
+                    );
+
+
+                if (filtered.length === 0) {
+
+
+                    result.textContent =
+                        "No matching records";
+
+
+                    paginationInfo.textContent =
+                        "Showing 0 to 0 of 0";
+
+                } else {
+
+
+                    const first =
+                        start + 1;
+
+
+                    const last =
+                        Math.min(
+                            end,
+                            filtered.length
+                        );
+
+
+                    result.textContent =
+                        "Showing " +
+                        filtered.length +
+                        " matching records";
+
+
+                    paginationInfo.textContent =
+                        "Showing " +
+                        first +
+                        " to " +
+                        last +
+                        " of " +
+                        filtered.length;
+
+                }
+
+
+                renderPagination(
+                    currentPage,
+                    totalPages
+                );
+
+            }
+
+
+            function renderPagination(
+                page,
+                totalPages
+            ) {
+
+
+                pagination.innerHTML =
+                    "";
+
+
+                pagination.appendChild(
+                    createPageButton(
+                        '<i class="bi bi-chevron-left"></i>',
+                        page === 1,
+                        false,
+                        function () {
+
+                            currentPage--;
+
+                            render();
+
+                        }
+                    )
+                );
+
+
+                getPaginationPages(
+                    page,
+                    totalPages
+                ).forEach(
+                    function (item) {
+
+
+                        if (item === "...") {
+
+
+                            const span =
+                                document.createElement(
+                                    "span"
+                                );
+
+                            span.className =
+                                "page-btn";
+
+                            span.style.display =
+                                "inline-flex";
+
+                            span.style.alignItems =
+                                "center";
+
+                            span.style.justifyContent =
+                                "center";
+
+                            span.textContent =
+                                "...";
+
+                            pagination.appendChild(
+                                span
+                            );
+
+                            return;
+
+                        }
+
+
+                        pagination.appendChild(
+                            createPageButton(
+                                String(item),
+                                false,
+                                item === page,
+                                function () {
+
+                                    currentPage =
+                                        item;
+
+                                    render();
+
+                                }
+                            )
+                        );
+
+                    }
+                );
+
+
+                pagination.appendChild(
+                    createPageButton(
+                        '<i class="bi bi-chevron-right"></i>',
+                        page === totalPages,
+                        false,
+                        function () {
+
+                            currentPage++;
+
+                            render();
+
+                        }
+                    )
+                );
+
+            }
+
+
+            filterButtons.forEach(
+                function (button) {
+
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+
+                            filterButtons.forEach(
+                                function (item) {
+
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            currentFilter =
+                                button.dataset.filter ||
+                                "all";
+
+
+                            currentPage =
+                                1;
+
+
+                            render();
+
+                        }
+                    );
+
+                }
+            );
+
+
+            search.addEventListener(
+                "input",
+                function () {
+
+                    currentPage =
+                        1;
+
+                    render();
+
+                }
+            );
+
+
+            pageSize.addEventListener(
+                "change",
+                function () {
+
+                    currentPage =
+                        1;
+
+                    render();
+
+                }
+            );
+
+
+            clearButton.addEventListener(
+                "click",
+                function () {
+
+                    search.value =
+                        "";
+
+                    currentFilter =
+                        "all";
+
+                    currentPage =
+                        1;
+
+
+                    filterButtons.forEach(
+                        function (button) {
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    const allButton =
+                        document.querySelector(
+                            '#materialFilters [data-filter="all"]'
+                        );
+
+
+                    if (allButton) {
+
+                        allButton.classList.add(
+                            "active"
+                        );
+
+                    }
+
+
+                    render();
+
+                }
+            );
+
+
+            updateCounts();
+
+            render();
+
+        }
+
+
+        /* =====================================================
+           PROCUREMENT FILTER
+        ===================================================== */
+
+        function setupProcurement() {
+
+
+            const rows =
+                Array.from(
+                    document.querySelectorAll(
+                        ".procurement-row"
+                    )
+                );
+
+
+            const search =
+                document.getElementById(
+                    "procurementSearch"
+                );
+
+
+            const filterButtons =
+                document.querySelectorAll(
+                    "#procurementFilters .quick-filter"
+                );
+
+
+            const result =
+                document.getElementById(
+                    "procurementSearchResult"
+                );
+
+
+            const paginationInfo =
+                document.getElementById(
+                    "procurementPaginationInfo"
+                );
+
+
+            const pagination =
+                document.getElementById(
+                    "procurementPaginationButtons"
+                );
+
+
+            const pageSize =
+                document.getElementById(
+                    "procurementPageSize"
+                );
+
+
+            const clearButton =
+                document.getElementById(
+                    "clearProcurementSearch"
+                );
+
+
+            let currentFilter =
+                "all";
+
+
+            let currentPage =
+                1;
+
+
+            function getPageSize() {
+
+                return (
+                    parseInt(
+                        pageSize.value,
+                        10
+                    ) || 10
+                );
+
+            }
+
+
+            function matchesFilter(row) {
+
+
+                const status =
+                    (
+                        row.dataset.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                const method =
+                    (
+                        row.dataset.method ||
+                        ""
+                    ).toLowerCase();
+
+
+                if (currentFilter === "all") {
+
+                    return true;
+
+                }
+
+
+                if (currentFilter === "card") {
+
+                    return method === "card";
+
+                }
+
+
+                if (currentFilter === "quotation") {
+
+                    return (
+                        method === "quotation" ||
+                        method.includes("quotation")
+                    );
+
+                }
+
+
+                if (currentFilter === "pending") {
+
+                    return (
+                        status.includes("pending") ||
+                        status.includes("correction")
+                    );
+
+                }
+
+
+                if (currentFilter === "approved") {
+
+                    return (
+                        status.includes("approved") ||
+                        status.includes("manager")
+                    );
+
+                }
+
+
+                if (currentFilter === "completed") {
+
+                    return (
+                        status === "completed"
+                    );
+
+                }
+
+
+                return true;
+
+            }
+
+
+            function getFilteredRows() {
+
+
+                const searchValue =
+                    (
+                        search.value || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                return rows.filter(
+                    function (row) {
+
+
+                        const searchable =
+                            (
+                                row.dataset.search ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const searchMatches =
+                            !searchValue ||
+                            searchable.includes(
+                                searchValue
+                            );
+
+
+                        return (
+                            searchMatches &&
+                            matchesFilter(row)
+                        );
+
+                    }
+                );
+
+            }
+
+
+            function updateCounts() {
+
+
+                const all =
+                    rows.length;
+
+
+                const card =
+                    rows.filter(
+                        function (row) {
+
+                            return (
+                                (
+                                    row.dataset.method ||
+                                    ""
+                                ).toLowerCase() ===
+                                "card"
+                            );
+
+                        }
+                    ).length;
+
+
+                const quotation =
+                    rows.filter(
+                        function (row) {
+
+                            return (
+                                (
+                                    row.dataset.method ||
+                                    ""
+                                ).toLowerCase() ===
+                                "quotation"
+                            );
+
+                        }
+                    ).length;
+
+
+                const pending =
+                    rows.filter(
+                        function (row) {
+
+                            const status =
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase();
+
+                            return (
+                                status.includes("pending") ||
+                                status.includes("correction")
+                            );
+
+                        }
+                    ).length;
+
+
+                const approved =
+                    rows.filter(
+                        function (row) {
+
+                            const status =
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase();
+
+                            return (
+                                status.includes("approved") ||
+                                status.includes("manager")
+                            );
+
+                        }
+                    ).length;
+
+
+                const completed =
+                    rows.filter(
+                        function (row) {
+
+                            return (
+                                (
+                                    row.dataset.status ||
+                                    ""
+                                ).toLowerCase() ===
+                                "completed"
+                            );
+
+                        }
+                    ).length;
+
+
+                document.getElementById(
+                    "procurementCountAll"
+                ).textContent = all;
+
+
+                document.getElementById(
+                    "procurementCountCard"
+                ).textContent = card;
+
+
+                document.getElementById(
+                    "procurementCountQuotation"
+                ).textContent = quotation;
+
+
+                document.getElementById(
+                    "procurementCountPending"
+                ).textContent = pending;
+
+
+                document.getElementById(
+                    "procurementCountApproved"
+                ).textContent = approved;
+
+
+                document.getElementById(
+                    "procurementCountCompleted"
+                ).textContent = completed;
+
+            }
+
+
+            function render() {
+
+
+                const filtered =
+                    getFilteredRows();
+
+
+                const size =
+                    getPageSize();
+
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            filtered.length / size
+                        )
+                    );
+
+
+                if (currentPage > totalPages) {
+
+                    currentPage =
+                        totalPages;
+
+                }
+
+
+                rows.forEach(
+                    function (row) {
+
+                        row.style.display =
+                            "none";
+
+                    }
+                );
+
+
+                const start =
+                    (currentPage - 1) * size;
+
+
+                const end =
+                    start + size;
+
+
+                filtered
+                    .slice(start, end)
+                    .forEach(
+                        function (row) {
+
+                            row.style.display =
+                                "";
+
+                        }
+                    );
+
+
+                if (filtered.length === 0) {
+
+
+                    result.textContent =
+                        "No matching records";
+
+
+                    paginationInfo.textContent =
+                        "Showing 0 to 0 of 0";
+
+                } else {
+
+
+                    const first =
+                        start + 1;
+
+
+                    const last =
+                        Math.min(
+                            end,
+                            filtered.length
+                        );
+
+
+                    result.textContent =
+                        "Showing " +
+                        filtered.length +
+                        " matching records";
+
+
+                    paginationInfo.textContent =
+                        "Showing " +
+                        first +
+                        " to " +
+                        last +
+                        " of " +
+                        filtered.length;
+
+                }
+
+
+                renderPagination(
+                    currentPage,
+                    totalPages
+                );
+
+            }
+
+
+            function renderPagination(
+                page,
+                totalPages
+            ) {
+
+
+                pagination.innerHTML =
+                    "";
+
+
+                pagination.appendChild(
+                    createPageButton(
+                        '<i class="bi bi-chevron-left"></i>',
+                        page === 1,
+                        false,
+                        function () {
+
+                            currentPage--;
+
+                            render();
+
+                        }
+                    )
+                );
+
+
+                getPaginationPages(
+                    page,
+                    totalPages
+                ).forEach(
+                    function (item) {
+
+
+                        if (item === "...") {
+
+
+                            const span =
+                                document.createElement(
+                                    "span"
+                                );
+
+                            span.className =
+                                "page-btn";
+
+                            span.style.display =
+                                "inline-flex";
+
+                            span.style.alignItems =
+                                "center";
+
+                            span.style.justifyContent =
+                                "center";
+
+                            span.textContent =
+                                "...";
+
+                            pagination.appendChild(
+                                span
+                            );
+
+                            return;
+
+                        }
+
+
+                        pagination.appendChild(
+                            createPageButton(
+                                String(item),
+                                false,
+                                item === page,
+                                function () {
+
+                                    currentPage =
+                                        item;
+
+                                    render();
+
+                                }
+                            )
+                        );
+
+                    }
+                );
+
+
+                pagination.appendChild(
+                    createPageButton(
+                        '<i class="bi bi-chevron-right"></i>',
+                        page === totalPages,
+                        false,
+                        function () {
+
+                            currentPage++;
+
+                            render();
+
+                        }
+                    )
+                );
+
+            }
+
+
+            filterButtons.forEach(
+                function (button) {
+
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+
+                            filterButtons.forEach(
+                                function (item) {
+
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            currentFilter =
+                                button.dataset.filter ||
+                                "all";
+
+
+                            currentPage =
+                                1;
+
+
+                            render();
+
+                        }
+                    );
+
+                }
+            );
+
+
+            search.addEventListener(
+                "input",
+                function () {
+
+                    currentPage =
+                        1;
+
+                    render();
+
+                }
+            );
+
+
+            pageSize.addEventListener(
+                "change",
+                function () {
+
+                    currentPage =
+                        1;
+
+                    render();
+
+                }
+            );
+
+
+            clearButton.addEventListener(
+                "click",
+                function () {
+
+                    search.value =
+                        "";
+
+                    currentFilter =
+                        "all";
+
+                    currentPage =
+                        1;
+
+
+                    filterButtons.forEach(
+                        function (button) {
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    const allButton =
+                        document.querySelector(
+                            '#procurementFilters [data-filter="all"]'
+                        );
+
+
+                    if (allButton) {
+
+                        allButton.classList.add(
+                            "active"
+                        );
+
+                    }
+
+
+                    render();
+
+                }
+            );
+
+
+            updateCounts();
+
+            render();
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        setupMaterialRequests();
+
+        setupProcurement();
+
+
+        /* =====================================================
+           SIDEBAR SMOOTH SCROLL
+        ===================================================== */
+
+        document.querySelectorAll(
+            '.sidebar-link[href^="#"]'
+        ).forEach(
+            function (link) {
+
+
+                link.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        const target =
+                            document.querySelector(
+                                link.getAttribute("href")
+                            );
+
+
+                        if (target) {
+
+                            event.preventDefault();
+
+                            target.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    }
 );
-
-
-const clearBtn =
-document.getElementById(
-config.clearBtnId
-);
-
-
-const tbody =
-document.getElementById(
-config.tbodyId
-);
-
-
-const badge =
-document.getElementById(
-config.badgeId
-);
-
-
-const paginationInfo =
-document.getElementById(
-config.paginationInfoId
-);
-
-
-const paginationControls =
-document.getElementById(
-config.paginationControlsId
-);
-
-
-const pageSizeSelect =
-document.getElementById(
-config.pageSizeSelectId
-);
-
-
-const sectionElement =
-document.getElementById(
-config.sectionId
-);
-
-
-if (!tbody) {
-
-return;
-
-}
-
-
-const allRows =
-Array.from(
-tbody.querySelectorAll(
-"." + config.rowClass
-)
-);
-
-
-let filteredRows =
-[...allRows];
-
-
-let currentPage =
-1;
-
-
-let pageSize =
-parseInt(
-pageSizeSelect
-?
-pageSizeSelect.value
-:
-10
-) || 10;
-
-
-/* =====================================================
-   UPDATE DISPLAY
-===================================================== */
-
-function updateDisplay(
-shouldScroll = false
-) {
-
-
-const existingNoMatch =
-tbody.querySelector(
-".no-match-row"
-);
-
-
-if (existingNoMatch) {
-
-existingNoMatch.remove();
-
-}
-
-
-const totalFiltered =
-filteredRows.length;
-
-
-const isAll =
-pageSizeSelect &&
-pageSizeSelect.value === "all";
-
-
-const effectivePageSize =
-isAll
-?
-(totalFiltered || 1)
-:
-pageSize;
-
-
-const totalPages =
-Math.ceil(
-totalFiltered /
-effectivePageSize
-) || 1;
-
-
-if (currentPage > totalPages) {
-
-currentPage =
-totalPages;
-
-}
-
-
-if (currentPage < 1) {
-
-currentPage =
-1;
-
-}
-
-
-const startIndex =
-(currentPage - 1) *
-effectivePageSize;
-
-
-const endIndex =
-isAll
-?
-totalFiltered
-:
-Math.min(
-startIndex +
-effectivePageSize,
-totalFiltered
-);
-
-
-/* HIDE ALL */
-
-allRows.forEach(
-row => {
-
-row.classList.add(
-"page-hidden"
-);
-
-}
-);
-
-
-/* SHOW CURRENT PAGE */
-
-filteredRows
-.slice(
-startIndex,
-endIndex
-)
-.forEach(
-(row, idx) => {
-
-
-row.classList.remove(
-"page-hidden"
-);
-
-
-const snCell =
-row.querySelector(
-"." +
-config.snCellClass
-);
-
-
-if (snCell) {
-
-const realIndex =
-startIndex +
-idx +
-1;
-
-
-snCell.textContent =
-realIndex < 10
-?
-"0" + realIndex
-:
-realIndex;
-
-}
-
-}
-);
-
-
-/* BADGE */
-
-if (badge) {
-
-
-const query =
-input
-?
-input.value.trim()
-:
-"";
-
-
-if (query === "") {
-
-
-badge.textContent =
-`${allRows.length} ${
-allRows.length === 1
-?
-config.labelSingular
-:
-config.labelPlural
-}`;
-
-
-} else {
-
-
-badge.textContent =
-`${totalFiltered} of ${allRows.length} found`;
-
-}
-
-}
-
-
-/* PAGINATION INFO */
-
-if (paginationInfo) {
-
-
-if (totalFiltered === 0) {
-
-
-paginationInfo.innerHTML =
-`Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> entries`;
-
-
-} else {
-
-
-paginationInfo.innerHTML =
-`Showing <strong>${startIndex + 1}</strong> to <strong>${endIndex}</strong> of <strong>${totalFiltered}</strong> entries`;
-
-}
-
-}
-
-
-/* PAGINATION */
-
-renderPaginationControls(
-totalPages
-);
-
-
-/* AUTO SCROLL */
-
-if (
-shouldScroll &&
-sectionElement
-) {
-
-sectionElement.scrollIntoView({
-
-behavior:
-"smooth",
-
-block:
-"start"
-
-});
-
-}
-
-
-/* NO MATCH */
-
-if (
-totalFiltered === 0 &&
-input &&
-input.value.trim() !== ""
-) {
-
-
-const noMatchRow =
-document.createElement(
-"tr"
-);
-
-
-noMatchRow.className =
-"no-match-row";
-
-
-const colCount =
-allRows[0]
-?
-allRows[0].cells.length
-:
-9;
-
-
-noMatchRow.innerHTML =
-`
-
-<td colspan="${colCount}">
-
-<div class="py-4 text-center">
-
-<i class="fas fa-search text-muted mb-2 fs-5"></i>
-
-<div>
-
-No matching records found for
-"<strong>${escapeHtml(input.value)}</strong>"
-
-</div>
-
-</div>
-
-</td>
-
-`;
-
-
-tbody.appendChild(
-noMatchRow
-);
-
-}
-
-}
-
-
-/* =====================================================
-   PAGINATION CONTROLS
-===================================================== */
-
-function renderPaginationControls(
-totalPages
-) {
-
-
-if (!paginationControls) {
-
-return;
-
-}
-
-
-paginationControls.innerHTML =
-"";
-
-
-if (
-totalPages <= 1 &&
-pageSizeSelect &&
-pageSizeSelect.value === "all"
-) {
-
-return;
-
-}
-
-
-/* PREVIOUS */
-
-const prevBtn =
-document.createElement(
-"button"
-);
-
-
-prevBtn.type =
-"button";
-
-
-prevBtn.className =
-"pagination-btn";
-
-
-prevBtn.innerHTML =
-`<i class="fas fa-chevron-left me-1"></i> Prev`;
-
-
-prevBtn.disabled =
-currentPage === 1;
-
-
-prevBtn.addEventListener(
-"click",
-() => {
-
-
-if (currentPage > 1) {
-
-currentPage--;
-
-updateDisplay(true);
-
-}
-
-}
-);
-
-
-paginationControls.appendChild(
-prevBtn
-);
-
-
-/* NUMBERED PAGES */
-
-let startPage =
-Math.max(
-1,
-currentPage - 2
-);
-
-
-let endPage =
-Math.min(
-totalPages,
-startPage + 4
-);
-
-
-if (
-endPage -
-startPage <
-4
-) {
-
-startPage =
-Math.max(
-1,
-endPage - 4
-);
-
-}
-
-
-for (
-let i = startPage;
-i <= endPage;
-i++
-) {
-
-
-const pageBtn =
-document.createElement(
-"button"
-);
-
-
-pageBtn.type =
-"button";
-
-
-pageBtn.className =
-`pagination-btn ${
-i === currentPage
-?
-"active"
-:
-""
-}`;
-
-
-pageBtn.textContent =
-i;
-
-
-pageBtn.addEventListener(
-"click",
-() => {
-
-
-if (
-currentPage !== i
-) {
-
-currentPage =
-i;
-
-updateDisplay(true);
-
-}
-
-}
-);
-
-
-paginationControls.appendChild(
-pageBtn
-);
-
-}
-
-
-/* NEXT */
-
-const nextBtn =
-document.createElement(
-"button"
-);
-
-
-nextBtn.type =
-"button";
-
-
-nextBtn.className =
-"pagination-btn";
-
-
-nextBtn.innerHTML =
-`Next <i class="fas fa-chevron-right ms-1"></i>`;
-
-
-nextBtn.disabled =
-currentPage === totalPages;
-
-
-nextBtn.addEventListener(
-"click",
-() => {
-
-
-if (
-currentPage <
-totalPages
-) {
-
-currentPage++;
-
-updateDisplay(true);
-
-}
-
-}
-);
-
-
-paginationControls.appendChild(
-nextBtn
-);
-
-}
-
-
-/* =====================================================
-   FILTER
-===================================================== */
-
-function filterRows() {
-
-
-const query =
-input
-?
-input.value
-.trim()
-.toLowerCase()
-:
-"";
-
-
-if (clearBtn) {
-
-clearBtn.style.display =
-query.length > 0
-?
-"inline-flex"
-:
-"none";
-
-}
-
-
-filteredRows =
-allRows.filter(
-row => {
-
-
-const text =
-row.innerText
-.toLowerCase();
-
-
-const matches =
-query === "" ||
-text.includes(query);
-
-
-if (matches) {
-
-row.classList.remove(
-"search-hidden"
-);
-
-} else {
-
-row.classList.add(
-"search-hidden"
-);
-
-}
-
-
-return matches;
-
-}
-);
-
-
-currentPage =
-1;
-
-
-updateDisplay(
-false
-);
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(str) {
-
-return str
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-);
-
-}
-
-
-/* =====================================================
-   SEARCH EVENTS
-===================================================== */
-
-if (input) {
-
-
-input.addEventListener(
-"input",
-filterRows
-);
-
-
-input.addEventListener(
-"keydown",
-function (e) {
-
-
-if (e.key === "Escape") {
-
-input.value =
-"";
-
-filterRows();
-
-input.blur();
-
-}
-
-}
-);
-
-}
-
-
-/* =====================================================
-   CLEAR SEARCH
-===================================================== */
-
-if (clearBtn) {
-
-
-clearBtn.addEventListener(
-"click",
-function () {
-
-
-input.value =
-"";
-
-filterRows();
-
-input.focus();
-
-}
-);
-
-}
-
-
-/* =====================================================
-   PAGE SIZE
-===================================================== */
-
-if (pageSizeSelect) {
-
-
-pageSizeSelect.addEventListener(
-"change",
-function () {
-
-
-pageSize =
-this.value === "all"
-?
-allRows.length
-:
-parseInt(
-this.value
-);
-
-
-currentPage =
-1;
-
-
-updateDisplay(
-true
-);
-
-}
-);
-
-}
-
-
-/* INITIAL */
-
-updateDisplay(
-false
-);
-
-}
-
-
-/* =====================================================
-   MATERIAL REQUEST TABLE
-===================================================== */
-
-initializeTableManager({
-
-inputId:
-"purchaseRequestsSearchInput",
-
-clearBtnId:
-"clearPurchaseReqSearch",
-
-rowClass:
-"searchable-purchase-req-row",
-
-tbodyId:
-"purchaseRequestsTableBody",
-
-badgeId:
-"purchaseRequestsBadge",
-
-paginationInfoId:
-"purchaseReqPaginationInfo",
-
-paginationControlsId:
-"purchaseReqPaginationControls",
-
-pageSizeSelectId:
-"purchaseReqPageSizeSelect",
-
-sectionId:
-"purchaseRequestsSection",
-
-snCellClass:
-"purchase-req-sn-cell",
-
-labelSingular:
-"request",
-
-labelPlural:
-"requests"
-
-});
-
-
-/* =====================================================
-   QUOTATION TABLE
-===================================================== */
-
-initializeTableManager({
-
-inputId:
-"purchaseQuotationsSearchInput",
-
-clearBtnId:
-"clearPurchaseQuotSearch",
-
-rowClass:
-"searchable-purchase-quot-row",
-
-tbodyId:
-"purchaseQuotationsTableBody",
-
-badgeId:
-"purchaseQuotationsBadge",
-
-paginationInfoId:
-"purchaseQuotPaginationInfo",
-
-paginationControlsId:
-"purchaseQuotPaginationControls",
-
-pageSizeSelectId:
-"purchaseQuotPageSizeSelect",
-
-sectionId:
-"purchaseQuotationsSection",
-
-snCellClass:
-"purchase-quot-sn-cell",
-
-labelSingular:
-"quotation",
-
-labelPlural:
-"quotations"
-
-});
-
-});
 
 </script>
 
-{% endblock %}
+
+</body>
+
+</html>

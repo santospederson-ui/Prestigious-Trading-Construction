@@ -1,0 +1,3811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Manager Procurement Review | Prestigious Trading & Construction W.L.L.
+    </title>
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        :root {
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #670F2A;
+            --qatar-maroon-light: #FDF2F4;
+            --qatar-maroon-hover: #F9E7EC;
+            --qatar-gold: #C5A059;
+
+            --navy-dark: #0F172A;
+            --navy-slate: #1E293B;
+
+            --bg-canvas: #F8FAFC;
+            --card-surface: #FFFFFF;
+
+            --border-light: #E2E8F0;
+            --border-subtle: #CBD5E1;
+
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+
+            --success: #15803D;
+            --success-bg: #F0FDF4;
+
+            --warning: #B45309;
+            --warning-bg: #FFFBEB;
+
+            --danger: #B91C1C;
+            --danger-bg: #FEF2F2;
+
+            --info: #0369A1;
+            --info-bg: #F0F9FF;
+
+            --shadow-sm:
+                0 1px 2px rgba(15, 23, 42, 0.04);
+
+            --shadow-md:
+                0 8px 25px rgba(15, 23, 42, 0.07);
+
+            --shadow-lg:
+                0 15px 40px rgba(15, 23, 42, 0.09);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+
+            --sidebar-width: 260px;
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        button,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            width: var(--sidebar-width);
+
+            background: #FFFFFF;
+
+            border-right: 1px solid var(--border-light);
+
+            box-shadow:
+                4px 0 20px rgba(15, 23, 42, 0.035);
+
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .sidebar-brand {
+            padding: 26px 22px 24px;
+
+            border-bottom: 1px solid var(--border-light);
+        }
+
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--qatar-maroon),
+                    var(--qatar-maroon-dark)
+                );
+
+            color: #FFFFFF;
+
+            font-size: 20px;
+
+            margin-bottom: 14px;
+
+            box-shadow:
+                0 7px 18px rgba(138, 21, 56, 0.22);
+        }
+
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+
+            line-height: 1.45;
+        }
+
+
+        .brand-subtitle {
+            margin-top: 4px;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .sidebar-menu {
+            padding: 22px 14px;
+
+            flex: 1;
+        }
+
+
+        .menu-label {
+            padding: 0 12px 10px;
+
+            color: #94A3B8;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .menu-link:hover {
+            background: var(--qatar-maroon-hover);
+            color: var(--qatar-maroon);
+        }
+
+
+        .menu-link.active {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--qatar-maroon),
+                    var(--qatar-maroon-dark)
+                );
+
+            color: #FFFFFF;
+
+            box-shadow:
+                0 7px 18px rgba(138, 21, 56, 0.18);
+        }
+
+
+        .menu-link i {
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 15px;
+        }
+
+
+        .sidebar-footer {
+            padding: 16px 14px;
+
+            border-top: 1px solid var(--border-light);
+        }
+
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 12px 13px;
+
+            border-radius: 10px;
+
+            color: var(--danger);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .logout-link:hover {
+            background: var(--danger-bg);
+        }
+
+
+        /* =====================================================
+           MOBILE HEADER
+        ===================================================== */
+
+        .mobile-header {
+            display: none;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 64px;
+
+            background: #FFFFFF;
+
+            border-bottom: 1px solid var(--border-light);
+
+            z-index: 900;
+
+            padding: 0 18px;
+
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .mobile-title {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+
+        .mobile-menu-btn {
+            width: 40px;
+            height: 40px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 9px;
+
+            background: #FFFFFF;
+
+            color: var(--navy-dark);
+
+            cursor: pointer;
+        }
+
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(15, 23, 42, 0.42);
+
+            z-index: 950;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: var(--sidebar-width);
+
+            padding: 32px 36px 60px;
+
+            min-height: 100vh;
+        }
+
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+
+        .page-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            background: var(--qatar-maroon-light);
+
+            color: var(--qatar-maroon);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+
+            margin-bottom: 10px;
+        }
+
+
+        .page-header h1 {
+            font-size: 27px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+
+            letter-spacing: -0.025em;
+        }
+
+
+        .page-header p {
+            margin-top: 7px;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-row {
+            margin-bottom: 20px;
+        }
+
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 13px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 9px;
+
+            background: #FFFFFF;
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .back-btn:hover {
+            border-color: var(--qatar-maroon);
+            color: var(--qatar-maroon);
+            background: var(--qatar-maroon-light);
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGES
+        ===================================================== */
+
+        .flash-container {
+            margin-bottom: 22px;
+        }
+
+
+        .flash-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            padding: 13px 15px;
+
+            margin-bottom: 10px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        .flash-message.success {
+            background: var(--success-bg);
+            border: 1px solid #BBF7D0;
+            color: var(--success);
+        }
+
+
+        .flash-message.danger {
+            background: var(--danger-bg);
+            border: 1px solid #FECACA;
+            color: var(--danger);
+        }
+
+
+        .flash-message.warning {
+            background: var(--warning-bg);
+            border: 1px solid #FDE68A;
+            color: var(--warning);
+        }
+
+
+        .flash-message.info {
+            background: var(--info-bg);
+            border: 1px solid #BAE6FD;
+            color: var(--info);
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .card {
+            background: var(--card-surface);
+
+            border: 1px solid var(--border-light);
+
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--shadow-sm);
+
+            margin-bottom: 22px;
+
+            overflow: hidden;
+        }
+
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            padding: 19px 22px;
+
+            border-bottom: 1px solid var(--border-light);
+        }
+
+
+        .card-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+
+            flex: 0 0 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: var(--qatar-maroon-light);
+
+            color: var(--qatar-maroon);
+
+            font-size: 15px;
+        }
+
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+        }
+
+
+        .card-subtitle {
+            margin-top: 2px;
+
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+
+        .card-body {
+            padding: 22px;
+        }
+
+
+        /* =====================================================
+           STATUS / METHOD
+        ===================================================== */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 9px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .status-pending {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+
+        .status-submitted {
+            background: var(--info-bg);
+            color: var(--info);
+        }
+
+
+        .status-approved {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+
+        .status-completed {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+
+        .method-badge {
+            display: inline-flex;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            background: var(--navy-dark);
+
+            color: #FFFFFF;
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           INFORMATION GRID
+        ===================================================== */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 14px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .info-box {
+            padding: 15px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 11px;
+
+            background: #FFFFFF;
+        }
+
+
+        .info-label {
+            color: var(--text-muted);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+
+            margin-bottom: 6px;
+        }
+
+
+        .info-value {
+            color: var(--navy-dark);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+
+        .info-value.muted {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+
+        .info-value.amount {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin: 28px 0 13px;
+        }
+
+
+        .section-heading h3 {
+            font-size: 14px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+        }
+
+
+        .section-heading span {
+            color: var(--text-muted);
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           DOCUMENTS
+        ===================================================== */
+
+        .documents-list {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 12px;
+        }
+
+
+        .document-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 14px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 11px;
+
+            background: #FFFFFF;
+
+            transition: 0.2s ease;
+        }
+
+
+        .document-item:hover {
+            border-color: var(--border-subtle);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+
+        .document-icon {
+            width: 40px;
+            height: 40px;
+
+            flex: 0 0 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: var(--qatar-maroon-light);
+
+            color: var(--qatar-maroon);
+
+            font-size: 15px;
+        }
+
+
+        .document-content {
+            min-width: 0;
+
+            flex: 1;
+        }
+
+
+        .document-title {
+            font-size: 12px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .document-meta {
+            margin-top: 3px;
+
+            color: var(--text-muted);
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+
+        .document-action {
+            flex: 0 0 auto;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 8px 10px;
+
+            border-radius: 8px;
+
+            background: var(--qatar-maroon);
+
+            color: #FFFFFF;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            transition: 0.2s ease;
+        }
+
+
+        .document-action:hover {
+            background: var(--qatar-maroon-dark);
+        }
+
+
+        /* =====================================================
+           EMPTY DOCUMENTS
+        ===================================================== */
+
+        .empty-documents {
+            padding: 30px 20px;
+
+            border: 1px dashed var(--border-subtle);
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            color: var(--text-muted);
+        }
+
+
+        .empty-documents i {
+            font-size: 24px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .empty-documents p {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           PACKAGE CHECK
+        ===================================================== */
+
+        .package-check {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 15px 16px;
+
+            border-radius: 11px;
+
+            margin-top: 20px;
+        }
+
+
+        .package-check.complete {
+            background: var(--success-bg);
+
+            border: 1px solid #BBF7D0;
+
+            color: var(--success);
+        }
+
+
+        .package-check.incomplete {
+            background: var(--danger-bg);
+
+            border: 1px solid #FECACA;
+
+            color: var(--danger);
+        }
+
+
+        .package-check-icon {
+            width: 38px;
+            height: 38px;
+
+            flex: 0 0 38px;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.7);
+        }
+
+
+        .package-check-title {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        .package-check-text {
+            margin-top: 2px;
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           ACCOUNT STAMPED DOCUMENTS
+        ===================================================== */
+
+        .account-stamped {
+            border-color: #BBF7D0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFFFFF,
+                    #F8FFF9
+                );
+        }
+
+
+        .account-stamped .document-icon {
+            background: var(--success-bg);
+
+            color: var(--success);
+        }
+
+
+        .stamp-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 5px;
+
+            padding: 4px 7px;
+
+            border-radius: 6px;
+
+            background: var(--success-bg);
+
+            color: var(--success);
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.05em;
+        }
+
+
+        /* =====================================================
+           ACTION BAR
+        ===================================================== */
+
+        .action-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 18px 22px;
+
+            background: #FFFFFF;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--shadow-md);
+
+            margin-bottom: 22px;
+        }
+
+
+        .action-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .action-info-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: var(--qatar-maroon-light);
+
+            color: var(--qatar-maroon);
+        }
+
+
+        .action-info strong {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        .action-info span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--text-muted);
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 14px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .btn-secondary {
+            background: #F1F5F9;
+
+            color: var(--navy-dark);
+
+            border: 1px solid var(--border-light);
+        }
+
+
+        .btn-secondary:hover {
+            background: #E2E8F0;
+        }
+
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--qatar-maroon),
+                    var(--qatar-maroon-dark)
+                );
+
+            color: #FFFFFF;
+
+            box-shadow:
+                0 6px 16px rgba(138, 21, 56, 0.18);
+        }
+
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 9px 20px rgba(138, 21, 56, 0.24);
+        }
+
+
+        .btn-disabled {
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+        }
+
+
+        /* =====================================================
+           MANAGEMENT SIGNATURE MODAL
+        ===================================================== */
+
+        .stamp-modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(15, 23, 42, 0.62);
+
+            z-index: 5000;
+
+            padding: 25px;
+
+            overflow-y: auto;
+        }
+
+
+        .stamp-modal-content {
+            position: relative;
+
+            width: 100%;
+
+            max-width: 720px;
+
+            margin: 40px auto;
+
+            background: #FFFFFF;
+
+            border-radius: 18px;
+
+            border: 1px solid var(--border-light);
+
+            box-shadow: var(--shadow-lg);
+
+            overflow: hidden;
+        }
+
+
+        .stamp-modal-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 20px 22px;
+
+            border-bottom: 1px solid var(--border-light);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFFFFF,
+                    #FDF8F9
+                );
+        }
+
+
+        .stamp-modal-title-wrap {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .stamp-modal-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: var(--qatar-maroon-light);
+
+            color: var(--qatar-maroon);
+
+            font-size: 16px;
+        }
+
+
+        .stamp-modal-title {
+            font-size: 15px;
+
+            font-weight: 800;
+
+            color: var(--navy-dark);
+        }
+
+
+        .stamp-modal-subtitle {
+            margin-top: 2px;
+
+            color: var(--text-muted);
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .stamp-close {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 9px;
+
+            background: #FFFFFF;
+
+            color: var(--text-secondary);
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .stamp-close:hover {
+            background: var(--danger-bg);
+
+            color: var(--danger);
+
+            border-color: #FECACA;
+        }
+
+
+        .stamp-modal-body {
+            padding: 22px;
+        }
+
+
+        .stamp-warning {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 11px;
+
+            padding: 13px 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            background: var(--warning-bg);
+
+            border: 1px solid #FDE68A;
+
+            color: var(--warning);
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        .stamp-warning i {
+            margin-top: 2px;
+        }
+
+
+        .signature-section-title {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .signature-section-title strong {
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--navy-dark);
+        }
+
+
+        .signature-section-title span {
+            font-size: 9px;
+
+            color: var(--text-muted);
+
+            font-weight: 600;
+        }
+
+
+        .signature-pad-wrap {
+            position: relative;
+
+            width: 100%;
+
+            height: 220px;
+
+            border: 2px dashed var(--border-subtle);
+
+            border-radius: 12px;
+
+            background: #FFFFFF;
+
+            overflow: hidden;
+        }
+
+
+        .signature-pad-wrap::before {
+            content: "SIGN HERE";
+
+            position: absolute;
+
+            left: 50%;
+
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            color: #E2E8F0;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.08em;
+
+            pointer-events: none;
+        }
+
+
+        #managerSignatureCanvas {
+            position: relative;
+
+            display: block;
+
+            width: 100%;
+
+            height: 100%;
+
+            cursor: crosshair;
+
+            touch-action: none;
+
+            z-index: 2;
+        }
+
+
+        .signature-line {
+            position: absolute;
+
+            left: 30px;
+
+            right: 30px;
+
+            bottom: 42px;
+
+            height: 1px;
+
+            background: #CBD5E1;
+
+            z-index: 1;
+
+            pointer-events: none;
+        }
+
+
+        .signature-line-label {
+            position: absolute;
+
+            left: 30px;
+
+            bottom: 18px;
+
+            color: var(--text-muted);
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+
+            z-index: 1;
+
+            pointer-events: none;
+        }
+
+
+        .signature-controls {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 9px;
+        }
+
+
+        .signature-hint {
+            color: var(--text-muted);
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .clear-signature-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 7px 10px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 8px;
+
+            background: #FFFFFF;
+
+            color: var(--danger);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .clear-signature-btn:hover {
+            background: var(--danger-bg);
+
+            border-color: #FECACA;
+        }
+
+
+        .comment-group {
+            margin-top: 20px;
+        }
+
+
+        .comment-label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--navy-dark);
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        .comment-label span {
+            color: var(--text-muted);
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .comment-input {
+            width: 100%;
+
+            min-height: 100px;
+
+            resize: vertical;
+
+            padding: 12px 13px;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            color: var(--text-primary);
+
+            background: #FFFFFF;
+
+            font-size: 11px;
+
+            font-weight: 500;
+
+            transition: 0.2s ease;
+        }
+
+
+        .comment-input:focus {
+            border-color: var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 3px rgba(138, 21, 56, 0.08);
+        }
+
+
+        .stamp-modal-footer {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 9px;
+
+            padding: 17px 22px;
+
+            border-top: 1px solid var(--border-light);
+
+            background: #F8FAFC;
+        }
+
+
+        .modal-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .modal-cancel {
+            background: #FFFFFF;
+
+            color: var(--navy-dark);
+
+            border: 1px solid var(--border-light);
+        }
+
+
+        .modal-cancel:hover {
+            background: #F1F5F9;
+        }
+
+
+        .modal-submit {
+            border: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--qatar-maroon),
+                    var(--qatar-maroon-dark)
+                );
+
+            color: #FFFFFF;
+
+            box-shadow:
+                0 6px 16px rgba(138, 21, 56, 0.18);
+        }
+
+
+        .modal-submit:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 9px 20px rgba(138, 21, 56, 0.24);
+        }
+
+
+        /* =====================================================
+           AUDIT HISTORY
+        ===================================================== */
+
+        .audit-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 0;
+        }
+
+
+        .audit-item {
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns: 34px minmax(0, 1fr);
+
+            gap: 12px;
+
+            padding: 0 0 20px;
+        }
+
+
+        .audit-item:last-child {
+            padding-bottom: 0;
+        }
+
+
+        .audit-marker-wrap {
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+        }
+
+
+        .audit-marker {
+            width: 10px;
+            height: 10px;
+
+            margin-top: 5px;
+
+            border-radius: 50%;
+
+            background: var(--qatar-maroon);
+
+            box-shadow:
+                0 0 0 4px var(--qatar-maroon-light);
+
+            z-index: 2;
+        }
+
+
+        .audit-line {
+            position: absolute;
+
+            top: 17px;
+            bottom: -5px;
+
+            width: 1px;
+
+            background: var(--border-light);
+        }
+
+
+        .audit-item:last-child .audit-line {
+            display: none;
+        }
+
+
+        .audit-title {
+            font-size: 11px;
+            font-weight: 800;
+
+            color: var(--navy-dark);
+        }
+
+
+        .audit-description {
+            margin-top: 3px;
+
+            font-size: 11px;
+
+            color: var(--text-secondary);
+        }
+
+
+        .audit-meta {
+            margin-top: 5px;
+
+            font-size: 9px;
+
+            color: var(--text-muted);
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           DESCRIPTION / NOTES
+        ===================================================== */
+
+        .description-box {
+            padding: 16px;
+
+            border-radius: 11px;
+
+            background: #F8FAFC;
+
+            border: 1px solid var(--border-light);
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .info-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+
+                transition: transform 0.25s ease;
+            }
+
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+
+            .mobile-header {
+                display: flex;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                padding:
+                    88px 18px 40px;
+            }
+
+
+            .documents-list {
+                grid-template-columns: 1fr;
+            }
+
+
+            .action-bar {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .action-buttons {
+                width: 100%;
+            }
+
+
+            .action-buttons .action-btn {
+                flex: 1;
+            }
+
+
+            .stamp-modal {
+                padding: 12px;
+            }
+
+
+            .stamp-modal-content {
+                margin: 15px auto;
+            }
+
+        }
+
+
+        @media (max-width: 560px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .page-header h1 {
+                font-size: 23px;
+            }
+
+
+            .card-header,
+            .card-body {
+                padding: 17px;
+            }
+
+
+            .document-item {
+                align-items: flex-start;
+            }
+
+
+            .document-action {
+                padding: 7px 8px;
+
+                font-size: 9px;
+            }
+
+
+            .stamp-modal-body {
+                padding: 17px;
+            }
+
+
+            .stamp-modal-header {
+                padding: 17px;
+            }
+
+
+            .stamp-modal-footer {
+                padding: 14px 17px;
+
+                flex-direction: column-reverse;
+            }
+
+
+            .modal-btn {
+                width: 100%;
+            }
+
+
+            .signature-pad-wrap {
+                height: 190px;
+            }
+
+
+            .signature-controls {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ===================================================== */
+
+        @media print {
+
+            .sidebar,
+            .mobile-header,
+            .sidebar-overlay,
+            .back-row,
+            .action-bar,
+            .document-action,
+            .stamp-modal {
+                display: none !important;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                padding: 0;
+            }
+
+
+            body {
+                background: #FFFFFF;
+            }
+
+
+            .card {
+                box-shadow: none;
+
+                break-inside: avoid;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     MOBILE HEADER
+========================================================= -->
+
+<header class="mobile-header">
+
+    <div class="mobile-title">
+        Manager Procurement Review
+    </div>
+
+    <button
+        type="button"
+        class="mobile-menu-btn"
+        onclick="toggleSidebar()"
+        aria-label="Open menu"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</header>
+
+
+<!-- =========================================================
+     SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="toggleSidebar()"
+></div>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="brand-logo">
+            <i class="fa-solid fa-building-shield"></i>
+        </div>
+
+        <div class="brand-name">
+            Prestigious Trading & Construction W.L.L.
+        </div>
+
+        <div class="brand-subtitle">
+            Construction Administration
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-menu">
+
+        <div class="menu-label">
+            Management
+        </div>
+
+        <a
+            href="{{ url_for('construction_manager_dashboard') }}"
+            class="menu-link active"
+        >
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Manager Dashboard</span>
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <a
+            href="{{ url_for('admin_logout') }}"
+            class="logout-link"
+        >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <div class="page-tag">
+            <i class="fa-solid fa-file-signature"></i>
+            Management / Procurement Review
+        </div>
+
+        <h1>
+            Manager Procurement Review
+        </h1>
+
+        <p>
+            Review the Account-stamped procurement package before applying
+            the Management digital signature and completing the workflow.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         BACK BUTTON
+    ====================================================== -->
+
+    <div class="back-row">
+
+        <a
+            href="{{ url_for('construction_manager_dashboard') }}"
+            class="back-btn"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Manager Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         FLASH MESSAGES
+    ====================================================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+
+                        {% if category == 'success' %}
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        {% elif category == 'danger' %}
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                        {% elif category == 'warning' %}
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        {% else %}
+                            <i class="fa-solid fa-circle-info"></i>
+                        {% endif %}
+
+                        <span>
+                            {{ message }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =====================================================
+         PROCUREMENT OVERVIEW
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div class="card-title-wrap">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+
+                <div>
+
+                    <div class="card-title">
+                        Procurement Package
+                    </div>
+
+                    <div class="card-subtitle">
+                        Complete procurement and Material Request information
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                {% if procurement.procurement_method == 'Card' %}
+
+                    <span class="method-badge">
+                        <i class="fa-solid fa-credit-card"></i>
+                        &nbsp; Card Procurement
+                    </span>
+
+                {% else %}
+
+                    <span class="method-badge">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        &nbsp; Quotation / LPO
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="section-heading">
+
+                <h3>
+                    Material Request Information
+                </h3>
+
+                <span>
+                    Original request linkage
+                </span>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Material Request
+                    </div>
+
+                    <div class="info-value">
+                        {{ procurement.request_number or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Project
+                    </div>
+
+                    <div class="info-value">
+                        {{ procurement.project_name or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Requested By
+                    </div>
+
+                    <div class="info-value">
+                        {{ procurement.requested_by_name
+                            or procurement.requested_by
+                            or '—'
+                        }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Request Date
+                    </div>
+
+                    <div class="info-value muted">
+                        {{ procurement.request_date or '—' }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROCUREMENT INFORMATION
+            ================================================== -->
+
+            <div class="section-heading">
+
+                <h3>
+                    Procurement Information
+                </h3>
+
+                <span>
+                    Financial and supplier details
+                </span>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Supplier
+                    </div>
+
+                    <div class="info-value">
+                        {{ procurement.supplier_name or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Supplier Contact
+                    </div>
+
+                    <div class="info-value muted">
+                        {{ procurement.supplier_contact or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Procurement Amount
+                    </div>
+
+                    <div class="info-value amount">
+
+                        {% if procurement.procurement_amount is not none %}
+
+                            {{ procurement.procurement_amount }}
+
+                            <span style="
+                                font-size: 11px;
+                                color: var(--text-muted);
+                                font-weight: 700;
+                            ">
+                                {{ procurement.currency or 'QAR' }}
+                            </span>
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Current Status
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if procurement.status == 'Pending Manager Review' %}
+
+                            <span class="status-badge status-pending">
+                                <i class="fa-solid fa-clock"></i>
+                                Pending Manager Review
+                            </span>
+
+                        {% elif procurement.status == 'Completed' %}
+
+                            <span class="status-badge status-completed">
+                                <i class="fa-solid fa-circle-check"></i>
+                                Completed
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge status-pending">
+                                {{ procurement.status or 'Unknown' }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACCOUNT REVIEW INFORMATION
+            ================================================== -->
+
+            <div class="section-heading">
+
+                <h3>
+                    Account Review
+                </h3>
+
+                <span>
+                    Previous workflow stage
+                </span>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Account Reviewer
+                    </div>
+
+                    <div class="info-value">
+                        {{ procurement.account_reviewer_name or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Account Reviewer ID
+                    </div>
+
+                    <div class="info-value muted">
+                        {{ procurement.account_reviewer_id or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Account Signed At
+                    </div>
+
+                    <div class="info-value muted">
+                        {{ procurement.account_signed_at or '—' }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Workflow Stage
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if procurement.workflow_stage == 'Manager Review' %}
+
+                            <span class="status-badge status-pending">
+                                <i class="fa-solid fa-user-tie"></i>
+                                Manager Review
+                            </span>
+
+                        {% elif procurement.workflow_stage == 'Completed' %}
+
+                            <span class="status-badge status-completed">
+                                <i class="fa-solid fa-check-double"></i>
+                                Completed
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge status-submitted">
+                                {{ procurement.workflow_stage or '—' }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CARD INFORMATION
+            ================================================== -->
+
+            {% if procurement.procurement_method == 'Card' %}
+
+                <div class="section-heading">
+
+                    <h3>
+                        Card Payment Information
+                    </h3>
+
+                    <span>
+                        Recorded by Purchase
+                    </span>
+
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Paid By
+                        </div>
+
+                        <div class="info-value">
+                            {{ procurement.card_paid_by_name or '—' }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Payment Date
+                        </div>
+
+                        <div class="info-value muted">
+                            {{ procurement.card_paid_at
+                                or procurement.payment_date
+                                or '—'
+                            }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Payment Reference
+                        </div>
+
+                        <div
+                            class="info-value"
+                            style="font-family: monospace;"
+                        >
+                            {{ procurement.card_payment_reference or '—' }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Procurement Initiated
+                        </div>
+
+                        <div class="info-value muted">
+                            {{ procurement.initiated_at or '—' }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 QUOTATION INFORMATION
+            ================================================== -->
+
+            {% if procurement.procurement_method == 'Quotation' %}
+
+                <div class="section-heading">
+
+                    <h3>
+                        Quotation / LPO Information
+                    </h3>
+
+                    <span>
+                        Pre-purchase approval package
+                    </span>
+
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Quotation Number
+                        </div>
+
+                        <div class="info-value">
+                            {{ procurement.quotation_number or '—' }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Quotation Date
+                        </div>
+
+                        <div class="info-value muted">
+                            {{ procurement.quotation_date or '—' }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            LPO Number
+                        </div>
+
+                        <div class="info-value">
+                            {{ procurement.lpo_number or '—' }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Submitted By
+                        </div>
+
+                        <div class="info-value muted">
+                            {{ procurement.pre_purchase_submitted_by_name or '—' }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 MATERIAL REQUEST DESCRIPTION
+            ================================================== -->
+
+            {% if procurement.description %}
+
+                <div class="section-heading">
+
+                    <h3>
+                        Material Request Description
+                    </h3>
+
+                </div>
+
+
+                <div class="description-box">
+                    {{ procurement.description }}
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 PROCUREMENT NOTES
+            ================================================== -->
+
+            {% if procurement.notes %}
+
+                <div class="section-heading">
+
+                    <h3>
+                        Procurement Notes
+                    </h3>
+
+                </div>
+
+
+                <div class="description-box">
+                    {{ procurement.notes }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ACCOUNT-STAMPED DOCUMENT PACKAGE
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div class="card-title-wrap">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+
+                <div>
+
+                    <div class="card-title">
+                        Account-Stamped Document Package
+                    </div>
+
+                    <div class="card-subtitle">
+                        Documents reviewed and digitally stamped by the Account Department
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <span class="status-badge status-approved">
+
+                <i class="fa-solid fa-stamp"></i>
+
+                Account Reviewed
+
+            </span>
+
+        </div>
+
+
+        <div class="card-body">
+
+
+            {% if procurement_documents %}
+
+                <div class="documents-list">
+
+                    {% for document in procurement_documents %}
+
+                        {% set workflow_stage =
+                            (document.workflow_stage or '')|lower
+                        %}
+
+                        {% set document_type =
+                            (document.document_type or '')|lower
+                        %}
+
+                        {% if workflow_stage == 'account stamp' %}
+
+                            <div class="document-item account-stamped">
+
+                                <div class="document-icon">
+
+                                    {% if 'quotation' in document_type %}
+                                        <i class="fa-solid fa-file-invoice"></i>
+
+                                    {% elif 'lpo' in document_type %}
+                                        <i class="fa-solid fa-file-signature"></i>
+
+                                    {% elif 'card payment' in document_type %}
+                                        <i class="fa-solid fa-credit-card"></i>
+
+                                    {% elif 'receipt' in document_type %}
+                                        <i class="fa-solid fa-receipt"></i>
+
+                                    {% elif 'invoice' in document_type %}
+                                        <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                                    {% elif 'delivery' in document_type %}
+                                        <i class="fa-solid fa-truck"></i>
+
+                                    {% else %}
+                                        <i class="fa-solid fa-file"></i>
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="document-content">
+
+                                    <div
+                                        class="document-title"
+                                        title="{{ document.original_file_name or document.document_title or 'Document' }}"
+                                    >
+                                        {{ document.document_title
+                                            or document.original_file_name
+                                            or 'Document'
+                                        }}
+                                    </div>
+
+
+                                    <div class="document-meta">
+
+                                        {{ document.document_type
+                                            or 'Supporting Document'
+                                        }}
+
+                                        {% if document.uploaded_by_name %}
+
+                                            · Uploaded by
+                                            {{ document.uploaded_by_name }}
+
+                                        {% endif %}
+
+                                        {% if document.uploaded_at %}
+
+                                            · {{ document.uploaded_at }}
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="stamp-label">
+
+                                        <i class="fa-solid fa-stamp"></i>
+
+                                        Account Stamped
+
+                                    </div>
+
+                                </div>
+
+
+                                {% if document.file_url %}
+
+                                    <a
+                                        href="{{ document.file_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="document-action"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Open
+                                    </a>
+
+                                {% else %}
+
+                                    <span
+                                        class="document-action"
+                                        style="
+                                            opacity: 0.5;
+                                            cursor: not-allowed;
+                                        "
+                                    >
+                                        <i class="fa-solid fa-ban"></i>
+                                        Unavailable
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     PACKAGE COMPLETENESS
+                ================================================== -->
+
+                {% if package_complete %}
+
+                    <div class="package-check complete">
+
+                        <div class="package-check-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="package-check-title">
+                                Required Account-stamped package is complete
+                            </div>
+
+                            <div class="package-check-text">
+
+                                {% if procurement.procurement_method == 'Card' %}
+
+                                    The Account-stamped Card Payment Evidence
+                                    document is available for Management review.
+
+                                {% else %}
+
+                                    The Account-stamped Quotation and LPO
+                                    documents are available for Management review.
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="package-check incomplete">
+
+                        <div class="package-check-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="package-check-title">
+                                Required Account-stamped package is incomplete
+                            </div>
+
+                            <div class="package-check-text">
+
+                                {% if procurement.procurement_method == 'Card' %}
+
+                                    The Account-stamped Card Payment Evidence
+                                    document could not be found.
+
+                                {% else %}
+
+                                    Both Account-stamped Quotation and LPO
+                                    documents are required before Management
+                                    can complete this procurement.
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% else %}
+
+                <div class="empty-documents">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <p>
+                        No Account-stamped procurement documents were found.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MANAGER ACTION AREA
+    ====================================================== -->
+
+    <section class="action-bar">
+
+        <div class="action-info">
+
+            <div class="action-info-icon">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Management Review & Digital Signature
+                </strong>
+
+                <span>
+                    Review the Account-stamped package before completing the procurement workflow.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="action-buttons">
+
+            <a
+                href="{{ url_for('construction_manager_dashboard') }}"
+                class="action-btn btn-secondary"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </a>
+
+
+            <!-- =================================================
+                 UPDATED:
+                 DO NOT USE package_complete TO LOCK THE BUTTON.
+                 BACKEND WILL VALIDATE THE PACKAGE ON SUBMISSION.
+            ================================================== -->
+
+            {% if procurement.status == 'Pending Manager Review'
+                  and procurement.workflow_stage == 'Manager Review' %}
+
+                <button
+                    type="button"
+                    class="action-btn btn-primary"
+                    onclick="openStampModal()"
+                >
+                    <i class="fa-solid fa-file-signature"></i>
+                    Review & Sign
+                </button>
+
+            {% elif procurement.status == 'Completed' %}
+
+                <button
+                    type="button"
+                    class="action-btn btn-disabled"
+                    disabled
+                >
+                    <i class="fa-solid fa-check-double"></i>
+                    Procurement Completed
+                </button>
+
+            {% else %}
+
+                <button
+                    type="button"
+                    class="action-btn btn-disabled"
+                    disabled
+                    title="The procurement is not currently awaiting Management review."
+                >
+                    <i class="fa-solid fa-lock"></i>
+                    Review & Sign
+                </button>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         AUDIT HISTORY
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div class="card-title-wrap">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+
+                <div>
+
+                    <div class="card-title">
+                        Procurement Audit History
+                    </div>
+
+                    <div class="card-subtitle">
+                        Complete activity history for this procurement record
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            {% if procurement_actions %}
+
+                <div class="audit-list">
+
+                    {% for action in procurement_actions %}
+
+                        <div class="audit-item">
+
+                            <div class="audit-marker-wrap">
+
+                                <div class="audit-marker"></div>
+
+                                <div class="audit-line"></div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="audit-title">
+
+                                    {{ action.action_type
+                                        or 'Procurement Action'
+                                    }}
+
+                                </div>
+
+
+                                {% if action.action_description %}
+
+                                    <div class="audit-description">
+
+                                        {{ action.action_description }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="audit-meta">
+
+                                    {% if action.performed_by_name %}
+
+                                        <i class="fa-solid fa-user"></i>
+
+                                        {{ action.performed_by_name }}
+
+                                    {% endif %}
+
+
+                                    {% if action.performed_at %}
+
+                                        &nbsp; · &nbsp;
+
+                                        <i class="fa-regular fa-clock"></i>
+
+                                        {{ action.performed_at }}
+
+                                    {% endif %}
+
+
+                                    {% if action.from_status
+                                          or action.to_status %}
+
+                                        &nbsp; · &nbsp;
+
+                                        {{ action.from_status or '—' }}
+
+                                        <i
+                                            class="fa-solid fa-arrow-right"
+                                            style="margin: 0 4px;"
+                                        ></i>
+
+                                        {{ action.to_status or '—' }}
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-documents">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    <p>
+                        No procurement activity has been recorded yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================================================
+     MANAGEMENT DIGITAL SIGNATURE MODAL
+========================================================= -->
+
+<div
+    class="stamp-modal"
+    id="stampModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="stampModalTitle"
+>
+
+    <div class="stamp-modal-content">
+
+
+        <!-- =================================================
+             MODAL HEADER
+        ================================================== -->
+
+        <div class="stamp-modal-header">
+
+            <div class="stamp-modal-title-wrap">
+
+                <div class="stamp-modal-icon">
+                    <i class="fa-solid fa-signature"></i>
+                </div>
+
+                <div>
+
+                    <div
+                        class="stamp-modal-title"
+                        id="stampModalTitle"
+                    >
+                        Management Digital Signature
+                    </div>
+
+                    <div class="stamp-modal-subtitle">
+                        Sign and complete this procurement package
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="stamp-close"
+                onclick="closeStampModal()"
+                aria-label="Close"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             MODAL BODY
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="{{ url_for('construction_manager_procurement_review', procurement_id=procurement.id) }}"
+            onsubmit="return submitManagerSignature();"
+        >
+
+            <div class="stamp-modal-body">
+
+
+                <!-- WARNING -->
+
+                <div class="stamp-warning">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <div>
+
+                        <strong>
+                            Important:
+                        </strong>
+
+                        By submitting this form, you confirm that you have
+                        reviewed the Account-stamped procurement package and
+                        authorize the Management Department digital signature.
+                        The procurement will then be marked as completed and
+                        the relevant departments will be notified.
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SIGNATURE
+                ================================================== -->
+
+                <div class="signature-section-title">
+
+                    <strong>
+                        Management Officer Signature
+                    </strong>
+
+                    <span>
+                        Required
+                    </span>
+
+                </div>
+
+
+                <div class="signature-pad-wrap">
+
+                    <canvas
+                        id="managerSignatureCanvas"
+                        width="1400"
+                        height="420"
+                    ></canvas>
+
+                    <div class="signature-line"></div>
+
+                    <div class="signature-line-label">
+                        Authorized Management Officer Signature
+                    </div>
+
+                </div>
+
+
+                <div class="signature-controls">
+
+                    <div class="signature-hint">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Draw your signature inside the box using your mouse,
+                        touch screen or stylus.
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="clear-signature-btn"
+                        onclick="clearManagerSignature()"
+                    >
+                        <i class="fa-solid fa-eraser"></i>
+                        Clear Signature
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     COMMENT
+                ================================================== -->
+
+                <div class="comment-group">
+
+                    <label
+                        for="manager_comment"
+                        class="comment-label"
+                    >
+                        Management Comment
+                        <span>
+                            (Optional)
+                        </span>
+                    </label>
+
+
+                    <textarea
+                        id="manager_comment"
+                        name="manager_comment"
+                        class="comment-input"
+                        placeholder="Enter any management comment, observation or completion note..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- HIDDEN SIGNATURE DATA -->
+
+                <input
+                    type="hidden"
+                    name="signature_data"
+                    id="signature_data"
+                    value=""
+                >
+
+            </div>
+
+
+            <!-- =================================================
+                 MODAL FOOTER
+            ================================================== -->
+
+            <div class="stamp-modal-footer">
+
+                <button
+                    type="button"
+                    class="modal-btn modal-cancel"
+                    onclick="closeStampModal()"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="modal-btn modal-submit"
+                    id="submitStampButton"
+                >
+                    <i class="fa-solid fa-file-signature"></i>
+                    Sign & Complete Procurement
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("sidebarOverlay");
+
+        sidebar.classList.toggle("open");
+
+        overlay.classList.toggle("open");
+    }
+
+
+    /* =========================================================
+       AUTO DISMISS FLASH MESSAGES
+    ========================================================= */
+
+    setTimeout(function () {
+
+        const messages =
+            document.querySelectorAll(".flash-message");
+
+        messages.forEach(function (message) {
+
+            message.style.transition =
+                "opacity 0.4s ease, transform 0.4s ease";
+
+            message.style.opacity = "0";
+
+            message.style.transform =
+                "translateY(-5px)";
+
+            setTimeout(function () {
+
+                message.remove();
+
+            }, 450);
+
+        });
+
+    }, 5000);
+
+
+    /* =========================================================
+       MANAGEMENT DIGITAL SIGNATURE
+    ========================================================= */
+
+    const signatureCanvas =
+        document.getElementById(
+            "managerSignatureCanvas"
+        );
+
+    let signatureContext = null;
+
+    let signatureDrawing = false;
+
+    let signatureHasContent = false;
+
+
+    if (signatureCanvas) {
+
+        signatureContext =
+            signatureCanvas.getContext("2d");
+
+        signatureContext.lineWidth = 2.5;
+
+        signatureContext.lineCap = "round";
+
+        signatureContext.lineJoin = "round";
+
+        signatureContext.strokeStyle =
+            "#0F172A";
+
+
+        function getCanvasPosition(event) {
+
+            const rect =
+                signatureCanvas.getBoundingClientRect();
+
+            const scaleX =
+                signatureCanvas.width / rect.width;
+
+            const scaleY =
+                signatureCanvas.height / rect.height;
+
+            return {
+                x:
+                    (event.clientX - rect.left)
+                    * scaleX,
+
+                y:
+                    (event.clientY - rect.top)
+                    * scaleY
+            };
+        }
+
+
+        signatureCanvas.addEventListener(
+            "pointerdown",
+            function(event) {
+
+                event.preventDefault();
+
+                signatureDrawing = true;
+
+                signatureHasContent = true;
+
+                const position =
+                    getCanvasPosition(event);
+
+                signatureContext.beginPath();
+
+                signatureContext.moveTo(
+                    position.x,
+                    position.y
+                );
+
+                try {
+
+                    signatureCanvas.setPointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {}
+
+            }
+        );
+
+
+        signatureCanvas.addEventListener(
+            "pointermove",
+            function(event) {
+
+                if (!signatureDrawing) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const position =
+                    getCanvasPosition(event);
+
+                signatureContext.lineTo(
+                    position.x,
+                    position.y
+                );
+
+                signatureContext.stroke();
+
+            }
+        );
+
+
+        signatureCanvas.addEventListener(
+            "pointerup",
+            function(event) {
+
+                signatureDrawing = false;
+
+                try {
+
+                    signatureCanvas.releasePointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {}
+
+            }
+        );
+
+
+        signatureCanvas.addEventListener(
+            "pointercancel",
+            function() {
+
+                signatureDrawing = false;
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       CLEAR SIGNATURE
+    ========================================================= */
+
+    function clearManagerSignature() {
+
+        if (!signatureCanvas || !signatureContext) {
+            return;
+        }
+
+        signatureContext.clearRect(
+            0,
+            0,
+            signatureCanvas.width,
+            signatureCanvas.height
+        );
+
+        signatureHasContent = false;
+
+        const signatureInput =
+            document.getElementById(
+                "signature_data"
+            );
+
+        if (signatureInput) {
+            signatureInput.value = "";
+        }
+
+    }
+
+
+    /* =========================================================
+       OPEN MODAL
+    ========================================================= */
+
+    function openStampModal() {
+
+        const modal =
+            document.getElementById("stampModal");
+
+        if (!modal) {
+            return;
+        }
+
+        modal.style.display = "block";
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+
+    /* =========================================================
+       CLOSE MODAL
+    ========================================================= */
+
+    function closeStampModal() {
+
+        const modal =
+            document.getElementById("stampModal");
+
+        if (!modal) {
+            return;
+        }
+
+        modal.style.display = "none";
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    /* =========================================================
+       SUBMIT MANAGEMENT SIGNATURE
+    ========================================================= */
+
+    function submitManagerSignature() {
+
+        if (!signatureCanvas) {
+
+            alert(
+                "Digital signature area is unavailable."
+            );
+
+            return false;
+        }
+
+
+        if (!signatureHasContent) {
+
+            alert(
+                "Please draw your digital signature before submitting."
+            );
+
+            return false;
+        }
+
+
+        const confirmation =
+            confirm(
+                "You are about to apply the official MANAGEMENT DEPARTMENT digital signature and complete this procurement.\n\nThe procurement will be marked as COMPLETED and the relevant departments will be notified.\n\nDo you want to continue?"
+            );
+
+
+        if (!confirmation) {
+            return false;
+        }
+
+
+        const signatureData =
+            signatureCanvas.toDataURL(
+                "image/png"
+            );
+
+
+        const signatureInput =
+            document.getElementById(
+                "signature_data"
+            );
+
+
+        if (!signatureInput) {
+
+            alert(
+                "Signature input is unavailable."
+            );
+
+            return false;
+        }
+
+
+        signatureInput.value =
+            signatureData;
+
+
+        const submitButton =
+            document.getElementById(
+                "submitStampButton"
+            );
+
+
+        if (submitButton) {
+
+            submitButton.disabled = true;
+
+            submitButton.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Completing Procurement...
+            `;
+
+            submitButton.style.opacity =
+                "0.65";
+
+            submitButton.style.cursor =
+                "not-allowed";
+
+        }
+
+
+        return true;
+    }
+
+
+    /* =========================================================
+       CLOSE MODAL WHEN CLICKING BACKDROP
+    ========================================================= */
+
+    const stampModal =
+        document.getElementById("stampModal");
+
+
+    if (stampModal) {
+
+        stampModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === stampModal) {
+
+                    closeStampModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       ESC KEY CLOSE
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                closeStampModal();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       PREVENT ACCIDENTAL DOUBLE SUBMISSION
+    ========================================================= */
+
+    window.addEventListener(
+        "pageshow",
+        function() {
+
+            const submitButton =
+                document.getElementById(
+                    "submitStampButton"
+                );
+
+            if (submitButton) {
+
+                submitButton.disabled = false;
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

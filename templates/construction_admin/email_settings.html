@@ -4,7 +4,6 @@
 Construction | Email Settings
 {% endblock %}
 
-
 {% block content %}
 
 <style>
@@ -24,7 +23,6 @@ Construction | Email Settings
 
 }
 
-
 .construction-email-container {
 
     max-width: 900px;
@@ -32,7 +30,6 @@ Construction | Email Settings
     margin: 0 auto;
 
 }
-
 
 /* =========================================
    MAIN CARD
@@ -53,7 +50,6 @@ Construction | Email Settings
 
 }
 
-
 /* =========================================
    HEADER
 ========================================= */
@@ -71,8 +67,17 @@ Construction | Email Settings
 
     padding: 30px 35px;
 
-}
+    display: flex;
 
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
 
 .email-settings-header-content {
 
@@ -83,7 +88,6 @@ Construction | Email Settings
     gap: 16px;
 
 }
-
 
 .email-settings-header-icon {
 
@@ -109,7 +113,6 @@ Construction | Email Settings
 
 }
 
-
 .email-settings-header h2 {
 
     margin: 0;
@@ -125,7 +128,6 @@ Construction | Email Settings
 
 }
 
-
 .email-settings-header p {
 
     margin: 6px 0 0;
@@ -138,6 +140,53 @@ Construction | Email Settings
 
 }
 
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.btn-back-dashboard {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    text-decoration: none !important;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: all .2s ease;
+
+    white-space: nowrap;
+
+}
+
+.btn-back-dashboard:hover {
+
+    background: #ffffff;
+
+    color: #234236 !important;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
 
 /* =========================================
    BODY
@@ -149,7 +198,6 @@ Construction | Email Settings
 
 }
 
-
 /* =========================================
    FORM GROUP
 ========================================= */
@@ -159,7 +207,6 @@ Construction | Email Settings
     margin-bottom: 22px;
 
 }
-
 
 .email-field label {
 
@@ -175,7 +222,6 @@ Construction | Email Settings
 
 }
 
-
 .email-field label i {
 
     color: #3F6B57;
@@ -185,7 +231,6 @@ Construction | Email Settings
     margin-right: 5px;
 
 }
-
 
 /* =========================================
    INPUT
@@ -215,13 +260,11 @@ Construction | Email Settings
 
 }
 
-
 .email-input:hover {
 
     border-color: #AFC4B5;
 
 }
-
 
 .email-input:focus {
 
@@ -233,7 +276,6 @@ Construction | Email Settings
         0 0 0 3px rgba(63,107,87,.12);
 
 }
-
 
 /* =========================================
    PASSWORD NOTE
@@ -250,7 +292,6 @@ Construction | Email Settings
     font-size: 11px;
 
 }
-
 
 /* =========================================
    TLS
@@ -278,7 +319,6 @@ Construction | Email Settings
 
 }
 
-
 .email-security-option input {
 
     width: 18px;
@@ -290,7 +330,6 @@ Construction | Email Settings
     accent-color: #3F6B57;
 
 }
-
 
 .email-security-option label {
 
@@ -306,7 +345,6 @@ Construction | Email Settings
 
 }
 
-
 .email-security-option i {
 
     color: #3F6B57;
@@ -314,7 +352,6 @@ Construction | Email Settings
     margin-left: auto;
 
 }
-
 
 /* =========================================
    SAVE BUTTON
@@ -344,7 +381,6 @@ Construction | Email Settings
 
 }
 
-
 .email-save-btn:hover {
 
     background: #234236;
@@ -356,13 +392,11 @@ Construction | Email Settings
 
 }
 
-
 .email-save-btn i {
 
     margin-right: 7px;
 
 }
-
 
 /* =========================================
    INFORMATION BOX
@@ -384,7 +418,6 @@ Construction | Email Settings
 
 }
 
-
 .email-info-title {
 
     display: flex;
@@ -403,13 +436,11 @@ Construction | Email Settings
 
 }
 
-
 .email-info-title i {
 
     color: #3F6B57;
 
 }
-
 
 .email-info-box ul {
 
@@ -418,7 +449,6 @@ Construction | Email Settings
     padding-left: 20px;
 
 }
-
 
 .email-info-box li {
 
@@ -432,20 +462,17 @@ Construction | Email Settings
 
 }
 
-
 .email-info-box li:last-child {
 
     margin-bottom: 0;
 
 }
 
-
 .email-info-box strong {
 
     color: #3F6B57;
 
 }
-
 
 /* =========================================
    SECURITY MESSAGE
@@ -477,7 +504,6 @@ Construction | Email Settings
 
 }
 
-
 .email-security-note i {
 
     color: #3F6B57;
@@ -485,7 +511,6 @@ Construction | Email Settings
     margin-top: 2px;
 
 }
-
 
 /* =========================================
    MOBILE
@@ -499,13 +524,15 @@ Construction | Email Settings
 
     }
 
-
     .email-settings-header {
 
         padding: 25px 22px;
 
-    }
+        flex-direction: column;
 
+        align-items: stretch;
+
+    }
 
     .email-settings-header-content {
 
@@ -513,6 +540,11 @@ Construction | Email Settings
 
     }
 
+    .btn-back-dashboard {
+
+        width: 100%;
+
+    }
 
     .email-settings-header h2 {
 
@@ -520,13 +552,11 @@ Construction | Email Settings
 
     }
 
-
     .email-settings-header p {
 
         font-size: 12px;
 
     }
-
 
     .email-settings-body {
 
@@ -536,34 +566,27 @@ Construction | Email Settings
 
 }
 
-
 </style>
-
 
 <div class="construction-email-page">
 
-
     <div class="construction-email-container">
-
 
         <div class="email-settings-card">
 
-
             <!-- =================================
-                 HEADER
+                 HEADER WITH BACK BUTTON
             ================================== -->
 
             <div class="email-settings-header">
 
                 <div class="email-settings-header-content">
 
-
                     <div class="email-settings-header-icon">
 
                        <i class="fas fa-envelope"></i>
 
                     </div>
-
 
                     <div>
 
@@ -579,12 +602,14 @@ Construction | Email Settings
 
                     </div>
 
-
                 </div>
 
+                <a href="{{ url_for('admin_dashboard') }}" class="btn-back-dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+
             </div>
-
-
 
             <!-- =================================
                  BODY
@@ -592,9 +617,7 @@ Construction | Email Settings
 
             <div class="email-settings-body">
 
-
                 <form method="POST">
-
 
                     <!-- SMTP SERVER -->
 
@@ -608,7 +631,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="text"
                             name="smtp_server"
@@ -618,8 +640,6 @@ Construction | Email Settings
                         >
 
                     </div>
-
-
 
                     <!-- SMTP PORT -->
 
@@ -633,7 +653,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="number"
                             name="smtp_port"
@@ -643,8 +662,6 @@ Construction | Email Settings
                         >
 
                     </div>
-
-
 
                     <!-- SMTP USERNAME -->
 
@@ -658,7 +675,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="text"
                             name="smtp_username"
@@ -669,8 +685,6 @@ Construction | Email Settings
                         >
 
                     </div>
-
-
 
                     <!-- SMTP PASSWORD -->
 
@@ -684,7 +698,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="password"
                             name="smtp_password"
@@ -692,7 +705,6 @@ Construction | Email Settings
                             placeholder="Enter Brevo SMTP Key"
                             {% if not settings %}required{% endif %}
                         >
-
 
                         {% if settings %}
 
@@ -707,8 +719,6 @@ Construction | Email Settings
 
                     </div>
 
-
-
                     <!-- SENDER EMAIL -->
 
                     <div class="email-field">
@@ -721,7 +731,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="email"
                             name="from_email"
@@ -732,8 +741,6 @@ Construction | Email Settings
                         >
 
                     </div>
-
-
 
                     <!-- SENDER NAME -->
 
@@ -747,7 +754,6 @@ Construction | Email Settings
 
                         </label>
 
-
                         <input
                             type="text"
                             name="sender_name"
@@ -756,8 +762,6 @@ Construction | Email Settings
                         >
 
                     </div>
-
-
 
                     <!-- TLS -->
 
@@ -770,19 +774,15 @@ Construction | Email Settings
                             {% if not settings or settings.use_tls %}checked{% endif %}
                         >
 
-
                         <label for="use_tls">
 
                             Enable TLS Security
 
                         </label>
 
-
                         <i class="fas fa-shield-halved"></i>
 
                     </div>
-
-
 
                     <!-- SAVE -->
 
@@ -797,17 +797,13 @@ Construction | Email Settings
 
                     </button>
 
-
                 </form>
-
-
 
                 <!-- =================================
                      BREVO GUIDE
                 ================================== -->
 
                 <div class="email-info-box">
-
 
                     <div class="email-info-title">
 
@@ -816,7 +812,6 @@ Construction | Email Settings
                         Brevo Configuration Guide
 
                     </div>
-
 
                     <ul>
 
@@ -830,7 +825,6 @@ Construction | Email Settings
 
                         </li>
 
-
                         <li>
 
                             SMTP Port:
@@ -840,7 +834,6 @@ Construction | Email Settings
                             </strong>
 
                         </li>
-
 
                         <li>
 
@@ -852,7 +845,6 @@ Construction | Email Settings
 
                         </li>
 
-
                         <li>
 
                             Use your
@@ -863,7 +855,6 @@ Construction | Email Settings
 
                         </li>
 
-
                         <li>
 
                             The sender email must be verified
@@ -873,10 +864,7 @@ Construction | Email Settings
 
                     </ul>
 
-
                 </div>
-
-
 
                 <!-- =================================
                      SECURITY NOTE
@@ -885,7 +873,6 @@ Construction | Email Settings
                 <div class="email-security-note">
 
                     <i class="fas fa-shield-halved"></i>
-
 
                     <div>
 
@@ -901,17 +888,12 @@ Construction | Email Settings
 
                 </div>
 
-
             </div>
-
 
         </div>
 
-
     </div>
 
-
 </div>
-
 
 {% endblock %}

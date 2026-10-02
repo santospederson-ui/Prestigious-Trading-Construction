@@ -1,0 +1,3293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Correct Material Request |
+        {{ material_request.request_number }}
+    </title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+
+            --maroon: #8A1538;
+            --dark-maroon: #670F2A;
+            --gold: #C5A059;
+
+            --green: #006b3c;
+
+            --text: #253047;
+            --muted: #6b7280;
+
+            --border: #e5e7eb;
+
+            --background: #f5f6f8;
+
+            --white: #ffffff;
+
+            --warning-bg: #fff7ed;
+            --warning-border: #f59e0b;
+
+            --shadow:
+                0 10px 30px rgba(15, 23, 42, 0.07);
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 270px;
+
+            background:
+                #ffffff;
+
+            border-right:
+                1px solid var(--border);
+
+            z-index: 1000;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-brand {
+
+            padding:
+                25px 24px 22px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .brand-mark {
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 12px;
+
+            background:
+                var(--maroon);
+
+            color:
+                #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            flex-shrink: 0;
+        }
+
+
+        .brand-title {
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color:
+                var(--maroon);
+
+            line-height: 1.25;
+        }
+
+
+        .brand-subtitle {
+
+            font-size: 10px;
+
+            color:
+                var(--muted);
+
+            margin-top: 3px;
+        }
+
+
+        .sidebar-section {
+
+            padding:
+                22px 16px 7px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+
+            color:
+                #9ca3af;
+        }
+
+
+        .sidebar-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin:
+                3px 12px;
+
+            padding:
+                11px 13px;
+
+            border-radius: 9px;
+
+            color:
+                #4b5563;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            transition: .2s ease;
+        }
+
+
+        .sidebar-link:hover {
+
+            background:
+                #f8f1f4;
+
+            color:
+                var(--maroon);
+        }
+
+
+        .sidebar-link.active {
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--maroon);
+
+            font-weight: 800;
+        }
+
+
+        .sidebar-link i {
+
+            font-size: 16px;
+
+            width: 19px;
+
+            text-align: center;
+        }
+
+
+        .sidebar-badge {
+
+            margin-left: auto;
+
+            min-width: 21px;
+
+            height: 21px;
+
+            padding: 0 6px;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                var(--maroon);
+
+            color:
+                white;
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 270px;
+
+            min-height: 100vh;
+        }
+
+
+        .topbar {
+
+            height: 78px;
+
+            background:
+                #ffffff;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 34px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 900;
+        }
+
+
+        .topbar-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+        }
+
+
+        .mobile-menu {
+
+            display: none;
+
+            border: 0;
+
+            background: transparent;
+
+            font-size: 22px;
+
+            color:
+                var(--maroon);
+        }
+
+
+        .page-title {
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+            color:
+                #172033;
+        }
+
+
+        .page-subtitle {
+
+            font-size: 11px;
+
+            color:
+                var(--muted);
+
+            margin-top: 3px;
+        }
+
+
+        .topbar-user {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 11px;
+
+            color:
+                var(--muted);
+        }
+
+
+        .user-avatar {
+
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--maroon);
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding:
+                32px;
+        }
+
+
+        .document-header {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .eyebrow {
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: .09em;
+
+            text-transform: uppercase;
+
+            color:
+                var(--maroon);
+
+            margin-bottom: 7px;
+        }
+
+
+        .document-title {
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+            color:
+                #172033;
+        }
+
+
+        .document-description {
+
+            margin-top: 7px;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            max-width: 720px;
+
+            line-height: 1.7;
+        }
+
+
+        .mr-badge {
+
+            padding:
+                12px 17px;
+
+            border-radius: 10px;
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--maroon);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           ALERT
+        ===================================================== */
+
+        .correction-alert {
+
+            background:
+                var(--warning-bg);
+
+            border:
+                1px solid #fed7aa;
+
+            border-left:
+                5px solid var(--warning-border);
+
+            border-radius: 12px;
+
+            padding:
+                18px 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .correction-alert-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color:
+                #9a3412;
+
+            font-weight: 800;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .correction-alert-header i {
+
+            font-size: 19px;
+        }
+
+
+        .correction-alert p {
+
+            margin:
+                0;
+
+            font-size: 12px;
+
+            color:
+                #7c2d12;
+
+            line-height: 1.7;
+        }
+
+
+        .engineer-comment {
+
+            margin-top: 14px;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid #fed7aa;
+
+            border-radius: 8px;
+
+            padding:
+                14px 16px;
+
+            font-size: 12px;
+
+            color:
+                #374151;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+        }
+
+
+        .comment-label {
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .06em;
+
+            color:
+                #9a3412;
+
+            margin-bottom: 6px;
+        }
+
+
+        /* =====================================================
+           GRID
+        ===================================================== */
+
+        .page-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.45fr)
+                minmax(330px, .75fr);
+
+            gap: 24px;
+
+            align-items: start;
+        }
+
+
+        .card {
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            background:
+                #ffffff;
+
+            box-shadow:
+                var(--shadow);
+
+            overflow: hidden;
+        }
+
+
+        .card-header {
+
+            padding:
+                18px 21px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        .card-header-title {
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            color:
+                #172033;
+        }
+
+
+        .card-header-subtitle {
+
+            font-size: 10px;
+
+            color:
+                var(--muted);
+
+            margin-top: 3px;
+        }
+
+
+        .card-body {
+
+            padding:
+                22px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-label {
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            color:
+                #374151;
+
+            margin-bottom: 7px;
+        }
+
+
+        .form-control,
+        .form-select {
+
+            min-height: 45px;
+
+            border:
+                1px solid #d9dee7;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            color:
+                #1f2937;
+
+            padding:
+                10px 12px;
+
+            box-shadow: none;
+        }
+
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color:
+                var(--maroon);
+
+            box-shadow:
+                0 0 0 3px rgba(138, 21, 56, .09);
+        }
+
+
+        textarea.form-control {
+
+            min-height: 120px;
+
+            resize: vertical;
+
+            line-height: 1.65;
+        }
+
+
+        .readonly-field {
+
+            background:
+                #f8fafc;
+
+            color:
+                #6b7280;
+
+            cursor: not-allowed;
+        }
+
+
+        .field-help {
+
+            font-size: 10px;
+
+            color:
+                #9ca3af;
+
+            margin-top: 6px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           MR NUMBER
+        ===================================================== */
+
+        .mr-number-box {
+
+            background:
+                #f8f1f4;
+
+            border:
+                1px solid #ead0d9;
+
+            border-radius: 9px;
+
+            padding:
+                12px 14px;
+
+            color:
+                var(--maroon);
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           FILE UPLOAD
+        ===================================================== */
+
+        .upload-zone {
+
+            border:
+                2px dashed #d6dbe4;
+
+            border-radius: 11px;
+
+            padding:
+                25px 18px;
+
+            text-align: center;
+
+            background:
+                #fafbfc;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+
+            border-color:
+                var(--maroon);
+
+            background:
+                #fdf7f9;
+        }
+
+
+        .upload-icon {
+
+            width: 46px;
+            height: 46px;
+
+            margin:
+                0 auto 10px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--maroon);
+
+            font-size: 20px;
+        }
+
+
+        .upload-title {
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color:
+                #374151;
+        }
+
+
+        .upload-description {
+
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            color:
+                #9ca3af;
+        }
+
+
+        .selected-file {
+
+            margin-top: 12px;
+
+            padding:
+                10px 12px;
+
+            border-radius: 8px;
+
+            background:
+                #f0fdf4;
+
+            border:
+                1px solid #bbf7d0;
+
+            color:
+                #166534;
+
+            font-size: 11px;
+
+            display: none;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-align: left;
+        }
+
+
+        .selected-file i {
+
+            font-size: 17px;
+        }
+
+
+        /* =====================================================
+           CURRENT DOCUMENT
+        ===================================================== */
+
+        .document-info {
+
+            background:
+                #f8fafc;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding:
+                15px;
+        }
+
+
+        .document-info-label {
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .06em;
+
+            color:
+                #9ca3af;
+
+            margin-bottom: 6px;
+        }
+
+
+        .document-info-name {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color:
+                #374151;
+
+            word-break: break-word;
+
+            line-height: 1.5;
+        }
+
+
+        .view-document {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 12px;
+
+            padding:
+                10px 13px;
+
+            border-radius: 8px;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid #d7dce5;
+
+            color:
+                var(--maroon);
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+
+        .view-document:hover {
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--dark-maroon);
+        }
+
+
+        /* =====================================================
+           SIGNATURE
+        ===================================================== */
+
+        .signature-wrapper {
+
+            border:
+                1px solid #d8dde6;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            background:
+                #ffffff;
+        }
+
+
+        .signature-toolbar {
+
+            padding:
+                9px 12px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            background:
+                #f8fafc;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .signature-toolbar span {
+
+            font-size: 10px;
+
+            color:
+                #6b7280;
+
+            font-weight: 700;
+        }
+
+
+        .clear-signature {
+
+            border: 0;
+
+            background: transparent;
+
+            color:
+                #b91c1c;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+
+        #signatureCanvas {
+
+            display: block;
+
+            width: 100%;
+
+            height: 150px;
+
+            background:
+                #ffffff;
+
+            cursor: crosshair;
+
+            touch-action: none;
+        }
+
+
+        /* =====================================================
+           WORKFLOW INFO
+        ===================================================== */
+
+        .workflow-box {
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .workflow-step {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding:
+                13px 14px;
+
+            border-bottom:
+                1px solid #eef0f3;
+        }
+
+
+        .workflow-step:last-child {
+
+            border-bottom: 0;
+        }
+
+
+        .step-icon {
+
+            width: 28px;
+            height: 28px;
+
+            border-radius: 50%;
+
+            background:
+                #f8e9ee;
+
+            color:
+                var(--maroon);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .workflow-step.current .step-icon {
+
+            background:
+                var(--green);
+
+            color:
+                white;
+        }
+
+
+        .step-title {
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            color:
+                #374151;
+        }
+
+
+        .step-description {
+
+            font-size: 9px;
+
+            color:
+                #9ca3af;
+
+            margin-top: 3px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           ACTION BAR
+        ===================================================== */
+
+        .action-bar {
+
+            margin-top: 24px;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            box-shadow:
+                var(--shadow);
+
+            padding:
+                18px 21px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .action-warning {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 10px;
+
+            color:
+                #6b7280;
+
+            line-height: 1.5;
+        }
+
+
+        .action-warning i {
+
+            color:
+                var(--warning-border);
+
+            font-size: 17px;
+        }
+
+
+        .action-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-shrink: 0;
+        }
+
+
+        .btn-cancel {
+
+            min-height: 43px;
+
+            padding:
+                0 18px;
+
+            border:
+                1px solid #d7dce5;
+
+            border-radius: 8px;
+
+            background:
+                #ffffff;
+
+            color:
+                #4b5563;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+        }
+
+
+        .btn-cancel:hover {
+
+            background:
+                #f8fafc;
+
+            color:
+                #374151;
+        }
+
+
+        .btn-submit {
+
+            min-height: 43px;
+
+            padding:
+                0 20px;
+
+            border: 0;
+
+            border-radius: 8px;
+
+            background:
+                var(--maroon);
+
+            color:
+                #ffffff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .btn-submit:hover {
+
+            background:
+                var(--dark-maroon);
+        }
+
+
+        .btn-submit:disabled {
+
+            opacity: .65;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            padding:
+                25px 32px 35px;
+
+            text-align: center;
+
+            font-size: 9px;
+
+            color:
+                #9ca3af;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .page-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition: .25s ease;
+            }
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+            .main {
+
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .topbar {
+
+                padding:
+                    0 18px;
+            }
+
+            .topbar-user span {
+
+                display: none;
+            }
+
+            .content {
+
+                padding:
+                    20px 15px;
+            }
+
+            .document-header {
+
+                flex-direction: column;
+            }
+
+            .mr-badge {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .action-bar {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .action-buttons {
+
+                width: 100%;
+
+                flex-direction: column;
+            }
+
+            .btn-cancel,
+            .btn-submit {
+
+                width: 100%;
+            }
+
+            .card-body {
+
+                padding:
+                    17px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="sidebar-brand">
+
+        <div
+            class="d-flex align-items-center gap-3"
+        >
+
+            <div class="brand-mark">
+                PT
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    Prestigious Trading
+                    <br>
+                    & Construction
+                </div>
+
+                <div class="brand-subtitle">
+                    Construction Management System
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-section">
+        Purchase Operations
+    </div>
+
+
+    <a
+        href="{{ url_for('construction_purchase_dashboard') }}"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-grid-1x2"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a
+        href="{{ url_for('construction_purchase_dashboard') }}#materialRequests"
+        class="sidebar-link active"
+    >
+
+        <i class="bi bi-file-earmark-text"></i>
+
+        <span>
+            Material Requests
+        </span>
+
+    </a>
+
+
+    <a
+        href="{{ url_for('construction_purchase_audit_trail') }}"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-shield-check"></i>
+
+        <span>
+            Audit Trail
+        </span>
+
+    </a>
+
+
+    <div class="sidebar-section">
+        Workflow & Management
+    </div>
+
+
+    <a
+        href="{{ url_for('construction_purchase_dashboard') }}#workflow"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-diagram-3"></i>
+
+        <span>
+            Purchase Workflow
+        </span>
+
+    </a>
+
+
+    <a
+        href="{{ url_for('construction_purchase_dashboard') }}#procurement"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-cart-check"></i>
+
+        <span>
+            Procurement
+        </span>
+
+    </a>
+
+
+    <div class="sidebar-section">
+        Account
+    </div>
+
+
+    <a
+        href="{{ url_for('admin_logout') }}"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                type="button"
+                class="mobile-menu"
+                id="mobileMenu"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div>
+
+                <h1 class="page-title">
+                    Correct Material Request
+                </h1>
+
+                <div class="page-subtitle">
+                    Correct the Engineer's requested changes
+                    and resubmit the same Material Request
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-user">
+
+            <span>
+                {{ purchase_name or "Purchase Officer" }}
+            </span>
+
+            <div class="user-avatar">
+
+                {{
+                    (
+                        purchase_name or
+                        "P"
+                    )[0]|upper
+                }}
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <section class="content">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="document-header">
+
+            <div>
+
+                <div class="eyebrow">
+                    Purchase Department
+                </div>
+
+                <h2 class="document-title">
+                    Material Request Correction
+                </h2>
+
+                <div class="document-description">
+
+                    The Engineer has returned this Material
+                    Request for correction. Make the required
+                    changes and resubmit it for Engineering
+                    review.
+
+                </div>
+
+            </div>
+
+
+            <div class="mr-badge">
+
+                <i class="bi bi-file-earmark-text me-1"></i>
+
+                {{ material_request.request_number }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ENGINEER CORRECTION NOTICE
+        ================================================== -->
+
+        <div class="correction-alert">
+
+            <div class="correction-alert-header">
+
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                Engineer Correction Required
+
+            </div>
+
+
+            <p>
+
+                This Material Request cannot proceed to Manager
+                Approval until the requested corrections have
+                been addressed.
+
+            </p>
+
+
+            <div class="engineer-comment">
+
+                <div class="comment-label">
+                    Engineer's Correction Comment
+                </div>
+
+                {{
+                    material_request.engineer_comment
+                    or
+                    "No correction comment was recorded."
+                }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAIN GRID
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="{{
+                url_for(
+                    'construction_purchase_material_request_correction',
+                    request_id=material_request.id
+                )
+            }}"
+            enctype="multipart/form-data"
+            id="correctionForm"
+        >
+
+
+            <div class="page-grid">
+
+
+                <!-- =============================================
+                     LEFT COLUMN
+                ============================================== -->
+
+                <div>
+
+
+                    <!-- =========================================
+                         MATERIAL REQUEST INFORMATION
+                    ========================================== -->
+
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Material Request Information
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Correct the information requested
+                                    by Engineering
+                                </div>
+
+                            </div>
+
+                            <i
+                                class="bi bi-pencil-square"
+                                style="
+                                    color:#8A1538;
+                                    font-size:18px;
+                                "
+                            ></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="row g-3">
+
+
+                                <!-- REQUEST NUMBER -->
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Material Request Number
+                                    </label>
+
+                                    <div class="mr-number-box">
+
+                                        <i
+                                            class="bi bi-lock-fill me-1"
+                                        ></i>
+
+                                        {{ material_request.request_number }}
+
+                                    </div>
+
+                                    <div class="field-help">
+
+                                        The original MR number is
+                                        permanently retained during
+                                        correction.
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- REQUEST DATE -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="request_date"
+                                        class="form-label"
+                                    >
+                                        Request Date
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="request_date"
+                                        name="request_date"
+                                        class="form-control"
+                                        value="{{
+                                            material_request.request_date
+                                        }}"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- PROJECT -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="project_name"
+                                        class="form-label"
+                                    >
+                                        Project Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="project_name"
+                                        name="project_name"
+                                        class="form-control"
+                                        value="{{
+                                            material_request.project_name
+                                            or ''
+                                        }}"
+                                        placeholder="Enter project name"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- REQUESTER -->
+
+                                <div class="col-12">
+
+                                    <label class="form-label">
+                                        Requested By
+                                    </label>
+
+                                    <!--
+                                        The current requester is retained.
+                                        The hidden value is the admin ID
+                                        required by the correction route.
+                                    -->
+
+                                    <input
+                                        type="hidden"
+                                        name="requested_by"
+                                        value="{{
+                                            material_request.requested_by
+                                        }}"
+                                    >
+
+                                    <input
+                                        type="text"
+                                        class="form-control readonly-field"
+                                        value="{{
+                                            material_request.requested_by_name
+                                            or 'Requested User'
+                                        }}"
+                                        readonly
+                                    >
+
+                                    <div class="field-help">
+
+                                        The original requester remains
+                                        attached to this Material Request.
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="description"
+                                        class="form-label"
+                                    >
+                                        Material / Purchase Description
+                                    </label>
+
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="form-control"
+                                        placeholder="Enter the corrected material request description"
+                                        required
+                                    >{{ material_request.description or '' }}</textarea>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         CORRECTED DOCUMENT
+                    ========================================== -->
+
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Corrected Material Request Document
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Upload the corrected PDF prepared
+                                    for Engineering review
+                                </div>
+
+                            </div>
+
+                            <i
+                                class="bi bi-file-earmark-arrow-up"
+                                style="
+                                    color:#8A1538;
+                                    font-size:18px;
+                                "
+                            ></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <!-- CURRENT DOCUMENT -->
+
+                            <div class="document-info mb-3">
+
+                                <div class="document-info-label">
+                                    Current Stamped Document
+                                </div>
+
+                                <div class="document-info-name">
+
+                                    {{
+                                        material_request.signed_file_name
+                                        or
+                                        "No stamped document available"
+                                    }}
+
+                                </div>
+
+
+                                {% if material_request.signed_file_url %}
+
+                                    <a
+                                        href="{{ material_request.signed_file_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="view-document"
+                                    >
+
+                                        <i
+                                            class="bi bi-box-arrow-up-right"
+                                        ></i>
+
+                                        Open Current Stamped Document
+
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- UPLOAD -->
+
+                            <label
+                                class="form-label"
+                                for="material_file"
+                            >
+                                Upload Corrected PDF
+                            </label>
+
+
+                            <div
+                                class="upload-zone"
+                                id="uploadZone"
+                            >
+
+                                <div class="upload-icon">
+
+                                    <i
+                                        class="bi bi-cloud-arrow-up"
+                                    ></i>
+
+                                </div>
+
+
+                                <div class="upload-title">
+
+                                    Click to select the corrected PDF
+
+                                </div>
+
+
+                                <div class="upload-description">
+
+                                    PDF only • Maximum file size depends
+                                    on your server configuration
+
+                                </div>
+
+
+                                <input
+                                    type="file"
+                                    id="material_file"
+                                    name="material_file"
+                                    accept=".pdf,application/pdf"
+                                    hidden
+                                    required
+                                >
+
+
+                                <div
+                                    class="selected-file"
+                                    id="selectedFile"
+                                >
+
+                                    <i
+                                        class="bi bi-file-earmark-pdf"
+                                    ></i>
+
+                                    <span id="selectedFileName">
+                                        No file selected
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="field-help">
+
+                                The corrected PDF will receive a new
+                                Purchase Department digital stamp.
+                                The previous Engineer-stamped document
+                                will not be overwritten.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         DIGITAL SIGNATURE
+                    ========================================== -->
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Purchase Digital Signature
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Sign the corrected Material Request
+                                    before resubmission
+                                </div>
+
+                            </div>
+
+                            <i
+                                class="bi bi-pen"
+                                style="
+                                    color:#8A1538;
+                                    font-size:18px;
+                                "
+                            ></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="signature-wrapper">
+
+                                <div class="signature-toolbar">
+
+                                    <span>
+                                        Sign inside the box below
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        class="clear-signature"
+                                        id="clearSignature"
+                                    >
+                                        <i
+                                            class="bi bi-eraser me-1"
+                                        ></i>
+                                        Clear
+                                    </button>
+
+                                </div>
+
+
+                                <canvas
+                                    id="signatureCanvas"
+                                ></canvas>
+
+                            </div>
+
+
+                            <input
+                                type="hidden"
+                                name="signature_data"
+                                id="signatureData"
+                            >
+
+
+                            <div class="field-help">
+
+                                Your digital signature will be stamped
+                                on the corrected PDF as the
+                                <strong>
+                                    Purchase Department
+                                </strong>
+                                approval stamp.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =============================================
+                     RIGHT COLUMN
+                ============================================== -->
+
+                <div>
+
+
+                    <!-- =========================================
+                         REQUEST STATUS
+                    ========================================== -->
+
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Request Status
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Current workflow position
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div
+                                style="
+                                    padding:14px;
+                                    border-radius:9px;
+                                    background:#fff7ed;
+                                    border:1px solid #fed7aa;
+                                    color:#9a3412;
+                                    font-size:11px;
+                                    font-weight:800;
+                                "
+                            >
+
+                                <i
+                                    class="bi bi-exclamation-circle me-1"
+                                ></i>
+
+                                Engineer Correction Required
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    margin-top:12px;
+                                    font-size:10px;
+                                    color:#6b7280;
+                                    line-height:1.6;
+                                "
+                            >
+
+                                After you submit the corrected
+                                request, its status will become:
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    margin-top:8px;
+                                    padding:11px 12px;
+                                    border-radius:8px;
+                                    background:#f0fdf4;
+                                    border:1px solid #bbf7d0;
+                                    color:#166534;
+                                    font-size:11px;
+                                    font-weight:800;
+                                "
+                            >
+
+                                <i
+                                    class="bi bi-arrow-right-circle me-1"
+                                ></i>
+
+                                Pending Engineer Review
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         WORKFLOW
+                    ========================================== -->
+
+                    <div
+                        class="card mb-4"
+                        id="workflow"
+                    >
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Approval Workflow
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Current Material Request journey
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body p-0">
+
+                            <div class="workflow-box">
+
+
+                                <div class="workflow-step">
+
+                                    <div class="step-icon">
+
+                                        <i
+                                            class="bi bi-check-lg"
+                                        ></i>
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="step-title">
+                                            Purchase Submission
+                                        </div>
+
+                                        <div class="step-description">
+                                            Original Material Request
+                                            submitted by Purchase.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="workflow-step">
+
+                                    <div class="step-icon">
+
+                                        <i
+                                            class="bi bi-check-lg"
+                                        ></i>
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="step-title">
+                                            Engineer Review
+                                        </div>
+
+                                        <div class="step-description">
+                                            Engineering reviewed the
+                                            original submission.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="workflow-step current">
+
+                                    <div class="step-icon">
+
+                                        <i
+                                            class="bi bi-pencil"
+                                        ></i>
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="step-title">
+                                            Purchase Correction
+                                        </div>
+
+                                        <div class="step-description">
+                                            Address the Engineer's
+                                            correction requirements.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="workflow-step">
+
+                                    <div class="step-icon">
+
+                                        4
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="step-title">
+                                            Engineer Re-Review
+                                        </div>
+
+                                        <div class="step-description">
+                                            The corrected request returns
+                                            to Engineering.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="workflow-step">
+
+                                    <div class="step-icon">
+
+                                        5
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="step-title">
+                                            Manager Approval
+                                        </div>
+
+                                        <div class="step-description">
+                                            Engineering approval sends the
+                                            request to Manager Approval.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         AUDIT INFORMATION
+                    ========================================== -->
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <div class="card-header-title">
+                                    Audit Information
+                                </div>
+
+                                <div class="card-header-subtitle">
+                                    Request identity is preserved
+                                </div>
+
+                            </div>
+
+                            <i
+                                class="bi bi-shield-check"
+                                style="
+                                    color:#8A1538;
+                                    font-size:18px;
+                                "
+                            ></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="mb-3">
+
+                                <div class="document-info-label">
+                                    Material Request ID
+                                </div>
+
+                                <div class="document-info-name">
+
+                                    #{{ material_request.id }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <div class="document-info-label">
+                                    Original MR Number
+                                </div>
+
+                                <div class="document-info-name">
+
+                                    {{ material_request.request_number }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <div class="document-info-label">
+                                    Original Submission
+                                </div>
+
+                                <div class="document-info-name">
+
+                                    {% if material_request.created_at %}
+
+                                        {{
+                                            material_request.created_at.strftime(
+                                                "%d %b %Y, %H:%M"
+                                            )
+                                        }}
+
+                                    {% else %}
+
+                                        Not available
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="document-info-label">
+                                    Engineer Review
+                                </div>
+
+                                <div class="document-info-name">
+
+                                    {% if material_request.engineer_reviewed_at %}
+
+                                        {{
+                                            material_request.engineer_reviewed_at.strftime(
+                                                "%d %b %Y, %H:%M"
+                                            )
+                                        }}
+
+                                    {% else %}
+
+                                        Not available
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTION BAR
+            ================================================== -->
+
+            <div class="action-bar">
+
+                <div class="action-warning">
+
+                    <i
+                        class="bi bi-info-circle"
+                    ></i>
+
+                    <span>
+
+                        The corrected document will create a new
+                        Purchase-stamped PDF while retaining this
+                        same Material Request number and audit history.
+
+                    </span>
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <a
+                        href="{{ url_for('construction_purchase_dashboard') }}"
+                        class="btn-cancel"
+                    >
+
+                        <i
+                            class="bi bi-arrow-left"
+                        ></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn-submit"
+                        id="submitButton"
+                    >
+
+                        <i
+                            class="bi bi-send-check"
+                        ></i>
+
+                        Correct & Resubmit to Engineer
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </form>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <div class="footer">
+
+            Prestigious Trading & Construction W.L.L.
+            <br>
+
+            Construction Management System
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* ========================================================
+       MOBILE SIDEBAR
+    ======================================================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+
+    if (mobileMenu) {
+
+        mobileMenu.addEventListener(
+            "click",
+            function () {
+
+                sidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       FILE UPLOAD
+    ======================================================== */
+
+    const uploadZone =
+        document.getElementById("uploadZone");
+
+    const materialFile =
+        document.getElementById("material_file");
+
+    const selectedFile =
+        document.getElementById("selectedFile");
+
+    const selectedFileName =
+        document.getElementById("selectedFileName");
+
+
+    uploadZone.addEventListener(
+        "click",
+        function () {
+
+            materialFile.click();
+
+        }
+    );
+
+
+    materialFile.addEventListener(
+        "change",
+        function () {
+
+            showSelectedFile(
+                this.files[0]
+            );
+
+        }
+    );
+
+
+    function showSelectedFile(file) {
+
+        if (!file) {
+
+            selectedFile.style.display =
+                "none";
+
+            return;
+        }
+
+
+        const fileName =
+            file.name.toLowerCase();
+
+
+        if (!fileName.endsWith(".pdf")) {
+
+            alert(
+                "Please select a PDF file."
+            );
+
+            materialFile.value = "";
+
+            selectedFile.style.display =
+                "none";
+
+            return;
+        }
+
+
+        selectedFileName.textContent =
+            file.name;
+
+
+        selectedFile.style.display =
+            "flex";
+    }
+
+
+    /* ========================================================
+       DRAG & DROP
+    ======================================================== */
+
+    [
+        "dragenter",
+        "dragover"
+    ].forEach(
+        function (eventName) {
+
+            uploadZone.addEventListener(
+                eventName,
+                function (event) {
+
+                    event.preventDefault();
+
+                    uploadZone.classList.add(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ].forEach(
+        function (eventName) {
+
+            uploadZone.addEventListener(
+                eventName,
+                function (event) {
+
+                    event.preventDefault();
+
+                    uploadZone.classList.remove(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    uploadZone.addEventListener(
+        "drop",
+        function (event) {
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if (!files.length) {
+                return;
+            }
+
+
+            const file =
+                files[0];
+
+
+            if (
+                !file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                alert(
+                    "Only PDF files are accepted."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Assign the dropped file to the
+             * file input using DataTransfer.
+             */
+
+            const dataTransfer =
+                new DataTransfer();
+
+
+            dataTransfer.items.add(
+                file
+            );
+
+
+            materialFile.files =
+                dataTransfer.files;
+
+
+            showSelectedFile(
+                file
+            );
+
+        }
+    );
+
+
+    /* ========================================================
+       SIGNATURE CANVAS
+    ======================================================== */
+
+    const canvas =
+        document.getElementById(
+            "signatureCanvas"
+        );
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    let drawing = false;
+
+    let hasSignature = false;
+
+
+    function resizeCanvas() {
+
+        const ratio =
+            Math.max(
+                window.devicePixelRatio || 1,
+                1
+            );
+
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const existingImage =
+            hasSignature
+                ? canvas.toDataURL()
+                : null;
+
+
+        canvas.width =
+            rect.width * ratio;
+
+        canvas.height =
+            rect.height * ratio;
+
+
+        ctx.scale(
+            ratio,
+            ratio
+        );
+
+
+        ctx.lineWidth = 2;
+
+        ctx.lineCap =
+            "round";
+
+        ctx.lineJoin =
+            "round";
+
+        ctx.strokeStyle =
+            "#172033";
+
+
+        if (existingImage) {
+
+            const image =
+                new Image();
+
+
+            image.onload =
+                function () {
+
+                    ctx.drawImage(
+                        image,
+                        0,
+                        0,
+                        rect.width,
+                        rect.height
+                    );
+
+                };
+
+
+            image.src =
+                existingImage;
+        }
+
+    }
+
+
+    resizeCanvas();
+
+
+    window.addEventListener(
+        "resize",
+        resizeCanvas
+    );
+
+
+    function getPointerPosition(
+        event
+    ) {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        return {
+
+            x:
+                event.clientX -
+                rect.left,
+
+            y:
+                event.clientY -
+                rect.top
+
+        };
+
+    }
+
+
+    canvas.addEventListener(
+        "pointerdown",
+        function (event) {
+
+            event.preventDefault();
+
+            drawing = true;
+
+            hasSignature = true;
+
+            canvas.setPointerCapture(
+                event.pointerId
+            );
+
+
+            const position =
+                getPointerPosition(
+                    event
+                );
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                position.x,
+                position.y
+            );
+
+        }
+    );
+
+
+    canvas.addEventListener(
+        "pointermove",
+        function (event) {
+
+            if (!drawing) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const position =
+                getPointerPosition(
+                    event
+                );
+
+
+            ctx.lineTo(
+                position.x,
+                position.y
+            );
+
+            ctx.stroke();
+
+        }
+    );
+
+
+    function stopDrawing() {
+
+        if (!drawing) {
+            return;
+        }
+
+
+        drawing = false;
+
+        updateSignatureData();
+
+    }
+
+
+    canvas.addEventListener(
+        "pointerup",
+        stopDrawing
+    );
+
+
+    canvas.addEventListener(
+        "pointercancel",
+        stopDrawing
+    );
+
+
+    canvas.addEventListener(
+        "pointerleave",
+        function () {
+
+            /*
+             * Do not force-stop drawing here because
+             * pointer capture is being used.
+             */
+
+        }
+    );
+
+
+    /* ========================================================
+       CLEAR SIGNATURE
+    ======================================================== */
+
+    const clearSignature =
+        document.getElementById(
+            "clearSignature"
+        );
+
+
+    clearSignature.addEventListener(
+        "click",
+        function () {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            hasSignature = false;
+
+
+            document.getElementById(
+                "signatureData"
+            ).value = "";
+
+        }
+    );
+
+
+    /* ========================================================
+       SIGNATURE DATA
+    ======================================================== */
+
+    function updateSignatureData() {
+
+        if (!hasSignature) {
+
+            document.getElementById(
+                "signatureData"
+            ).value = "";
+
+            return;
+        }
+
+
+        document.getElementById(
+            "signatureData"
+        ).value =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+    }
+
+
+    /* ========================================================
+       FORM VALIDATION
+    ======================================================== */
+
+    const correctionForm =
+        document.getElementById(
+            "correctionForm"
+        );
+
+
+    const submitButton =
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    correctionForm.addEventListener(
+        "submit",
+        function (event) {
+
+            /*
+             * Make sure signature data is current.
+             */
+
+            updateSignatureData();
+
+
+            const signatureData =
+                document.getElementById(
+                    "signatureData"
+                ).value;
+
+
+            if (!signatureData) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please provide your digital signature before resubmitting the Material Request."
+                );
+
+                return;
+            }
+
+
+            if (
+                !materialFile.files ||
+                !materialFile.files.length
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please upload the corrected PDF before resubmitting."
+                );
+
+                return;
+            }
+
+
+            const file =
+                materialFile.files[0];
+
+
+            if (
+                !file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "The corrected document must be a PDF file."
+                );
+
+                return;
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to correct and resubmit " +
+                    "{{ material_request.request_number }}" +
+                    " to Engineering?\n\n" +
+                    "The same Material Request number will be retained."
+                );
+
+
+            if (!confirmed) {
+
+                event.preventDefault();
+
+                return;
+            }
+
+
+            submitButton.disabled =
+                true;
+
+
+            submitButton.innerHTML =
+
+                '<span class="spinner-border spinner-border-sm"></span>' +
+                ' Resubmitting...';
+
+        }
+    );
+
+</script>
+
+
+</body>
+</html>

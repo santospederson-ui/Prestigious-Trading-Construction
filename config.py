@@ -53,7 +53,7 @@ class Config:
 
     DEFAULT_CURRENCY = "QAR"
 
-    COMPANY_NAME = "Prestigious Real Estate"
+    COMPANY_NAME = "Prestigious Trading & Constructions"
 
     CONTACT_EMAIL = "santospederson@gmail.com"
 

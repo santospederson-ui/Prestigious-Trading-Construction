@@ -1,1667 +1,752 @@
-{% extends "base.html" %}
-
-{% block title %}
-Material Request | Prestigious Trading & Construction
-{% endblock %}
-
-{% block content %}
-
-<style>
-
-/* =========================================================
-   PRESTIGIOUS TRADING & CONSTRUCTION
-   EXECUTIVE MATERIAL REQUEST SYSTEM
-   UI/UX ENHANCED — LOGIC & ROUTES UNCHANGED
-========================================================= */
-
-:root {
-    --mr-primary: #1e4b38;
-    --mr-primary-dark: #133325;
-    --mr-primary-light: #2d6a50;
-    --mr-primary-soft: #edf6f1;
-    --mr-primary-border: #c8e0d4;
-
-    --mr-gold: #c49a4a;
-    --mr-gold-soft: rgba(196, 154, 74, 0.12);
-
-    --mr-bg: #f4f6f8;
-    --mr-card-bg: #ffffff;
-
-    --mr-border: #e2e8f0;
-    --mr-border-dark: #cbd5e1;
-
-    --mr-text-main: #0f172a;
-    --mr-text-body: #334155;
-    --mr-text-muted: #64748b;
-
-    --mr-danger: #dc2626;
-    --mr-danger-soft: #fef2f2;
-    --mr-danger-border: #fecaca;
-
-    --mr-success: #198754;
-
-    --mr-shadow-sm:
-        0 2px 8px rgba(15, 23, 42, 0.04);
-
-    --mr-shadow-md:
-        0 12px 30px rgba(15, 23, 42, 0.07);
-
-    --mr-shadow-lg:
-        0 20px 45px rgba(15, 23, 42, 0.09);
-
-    --mr-radius: 14px;
-}
-
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-.material-request-page {
-    min-height: calc(100vh - 70px);
-    background:
-        linear-gradient(
-            180deg,
-            #f8fafc 0%,
-            var(--mr-bg) 100%
-        );
-
-    padding: 30px 20px 80px;
-}
-
-.request-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-
-/* =========================================================
-   TOP NAVIGATION / BACK
-========================================================= */
-
-.page-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-
-    margin-bottom: 18px;
-}
-
-.back-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 9px 14px;
-
-    background: #ffffff;
-
-    border: 1px solid var(--mr-border-dark);
-    border-radius: 9px;
-
-    color: #475569;
-
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 800;
-
-    cursor: pointer;
-
-    transition:
-        all 0.2s ease;
-
-    box-shadow:
-        0 2px 6px rgba(15, 23, 42, 0.03);
-}
-
-.back-button:hover {
-    background: #f8fafc;
-    border-color: #94a3b8;
-    color: var(--mr-primary);
-
-    transform: translateX(-2px);
-
-    box-shadow:
-        0 5px 12px rgba(15, 23, 42, 0.06);
-}
-
-.back-button i {
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
-
-.page-header {
-    position: relative;
-
-    display: flex;
-    flex-wrap: wrap;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 22px 24px;
-
-    margin-bottom: 20px;
-
-    background: #ffffff;
-
-    border: 1px solid var(--mr-border);
-
-    border-radius: var(--mr-radius);
-
-    box-shadow: var(--mr-shadow-sm);
-
-    overflow: hidden;
-}
-
-
-/* Decorative left accent */
-
-.page-header::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-    bottom: 0;
-
-    width: 4px;
-
-    background:
-        linear-gradient(
-            180deg,
-            var(--mr-primary),
-            var(--mr-gold)
-        );
-}
-
-
-.page-header-title {
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-}
-
-
-.page-header-icon {
-    width: 50px;
-    height: 50px;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--mr-primary-soft),
-            #ffffff
-        );
-
-    color: var(--mr-primary);
-
-    border: 1px solid var(--mr-primary-border);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 20px;
-
-    flex-shrink: 0;
-
-    box-shadow:
-        0 4px 10px rgba(30, 75, 56, 0.06);
-}
-
-
-.page-header h1 {
-    margin: 0 0 5px;
-
-    font-size: 25px;
-    font-weight: 850;
-
-    color: var(--mr-text-main);
-
-    letter-spacing: -0.4px;
-}
-
-
-.page-header p {
-    margin: 0;
-
-    color: var(--mr-text-muted);
-
-    font-size: 13px;
-    font-weight: 500;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   HEADER STATUS
-========================================================= */
-
-.header-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 7px 11px;
-
-    border-radius: 20px;
-
-    background: var(--mr-primary-soft);
-
-    border: 1px solid var(--mr-primary-border);
-
-    color: var(--mr-primary);
-
-    font-size: 11px;
-    font-weight: 800;
-
-    white-space: nowrap;
-}
-
-.header-status-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--mr-primary);
-
-    box-shadow:
-        0 0 0 3px rgba(30, 75, 56, 0.10);
-}
-
-
-/* =========================================================
-   SEGMENTED TABS
-========================================================= */
-
-.request-tabs {
-    display: flex;
-
-    gap: 6px;
-
-    padding: 6px;
-
-    background: #e2e8f0;
-
-    border-radius: 12px;
-
-    margin-bottom: 24px;
-
-    border: 1px solid #cbd5e1;
-
-    box-shadow:
-        0 2px 5px rgba(15, 23, 42, 0.03);
-}
-
-
-.request-tab {
-    flex: 1;
-
-    border: none;
-
-    background: transparent;
-
-    color: var(--mr-text-muted);
-
-    padding: 13px 20px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-    font-weight: 750;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 9px;
-
-    transition:
-        all 0.2s cubic-bezier(
-            0.4,
-            0,
-            0.2,
-            1
-        );
-}
-
-
-.request-tab i {
-    font-size: 14px;
-}
-
-
-.request-tab:hover {
-    color: var(--mr-text-main);
-
-    background:
-        rgba(255, 255, 255, 0.45);
-}
-
-
-.request-tab.active {
-    background: var(--mr-card-bg);
-
-    color: var(--mr-primary);
-
-    box-shadow:
-        0 4px 14px rgba(15, 23, 42, 0.08);
-}
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.request-card {
-    background: var(--mr-card-bg);
-
-    border: 1px solid var(--mr-border);
-
-    border-radius: var(--mr-radius);
-
-    box-shadow: var(--mr-shadow-sm);
-
-    margin-bottom: 24px;
-
-    overflow: hidden;
-
-    transition:
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.request-card:hover {
-    box-shadow: var(--mr-shadow-md);
-}
-
-
-/* =========================================================
-   CARD HEADER
-========================================================= */
-
-.card-header-bar {
-    padding: 17px 24px;
-
-    border-bottom: 1px solid var(--mr-border);
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff,
-            #fbfcfd
-        );
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 16px;
-}
-
-
-.card-header-bar h3 {
-    margin: 0;
-
-    color: var(--mr-text-main);
-
-    font-size: 13px;
-
-    font-weight: 850;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.7px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-
-.card-header-bar h3 i {
-    color: var(--mr-primary);
-
-    font-size: 16px;
-}
-
-
-.card-header-meta {
-    color: var(--mr-text-muted);
-
-    font-size: 11px;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   FORM GRID
-========================================================= */
-
-.form-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            minmax(0, 1fr)
-        );
-
-    gap: 20px;
-
-    padding: 24px;
-}
-
-
-.form-group {
-    display: flex;
-
-    flex-direction: column;
-}
-
-
-.form-group.full {
-    grid-column: 1 / -1;
-}
-
-
-.form-group label {
-    margin-bottom: 8px;
-
-    color: #475569;
-
-    font-size: 11px;
-
-    font-weight: 850;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.5px;
-}
-
-
-.form-group label::after {
-    content: "";
-}
-
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    border:
-        1.5px solid var(--mr-border);
-
-    border-radius: 9px;
-
-    padding: 11px 14px;
-
-    color: var(--mr-text-main);
-
-    background: #fafbfc;
-
-    font-family: inherit;
-
-    font-size: 13px;
-
-    font-weight: 500;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
-}
-
-
-.form-group input:hover,
-.form-group textarea:hover,
-.form-group select:hover {
-    border-color: #cbd5e1;
-
-    background: #ffffff;
-}
-
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #94a3b8;
-}
-
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    outline: none;
-
-    border-color:
-        var(--mr-primary);
-
-    background: #ffffff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(
-            30,
-            75,
-            56,
-            0.12
-        );
-}
-
-
-.form-group textarea {
-    min-height: 90px;
-
-    resize: vertical;
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   MATERIAL ITEMS HEADER ENHANCEMENT
-========================================================= */
-
-.material-section-intro {
-    padding: 14px 24px 0;
-
-    color: var(--mr-text-muted);
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   MATERIAL ITEMS TABLE
-========================================================= */
-
-.table-responsive-box {
-    margin: 20px 24px;
-
-    border:
-        1px solid var(--mr-border);
-
-    border-radius: 10px;
-
-    overflow-x: auto;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 2px 6px
-        rgba(
-            15,
-            23,
-            42,
-            0.02
-        );
-}
-
-
-.material-table {
-    width: 100%;
-
-    min-width: 900px;
-
-    border-collapse: separate;
-
-    border-spacing: 0;
-}
-
-
-.material-table th {
-    padding: 13px 12px;
-
-    background: #f8fafc;
-
-    color: #475569;
-
-    border-bottom:
-        1.5px solid
-        var(--mr-border);
-
-    font-size: 10.5px;
-
-    font-weight: 850;
-
-    text-align: left;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.5px;
-
-    white-space: nowrap;
-}
-
-
-.material-table td {
-    padding: 9px 10px;
-
-    border-bottom:
-        1px solid #edf2f7;
-
-    vertical-align: middle;
-
-    background: #ffffff;
-}
-
-
-.material-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-
-.material-table tbody tr {
-    transition:
-        background 0.15s ease;
-}
-
-
-.material-table tbody tr:hover td {
-    background: #f9fcfa;
-}
-
-
-.material-table input {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 9px 11px;
-
-    border:
-        1px solid
-        var(--mr-border);
-
-    border-radius: 7px;
-
-    background: #ffffff;
-
-    color: var(--mr-text-main);
-
-    font-family: inherit;
-
-    font-size: 12.5px;
-
-    font-weight: 500;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.material-table input:hover {
-    border-color: #cbd5e1;
-}
-
-
-.material-table input:focus {
-    outline: none;
-
-    border-color:
-        var(--mr-primary);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(
-            30,
-            75,
-            56,
-            0.10
-        );
-}
-
-
-.description-column {
-    min-width: 250px;
-}
-
-
-.brand-column {
-    min-width: 150px;
-}
-
-
-.unit-column {
-    min-width: 100px;
-}
-
-
-.quantity-column {
-    min-width: 110px;
-}
-
-
-.specification-column {
-    min-width: 200px;
-}
-
-
-.action-column {
-    width: 85px;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   TABLE SCROLLBAR
-========================================================= */
-
-.table-responsive-box::-webkit-scrollbar {
-    height: 8px;
-}
-
-
-.table-responsive-box::-webkit-scrollbar-track {
-    background: #f1f5f9;
-}
-
-
-.table-responsive-box::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-
-    border-radius: 10px;
-}
-
-
-.table-responsive-box::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-
-/* =========================================================
-   BUTTON SYSTEM
-========================================================= */
-
-.btn {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    border:
-        1px solid transparent;
-
-    border-radius: 9px;
-
-    padding: 10px 18px;
-
-    font-family: inherit;
-
-    font-size: 12.5px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    text-decoration: none !important;
-
-    transition:
-        all 0.2s
-        cubic-bezier(
-            0.4,
-            0,
-            0.2,
-            1
-        );
-
-    white-space: nowrap;
-}
-
-
-.btn:hover {
-    transform:
-        translateY(-1px);
-}
-
-
-.btn:active {
-    transform:
-        translateY(0);
-}
-
-
-/* PRIMARY */
-
-.btn-primary {
-    background:
-        linear-gradient(
-            135deg,
-            var(--mr-primary),
-            var(--mr-primary-light)
-        );
-
-    border-color:
-        var(--mr-primary);
-
-    color: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(
-            30,
-            75,
-            56,
-            0.20
-        );
-}
-
-
-.btn-primary:hover {
-    background:
-        linear-gradient(
-            135deg,
-            var(--mr-primary-dark),
-            var(--mr-primary)
-        );
-
-    border-color:
-        var(--mr-primary-dark);
-
-    color: #ffffff;
-
-    box-shadow:
-        0 7px 20px
-        rgba(
-            30,
-            75,
-            56,
-            0.28
-        );
-}
-
-
-/* SECONDARY */
-
-.btn-secondary {
-    background: #ffffff;
-
-    border-color:
-        var(--mr-border-dark);
-
-    color: #334155;
-}
-
-
-.btn-secondary:hover {
-    background: #f8fafc;
-
-    border-color: #94a3b8;
-
-    color: #0f172a;
-}
-
-
-/* SUCCESS */
-
-.btn-success {
-    background:
-        linear-gradient(
-            135deg,
-            #198754,
-            #157347
-        );
-
-    border-color:
-        #198754;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(
-            25,
-            135,
-            84,
-            0.18
-        );
-}
-
-
-.btn-success:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #157347,
-            #105c39
-        );
-
-    color: #ffffff;
-}
-
-
-/* DELETE */
-
-.btn-danger-sm {
-    background:
-        var(--mr-danger-soft);
-
-    border:
-        1px solid
-        var(--mr-danger-border);
-
-    color:
-        var(--mr-danger);
-
-    padding:
-        6px 11px;
-
-    font-size: 10.5px;
-
-    border-radius: 6px;
-}
-
-
-.btn-danger-sm:hover {
-    background: #fee2e2;
-
-    border-color: #f87171;
-
-    color: #b91c1c;
-
-    box-shadow:
-        0 3px 8px
-        rgba(
-            220,
-            38,
-            38,
-            0.10
-        );
-}
-
-
-/* =========================================================
-   FORM ACTIONS
-========================================================= */
-
-.form-actions-bar {
-    display: flex;
-
-    justify-content: flex-end;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 18px 24px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #fafbfc,
-            #f8fafc
-        );
-
-    border-top:
-        1px solid
-        var(--mr-border);
-}
-
-
-/* =========================================================
-   UPLOAD INFORMATION
-========================================================= */
-
-.upload-info-box {
-    margin:
-        20px 24px;
-
-    padding:
-        16px 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--mr-primary-soft),
-            #f7fbf9
-        );
-
-    border:
-        1px solid
-        var(--mr-primary-border);
-
-    border-left:
-        4px solid
-        var(--mr-primary);
-
-    border-radius: 9px;
-
-    color: #334155;
-
-    font-size: 13px;
-
-    line-height: 1.65;
-}
-
-
-.upload-info-box strong {
-    color:
-        var(--mr-primary);
-
-    font-weight: 850;
-}
-
-
-/* =========================================================
-   UPLOAD DROPZONE
-========================================================= */
-
-.upload-dropzone {
-    position: relative;
-
-    margin:
-        0 24px 24px;
-
-    padding:
-        42px 24px;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            180deg,
-            #fafbfc,
-            #ffffff
-        );
-
-    border:
-        2px dashed
-        #cbd5e1;
-
-    border-radius: 13px;
-
-    transition:
-        all 0.2s ease;
-}
-
-
-.upload-dropzone:hover {
-    background: #ffffff;
-
-    border-color:
-        var(--mr-primary);
-
-    box-shadow:
-        0 8px 25px
-        rgba(
-            30,
-            75,
-            56,
-            0.07
-        );
-}
-
-
-.upload-dropzone-icon {
-    width: 64px;
-    height: 64px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--mr-primary-soft),
-            #ffffff
-        );
-
-    color:
-        var(--mr-primary);
-
-    border:
-        1px solid
-        var(--mr-primary-border);
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 25px;
-
-    margin-bottom: 15px;
-
-    box-shadow:
-        0 5px 15px
-        rgba(
-            30,
-            75,
-            56,
-            0.07
-        );
-}
-
-
-.upload-dropzone strong {
-    display: block;
-
-    color:
-        var(--mr-text-main);
-
-    font-size: 14px;
-
-    font-weight: 850;
-
-    margin-bottom: 5px;
-}
-
-
-.upload-dropzone-subtitle {
-    color:
-        var(--mr-text-muted);
-
-    font-size: 11px;
-
-    margin-bottom: 5px;
-}
-
-
-.upload-dropzone input[type="file"] {
-    width: 100%;
-
-    max-width: 480px;
-
-    margin:
-        16px auto 0;
-
-    display: block;
-
-    box-sizing: border-box;
-
-    padding:
-        10px 14px;
-
-    border:
-        1px solid
-        var(--mr-border);
-
-    border-radius: 8px;
-
-    background: #ffffff;
-
-    color: #475569;
-
-    font-family: inherit;
-
-    font-size: 12px;
-
-    cursor: pointer;
-}
-
-
-.upload-dropzone input[type="file"]:focus {
-    outline: none;
-
-    border-color:
-        var(--mr-primary);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(
-            30,
-            75,
-            56,
-            0.10
-        );
-}
-
-
-.allowed-files-pill {
-    display: inline-block;
-
-    margin-top: 14px;
-
-    padding:
-        5px 13px;
-
-    background: #edf2f7;
-
-    border-radius: 20px;
-
-    color: #64748b;
-
-    font-size: 10.5px;
-
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   FORM FIELD HELPER
-========================================================= */
-
-.required-note {
-    color:
-        var(--mr-danger);
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    margin-left: 4px;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 768px) {
-
-    .material-request-page {
-        padding:
-            20px 12px 60px;
-    }
-
-
-    .request-container {
-        width: 100%;
-    }
-
-
-    .page-navigation {
-        margin-bottom: 12px;
-    }
-
-
-    .back-button {
-        padding:
-            9px 13px;
-    }
-
-
-    .page-header {
-        padding:
-            18px;
-
-        align-items: flex-start;
-    }
-
-
-    .page-header-title {
-        align-items: flex-start;
-    }
-
-
-    .page-header-icon {
-        width: 44px;
-        height: 44px;
-
-        font-size: 17px;
-    }
-
-
-    .page-header h1 {
-        font-size: 21px;
-    }
-
-
-    .page-header p {
-        font-size: 12px;
-    }
-
-
-    .header-status {
-        margin-left: 58px;
-    }
-
-
-    .request-tabs {
-        flex-direction: column;
-
-        gap: 5px;
-    }
-
-
-    .request-tab {
-        width: 100%;
-    }
-
-
-    .form-grid {
-        grid-template-columns: 1fr;
-
-        padding: 18px;
-
-        gap: 16px;
-    }
-
-
-    .form-group.full {
-        grid-column: auto;
-    }
-
-
-    .card-header-bar {
-        padding:
-            16px 18px;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-
-    .card-header-bar .btn {
-        width: 100%;
-    }
-
-
-    .material-section-intro {
-        padding:
-            13px 18px 0;
-    }
-
-
-    .table-responsive-box {
-        margin:
-            16px;
-    }
-
-
-    .form-actions-bar {
-        padding:
-            16px 18px;
-
-        flex-direction: column-reverse;
-    }
-
-
-    .form-actions-bar .btn {
-        width: 100%;
-    }
-
-
-    .upload-info-box {
-        margin-left: 16px;
-        margin-right: 16px;
-    }
-
-
-    .upload-dropzone {
-        margin-left: 16px;
-        margin-right: 16px;
-
-        padding:
-            32px 18px;
-    }
-
-
-    .upload-dropzone input[type="file"] {
-        max-width: 100%;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 480px) {
-
-    .material-request-page {
-        padding:
-            15px 9px 45px;
-    }
-
-
-    .page-header {
-        padding:
-            16px;
-    }
-
-
-    .page-header-title {
-        gap: 11px;
-    }
-
-
-    .page-header-icon {
-        width: 40px;
-        height: 40px;
-
-        border-radius: 10px;
-
-        font-size: 16px;
-    }
-
-
-    .page-header h1 {
-        font-size: 19px;
-    }
-
-
-    .page-header p {
-        font-size: 11px;
-    }
-
-
-    .header-status {
-        margin-left: 51px;
-
-        font-size: 10px;
-    }
-
-
-    .request-tabs {
-        margin-bottom: 18px;
-    }
-
-
-    .request-tab {
-        font-size: 12px;
-
-        padding:
-            11px 14px;
-    }
-
-
-    .card-header-bar h3 {
-        font-size: 12px;
-    }
-
-
-    .btn {
-        font-size: 12px;
-    }
-
-}
-
-</style>
-
-
-<div class="material-request-page">
-
-    <div class="request-container">
-
-
-        <!-- =====================================================
-             BACK NAVIGATION
-        ====================================================== -->
-
-        <div class="page-navigation">
-
-            <button
-                type="button"
-                class="back-button"
-                onclick="window.history.back()"
-            >
-                <i class="fas fa-arrow-left"></i>
-                Back
-            </button>
-
-        </div>
-
-
-        <!-- =====================================================
-             PAGE HEADER
-        ====================================================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Material Request | Purchase</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --border: #e2e8f0;
+            --muted: #64748b;
+            --background: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: #1e293b;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 30px 15px 50px;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            background: var(--primary);
+            color: white;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            margin: 4px 0 0;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        /* CARD */
+
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
+        }
+
+        .card-section {
+            padding: 28px;
+        }
+
+        .card-section + .card-section {
+            border-top: 1px solid var(--border);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .section-heading-icon {
+            width: 38px;
+            height: 38px;
+            background: #eff6ff;
+            color: var(--accent);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 17px;
+            font-weight: 700;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .section-heading p {
+            margin: 2px 0 0;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* FORM */
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        .form-control {
+            min-height: 46px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 14px;
+            padding: 10px 13px;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 115px;
+            resize: vertical;
+        }
+
+        .form-help {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        /* MR NUMBER */
+
+        .request-number-wrapper {
+            position: relative;
+        }
+
+        .request-number-wrapper .form-control {
+            padding-left: 45px;
+            font-weight: 600;
+        }
+
+        .request-number-icon {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: var(--accent);
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        /* UPLOAD */
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 13px;
+            padding: 34px 25px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: var(--accent);
+            background: #eff6ff;
+        }
+
+        .upload-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 13px;
+            font-size: 25px;
+        }
+
+        .upload-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .upload-subtitle {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .selected-file {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .selected-file.show {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .selected-file-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .selected-file-info span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .remove-file {
+            border: none;
+            background: transparent;
+            color: var(--danger);
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        /* SIGNATURE */
+
+        .signature-box {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .signature-header {
+            padding: 13px 16px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .signature-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .clear-signature {
+            border: 1px solid #fecaca;
+            background: #fff;
+            color: var(--danger);
+            border-radius: 7px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .clear-signature:hover {
+            background: #fef2f2;
+        }
+
+        .signature-canvas-wrapper {
+            position: relative;
+            background:
+                linear-gradient(#fff, #fff) padding-box;
+        }
+
+        #signatureCanvas {
+            display: block;
+            width: 100%;
+            height: 190px;
+            cursor: crosshair;
+            touch-action: none;
+            background: white;
+        }
+
+        .signature-placeholder {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        .signature-line {
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            bottom: 35px;
+            border-bottom: 1px solid #cbd5e1;
+            pointer-events: none;
+        }
+
+        .signature-caption {
+            position: absolute;
+            bottom: 13px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+            pointer-events: none;
+        }
+
+        /* WORKFLOW */
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .workflow-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: calc(50% + 25px);
+            width: calc(100% - 50px);
+            height: 2px;
+            background: #e2e8f0;
+        }
+
+        .workflow-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .workflow-step.active .workflow-circle {
+            background: #dbeafe;
+            color: var(--accent);
+        }
+
+        .workflow-step.active .workflow-label {
+            color: var(--accent);
+        }
+
+        .workflow-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        /* BUTTONS */
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 22px 28px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-cancel {
+            border: 1px solid #cbd5e1;
+            background: white;
+            color: #334155;
+            border-radius: 9px;
+            padding: 11px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-cancel:hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-submit {
+            border: none;
+            background: var(--accent);
+            color: white;
+            border-radius: 9px;
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* ALERT */
+
+        .alert {
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .page-wrapper {
+                padding: 15px 10px 35px;
+            }
+
+            .page-header {
+                padding: 20px;
+            }
+
+            .header-content {
+                align-items: flex-start;
+            }
+
+            .header-left {
+                align-items: flex-start;
+            }
+
+            .header-icon {
+                width: 44px;
+                height: 44px;
+            }
+
+            .page-header h1 {
+                font-size: 18px;
+            }
+
+            .back-btn {
+                font-size: 12px;
+                padding: 7px 10px;
+            }
+
+            .card-section {
+                padding: 20px 16px;
+            }
+
+            .form-actions {
+                padding: 18px 16px;
+                flex-direction: column-reverse;
+            }
+
+            .btn-submit,
+            .btn-cancel {
+                width: 100%;
+                text-align: center;
+            }
+
+            .workflow {
+                gap: 0;
+            }
+
+            .workflow-step:not(:last-child)::after {
+                left: calc(50% + 20px);
+                width: calc(100% - 40px);
+            }
+
+            .workflow-circle {
+                width: 36px;
+                height: 36px;
+            }
+
+            .workflow-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            #signatureCanvas {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="main-container">
+
+        <!-- HEADER -->
 
         <div class="page-header">
 
-            <div class="page-header-title">
+            <div class="header-content">
 
-                <div class="page-header-icon">
-                    <i class="fas fa-file-signature"></i>
-                </div>
+                <div class="header-left">
 
-                <div>
+                    <div class="header-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
 
-                    <h1>
-                        Material Request
-                    </h1>
-
-                    <p>
-                        Create a structured material procurement request
-                        or upload existing documentation.
-                    </p>
+                    <div>
+                        <h1>Create Material Request</h1>
+                        <p>
+                            Upload the prepared Material Request and send it for Engineer review.
+                        </p>
+                    </div>
 
                 </div>
 
-            </div>
-
-
-            <div class="header-status">
-
-                <span class="header-status-dot"></span>
-
-                Purchase Department
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             SEGMENTED NAVIGATION TABS
-        ====================================================== -->
-
-        <div class="request-tabs">
-
-            <button
-                type="button"
-                class="request-tab active"
-                id="manualTab"
-                onclick="showRequestSection('manual')"
-            >
-
-                <i class="fas fa-file-circle-plus"></i>
-
-                Create Manual Request
-
-            </button>
-
-
-            <button
-                type="button"
-                class="request-tab"
-                id="uploadTab"
-                onclick="showRequestSection('upload')"
-            >
-
-                <i class="fas fa-cloud-arrow-up"></i>
-
-                Upload Existing Request
-
-            </button>
-
-        </div>
-
-
-        <!-- =====================================================
-             MANUAL REQUEST FORM
-             CREATE → PREVIEW → CONFIRM
-        ====================================================== -->
-
-        <div id="manualSection">
-
-            <form
-                method="POST"
-                action="{{ url_for('construction_purchase_material_request_manual') }}"
-                id="manualRequestForm"
-            >
-
-                <input
-                    type="hidden"
-                    name="manual_request"
-                    value="1"
+                <a
+                    href="{{ url_for('construction_purchase_dashboard') }}"
+                    class="back-btn"
                 >
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Purchase Dashboard
+                </a>
+
+            </div>
+
+        </div>
 
 
-                <!-- =================================================
-                     REQUEST INFORMATION
-                ================================================== -->
+        <!-- FLASH MESSAGES -->
 
-                <div class="request-card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
 
-                    <div class="card-header-bar">
+            {% if messages %}
 
-                        <h3>
+                {% for category, message in messages %}
 
-                            <i class="fas fa-circle-info"></i>
+                    <div
+                        class="alert alert-{{ 'danger' if category == 'error' else category }}"
+                        role="alert"
+                    >
+                        <i class="bi bi-info-circle me-2"></i>
+                        {{ message }}
+                    </div>
 
-                            Request Information
+                {% endfor %}
 
-                        </h3>
+            {% endif %}
 
-                        <span class="card-header-meta">
-                            Basic request details
-                        </span>
+        {% endwith %}
+
+
+        <!-- MAIN FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('construction_purchase_material_request') }}"
+            enctype="multipart/form-data"
+            id="materialRequestForm"
+        >
+
+            <div class="form-card">
+
+                <!-- REQUEST INFORMATION -->
+
+                <div class="card-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-heading-icon">
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+
+                        <div>
+                            <h2>Request Information</h2>
+                            <p>
+                                Enter the information shown on the manually prepared Material Request.
+                            </p>
+                        </div>
 
                     </div>
 
 
-                    <div class="form-grid">
+                    <div class="row g-4">
+
+                        <!-- MATERIAL REQUEST NUMBER -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="request_number"
+                                class="form-label"
+                            >
+                                Material Request Number
+                                <span class="required">*</span>
+                            </label>
+
+                            <div class="request-number-wrapper">
+
+                                <i
+                                    class="bi bi-hash request-number-icon"
+                                ></i>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="request_number"
+                                    name="request_number"
+                                    placeholder="e.g. MR-2026-00125"
+                                    maxlength="50"
+                                    autocomplete="off"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="form-help">
+                                Enter the MR number exactly as written on the prepared document.
+                            </div>
+
+                        </div>
 
 
-                        <!-- PROJECT -->
+                        <!-- PROJECT NAME -->
 
-                        <div class="form-group">
+                        <div class="col-md-6">
 
-                            <label for="project_name">
+                            <label
+                                for="project_name"
+                                class="form-label"
+                            >
                                 Project Name
-                                <span class="required-note">*</span>
+                                <span class="required">*</span>
                             </label>
 
                             <input
                                 type="text"
+                                class="form-control"
                                 id="project_name"
                                 name="project_name"
                                 placeholder="Enter project name"
+                                maxlength="255"
                                 required
                             >
 
@@ -1670,33 +755,49 @@ Material Request | Prestigious Trading & Construction
 
                         <!-- REQUESTED BY -->
 
-                        <div class="form-group">
+                        <div class="col-md-6">
 
-                            <label for="requested_by">
+                            <label
+                                for="requested_by"
+                                class="form-label"
+                            >
                                 Requested By
+                                <span class="required">*</span>
                             </label>
 
                             <input
                                 type="text"
+                                class="form-control"
                                 id="requested_by"
                                 name="requested_by"
-                                placeholder="Name of person requesting material"
+                                placeholder="Enter the actual requester's full name"
+                                maxlength="150"
+                                autocomplete="off"
+                                required
                             >
+
+                            <div class="form-help">
+                                Enter the name of the person who actually requested the materials.
+                            </div>
 
                         </div>
 
 
                         <!-- REQUEST DATE -->
 
-                        <div class="form-group">
+                        <div class="col-md-6">
 
-                            <label for="request_date">
+                            <label
+                                for="request_date"
+                                class="form-label"
+                            >
                                 Request Date
-                                <span class="required-note">*</span>
+                                <span class="required">*</span>
                             </label>
 
                             <input
                                 type="date"
+                                class="form-control"
                                 id="request_date"
                                 name="request_date"
                                 required
@@ -1707,17 +808,25 @@ Material Request | Prestigious Trading & Construction
 
                         <!-- DESCRIPTION -->
 
-                        <div class="form-group full">
+                        <div class="col-12">
 
-                            <label for="description">
-                                General Description
+                            <label
+                                for="description"
+                                class="form-label"
+                            >
+                                Description / Remarks
                             </label>
 
                             <textarea
+                                class="form-control"
                                 id="description"
                                 name="description"
-                                placeholder="Optional general description or notes for this material request..."
+                                placeholder="Enter any relevant remarks about this Material Request..."
                             ></textarea>
+
+                            <div class="form-help">
+                                Optional. You can add additional information for the Engineer.
+                            </div>
 
                         </div>
 
@@ -1726,347 +835,272 @@ Material Request | Prestigious Trading & Construction
                 </div>
 
 
-                <!-- =================================================
-                     MATERIAL ITEMS
-                ================================================== -->
+                <!-- DOCUMENT UPLOAD -->
 
-                <div class="request-card">
+                <div class="card-section">
 
-                    <div class="card-header-bar">
+                    <div class="section-heading">
 
-                        <h3>
+                        <div class="section-heading-icon">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                        </div>
 
-                            <i class="fas fa-layer-group"></i>
+                        <div>
+                            <h2>Prepared Material Request</h2>
+                            <p>
+                                Upload the Material Request document that has already been prepared.
+                            </p>
+                        </div>
 
-                            Material Items
+                    </div>
 
-                        </h3>
 
+                    <input
+                        type="file"
+                        id="material_file"
+                        name="material_file"
+                        accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx"
+                        hidden
+                        required
+                    >
+
+
+                    <div
+                        class="upload-area"
+                        id="uploadArea"
+                    >
+
+                        <div class="upload-icon">
+                            <i class="bi bi-file-earmark-arrow-up"></i>
+                        </div>
+
+                        <div class="upload-title">
+                            Click to upload or drag and drop
+                        </div>
+
+                        <div class="upload-subtitle">
+                            PDF, Word, Excel, JPG or PNG
+                        </div>
+
+                        <div class="upload-subtitle mt-1">
+                            Upload the complete prepared Material Request document
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="selected-file"
+                        id="selectedFile"
+                    >
+
+                        <div class="selected-file-info">
+
+                            <i class="bi bi-file-earmark-check fs-5"></i>
+
+                            <span id="selectedFileName"></span>
+
+                        </div>
 
                         <button
                             type="button"
-                            class="btn btn-secondary"
-                            onclick="addMaterialRow()"
+                            class="remove-file"
+                            id="removeFile"
+                            title="Remove file"
                         >
-
-                            <i class="fas fa-plus"></i>
-
-                            Add Material Row
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="material-section-intro">
-
-                        Add each required material below.
-                        You can add multiple items to the same request.
-
-                    </div>
-
-
-                    <div class="table-responsive-box">
-
-                        <table class="material-table">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th class="description-column">
-                                        Item Description *
-                                    </th>
-
-                                    <th class="brand-column">
-                                        Brand
-                                    </th>
-
-                                    <th class="unit-column">
-                                        Unit
-                                    </th>
-
-                                    <th class="quantity-column">
-                                        Quantity *
-                                    </th>
-
-                                    <th class="specification-column">
-                                        Specification
-                                    </th>
-
-                                    <th class="action-column">
-                                        Action
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody id="materialItemsBody">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-
-                    <div class="form-actions-bar">
-
-                        <button
-                            type="reset"
-                            class="btn btn-secondary"
-                            onclick="resetMaterialRows()"
-                        >
-
-                            <i class="fas fa-rotate-left"></i>
-
-                            Reset Items
-
-                        </button>
-
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                        >
-
-                            <i class="fas fa-file-circle-check"></i>
-
-                            Preview Material Request
-
+                            <i class="bi bi-x-circle"></i>
                         </button>
 
                     </div>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- DIGITAL SIGNATURE -->
 
+                <div class="card-section">
 
-        <!-- =====================================================
-             UPLOAD EXISTING MATERIAL REQUEST
-        ====================================================== -->
+                    <div class="section-heading">
 
-        <div
-            id="uploadSection"
-            style="display:none;"
-        >
-
-            <form
-                method="POST"
-                action="{{ url_for('construction_purchase_material_request') }}"
-                enctype="multipart/form-data"
-            >
-
-                <div class="request-card">
-
-
-                    <!-- CARD HEADER -->
-
-                    <div class="card-header-bar">
-
-                        <h3>
-
-                            <i class="fas fa-cloud-arrow-up"></i>
-
-                            Upload Existing Material Request
-
-                        </h3>
-
-                        <span class="card-header-meta">
-                            Document archive
-                        </span>
-
-                    </div>
-
-
-                    <!-- INFORMATION -->
-
-                    <div class="upload-info-box">
-
-                        <strong>
-                            Pre-Prepared Request Document
-                        </strong>
-
-                        <br>
-
-                        Use this section when your material request
-                        has already been finalized as a document.
-                        The uploaded file will be archived in the
-                        system and linked to the project details below.
-
-                    </div>
-
-
-                    <!-- PROJECT DETAILS -->
-
-                    <div class="form-grid">
-
-
-                        <!-- PROJECT -->
-
-                        <div class="form-group">
-
-                            <label for="upload_project_name">
-                                Project Name
-                                <span class="required-note">*</span>
-                            </label>
-
-                            <input
-                                type="text"
-                                id="upload_project_name"
-                                name="project_name"
-                                placeholder="Enter project name"
-                                required
-                            >
-
+                        <div class="section-heading-icon">
+                            <i class="bi bi-pen"></i>
                         </div>
-
-
-                        <!-- REQUESTED BY -->
-
-                        <div class="form-group">
-
-                            <label for="upload_requested_by">
-                                Requested By
-                            </label>
-
-                            <input
-                                type="text"
-                                id="upload_requested_by"
-                                name="requested_by"
-                                placeholder="Name of person requesting material"
-                            >
-
-                        </div>
-
-
-                        <!-- REQUEST DATE -->
-
-                        <div class="form-group">
-
-                            <label for="upload_request_date">
-                                Request Date
-                                <span class="required-note">*</span>
-                            </label>
-
-                            <input
-                                type="date"
-                                id="upload_request_date"
-                                name="request_date"
-                                required
-                            >
-
-                        </div>
-
-
-                        <!-- DESCRIPTION -->
-
-                        <div class="form-group full">
-
-                            <label for="upload_description">
-                                Description
-                            </label>
-
-                            <textarea
-                                id="upload_description"
-                                name="description"
-                                placeholder="Optional notes regarding this upload..."
-                            ></textarea>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         FILE UPLOAD
-                    ================================================== -->
-
-                    <div class="upload-dropzone">
-
-                        <div class="upload-dropzone-icon">
-
-                            <i class="fas fa-file-arrow-up"></i>
-
-                        </div>
-
-
-                        <strong>
-                            Select Material Request Document
-                        </strong>
-
-
-                        <div class="upload-dropzone-subtitle">
-
-                            Upload the prepared material request document
-                            for system archiving.
-
-                        </div>
-
-
-                        <input
-                            type="file"
-                            name="material_file"
-                            id="material_file"
-                            accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx"
-                            required
-                        >
-
 
                         <div>
+                            <h2>Purchase Officer Digital Signature</h2>
+                            <p>
+                                Sign the Material Request before sending it to the Engineer.
+                            </p>
+                        </div>
 
-                            <span class="allowed-files-pill">
+                    </div>
 
-                                Accepted Formats:
-                                PDF, Word, Excel, PNG, JPG, JPEG
 
-                            </span>
+                    <div class="signature-box">
+
+                        <div class="signature-header">
+
+                            <div class="signature-title">
+
+                                <i class="bi bi-pen me-1"></i>
+
+                                Draw your signature below
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="clear-signature"
+                                id="clearSignature"
+                            >
+                                <i class="bi bi-eraser me-1"></i>
+                                Clear
+                            </button>
+
+                        </div>
+
+
+                        <div class="signature-canvas-wrapper">
+
+                            <canvas
+                                id="signatureCanvas"
+                            ></canvas>
+
+                            <div
+                                class="signature-placeholder"
+                                id="signaturePlaceholder"
+                            >
+                                Sign here using your mouse, touch screen or trackpad
+                            </div>
+
+                            <div class="signature-line"></div>
+
+                            <div class="signature-caption">
+                                Purchase Officer Signature
+                            </div>
 
                         </div>
 
                     </div>
 
 
-                    <!-- =================================================
-                         UPLOAD ACTIONS
-                    ================================================== -->
+                    <input
+                        type="hidden"
+                        name="signature_data"
+                        id="signature_data"
+                    >
 
-                    <div class="form-actions-bar">
+                    <div class="form-help">
+                        Your digital signature will be attached to this submission and recorded in the workflow audit trail.
+                    </div>
 
-                        <button
-                            type="reset"
-                            class="btn btn-secondary"
-                        >
-
-                            <i class="fas fa-rotate-left"></i>
-
-                            Reset
-
-                        </button>
+                </div>
 
 
-                        <button
-                            type="submit"
-                            class="btn btn-success"
-                        >
+                <!-- WORKFLOW -->
 
-                            <i class="fas fa-cloud-arrow-up"></i>
+                <div class="card-section">
 
-                            Upload Material Request
+                    <div class="section-heading">
 
-                        </button>
+                        <div class="section-heading-icon">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+
+                        <div>
+                            <h2>Approval Workflow</h2>
+                            <p>
+                                This request will move through the following approval stages.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow">
+
+                        <div class="workflow-step active">
+
+                            <div class="workflow-circle">
+                                <i class="bi bi-cart"></i>
+                            </div>
+
+                            <div class="workflow-label">
+                                Purchase
+                            </div>
+
+                        </div>
+
+
+                        <div class="workflow-step">
+
+                            <div class="workflow-circle">
+                                <i class="bi bi-person-check"></i>
+                            </div>
+
+                            <div class="workflow-label">
+                                Engineer Review
+                            </div>
+
+                        </div>
+
+
+                        <div class="workflow-step">
+
+                            <div class="workflow-circle">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+
+                            <div class="workflow-label">
+                                Manager Approval
+                            </div>
+
+                        </div>
+
+
+                        <div class="workflow-step">
+
+                            <div class="workflow-circle">
+                                <i class="bi bi-check-lg"></i>
+                            </div>
+
+                            <div class="workflow-label">
+                                Approved
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('construction_purchase_dashboard') }}"
+                        class="btn-cancel"
+                    >
+                        <i class="bi bi-x-lg me-1"></i>
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn-submit"
+                        id="submitButton"
+                    >
+                        <i class="bi bi-send me-1"></i>
+                        Submit to Engineer
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
 
     </div>
 
@@ -2075,361 +1109,513 @@ Material Request | Prestigious Trading & Construction
 
 <script>
 
-/* ==========================================================
-   SHOW MANUAL / UPLOAD SECTION
-========================================================== */
+    document.addEventListener("DOMContentLoaded", function () {
 
-function showRequestSection(section) {
+        /* =========================================
+           DATE
+        ========================================= */
 
-    const manualSection =
-        document.getElementById("manualSection");
+        const requestDate = document.getElementById("request_date");
 
-    const uploadSection =
-        document.getElementById("uploadSection");
+        if (requestDate) {
 
-    const manualTab =
-        document.getElementById("manualTab");
+            const today = new Date();
 
-    const uploadTab =
-        document.getElementById("uploadTab");
+            const year = today.getFullYear();
 
+            const month = String(today.getMonth() + 1).padStart(2, "0");
 
-    if (section === "manual") {
+            const day = String(today.getDate()).padStart(2, "0");
 
-        manualSection.style.display = "block";
+            requestDate.value = `${year}-${month}-${day}`;
+        }
 
-        uploadSection.style.display = "none";
 
-        manualTab.classList.add("active");
+        /* =========================================
+           FILE UPLOAD
+        ========================================= */
 
-        uploadTab.classList.remove("active");
+        const uploadArea = document.getElementById("uploadArea");
 
-    }
+        const materialFile = document.getElementById("material_file");
 
-    else {
+        const selectedFile = document.getElementById("selectedFile");
 
-        manualSection.style.display = "none";
+        const selectedFileName =
+            document.getElementById("selectedFileName");
 
-        uploadSection.style.display = "block";
+        const removeFile =
+            document.getElementById("removeFile");
 
-        manualTab.classList.remove("active");
 
-        uploadTab.classList.add("active");
+        uploadArea.addEventListener("click", function () {
 
-    }
+            materialFile.click();
 
-}
+        });
 
 
-/* ==========================================================
-   ADD MATERIAL ROW
-========================================================== */
+        materialFile.addEventListener("change", function () {
 
-function addMaterialRow() {
+            if (this.files.length > 0) {
 
-    const tbody =
-        document.getElementById(
-            "materialItemsBody"
-        );
+                showSelectedFile(this.files[0]);
 
+            }
 
-    const row =
-        document.createElement("tr");
+        });
 
 
-    row.innerHTML = `
+        function showSelectedFile(file) {
 
-        <td>
+            selectedFileName.textContent = file.name;
 
-            <input
-                type="text"
-                name="item_description[]"
-                placeholder="Material description"
-                required
-            >
+            selectedFile.classList.add("show");
 
-        </td>
+        }
 
 
-        <td>
+        removeFile.addEventListener("click", function (event) {
 
-            <input
-                type="text"
-                name="item_brand[]"
-                placeholder="Brand"
-            >
+            event.stopPropagation();
 
-        </td>
+            materialFile.value = "";
 
+            selectedFileName.textContent = "";
 
-        <td>
+            selectedFile.classList.remove("show");
 
-            <input
-                type="text"
-                name="item_unit[]"
-                placeholder="pcs"
-            >
+        });
 
-        </td>
 
+        /* =========================================
+           DRAG AND DROP
+        ========================================= */
 
-        <td>
+        uploadArea.addEventListener("dragover", function (event) {
 
-            <input
-                type="number"
-                name="item_quantity[]"
-                placeholder="0"
-                min="0.01"
-                step="any"
-                required
-            >
+            event.preventDefault();
 
-        </td>
+            uploadArea.classList.add("dragover");
 
+        });
 
-        <td>
 
-            <input
-                type="text"
-                name="item_specification[]"
-                placeholder="Size / specification"
-            >
+        uploadArea.addEventListener("dragleave", function () {
 
-        </td>
+            uploadArea.classList.remove("dragover");
 
+        });
 
-        <td class="action-column">
 
-            <button
-                type="button"
-                class="btn btn-danger-sm"
-                onclick="removeMaterialRow(this)"
-                title="Remove material row"
-            >
+        uploadArea.addEventListener("drop", function (event) {
 
-                <i class="fas fa-trash-can"></i>
+            event.preventDefault();
 
-                Delete
+            uploadArea.classList.remove("dragover");
 
-            </button>
+            const files = event.dataTransfer.files;
 
-        </td>
+            if (files.length > 0) {
 
-    `;
+                materialFile.files = files;
 
+                showSelectedFile(files[0]);
 
-    tbody.appendChild(row);
+            }
 
-}
+        });
 
 
-/* ==========================================================
-   REMOVE MATERIAL ROW
-========================================================== */
+        /* =========================================
+           DIGITAL SIGNATURE
+        ========================================= */
 
-function removeMaterialRow(button) {
+        const canvas =
+            document.getElementById("signatureCanvas");
 
-    const tbody =
-        document.getElementById(
-            "materialItemsBody"
-        );
+        const ctx = canvas.getContext("2d");
 
+        const signatureData =
+            document.getElementById("signature_data");
 
-    const rows =
-        tbody.querySelectorAll("tr");
+        const clearSignature =
+            document.getElementById("clearSignature");
 
+        const signaturePlaceholder =
+            document.getElementById("signaturePlaceholder");
 
-    if (rows.length <= 1) {
+        let drawing = false;
 
-        alert(
-            "At least one material item is required."
-        );
+        let hasSignature = false;
 
-        return;
 
-    }
+        function resizeCanvas() {
 
+            const rect = canvas.getBoundingClientRect();
 
-    button
-        .closest("tr")
-        .remove();
+            const ratio = window.devicePixelRatio || 1;
 
-}
+            const oldImage =
+                hasSignature
+                    ? canvas.toDataURL("image/png")
+                    : null;
 
+            canvas.width = rect.width * ratio;
 
-/* ==========================================================
-   RESET MATERIAL ROWS
-========================================================== */
+            canvas.height = rect.height * ratio;
 
-function resetMaterialRows() {
-
-    setTimeout(function() {
-
-        const tbody =
-            document.getElementById(
-                "materialItemsBody"
+            ctx.setTransform(
+                ratio,
+                0,
+                0,
+                ratio,
+                0,
+                0
             );
 
+            ctx.lineWidth = 2.2;
 
-        tbody.innerHTML = "";
+            ctx.lineCap = "round";
+
+            ctx.lineJoin = "round";
+
+            ctx.strokeStyle = "#0f172a";
+
+            if (oldImage) {
+
+                const image = new Image();
+
+                image.onload = function () {
+
+                    ctx.drawImage(
+                        image,
+                        0,
+                        0,
+                        rect.width,
+                        rect.height
+                    );
+
+                };
+
+                image.src = oldImage;
+            }
+        }
 
 
-        addMaterialRow();
+        resizeCanvas();
 
-    }, 0);
-
-}
-
-
-/* ==========================================================
-   MANUAL FORM VALIDATION
-========================================================== */
-
-document
-    .getElementById("manualRequestForm")
-    .addEventListener(
-        "submit",
-        function(event) {
-
-            const rows =
-                document.querySelectorAll(
-                    "#materialItemsBody tr"
-                );
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
 
 
-            if (rows.length === 0) {
+        function getPosition(event) {
 
-                event.preventDefault();
+            const rect =
+                canvas.getBoundingClientRect();
 
-                alert(
-                    "Please add at least one material item."
-                );
+            let clientX;
+            let clientY;
+
+
+            if (event.touches && event.touches.length > 0) {
+
+                clientX = event.touches[0].clientX;
+
+                clientY = event.touches[0].clientY;
+
+            } else if (
+                event.changedTouches &&
+                event.changedTouches.length > 0
+            ) {
+
+                clientX =
+                    event.changedTouches[0].clientX;
+
+                clientY =
+                    event.changedTouches[0].clientY;
+
+            } else {
+
+                clientX = event.clientX;
+
+                clientY = event.clientY;
+
+            }
+
+
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+
+        function startDrawing(event) {
+
+            event.preventDefault();
+
+            drawing = true;
+
+            hasSignature = true;
+
+            signaturePlaceholder.style.display = "none";
+
+            const pos = getPosition(event);
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                pos.x,
+                pos.y
+            );
+        }
+
+
+        function draw(event) {
+
+            if (!drawing) return;
+
+            event.preventDefault();
+
+            const pos = getPosition(event);
+
+            ctx.lineTo(
+                pos.x,
+                pos.y
+            );
+
+            ctx.stroke();
+
+        }
+
+
+        function stopDrawing(event) {
+
+            if (!drawing) return;
+
+            event.preventDefault();
+
+            drawing = false;
+
+            saveSignature();
+
+        }
+
+
+        function saveSignature() {
+
+            if (!hasSignature) {
+
+                signatureData.value = "";
 
                 return;
 
             }
 
+            signatureData.value =
+                canvas.toDataURL("image/png");
 
-            let valid = true;
-
-
-            rows.forEach(function(row) {
-
-                const description =
-                    row.querySelector(
-                        'input[name="item_description[]"]'
-                    );
+        }
 
 
-                const quantity =
-                    row.querySelector(
-                        'input[name="item_quantity[]"]'
-                    );
+        canvas.addEventListener(
+            "mousedown",
+            startDrawing
+        );
+
+        canvas.addEventListener(
+            "mousemove",
+            draw
+        );
+
+        canvas.addEventListener(
+            "mouseup",
+            stopDrawing
+        );
+
+        canvas.addEventListener(
+            "mouseleave",
+            stopDrawing
+        );
 
 
-                if (
-                    !description ||
-                    !description.value.trim()
-                ) {
+        canvas.addEventListener(
+            "touchstart",
+            startDrawing,
+            { passive: false }
+        );
 
-                    valid = false;
+        canvas.addEventListener(
+            "touchmove",
+            draw,
+            { passive: false }
+        );
 
-                }
-
-
-                if (
-                    !quantity ||
-                    !quantity.value ||
-                    parseFloat(
-                        quantity.value
-                    ) <= 0
-                ) {
-
-                    valid = false;
-
-                }
-
-            });
+        canvas.addEventListener(
+            "touchend",
+            stopDrawing,
+            { passive: false }
+        );
 
 
-            if (!valid) {
+        clearSignature.addEventListener(
+            "click",
+            function () {
 
-                event.preventDefault();
+                const rect =
+                    canvas.getBoundingClientRect();
 
-                alert(
-                    "Please provide a valid description and positive quantity for every material item."
+                ctx.clearRect(
+                    0,
+                    0,
+                    rect.width,
+                    rect.height
                 );
 
+                hasSignature = false;
+
+                signatureData.value = "";
+
+                signaturePlaceholder.style.display =
+                    "block";
+
             }
-
-        }
-    );
+        );
 
 
-/* ==========================================================
-   DEFAULT DATE INITIALIZATION
-========================================================== */
+        /* =========================================
+           FORM VALIDATION
+        ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-
-        /* ----------------------------------------------
-           FIRST MATERIAL ROW
-        ---------------------------------------------- */
-
-        addMaterialRow();
-
-
-        /* ----------------------------------------------
-           MANUAL REQUEST DATE
-        ---------------------------------------------- */
-
-        const requestDate =
+        const form =
             document.getElementById(
-                "request_date"
+                "materialRequestForm"
+            );
+
+        const submitButton =
+            document.getElementById(
+                "submitButton"
             );
 
 
-        if (
-            requestDate &&
-            !requestDate.value
-        ) {
+        form.addEventListener(
+            "submit",
+            function (event) {
 
-            requestDate.value =
-                new Date()
-                    .toISOString()
-                    .split("T")[0];
+                const requestNumber =
+                    document.getElementById(
+                        "request_number"
+                    );
 
-        }
+                const projectName =
+                    document.getElementById(
+                        "project_name"
+                    );
 
-
-        /* ----------------------------------------------
-           UPLOAD REQUEST DATE
-        ---------------------------------------------- */
-
-        const uploadDate =
-            document.getElementById(
-                "upload_request_date"
-            );
+                const requestedBy =
+                    document.getElementById(
+                        "requested_by"
+                    );
 
 
-        if (
-            uploadDate &&
-            !uploadDate.value
-        ) {
+                /* Material Request Number */
 
-            uploadDate.value =
-                new Date()
-                    .toISOString()
-                    .split("T")[0];
+                if (!requestNumber.value.trim()) {
 
-        }
+                    event.preventDefault();
 
-    }
-);
+                    requestNumber.focus();
+
+                    alert(
+                        "Please enter the Material Request Number."
+                    );
+
+                    return;
+                }
+
+
+                /* Project */
+
+                if (!projectName.value.trim()) {
+
+                    event.preventDefault();
+
+                    projectName.focus();
+
+                    alert(
+                        "Please enter the Project Name."
+                    );
+
+                    return;
+                }
+
+
+                /* Requested By */
+
+                if (!requestedBy.value.trim()) {
+
+                    event.preventDefault();
+
+                    requestedBy.focus();
+
+                    alert(
+                        "Please enter the name of the person who requested the materials."
+                    );
+
+                    return;
+                }
+
+
+                /* File */
+
+                if (
+                    !materialFile.files ||
+                    materialFile.files.length === 0
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please upload the prepared Material Request document."
+                    );
+
+                    return;
+                }
+
+
+                /* Signature */
+
+                saveSignature();
+
+                if (!signatureData.value) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please provide the Purchase Officer digital signature."
+                    );
+
+                    return;
+                }
+
+
+                /* Prevent double submission */
+
+                submitButton.disabled = true;
+
+                submitButton.innerHTML =
+                    '<span class="spinner-border spinner-border-sm me-2"></span>' +
+                    'Submitting...';
+
+            }
+        );
+
+    });
 
 </script>
 
-{% endblock %}
+</body>
+</html>
