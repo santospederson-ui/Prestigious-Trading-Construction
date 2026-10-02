@@ -773,57 +773,87 @@ def sitemap():
 
     pages = []
 
-
     # =========================
     # STATIC WEBSITE PAGES
     # =========================
 
-    pages.append(url_for("home", _external=True))
-    pages.append(url_for("about", _external=True))
-    pages.append(url_for("properties", _external=True))
-    pages.append(url_for("services", _external=True))
-    pages.append(url_for("locations", _external=True))
-    pages.append(url_for("contact", _external=True))
-    pages.append(url_for("find_property", _external=True))
+    pages.append(
+        url_for("home", _external=True)
+    )
 
+    pages.append(
+        url_for("about", _external=True)
+    )
+
+    pages.append(
+        url_for("projects", _external=True)
+    )
+
+    pages.append(
+        url_for("services", _external=True)
+    )
+
+    pages.append(
+        url_for("contact", _external=True)
+    )
 
 
     # =========================
-    # PROPERTY DETAILS PAGES
+    # PROJECT DETAILS PAGES
     # =========================
 
-    conn = get_db_connection()
+    conn = None
+    cursor = None
 
-    cursor = conn.cursor(dictionary=True)
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT
+                slug
+            FROM construction_projects
+            WHERE slug IS NOT NULL
+              AND slug != ''
+            ORDER BY created_at DESC
+        """)
+
+        projects = cursor.fetchall()
 
 
-    cursor.execute("""
-        SELECT id
-        FROM properties
-        ORDER BY created_at DESC
-    """)
+        for project in projects:
 
-
-    properties = cursor.fetchall()
-
-
-
-    for property in properties:
-
-        pages.append(
-            url_for(
-                "property_details",
-                id=property["id"],
-                _external=True
+            pages.append(
+                url_for(
+                    "project_details",
+                    slug=project["slug"],
+                    _external=True
+                )
             )
+
+
+    except Exception as e:
+
+        print(
+            "SITEMAP ERROR:",
+            e
         )
 
 
+    finally:
 
-    cursor.close()
-    conn.close()
+        if cursor:
+            cursor.close()
+
+        if conn:
+            conn.close()
 
 
+    # =========================
+    # GENERATE XML
+    # =========================
 
     xml = render_template(
         "sitemap.xml",
@@ -2454,21 +2484,22 @@ def home():
 
     cursor.execute("""
         SELECT *
-        FROM properties
-        ORDER BY id DESC
+        FROM construction_projects
+        ORDER BY
+            is_featured DESC,
+            created_at DESC
         LIMIT 12
     """)
 
-    properties = cursor.fetchall()
+    projects = cursor.fetchall()
 
     cursor.close()
     conn.close()
 
     return render_template(
         "home.html",
-        properties=properties
+        projects=projects
     )
-
 
 
 
@@ -4061,9 +4092,7 @@ def add_project():
 
 
 
-# =====================================================
-# PROJECT DETAILS
-# =====================================================
+
 # =====================================================
 # PROJECT DETAILS
 # =====================================================
